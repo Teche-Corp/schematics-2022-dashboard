@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-export default function IndexPage() {
+const IndexPage = () => {
   const [show, setShow] = useState(null);
   const [profile, setProfile] = useState(false);
   const [menu, setMenu] = useState(false);
@@ -1442,4 +1442,6 @@ export default function IndexPage() {
       </div>
     </>
   );
-}
+};
+
+export default IndexPage;

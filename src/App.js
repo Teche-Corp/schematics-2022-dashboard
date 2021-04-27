@@ -1,18 +1,11 @@
-import { Route, Switch } from 'react-router';
-import { BrowserRouter } from 'react-router-dom';
-import './App.css';
-import IndexPage from './DashBoard';
-import SignIn from './SingIn';
+import React from 'react';
 
-function App() {
-  return (
-    <BrowserRouter>
-      <Switch>
-        <Route path='/dashboard' component={IndexPage} />
-        <Route path='/' component={SignIn} />
-      </Switch>
-    </BrowserRouter>
-  );
-}
+import Routes from './routes';
+
+import './App.css';
+
+const App = () => {
+  return <Routes />;
+};
 
 export default App;

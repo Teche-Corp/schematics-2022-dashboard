@@ -1,32 +1,15 @@
 import React from 'react';
+
 import { Link } from 'react-router-dom';
 
-export default function SignIn() {
+import { SignInHeader } from '../../components';
+
+const SignIn = () => {
   return (
     <>
       <div className='mx-auto'>
         <div className='flex flex-col justify-center min-h-screen px-10 py-12 border-2 bg-gray-50 lg:px-8'>
-          <div className='sm:mx-auto sm:w-full sm:max-w-md'>
-            <img
-              className='w-auto h-12 mx-auto'
-              src='https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg'
-              alt='Workflow'
-            />
-            <h2 className='mt-6 text-3xl font-extrabold text-center text-gray-900'>
-              Sign in to your account
-            </h2>
-            <p className='mt-2 text-sm text-center text-gray-600 max-w'>
-              Or
-              {/* space */}
-              <a
-                href='/'
-                className='ml-1 font-medium text-indigo-600 hover:text-indigo-500'
-              >
-                start your 14-day free trial
-              </a>
-            </p>
-          </div>
-
+          <SignInHeader />
           <div className='mt-8 sm:mx-auto sm:w-full sm:max-w-md'>
             <div className='px-4 py-8 bg-white shadow sm:rounded-lg sm:px-10'>
               <form className='space-y-6' action='#' method='POST'>
@@ -183,4 +166,6 @@ export default function SignIn() {
       </div>
     </>
   );
-}
+};
+
+export default SignIn;
