@@ -1,6 +1,7 @@
 import React from 'react';
-
+import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
+
 import { useAuthDispatch } from '../../contexts/AuthContext';
 
 import { SignInHeader } from '../../components';
@@ -8,13 +9,19 @@ import { SignInHeader } from '../../components';
 const SignIn = () => {
   const dispatch = useAuthDispatch();
   const history = useHistory();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-  const handleLogin = (e) => {
-    e.preventDefault();
+  const handleLogin = (data) => {
+    const fetchedData = {
+      email: data.email,
+      name: data.email,
+    };
 
-    const data = { name: 'Clarence', email: 'theodorusclarence@gmail.com' };
-
-    dispatch('LOGIN', data);
+    dispatch('LOGIN', fetchedData);
     history.push('/dashboard');
   };
 
@@ -25,7 +32,7 @@ const SignIn = () => {
           <SignInHeader />
           <div className='mt-8 sm:mx-auto sm:w-full sm:max-w-md'>
             <div className='px-4 py-8 bg-white shadow sm:rounded-lg sm:px-10'>
-              <form className='space-y-6' onSubmit={handleLogin}>
+              <form className='space-y-6' onSubmit={handleSubmit(handleLogin)}>
                 <div>
                   <label
                     htmlFor='email'
@@ -35,6 +42,7 @@ const SignIn = () => {
                   </label>
                   <div className='mt-1'>
                     <input
+                      {...register('email', { required: 'Email harus diisi' })}
                       id='email'
                       name='email'
                       type='email'
@@ -42,6 +50,11 @@ const SignIn = () => {
                       required=''
                       className='block w-full px-3 py-2 placeholder-gray-400 border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
                     />
+                    {errors['email'] && (
+                      <span className='text-sm text-red-500'>
+                        {errors['email'].message}
+                      </span>
+                    )}
                   </div>
                 </div>
 
@@ -54,6 +67,9 @@ const SignIn = () => {
                   </label>
                   <div className='mt-1'>
                     <input
+                      {...register('password', {
+                        required: 'Password harus diisi',
+                      })}
                       id='password'
                       name='password'
                       type='password'
@@ -61,6 +77,11 @@ const SignIn = () => {
                       required=''
                       className='block w-full px-3 py-2 placeholder-gray-400 border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
                     />
+                    {errors['password'] && (
+                      <span className='text-sm text-red-500'>
+                        {errors['password'].message}
+                      </span>
+                    )}
                   </div>
                 </div>
 
