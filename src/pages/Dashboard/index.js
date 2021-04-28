@@ -22,6 +22,7 @@ import {
   OfficeBuildingIcon,
   SearchIcon,
 } from '@heroicons/react/solid';
+import { useAuthState } from '../../contexts/AuthContext';
 
 const navigation = [
   { name: 'Home', href: '#', icon: HomeIcon, current: true },
@@ -65,6 +66,7 @@ function classNames(...classes) {
 
 export default function Example() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { user } = useAuthState();
 
   return (
     <div className='flex h-screen overflow-hidden bg-gray-100'>
@@ -375,7 +377,7 @@ export default function Example() {
                           alt=''
                         /> */}
                         <h1 className='text-2xl font-bold leading-7 text-gray-900 md:ml-3 sm:leading-9 sm:truncate'>
-                          Good morning, Schematics 2021
+                          Good morning, {user?.name}
                         </h1>
                       </div>
                       <dl className='flex flex-col mt-6 sm:ml-3 sm:mt-1 sm:flex-row sm:flex-wrap'>
