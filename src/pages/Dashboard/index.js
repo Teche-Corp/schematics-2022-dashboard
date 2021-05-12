@@ -22,7 +22,7 @@ import {
   OfficeBuildingIcon,
   SearchIcon,
 } from '@heroicons/react/solid';
-import { useAuthState } from '../../contexts/AuthContext';
+import { useAuthState } from '@/contexts/AuthContext';
 
 const navigation = [
   { name: 'Home', href: '#', icon: HomeIcon, current: true },

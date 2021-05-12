@@ -2,9 +2,9 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 
-import { useAuthDispatch } from '../../contexts/AuthContext';
+import { useAuthDispatch } from '@/contexts/AuthContext';
 
-import { SignInHeader } from '../../components';
+import SignInHeader from '@/components/SignInHeader';
 
 const SignIn = () => {
   const dispatch = useAuthDispatch();

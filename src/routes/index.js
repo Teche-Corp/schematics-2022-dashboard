@@ -7,7 +7,7 @@ import {
   Switch,
 } from 'react-router-dom';
 
-import { Dashboard, SignIn } from '../pages';
+import { Dashboard, SignIn } from '@/pages';
 
 import PrivateRoute from './PrivateRoute';
 
