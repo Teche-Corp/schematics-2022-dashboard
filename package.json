@@ -17,11 +17,6 @@
     "react-scripts": "4.0.3",
     "web-vitals": "^1.1.1"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
       "prettier --write"
@@ -33,7 +28,8 @@
     "test": "craco test",
     "eject": "react-scripts eject",
     "format": "prettier --write src/**/*.{js,jsx,ts,tsx,json,css,scss,md}",
-    "lint": "eslint src/**/*.{js,jsx,ts,tsx,json,css,scss,md}"
+    "lint": "eslint src/**/*.{js,jsx,ts,tsx,json,css,scss,md}",
+    "prepare": "husky install"
   },
   "eslintConfig": {
     "extends": [
@@ -54,12 +50,14 @@
     ]
   },
   "devDependencies": {
+    "@commitlint/cli": "^12.1.4",
+    "@commitlint/config-conventional": "^12.1.4",
     "@tailwindcss/postcss7-compat": "^2.1.2",
     "autoprefixer": "^9.8.6",
     "eslint": "^7.25.0",
     "eslint-config-prettier": "^8.2.0",
     "eslint-plugin-prettier": "^3.4.0",
-    "husky": "^4.3.8",
+    "husky": "^6.0.0",
     "lint-staged": "^10.5.4",
     "postcss": "^7.0.35",
     "prettier": "^2.2.1",
