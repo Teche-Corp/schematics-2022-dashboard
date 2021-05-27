@@ -11,5 +11,8 @@
       "@/layout/*": ["./layout/*"]
     }
   },
+  "typeAcquisition": {
+    "exclude": ["dotenv"]
+  },
   "exclude": ["node_modules", "build"]
 }
