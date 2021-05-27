@@ -1,11 +1,9 @@
-import { useAuthState } from '@/contexts/AuthContext';
 import { Menu, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 import { HiBell, HiChevronDown, HiMenuAlt1 } from 'react-icons/hi';
 import { VscAccount } from 'react-icons/vsc';
 
 export default function Navbar({ setSidebarOpen }) {
-  const { user } = useAuthState();
   return (
     <div className='relative z-10 flex flex-shrink-0 h-16 bg-white border-b border-gray-200 lg:border-none'>
       <button
