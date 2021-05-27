@@ -1,9 +1,11 @@
+import { useAuthState } from '@/contexts/AuthContext';
 import { Menu, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 import { HiBell, HiChevronDown, HiMenuAlt1 } from 'react-icons/hi';
 import { VscAccount } from 'react-icons/vsc';
 
 export default function Navbar({ setSidebarOpen }) {
+  const { user } = useAuthState();
   return (
     <div className='relative z-10 flex flex-shrink-0 h-16 bg-white border-b border-gray-200 lg:border-none'>
       <button
@@ -30,8 +32,8 @@ export default function Navbar({ setSidebarOpen }) {
                   <Menu.Button className='flex items-center max-w-xs text-sm bg-white rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 lg:p-2 lg:rounded-md lg:hover:bg-gray-50'>
                     <VscAccount className='w-6 h-6' />
                     <span className='hidden ml-3 text-sm font-medium text-gray-700 lg:block'>
-                      <span className='sr-only'>Open user menu for </span>Emilia
-                      Birch
+                      <span className='sr-only'>Open user menu for </span>
+                      {user?.name}
                     </span>
                     <HiChevronDown
                       className='flex-shrink-0 hidden w-5 h-5 ml-1 text-gray-400 lg:block'
