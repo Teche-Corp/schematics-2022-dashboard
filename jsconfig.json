@@ -7,7 +7,8 @@
       "@/components/*": ["./components/*"],
       "@/pages/*": ["./pages/*"],
       "@/contexts/*": ["./contexts/*"],
-      "@/routes/*": ["./routes/*"]
+      "@/routes/*": ["./routes/*"],
+      "@/layout/*": ["./layout/*"]
     }
   },
   "exclude": ["node_modules", "build"]
