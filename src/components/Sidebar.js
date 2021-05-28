@@ -12,6 +12,7 @@ import {
   HiShieldCheck,
   HiXCircle,
 } from 'react-icons/hi';
+import { classNames } from '@/lib/helper';
 
 const navigation = [
   { name: 'Home', href: '#', icon: HiHome, current: true },
@@ -198,8 +199,4 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
       </div>
     </div>
   );
-}
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ');
 }

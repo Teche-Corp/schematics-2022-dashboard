@@ -8,7 +8,8 @@
       "@/pages/*": ["./pages/*"],
       "@/contexts/*": ["./contexts/*"],
       "@/routes/*": ["./routes/*"],
-      "@/layout/*": ["./layout/*"]
+      "@/layout/*": ["./layout/*"],
+      "@/lib/*": ["./lib/*"]
     }
   },
   "typeAcquisition": {

@@ -1,5 +1,6 @@
 import { useAuthState } from '@/contexts/AuthContext';
 import DashboardShell from '@/layout/DashboardShell';
+import { classNames } from '@/lib/helper';
 import {
   HiCash,
   HiCheckCircle,
@@ -312,8 +313,4 @@ export default function Dashboard() {
       </main>
     </DashboardShell>
   );
-}
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ');
 }

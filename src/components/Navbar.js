@@ -1,4 +1,5 @@
 import { useAuthState } from '@/contexts/AuthContext';
+import { classNames } from '@/lib/helper';
 import { Menu, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 import { HiBell, HiChevronDown, HiMenuAlt1 } from 'react-icons/hi';
@@ -103,8 +104,4 @@ export default function Navbar({ setSidebarOpen }) {
       </div>
     </div>
   );
-}
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ');
 }
