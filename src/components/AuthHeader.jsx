@@ -1,6 +1,4 @@
-import React from 'react';
-
-const SignInHeader = ({ headerText }) => {
+export default function AuthHeader({ headerText }) {
   return (
     <div className='sm:mx-auto sm:w-full sm:max-w-md'>
       <img
@@ -13,6 +11,4 @@ const SignInHeader = ({ headerText }) => {
       </h2>
     </div>
   );
-};
-
-export default SignInHeader;
+}

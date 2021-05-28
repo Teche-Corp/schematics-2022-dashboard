@@ -4,9 +4,9 @@ import { Link, useHistory } from 'react-router-dom';
 
 import { useAuthDispatch } from '@/contexts/AuthContext';
 
-import SignInHeader from '@/components/SignInHeader';
 import Input from '@/components/Input';
 import PasswordInput from '@/components/PasswordInput';
+import AuthHeader from '@/components/AuthHeader';
 
 const SignIn = () => {
   const dispatch = useAuthDispatch();
@@ -34,7 +34,7 @@ const SignIn = () => {
     <>
       <div className='mx-auto'>
         <div className='flex flex-col justify-center min-h-screen px-10 py-12 border-2 bg-gray-50 lg:px-8'>
-          <SignInHeader headerText='Sign in to your account' />
+          <AuthHeader headerText='Sign in to your account' />
           <div className='mt-8 sm:mx-auto sm:w-full sm:max-w-md'>
             <div className='px-4 py-8 bg-white shadow sm:rounded-lg sm:px-10'>
               <FormProvider {...methods}>
