@@ -7,9 +7,12 @@ import {
   Switch,
 } from 'react-router-dom';
 
-import { Dashboard, SignIn } from '@/pages';
+import { Dashboard } from '@/pages';
 
 import PrivateRoute from './PrivateRoute';
+
+import SignIn from '@/pages/SignIn';
+import SignUp from '@/pages/SignUp';
 
 const Routes = () => {
   return (
@@ -20,6 +23,7 @@ const Routes = () => {
         </Route>
         <PrivateRoute path='/dashboard' component={Dashboard} />
         <Route path='/login' component={SignIn} />
+        <Route path='/signup' component={SignUp} />
       </Switch>
     </Router>
   );
