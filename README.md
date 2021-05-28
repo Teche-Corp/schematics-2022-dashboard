@@ -1,70 +1,51 @@
-# Getting Started with Create React App
+## Commit Message Convention
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This website follows [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)
 
-## Available Scripts
+Commit message akan dicek menggunakan [husky and commit lint](https://theodorusclarence.com/library/husky-commitlint-prettier), jika convention salah, maka tidak bisa melakukan commit
 
-In the project directory, you can run:
+### Format
 
-### `npm start`
+`<type>(optional scope): <description>`
+Contoh: `feat(pre-event): add speakers section`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### 1. Type
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Type yang bisa digunakan adalah:
 
-### `npm test`
+- feat → Jika ada penambahan/pengurangan fitur codingan. Contoh: `feat: add table on landing page`, `feat: remove table from landing page`
+- fix → Jika ada bug fixing, diikuti dengan bugnya. Contoh: `fix: illustration overflows in mobile view`
+- BREAKING CHANGE → Jika ada perubahan yang signifikan. Contoh: `BREAKING CHANGE: change login flow to not save token in localStorage`
+- docs → Update documentation (README.md)
+- style → Update style, tidak mengubah logic sama sekali (reorder import, fix whitespace, remove comment)
+- chore → Jika menginstall, mengupdate dependecies
+- refactor → Jika ada perubahan code, dengan end result yang sama, tetapi approach berbeda yang lebih baik.
+- ci → Update github workflows, husky
+- test → Update testing suite
+- perf → Fix sesuatu yang bersifat improve performance (derived state, memo)
+- vercel → Jika ada commit kosong untuk trigger vercel deployment. Contoh: `vercel: trigger deployment`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 2. Optional Scope
 
-### `npm run build`
+Contoh labeling per page `feat(pre-event): add date label`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+\*Jika tidak ada scope, maka tidak perlu ditulis.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Scope yang bisa digunakan:
+**TODO: Change this to your scope, don't forget to change in the commitlint.config.js**
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- pre-event
+- conference
+- ibl-case
 
-### `npm run eject`
+### 3. Description
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Description harus bisa mendeskripsikan apa yang dikerjakan.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+**Jika ada beberapa hal yang dikerjakan, maka lakukan commit secara bertahap.**
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Setelah titik dua, ada spasi. Contoh: `feat: add something`
+- Jika type `fix` langsung sebut issuenya. Contoh: `fix: file size limiter not working`
+- Gunakan kata imperative, dan present tense: "change" bukan "changed" atau "changes"
+- Jangan gunakan huruf kapital di awal kalimat description
+- Jangan tambahkan titik di akhir description
