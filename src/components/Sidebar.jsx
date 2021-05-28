@@ -84,9 +84,9 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
               </Transition.Child>
               <div className='flex items-center flex-shrink-0 px-4'>
                 <img
-                  className='w-auto h-8'
-                  src='https://tailwindui.com/img/logos/easywire-logo-cyan-300-mark-white-text.svg'
-                  alt='Easywire logo'
+                  className='h-20 mx-auto'
+                  src='/images/logo/colored-no-title.png'
+                  alt='Logo Colored'
                 />
               </div>
               <nav
@@ -146,9 +146,9 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
           <div className='flex flex-col flex-grow pt-5 pb-4 overflow-y-auto bg-cyan-700'>
             <div className='flex items-center flex-shrink-0 px-4'>
               <img
-                className='w-auto h-8'
-                src='https://tailwindui.com/img/logos/easywire-logo-cyan-300-mark-white-text.svg'
-                alt='Easywire logo'
+                className='h-20 mx-auto'
+                src='/images/logo/colored-no-title.png'
+                alt='Logo Colored'
               />
             </div>
             <nav
