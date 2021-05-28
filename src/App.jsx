@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Routes from '@/routes';
+import Routes from '@/routes/index';
 import { AuthProvider } from '@/contexts/AuthContext';
 
 import '@/App.css';
