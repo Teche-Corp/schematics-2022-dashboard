@@ -1,4 +1,4 @@
-export default function AuthHeader({ headerText }) {
+export default function AuthHeader({ headerText, className }) {
   return (
     <div className='sm:mx-auto sm:w-full sm:max-w-md'>
       <img
@@ -6,9 +6,9 @@ export default function AuthHeader({ headerText }) {
         src='/images/logo/colored-no-title.png'
         alt='Logo Colored'
       />
-      <h2 className='mt-6 text-3xl font-extrabold text-center text-gray-900'>
+      <h1 className='mt-6 text-4xl font-extrabold text-center text-white'>
         {headerText}
-      </h2>
+      </h1>
     </div>
   );
 }
