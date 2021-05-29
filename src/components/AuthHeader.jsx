@@ -1,4 +1,4 @@
-export default function AuthHeader({ headerText, className }) {
+export default function AuthHeader({ headerText }) {
   return (
     <div className='sm:mx-auto sm:w-full sm:max-w-md'>
       <img
