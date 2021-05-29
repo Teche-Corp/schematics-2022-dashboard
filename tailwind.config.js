@@ -6,6 +6,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        dark: '#161616',
         cyan: colors.cyan,
         npc: {
           DEFAULT: '#c93d45',
@@ -32,6 +33,11 @@ module.exports = {
           700: '#3d7196',
         },
       },
+    },
+  },
+  variants: {
+    extend: {
+      scale: ['group-hover'],
     },
   },
   plugins: [require('@tailwindcss/forms')],
