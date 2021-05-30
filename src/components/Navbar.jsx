@@ -1,9 +1,13 @@
-import { useAuthState } from '@/contexts/AuthContext';
-import { classNames } from '@/lib/helper';
-import { Menu, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
+import { Link } from 'react-router-dom';
+
+import { Menu, Transition } from '@headlessui/react';
 import { HiBell, HiChevronDown, HiMenuAlt1 } from 'react-icons/hi';
 import { VscAccount } from 'react-icons/vsc';
+
+import { useAuthState } from '@/contexts/AuthContext';
+
+import { classNames } from '@/lib/helper';
 
 export default function Navbar({ setSidebarOpen }) {
   const { user } = useAuthState();
@@ -58,15 +62,15 @@ export default function Navbar({ setSidebarOpen }) {
                   >
                     <Menu.Item>
                       {({ active }) => (
-                        <a
-                          href='a'
+                        <Link
+                          to='edit-profile'
                           className={classNames(
                             active ? 'bg-gray-100' : '',
                             'block px-4 py-2 text-sm text-gray-700',
                           )}
                         >
-                          Your Profile
-                        </a>
+                          Edit Profile
+                        </Link>
                       )}
                     </Menu.Item>
                     <Menu.Item>
