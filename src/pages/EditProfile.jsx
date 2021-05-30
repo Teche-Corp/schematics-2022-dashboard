@@ -25,7 +25,10 @@ export default function EditProfile() {
 
   return (
     <DashboardShell>
-      <main className='flex-1 overflow-y-auto bg-white border-t focus:outline-none'>
+      <main
+        className='flex-1 overflow-y-auto bg-white border-t focus:outline-none'
+        style={{ minHeight: 'calc(100vh - 4rem)' }}
+      >
         <div className='relative max-w-4xl mx-auto md:px-8 xl:px-0'>
           <div className='pt-10 pb-16'>
             <div className='px-4 sm:px-6 md:px-0'>
