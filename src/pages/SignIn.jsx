@@ -58,7 +58,7 @@ const SignIn = () => {
                   <div className='flex flex-row-reverse items-center'>
                     <div className='text-sm'>
                       <a
-                        href='/'
+                        href='/forgot'
                         className='font-medium text-indigo-600 hover:text-indigo-500'
                       >
                         Forgot your password?

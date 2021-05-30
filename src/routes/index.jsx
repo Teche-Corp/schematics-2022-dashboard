@@ -14,6 +14,7 @@ import Dashboard from '@/pages/Dashboard';
 import EditProfile from '@/pages/EditProfile';
 import SignIn from '@/pages/SignIn';
 import SignUp from '@/pages/SignUp';
+import ForgotPassword from '@/pages/ForgotPassword';
 
 const Routes = () => {
   return (
@@ -27,6 +28,7 @@ const Routes = () => {
         <PrivateRoute path='/edit-profile' component={EditProfile} />
         <Route path='/signin' component={SignIn} />
         <Route path='/signup' component={SignUp} />
+        <Route path='/forgot' component={ForgotPassword} />
       </Switch>
     </Router>
   );
