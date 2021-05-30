@@ -1,9 +1,5 @@
 import { classNames } from '@/lib/helper';
 import {
-  HiCog,
-  HiHome,
-  HiQuestionMarkCircle,
-  HiXCircle,
   HiDesktopComputer,
   HiSpeakerphone,
   HiOutlineSparkles,
