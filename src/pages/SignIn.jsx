@@ -33,10 +33,10 @@ const SignIn = () => {
   return (
     <>
       <div className='mx-auto'>
-        <div className='flex flex-col justify-center min-h-screen px-10 py-12 border-2 bg-gray-50 lg:px-8'>
+        <div className='flex flex-col justify-center min-h-screen px-10 py-12 bg-dark lg:px-8'>
           <AuthHeader headerText='Sign in to your account' />
           <div className='mt-8 sm:mx-auto sm:w-full sm:max-w-md'>
-            <div className='px-4 py-8 bg-white shadow sm:rounded-lg sm:px-10'>
+            <div className='px-4 py-8 text-white border border-gray-700 shadow bg-dark sm:rounded-lg sm:px-10'>
               <FormProvider {...methods}>
                 <form
                   className='space-y-6'
@@ -83,7 +83,7 @@ const SignIn = () => {
                     <div className='w-full border-t border-gray-300'></div>
                   </div>
                   <div className='relative flex justify-center text-sm'>
-                    <span className='px-2 text-gray-500 bg-white'>
+                    <span className='px-2 text-gray-50 bg-dark'>
                       Don't have an account?
                     </span>
                   </div>

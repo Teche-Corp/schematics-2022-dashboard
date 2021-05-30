@@ -15,7 +15,7 @@ export default function Input({
   } = useFormContext();
   return (
     <div className=''>
-      <label htmlFor={id} className='block text-sm font-bold text-gray-700'>
+      <label htmlFor={id} className='block text-sm font-bold text-gray-50'>
         {label}
       </label>
       <div className='relative mt-1 '>
@@ -25,7 +25,7 @@ export default function Input({
           name={id}
           id={id}
           disabled={disabled}
-          className={`block w-full border-gray-300 rounded-md shadow-sm   ${
+          className={`block w-full border-gray-600 bg-dark rounded-md shadow-sm   ${
             errors[id]
               ? 'focus:ring-red-500 border-red-500 focus:border-red-500'
               : 'focus:ring-indigo-500 focus:border-indigo-500'
