@@ -54,6 +54,20 @@ export default function SignUp() {
                     validation={{ required: 'Email is required' }}
                   />
 
+                  <Input
+                    label='Phone Number'
+                    id='phone'
+                    placeholder='+6285123456'
+                    validation={{
+                      required: 'Phone Number is required',
+                      pattern: {
+                        value: /^\+628[1-9][0-9]{6,11}$/,
+                        message:
+                          'Please fill in phone number starting with +62 and correct format',
+                      },
+                    }}
+                  />
+
                   <PasswordInput
                     label='Password'
                     id='password'
