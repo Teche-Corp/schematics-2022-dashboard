@@ -2,30 +2,37 @@ import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import {
   HiCog,
-  HiClock,
   HiHome,
-  HiScale,
-  HiCreditCard,
-  HiUserGroup,
-  HiDocumentReport,
   HiQuestionMarkCircle,
-  HiShieldCheck,
   HiXCircle,
+  HiDesktopComputer,
+  HiSpeakerphone,
+  HiOutlineSparkles,
 } from 'react-icons/hi';
 import { classNames } from '@/lib/helper';
 
+import { BiBrain } from 'react-icons/bi';
+
 const navigation = [
   { name: 'Home', href: '#', icon: HiHome, current: true },
-  { name: 'History', href: '#', icon: HiClock, current: false },
-  { name: 'Balances', href: '#', icon: HiScale, current: false },
-  { name: 'Cards', href: '#', icon: HiCreditCard, current: false },
-  { name: 'Recipients', href: '#', icon: HiUserGroup, current: false },
-  { name: 'Reports', href: '#', icon: HiDocumentReport, current: false },
+  {
+    name: 'Schematics NPC',
+    href: '#',
+    icon: HiDesktopComputer,
+    current: false,
+  },
+  { name: 'Schematics NLC', href: '#', icon: BiBrain, current: false },
+  { name: 'Schematics NST', href: '#', icon: HiSpeakerphone, current: false },
+  {
+    name: 'Schematics Reeva',
+    href: '#',
+    icon: HiOutlineSparkles,
+    current: false,
+  },
 ];
 const secondaryNavigation = [
   { name: 'Settings', href: '#', icon: HiCog },
   { name: 'Help', href: '#', icon: HiQuestionMarkCircle },
-  { name: 'Privacy', href: '#', icon: HiShieldCheck },
 ];
 
 export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
@@ -85,8 +92,8 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
               <div className='flex items-center flex-shrink-0 px-4'>
                 <img
                   className='h-20 mx-auto'
-                  src='/images/logo/colored-no-title.png'
-                  alt='Logo Colored'
+                  src='/images/logo/colored-title.png'
+                  alt='colored-title'
                 />
               </div>
               <nav
@@ -146,9 +153,9 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
           <div className='flex flex-col flex-grow pt-5 pb-4 overflow-y-auto bg-cyan-700'>
             <div className='flex items-center flex-shrink-0 px-4'>
               <img
-                className='h-20 mx-auto'
-                src='/images/logo/colored-no-title.png'
-                alt='Logo Colored'
+                className='h-20'
+                src='/images/logo/colored-title.png'
+                alt='colored-title'
               />
             </div>
             <nav

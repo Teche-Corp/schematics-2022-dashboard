@@ -27,7 +27,7 @@ const SignIn = () => {
     };
 
     dispatch('LOGIN', fetchedData);
-    history.push('/choose-event');
+    history.push('/dashboard');
   };
 
   return (
