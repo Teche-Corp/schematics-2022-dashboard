@@ -18,6 +18,51 @@ import ForgotPassword from '@/pages/ForgotPassword';
 import DashboardTeam from '@/components/DashboardTeam';
 import EventNPC from '@/pages/EventNPC';
 
+const routeItems = [
+  {
+    auth: 'private',
+    route: Route,
+    key: 'choose-event',
+    path: '/choose-event',
+    component: ChooseEvent,
+  },
+  {
+    auth: 'private',
+    route: Route,
+    key: 'dashboard',
+    path: '/dashboard',
+    component: Dashboard,
+  },
+  {
+    auth: 'private',
+    route: Route,
+    key: 'edit-profile',
+    path: '/edit-profile',
+    component: EditProfile,
+  },
+  {
+    auth: 'none',
+    route: PrivateRoute,
+    key: 'signin',
+    path: '/signin',
+    component: SignIn,
+  },
+  {
+    auth: 'none',
+    route: PrivateRoute,
+    key: 'signup',
+    path: '/signup',
+    component: SignUp,
+  },
+  {
+    auth: 'none',
+    route: PrivateRoute,
+    key: 'forgot',
+    path: '/forgot',
+    component: ForgotPassword,
+  },
+];
+
 const Routes = () => {
   return (
     <Router>
@@ -25,14 +70,15 @@ const Routes = () => {
         <Route exact path='/'>
           <Redirect to='/signin' />
         </Route>
-        <PrivateRoute path='/choose-event' component={ChooseEvent} />
-        <PrivateRoute path='/dashboard' component={Dashboard} />
-        <PrivateRoute path='/edit-profile' component={EditProfile} />
-        <PrivateRoute path='/sch-npc' component={EventNPC} />
-        <PrivateRoute path='/sch-npc/team' component={DashboardTeam} />
-        <Route path='/signin' component={SignIn} />
-        <Route path='/signup' component={SignUp} />
-        <Route path='/forgot' component={ForgotPassword} />
+        {routeItems.map((routeItem) => {
+          return (
+            <routeItem.route
+              key={routeItem.key}
+              path={routeItem.path}
+              component={routeItem.component}
+            />
+          );
+        })}
       </Switch>
     </Router>
   );
