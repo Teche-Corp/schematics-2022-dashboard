@@ -6,7 +6,18 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        dark: '#161616',
+        dark: {
+          DEFAULT: '#161616',
+          100: '#333333',
+          400: '#252525',
+          700: '#000000',
+        },
+        light: {
+          DEFAULT: '#f3f3f3',
+          100: '#ffffff',
+          400: '#fefefe',
+          700: '#eef3f9',
+        },
         cyan: colors.cyan,
         npc: {
           DEFAULT: '#c93d45',
