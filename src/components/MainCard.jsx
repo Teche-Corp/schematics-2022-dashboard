@@ -6,6 +6,7 @@ import {
 } from 'react-icons/hi';
 
 import { BiBrain } from 'react-icons/bi';
+import { Link } from 'react-router-dom';
 
 const actions = [
   {
@@ -19,7 +20,7 @@ const actions = [
   },
   {
     title: 'Schematics NPC',
-    href: '#',
+    href: '/sch-npc',
     icon: HiDesktopComputer,
     iconForeground: 'text-light-blue-700',
     iconBackground: 'bg-blue-50',
@@ -77,11 +78,11 @@ export default function Example() {
           </div>
           <div className='mt-8'>
             <h3 className='text-lg font-medium'>
-              <a href={action.href} className='focus:outline-none'>
+              <Link to={action.href} className='focus:outline-none'>
                 {/* Extend touch target to entire panel */}
                 <span className='absolute inset-0' aria-hidden='true' />
                 {action.title}
-              </a>
+              </Link>
             </h3>
             <p className='mt-2 text-sm text-gray-500'>{action.description}</p>
           </div>

@@ -12,12 +12,13 @@ import {
 import { classNames } from '@/lib/helper';
 
 import { BiBrain } from 'react-icons/bi';
+import { Link, useLocation } from 'react-router-dom';
 
 const navigation = [
-  { name: 'Home', href: '#', icon: HiHome, current: true },
+  { name: 'Home', href: '/dashboard', icon: HiHome, current: false },
   {
     name: 'Schematics NPC',
-    href: '#',
+    href: '/sch-npc',
     icon: HiDesktopComputer,
     current: false,
   },
@@ -36,6 +37,10 @@ const secondaryNavigation = [
 ];
 
 export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
+  const location = useLocation();
+
+  const { pathname } = location;
+
   return (
     <div>
       <Transition.Root show={sidebarOpen} as={Fragment}>
@@ -102,11 +107,11 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
               >
                 <div className='px-2 space-y-1'>
                   {navigation.map((item) => (
-                    <a
+                    <Link
                       key={item.name}
-                      href={item.href}
+                      to={item.href}
                       className={classNames(
-                        item.current
+                        item.href === pathname
                           ? 'bg-cyan-800 text-white'
                           : 'text-cyan-100 hover:text-white hover:bg-cyan-600',
                         'group flex items-center px-2 py-2 text-base font-medium rounded-md',
@@ -118,15 +123,15 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
                         aria-hidden='true'
                       />
                       {item.name}
-                    </a>
+                    </Link>
                   ))}
                 </div>
                 <div className='pt-6 mt-6'>
                   <div className='px-2 space-y-1'>
                     {secondaryNavigation.map((item) => (
-                      <a
+                      <Link
                         key={item.name}
-                        href={item.href}
+                        to={item.href}
                         className='flex items-center px-2 py-2 text-base font-medium rounded-md group text-cyan-100 hover:text-white hover:bg-cyan-600'
                       >
                         <item.icon
@@ -134,7 +139,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
                           aria-hidden='true'
                         />
                         {item.name}
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 </div>
@@ -164,11 +169,11 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
             >
               <div className='px-2 space-y-1'>
                 {navigation.map((item) => (
-                  <a
+                  <Link
                     key={item.name}
-                    href={item.href}
+                    to={item.href}
                     className={classNames(
-                      item.current
+                      item.href === pathname
                         ? 'bg-cyan-800 text-white'
                         : 'text-cyan-100 hover:text-white hover:bg-cyan-600',
                       'group flex items-center px-2 py-2 text-sm leading-6 font-medium rounded-md',
@@ -180,15 +185,15 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
                       aria-hidden='true'
                     />
                     {item.name}
-                  </a>
+                  </Link>
                 ))}
               </div>
               <div className='pt-6 mt-6'>
                 <div className='px-2 space-y-1'>
                   {secondaryNavigation.map((item) => (
-                    <a
+                    <Link
                       key={item.name}
-                      href={item.href}
+                      to={item.href}
                       className='flex items-center px-2 py-2 text-sm font-medium leading-6 rounded-md group text-cyan-100 hover:text-white hover:bg-cyan-600'
                     >
                       <item.icon
@@ -196,7 +201,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
                         aria-hidden='true'
                       />
                       {item.name}
-                    </a>
+                    </Link>
                   ))}
                 </div>
               </div>
