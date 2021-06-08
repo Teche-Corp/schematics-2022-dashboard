@@ -1,28 +1,7 @@
 import { useAuthState } from '@/contexts/AuthContext';
 import DashboardShell from '@/layout/DashboardShell';
-import {
-  HiCheckCircle,
-  HiClipboardList,
-  HiCreditCard,
-  HiOfficeBuilding,
-  HiUserGroup,
-} from 'react-icons/hi';
+import { HiCheckCircle, HiOfficeBuilding } from 'react-icons/hi';
 import { Link } from 'react-router-dom';
-
-const cards = [
-  {
-    name: 'Team NPC',
-    href: '#',
-    icon: HiUserGroup,
-    amount: 'Doa-Ibu',
-  },
-  {
-    name: 'Payment Status',
-    href: '#',
-    icon: HiCreditCard,
-    amount: 'Success',
-  },
-];
 
 export default function EventNPC() {
   const { user } = useAuthState();
