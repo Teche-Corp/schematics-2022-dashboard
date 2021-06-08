@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 const actions = [
   {
     title: 'Schematics NLC',
-    href: '#',
+    href: '/my/sch-nlc',
     icon: BiBrain,
     iconForeground: 'text-red-700',
     iconBackground: 'bg-red-50',

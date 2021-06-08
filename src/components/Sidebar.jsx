@@ -23,7 +23,7 @@ const navigation = [
   },
   {
     name: 'Schematics NLC',
-    href: '/my/sch-nlc/team',
+    href: '/my/sch-nlc',
     icon: BiBrain,
     current: false,
   },

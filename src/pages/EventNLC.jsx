@@ -2,15 +2,15 @@ import { useAuthState } from '@/contexts/AuthContext';
 import DashboardShell from '@/layout/DashboardShell';
 import {
   HiCheckCircle,
-  HiClipboardList,
   HiCreditCard,
   HiOfficeBuilding,
   HiUserGroup,
 } from 'react-icons/hi';
+import { Link } from 'react-router-dom';
 
 const cards = [
   {
-    name: 'Team',
+    name: 'Team NLC',
     href: '#',
     icon: HiUserGroup,
     amount: 'Doa-Ibu',
@@ -21,21 +21,14 @@ const cards = [
     icon: HiCreditCard,
     amount: 'Success',
   },
-  {
-    name: 'Events Verified',
-    href: '#',
-    icon: HiClipboardList,
-    amount: '0',
-  },
 ];
 
-export const Dashboard = () => {
+export default function EventNLC() {
   const { user } = useAuthState();
 
   return (
     <DashboardShell>
-      <main className='relative z-0 flex-1 pb-8 overflow-y-auto'>
-        {/* Page header */}
+      <main className='h-5/6'>
         <div className='bg-white shadow'>
           <div className='px-4 sm:px-6 lg:max-w-6xl lg:mx-auto lg:px-8'>
             <div className='py-6 md:flex md:items-center md:justify-between lg:border-t lg:border-gray-200'>
@@ -79,74 +72,37 @@ export const Dashboard = () => {
                   </div>
                 </div>
               </div>
-              {/* <div className='flex mt-6 space-x-3 md:mt-0 md:ml-4'>
+              <div className='flex mt-6 space-x-3 md:mt-0 md:ml-4'>
                 <button
                   type='button'
                   className='inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500'
                 >
-                  Add money
+                  Join Team
                 </button>
                 <button
                   type='button'
                   className='inline-flex items-center px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-cyan-600 hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500'
                 >
-                  Send money
+                  Create Team
                 </button>
-              </div> */}
+              </div>
             </div>
           </div>
         </div>
-        <div className='mt-8 '>
-          {/* children */}
-          <div className='max-w-6xl px-4 mx-auto sm:px-6 lg:px-8'>
-            <h2 className='text-lg font-medium leading-6 text-gray-900'>
-              Schematics NLC
-            </h2>
-            <div className='grid grid-cols-1 gap-5 mt-2 sm:grid-cols-2 lg:grid-cols-3'>
-              {/* Card */}
-              {cards.map((card) => (
-                <div
-                  key={card.name}
-                  className='overflow-hidden bg-white rounded-lg shadow'
-                >
-                  <div className='p-5'>
-                    <div className='flex items-center'>
-                      <div className='flex-shrink-0'>
-                        <card.icon
-                          className='w-6 h-6 text-gray-400'
-                          aria-hidden='true'
-                        />
-                      </div>
-                      <div className='flex-1 w-0 ml-5'>
-                        <dl>
-                          <dt className='text-sm font-medium text-gray-500 truncate'>
-                            {card.name}
-                          </dt>
-                          <dd>
-                            <div className='text-lg font-medium text-gray-900'>
-                              {card.amount}
-                            </div>
-                          </dd>
-                        </dl>
-                      </div>
-                    </div>
-                  </div>
-                  <div className='px-5 py-3 bg-gray-50'>
-                    <div className='text-sm'>
-                      <a
-                        href={card.href}
-                        className='font-medium text-cyan-700 hover:text-cyan-900'
-                      >
-                        View all
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+        <main className='w-full h-full px-4 py-20 mx-auto mt-1 bg-white '>
+          <div className='text-center'>
+            <h1 className='text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:text-6xl'>
+              <span className='block xl:inline'>Schematics</span>{' '}
+              <span className='block text-yellow-400 xl:inline'>NLC</span>
+            </h1>
+            <p className='max-w-md mx-auto mt-3 text-base text-gray-500 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl'>
+              Schematics NLC merupakan kompetisi logika terbesar di Indonesia,
+              dengan jumlah peserta yang kerap meningkat tiap tahunnya
+            </p>
+            <div className='max-w-md mx-auto mt-5 sm:flex sm:justify-center md:mt-8'></div>
           </div>
-        </div>
+        </main>
       </main>
     </DashboardShell>
   );
-};
+}
