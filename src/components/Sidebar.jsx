@@ -10,7 +10,6 @@ import {
   HiOutlineSparkles,
 } from 'react-icons/hi';
 import { classNames } from '@/lib/helper';
-
 import { BiBrain } from 'react-icons/bi';
 import { Link, useLocation } from 'react-router-dom';
 
@@ -22,7 +21,12 @@ const navigation = [
     icon: HiDesktopComputer,
     current: false,
   },
-  { name: 'Schematics NLC', href: '#', icon: BiBrain, current: false },
+  {
+    name: 'Schematics NLC',
+    href: '/my/sch-nlc/team',
+    icon: BiBrain,
+    current: false,
+  },
   { name: 'Schematics NST', href: '#', icon: HiSpeakerphone, current: false },
   {
     name: 'Schematics Reeva',

@@ -12,6 +12,7 @@ import PrivateRoute from './PrivateRoute';
 import ChooseEvent from '@/pages/ChooseEvent';
 import Dashboard from '@/pages/Dashboard';
 import EditProfile from '@/pages/EditProfile';
+import { Dashboard as NLCDashboard } from '@/pages/nlc/Dashboard';
 import SignIn from '@/pages/SignIn';
 import SignUp from '@/pages/SignUp';
 import ForgotPassword from '@/pages/ForgotPassword';
@@ -39,6 +40,13 @@ const routeItems = [
     key: 'edit-profile',
     path: '/edit-profile',
     component: EditProfile,
+  },
+  {
+    auth: 'private',
+    route: PrivateRoute,
+    key: 'nlc-team',
+    path: '/my/sch-nlc/team',
+    component: NLCDashboard,
   },
   {
     auth: 'none',
