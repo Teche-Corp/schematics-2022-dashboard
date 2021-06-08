@@ -18,6 +18,7 @@ import SignUp from '@/pages/SignUp';
 import ForgotPassword from '@/pages/ForgotPassword';
 import DashboardTeam from '@/components/DashboardTeam';
 import EventNPC from '@/pages/EventNPC';
+import CreateTeam from '@/pages/CreateTeam';
 
 const routeItems = [
   {
@@ -40,6 +41,13 @@ const routeItems = [
     key: 'edit-profile',
     path: '/edit-profile',
     component: EditProfile,
+  },
+  {
+    auth: 'private',
+    route: PrivateRoute,
+    key: 'nlc-create-team',
+    path: '/sch-nlc/create-team',
+    component: CreateTeam,
   },
   {
     auth: 'private',
