@@ -49,6 +49,20 @@ const routeItems = [
     component: EventNLC,
   },
   {
+    auth: 'private',
+    route: PrivateRoute,
+    key: 'nlc-event',
+    path: '/sch-npc',
+    component: EventNPC,
+  },
+  {
+    auth: 'private',
+    route: PrivateRoute,
+    key: 'nlc-event',
+    path: '/sch-npc/team',
+    component: DashboardTeam,
+  },
+  {
     auth: 'none',
     route: Route,
     key: 'signin',
