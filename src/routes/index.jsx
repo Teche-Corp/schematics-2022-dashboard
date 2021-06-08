@@ -45,7 +45,7 @@ const routeItems = [
     auth: 'private',
     route: PrivateRoute,
     key: 'nlc-event',
-    path: '/my/sch-nlc',
+    path: '/sch-nlc',
     component: EventNLC,
   },
   {

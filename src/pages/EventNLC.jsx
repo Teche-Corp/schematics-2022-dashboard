@@ -72,20 +72,6 @@ export default function EventNLC() {
                   </div>
                 </div>
               </div>
-              <div className='flex mt-6 space-x-3 md:mt-0 md:ml-4'>
-                <button
-                  type='button'
-                  className='inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500'
-                >
-                  Join Team
-                </button>
-                <button
-                  type='button'
-                  className='inline-flex items-center px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-cyan-600 hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500'
-                >
-                  Create Team
-                </button>
-              </div>
             </div>
           </div>
         </div>
@@ -99,7 +85,16 @@ export default function EventNLC() {
               Schematics NLC merupakan kompetisi logika terbesar di Indonesia,
               dengan jumlah peserta yang kerap meningkat tiap tahunnya
             </p>
-            <div className='max-w-md mx-auto mt-5 sm:flex sm:justify-center md:mt-8'></div>
+            <div className='max-w-md mx-auto mt-5 sm:flex sm:justify-center md:mt-8'>
+              <div className='rounded-md shadow'>
+                <Link
+                  to='#'
+                  className='flex items-center justify-center w-full px-8 py-3 text-base font-medium text-white bg-yellow-600 border border-transparent rounded-md hover:bg-yellow-700 md:py-4 md:text-lg md:px-10'
+                >
+                  Buat Tim
+                </Link>
+              </div>
+            </div>
           </div>
         </main>
       </main>
