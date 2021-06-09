@@ -19,6 +19,7 @@ import ForgotPassword from '@/pages/ForgotPassword';
 import DashboardTeam from '@/components/DashboardTeam';
 import EventNPC from '@/pages/EventNPC';
 import CreateTeam from '@/pages/CreateTeam';
+import ChangePassword from '@/pages/ChangePassword';
 
 const routeItems = [
   {
@@ -90,6 +91,13 @@ const routeItems = [
     key: 'forgot',
     path: '/forgot',
     component: ForgotPassword,
+  },
+  {
+    auth: 'none',
+    route: Route,
+    key: 'change-password',
+    path: '/change-password',
+    component: ChangePassword,
   },
 ];
 
