@@ -24,7 +24,7 @@ export default function StandAloneInput({
           className={`block w-full border-gray-300 rounded-md shadow-sm   ${
             errors[id]
               ? 'focus:ring-red-500 border-red-500 focus:border-red-500'
-              : 'focus:ring-cyan-500 focus:border-cyan-500'
+              : 'focus:ring-dark-400 focus:border-dark-400'
           } sm:text-sm`}
           placeholder={placeholder}
           aria-describedby={id}

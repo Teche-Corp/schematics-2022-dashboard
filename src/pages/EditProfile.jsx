@@ -32,7 +32,7 @@ export default function EditProfile() {
         <div className='relative max-w-4xl mx-auto md:px-8 xl:px-0'>
           <div className='pt-10 pb-16'>
             <div className='px-4 sm:px-6 md:px-0'>
-              <h1 className='text-3xl font-extrabold text-gray-700'>
+              <h1 className='text-3xl font-extrabold text-gray-900'>
                 Edit Profile
               </h1>
             </div>
@@ -119,13 +119,13 @@ export default function EditProfile() {
                             <button
                               type='button'
                               onClick={handleEditClick}
-                              className='px-4 py-2 text-sm font-medium bg-white border rounded-md shadow-sm border-300 text-cyan-900 hover:bg-cyan-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500'
+                              className='px-4 py-2 text-sm font-medium text-gray-700 bg-white border rounded-md shadow-sm border-300 text-dark-900 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-dark-400'
                             >
                               Cancel
                             </button>
                             <button
                               type='submit'
-                              className='inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-cyan-600 hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500'
+                              className='inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-dark-100 bg-dark-600 hover:bg-dark-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-dark-100'
                             >
                               Save
                             </button>
@@ -134,7 +134,7 @@ export default function EditProfile() {
                           <button
                             type='button'
                             onClick={handleEditClick}
-                            className='inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-cyan-600 hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500'
+                            className='inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-dark-100 hover:bg-dark-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-dark-100'
                           >
                             Edit
                           </button>
