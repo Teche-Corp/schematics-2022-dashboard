@@ -1,4 +1,5 @@
 import { FormProvider, useForm } from 'react-hook-form';
+import { Link } from 'react-router-dom';
 
 import DashboardShell from '@/layout/DashboardShell';
 import LightInput from '@/components/LightInput';
@@ -321,15 +322,15 @@ export default function CreateTeam() {
 
                 <div className='pt-5'>
                   <div className='flex justify-end'>
-                    <button
-                      type='button'
+                    <Link
+                      to='/sch-nlc'
                       className='px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-dark-400'
                     >
                       Cancel
-                    </button>
+                    </Link>
                     <button
                       type='submit'
-                      className='inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-dark-100 hover:bg-dark-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-dark-100'
+                      className='inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-nlc-400 hover:bg-nlc-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-nlc-400'
                     >
                       Save
                     </button>
