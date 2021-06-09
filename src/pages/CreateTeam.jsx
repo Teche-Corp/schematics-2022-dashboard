@@ -99,7 +99,13 @@ export default function CreateTeam() {
                           label='Email'
                           id='leader-email'
                           type='email'
-                          validation={{ required: 'Email is required' }}
+                          validation={{
+                            required: 'Email is required',
+                            pattern: {
+                              value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                              message: 'Please input correct email address',
+                            },
+                          }}
                         />
                       </div>
 
@@ -117,7 +123,14 @@ export default function CreateTeam() {
                           label='Phone Number'
                           id='leader-phone'
                           type='text'
-                          validation={{ required: 'Phone Number is required' }}
+                          validation={{
+                            required: 'Phone Number is required',
+                            pattern: {
+                              value: /^\+628[1-9][0-9]{6,11}$/,
+                              message:
+                                'Please fill in phone number starting with +62 and correct format',
+                            },
+                          }}
                         />
                       </div>
 
@@ -205,7 +218,13 @@ export default function CreateTeam() {
                           label='Email'
                           id='member-email'
                           type='email'
-                          validation={{ required: 'Email is required' }}
+                          validation={{
+                            required: 'Email is required',
+                            pattern: {
+                              value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                              message: 'Please input correct email address',
+                            },
+                          }}
                         />
                       </div>
 
@@ -223,7 +242,14 @@ export default function CreateTeam() {
                           label='Phone Number'
                           id='member-phone'
                           type='text'
-                          validation={{ required: 'Phone Number is required' }}
+                          validation={{
+                            required: 'Phone Number is required',
+                            pattern: {
+                              value: /^\+628[1-9][0-9]{6,11}$/,
+                              message:
+                                'Please fill in phone number starting with +62 and correct format',
+                            },
+                          }}
                         />
                       </div>
 
