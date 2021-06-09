@@ -73,7 +73,7 @@ export default function EventNPC() {
           <div className='text-center'>
             <h1 className='text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:text-6xl'>
               <span className='block xl:inline'>Schematics</span>{' '}
-              <span className='block text-red-400 xl:inline'>NPC</span>
+              <span className='block text-npc xl:inline'>NPC</span>
             </h1>
             <p className='max-w-md mx-auto mt-3 text-base text-gray-500 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl'>
               Schematics NPC merupakan sebuah kompetisi pemrograman tingkat

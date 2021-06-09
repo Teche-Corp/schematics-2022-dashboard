@@ -29,9 +29,7 @@ export default function CreateTeam() {
                   <div>
                     <h1 className='mb-6 text-4xl font-extrabold tracking-tight text-gray-900 sm:text-3xl md:text-4xl'>
                       <span className='block xl:inline'>Create Team</span>{' '}
-                      <span className='block text-yellow-400 xl:inline'>
-                        NLC
-                      </span>
+                      <span className='block text-nlc xl:inline'>NLC</span>
                     </h1>
                     <div className='grid grid-cols-1 mt-6 gap-y-6 gap-x-4 sm:grid-cols-6'>
                       <div className='sm:col-span-4'>
@@ -179,7 +177,7 @@ export default function CreateTeam() {
                             <div className='flex text-sm text-gray-600'>
                               <label
                                 htmlFor='file-upload'
-                                className='relative font-medium bg-white rounded-md cursor-pointer text-nlc-400 hover:text-nlc-700 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-nlc-400'
+                                className='relative font-medium bg-white rounded-md cursor-pointer text-nlc hover:text-nlc-400 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-nlc-400'
                               >
                                 <span>Upload a file</span>
                                 <input
@@ -298,7 +296,7 @@ export default function CreateTeam() {
                             <div className='flex text-sm text-gray-600'>
                               <label
                                 htmlFor='file-upload'
-                                className='relative font-medium bg-white rounded-md cursor-pointer text-nlc-400 hover:text-nlc-700 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-nlc-400'
+                                className='relative font-medium bg-white rounded-md cursor-pointer text-nlc hover:text-nlc-400 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-nlc-400'
                               >
                                 <span>Upload a file</span>
                                 <input
@@ -330,7 +328,7 @@ export default function CreateTeam() {
                     </Link>
                     <button
                       type='submit'
-                      className='inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-nlc-400 hover:bg-nlc-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-nlc-400'
+                      className='inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-nlc hover:bg-nlc-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-nlc-400'
                     >
                       Save
                     </button>

@@ -13,8 +13,8 @@ const actions = [
     title: 'Schematics NLC',
     href: '/sch-nlc',
     icon: BiBrain,
-    iconForeground: 'text-red-700',
-    iconBackground: 'bg-red-50',
+    iconForeground: 'text-nlc',
+    iconBackground: 'bg-nlc-100',
     description:
       'Schematics NLC merupakan kompetisi logika terbesar di Indonesia, dengan jumlah peserta yang kerap meningkat tiap tahunnya',
   },
@@ -22,8 +22,8 @@ const actions = [
     title: 'Schematics NPC',
     href: '/sch-npc',
     icon: HiDesktopComputer,
-    iconForeground: 'text-light-blue-700',
-    iconBackground: 'bg-blue-50',
+    iconForeground: 'text-npc',
+    iconBackground: 'bg-npc-100',
     description:
       'Schematics NPC merupakan sebuah kompetisi pemrograman tingkat nasional yang menguji kemampuan algoritma dan pemrograman dalam memecahkan masalah yang diberikan',
   },
@@ -31,8 +31,8 @@ const actions = [
     title: 'Schematics NST',
     href: '#',
     icon: HiSpeakerphone,
-    iconForeground: 'text-rose-700',
-    iconBackground: 'bg-green-50',
+    iconForeground: 'text-nst',
+    iconBackground: 'bg-nst-100',
     description:
       'Schematics NST bertujuan untuk membagikan pengetahuan dan perkemabangan teknologi informasi terkini',
   },
@@ -40,8 +40,8 @@ const actions = [
     title: 'Schematics Reeva',
     href: '#',
     icon: HiOutlineSparkles,
-    iconForeground: 'text-yellow-700',
-    iconBackground: 'bg-yellow-50',
+    iconForeground: 'text-reeva',
+    iconBackground: 'bg-reeva-100',
     description:
       'Schematics REEVA merupakan penutup dari serangkaian event Schematics yang menghadirkan expo berisi jutaan kreativitas dan berbagai performance menarik dari artis - artis ternama Indonesia.',
   },
@@ -62,7 +62,7 @@ export default function Example() {
             actionIdx === actions.length - 1
               ? 'rounded-bl-lg rounded-br-lg sm:rounded-bl-none'
               : '',
-            'relative group bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500',
+            'relative group bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-dark-100',
           )}
         >
           <div>
