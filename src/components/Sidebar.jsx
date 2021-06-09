@@ -18,19 +18,28 @@ const navigation = [
   {
     name: 'Schematics NPC',
     href: '/sch-npc',
+    color: 'text-npc-100',
     icon: HiDesktopComputer,
     current: false,
   },
   {
     name: 'Schematics NLC',
     href: '/sch-nlc',
+    color: 'text-nlc-100',
     icon: BiBrain,
     current: false,
   },
-  { name: 'Schematics NST', href: '#', icon: HiSpeakerphone, current: false },
+  {
+    name: 'Schematics NST',
+    href: '#',
+    color: 'text-nst-100',
+    icon: HiSpeakerphone,
+    current: false,
+  },
   {
     name: 'Schematics Reeva',
     href: '#',
+    color: 'text-reeva-100',
     icon: HiOutlineSparkles,
     current: false,
   },
@@ -75,7 +84,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
             leaveFrom='translate-x-0'
             leaveTo='-translate-x-full'
           >
-            <div className='relative flex flex-col flex-1 w-full max-w-xs pt-5 pb-4 bg-cyan-700'>
+            <div className='relative flex flex-col flex-1 w-full max-w-xs pt-5 pb-4 bg-dark'>
               <Transition.Child
                 as={Fragment}
                 enter='ease-in-out duration-300'
@@ -106,7 +115,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
                 />
               </div>
               <nav
-                className='flex-shrink-0 h-full mt-5 overflow-y-auto divide-y divide-cyan-800'
+                className='flex-shrink-0 h-full mt-5 overflow-y-auto divide-y divide-dark-700'
                 aria-label='Sidebar'
               >
                 <div className='px-2 space-y-1'>
@@ -116,14 +125,18 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
                       to={item.href}
                       className={classNames(
                         item.href === pathname
-                          ? 'bg-cyan-800 text-white'
-                          : 'text-cyan-100 hover:text-white hover:bg-cyan-600',
+                          ? 'bg-dark-100'
+                          : 'hover:bg-dark-400',
+                        item.color ? `${item.color}` : 'text-white',
                         'group flex items-center px-2 py-2 text-base font-medium rounded-md',
                       )}
                       aria-current={item.current ? 'page' : undefined}
                     >
                       <item.icon
-                        className='w-6 h-6 mr-4 text-cyan-200'
+                        className={classNames(
+                          item.color ? `${item.color}` : 'text-white',
+                          'w-6 h-6 mr-4 text-white',
+                        )}
                         aria-hidden='true'
                       />
                       {item.name}
@@ -136,10 +149,10 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
                       <Link
                         key={item.name}
                         to={item.href}
-                        className='flex items-center px-2 py-2 text-base font-medium rounded-md group text-cyan-100 hover:text-white hover:bg-cyan-600'
+                        className='flex items-center px-2 py-2 text-base font-medium text-white rounded-md group hover:bg-dark-400'
                       >
                         <item.icon
-                          className='w-6 h-6 mr-4 text-cyan-200'
+                          className='w-6 h-6 mr-4 text-white'
                           aria-hidden='true'
                         />
                         {item.name}
@@ -159,7 +172,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
       <div className='hidden h-full lg:flex lg:flex-shrink-0'>
         <div className='flex flex-col w-64'>
           {/* Sidebar component, swap this element with another sidebar if you like */}
-          <div className='flex flex-col flex-grow pt-5 pb-4 overflow-y-auto bg-cyan-700'>
+          <div className='flex flex-col flex-grow pt-5 pb-4 overflow-y-auto bg-dark'>
             <div className='flex items-center flex-shrink-0 px-4'>
               <img
                 className='h-20'
@@ -168,7 +181,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
               />
             </div>
             <nav
-              className='flex flex-col flex-1 mt-5 overflow-y-auto divide-y divide-cyan-800'
+              className='flex flex-col flex-1 mt-5 overflow-y-auto divide-y divide-gray-600'
               aria-label='Sidebar'
             >
               <div className='px-2 space-y-1'>
@@ -178,14 +191,18 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
                     to={item.href}
                     className={classNames(
                       item.href === pathname
-                        ? 'bg-cyan-800 text-white'
-                        : 'text-cyan-100 hover:text-white hover:bg-cyan-600',
-                      'group flex items-center px-2 py-2 text-sm leading-6 font-medium rounded-md',
+                        ? 'bg-dark-100 text-white'
+                        : 'text-white hover:bg-dark-400',
+                      item.color ? `${item.color}` : 'text-white',
+                      'group flex items-center px-2 py-2 text-base font-medium rounded-md',
                     )}
                     aria-current={item.current ? 'page' : undefined}
                   >
                     <item.icon
-                      className='w-6 h-6 mr-4 text-cyan-200'
+                      className={classNames(
+                        item.color ? `${item.color}` : 'text-white',
+                        'w-6 h-6 mr-4 text-white',
+                      )}
                       aria-hidden='true'
                     />
                     {item.name}
@@ -198,10 +215,10 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
                     <Link
                       key={item.name}
                       to={item.href}
-                      className='flex items-center px-2 py-2 text-sm font-medium leading-6 rounded-md group text-cyan-100 hover:text-white hover:bg-cyan-600'
+                      className='flex items-center px-2 py-2 text-base font-medium text-white rounded-md group hover:bg-dark-400'
                     >
                       <item.icon
-                        className='w-6 h-6 mr-4 text-cyan-200'
+                        className='w-6 h-6 mr-4 text-white'
                         aria-hidden='true'
                       />
                       {item.name}

@@ -14,7 +14,7 @@ export default function Navbar({ setSidebarOpen }) {
   return (
     <div className='relative z-10 flex flex-shrink-0 h-16 bg-white border-b border-gray-200 lg:border-none'>
       <button
-        className='px-4 text-gray-400 border-r border-gray-200 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-cyan-500 lg:hidden'
+        className='px-4 text-gray-400 border-r border-gray-200 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-dark-100 lg:hidden'
         onClick={() => setSidebarOpen(true)}
       >
         <span className='sr-only'>Open sidebar</span>
@@ -24,7 +24,7 @@ export default function Navbar({ setSidebarOpen }) {
       <div className='flex justify-between flex-1 px-4 sm:px-6 lg:max-w-6xl lg:mx-auto lg:px-8'>
         <div className='flex flex-1'></div>
         <div className='flex items-center ml-4 md:ml-6'>
-          <button className='p-1 text-gray-400 bg-white rounded-full hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500'>
+          <button className='p-1 text-gray-400 bg-white rounded-full hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-dark-100'>
             <span className='sr-only'>View notifications</span>
             <HiBell className='w-6 h-6' aria-hidden='true' />
           </button>
@@ -34,7 +34,7 @@ export default function Navbar({ setSidebarOpen }) {
             {({ open }) => (
               <>
                 <div>
-                  <Menu.Button className='flex items-center max-w-xs text-sm bg-white rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 lg:p-2 lg:rounded-md lg:hover:bg-gray-50'>
+                  <Menu.Button className='flex items-center max-w-xs text-sm bg-white rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-dark-100 lg:p-2 lg:rounded-md lg:hover:bg-gray-50'>
                     <VscAccount className='w-6 h-6' />
                     <span className='hidden ml-3 text-sm font-medium text-gray-700 lg:block'>
                       <span className='sr-only'>Open user menu for </span>
