@@ -83,7 +83,7 @@ export default function EventNPC() {
             <div className='max-w-md mx-auto mt-5 sm:flex sm:justify-center md:mt-8'>
               <div className='rounded-md shadow'>
                 <Link
-                  to='#'
+                  to='/sch-npc/create-team/junior'
                   className='flex items-center justify-center w-full px-8 py-3 text-base font-medium text-white bg-red-600 border border-transparent rounded-md hover:bg-red-700 md:py-4 md:text-lg md:px-10'
                 >
                   Junior NPC
