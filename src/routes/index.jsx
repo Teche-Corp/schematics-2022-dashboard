@@ -22,6 +22,7 @@ import EventNPC from '@/pages/EventNPC';
 import CreateTeam from '@/pages/CreateTeam';
 import ChangePassword from '@/pages/ChangePassword';
 import CreateTeamNPCSenior from '@/pages/CreateTeamNPCSenior';
+import PaymentNLC from '@/pages/PaymentNLC';
 
 const routeItems = [
   {
@@ -51,6 +52,13 @@ const routeItems = [
     key: 'nlc-create-team',
     path: '/sch-nlc/create-team',
     component: CreateTeam,
+  },
+  {
+    auth: 'private',
+    route: PrivateRoute,
+    key: 'nlc-create-team',
+    path: '/sch-nlc/payment',
+    component: PaymentNLC,
   },
   {
     auth: 'private',
