@@ -91,7 +91,7 @@ export default function EventNPC() {
               </div>
               <div className='mt-3 rounded-md shadow sm:mt-0 sm:ml-3'>
                 <Link
-                  to='#'
+                  to='/sch-npc/create-team/senior'
                   className='flex items-center justify-center w-full px-8 py-3 text-base font-medium text-red-600 bg-white border border-transparent rounded-md hover:bg-gray-50 md:py-4 md:text-lg md:px-10'
                 >
                   Senior NPC
