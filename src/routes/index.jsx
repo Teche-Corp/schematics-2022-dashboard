@@ -54,8 +54,8 @@ const routeItems = [
     component: CreateTeam,
   },
   {
-    auth: 'private',
-    route: PrivateRoute,
+    auth: 'none',
+    route: Route,
     key: 'nlc-create-team',
     path: '/sch-nlc/payment',
     component: PaymentNLC,
