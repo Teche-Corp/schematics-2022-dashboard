@@ -13,7 +13,7 @@ const actions = [
     title: 'Schematics NLC',
     href: '/sch-nlc',
     icon: BiBrain,
-    iconForeground: 'text-nlc',
+    iconForeground: 'text-yellow-700',
     iconBackground: 'bg-nlc-100',
     description:
       'Schematics NLC merupakan kompetisi logika terbesar di Indonesia, dengan jumlah peserta yang kerap meningkat tiap tahunnya',
@@ -31,7 +31,7 @@ const actions = [
     title: 'Schematics NST',
     href: '#',
     icon: HiSpeakerphone,
-    iconForeground: 'text-nst',
+    iconForeground: 'text-green-700',
     iconBackground: 'bg-nst-100',
     description:
       'Schematics NST bertujuan untuk membagikan pengetahuan dan perkemabangan teknologi informasi terkini',
@@ -40,7 +40,7 @@ const actions = [
     title: 'Schematics Reeva',
     href: '#',
     icon: HiOutlineSparkles,
-    iconForeground: 'text-reeva',
+    iconForeground: 'text-blue-700',
     iconBackground: 'bg-reeva-100',
     description:
       'Schematics REEVA merupakan penutup dari serangkaian event Schematics yang menghadirkan expo berisi jutaan kreativitas dan berbagai performance menarik dari artis - artis ternama Indonesia.',
