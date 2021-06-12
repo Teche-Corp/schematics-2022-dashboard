@@ -17,6 +17,7 @@ import SignIn from '@/pages/SignIn';
 import SignUp from '@/pages/SignUp';
 import ForgotPassword from '@/pages/ForgotPassword';
 import DashboardTeam from '@/components/DashboardTeam';
+import CreateTeamNPCJunior from '@/pages/CreateTeamNPCJunior';
 import EventNPC from '@/pages/EventNPC';
 import CreateTeam from '@/pages/CreateTeam';
 import ChangePassword from '@/pages/ChangePassword';
@@ -56,6 +57,13 @@ const routeItems = [
     key: 'nlc-event',
     path: '/sch-nlc',
     component: EventNLC,
+  },
+  {
+    auth: 'private',
+    route: PrivateRoute,
+    key: 'npc-create-team-junior',
+    path: '/sch-npc/create-team/junior',
+    component: CreateTeamNPCJunior,
   },
   {
     auth: 'private',
