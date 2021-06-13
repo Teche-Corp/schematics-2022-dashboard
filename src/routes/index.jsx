@@ -12,17 +12,20 @@ import PrivateRoute from './PrivateRoute';
 import ChooseEvent from '@/pages/ChooseEvent';
 import Dashboard from '@/pages/Dashboard';
 import EditProfile from '@/pages/EditProfile';
-import EventNLC from '@/pages/EventNLC';
-import SignIn from '@/pages/SignIn';
-import SignUp from '@/pages/SignUp';
-import ForgotPassword from '@/pages/ForgotPassword';
 import DashboardTeam from '@/components/DashboardTeam';
-import CreateTeamNPCJunior from '@/pages/CreateTeamNPCJunior';
-import EventNPC from '@/pages/EventNPC';
-import CreateTeam from '@/pages/CreateTeam';
-import ChangePassword from '@/pages/ChangePassword';
-import CreateTeamNPCSenior from '@/pages/CreateTeamNPCSenior';
-import PaymentNLC from '@/pages/PaymentNLC';
+
+import SignIn from '@/pages/auth/SignIn';
+import SignUp from '@/pages/auth/SignUp';
+import ForgotPassword from '@/pages/auth/ForgotPassword';
+import ChangePassword from '@/pages/auth/ChangePassword';
+
+import EventNLC from '@/pages/nlc/EventNLC';
+import CreateTeam from '@/pages/nlc/CreateTeam';
+import PaymentNLC from '@/pages/nlc/PaymentNLC';
+
+import EventNPC from '@/pages/npc/EventNPC';
+import CreateTeamNPCJunior from '@/pages/npc/CreateTeamNPCJunior';
+import CreateTeamNPCSenior from '@/pages/npc/CreateTeamNPCSenior';
 
 const routeItems = [
   {
