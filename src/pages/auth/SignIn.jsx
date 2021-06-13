@@ -28,7 +28,7 @@ const SignIn = () => {
 
       dispatch('LOGIN', { email: data.email, token });
       setLoading(false);
-      history.push('/dashboard');
+      history.replace('/dashboard');
     } catch (err) {
       console.error(err);
       toast.error('Uh oh! Something is wrong, please try again');
