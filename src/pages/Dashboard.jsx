@@ -56,7 +56,7 @@ export default function Dashboard() {
                   alt=''
                 /> */}
                       <h1 className='text-2xl font-bold leading-7 text-gray-900 md:ml-3 sm:leading-9 sm:truncate'>
-                        Hello, {user?.name}
+                        Hello, {user?.email}
                       </h1>
                     </div>
                     <dl className='flex flex-col mt-6 sm:ml-3 sm:mt-1 sm:flex-row sm:flex-wrap'>

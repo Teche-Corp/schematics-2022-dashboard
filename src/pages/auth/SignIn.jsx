@@ -1,4 +1,6 @@
-import React from 'react';
+import axios from 'axios';
+import toast from 'react-hot-toast';
+import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Link, useHistory } from 'react-router-dom';
 
@@ -7,27 +9,32 @@ import { useAuthDispatch } from '@/contexts/AuthContext';
 import Input from '@/components/Input';
 import PasswordInput from '@/components/PasswordInput';
 import AuthHeader from '@/components/AuthHeader';
+import SubmitButton from '@/components/SubmitButton';
 
 const SignIn = () => {
   const dispatch = useAuthDispatch();
   const history = useHistory();
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   formState: { errors },
-  // } = useForm();
+  const [loading, setLoading] = useState(false);
 
   const methods = useForm();
   const { handleSubmit } = methods;
 
-  const handleLogin = (data) => {
-    const fetchedData = {
-      email: data.email,
-      name: data.email,
-    };
+  const handleLogin = async (data) => {
+    try {
+      setLoading(true);
+      const res = await axios.post('/user/login', data);
+      const { token } = res.data;
+      localStorage.setItem('token', token);
 
-    dispatch('LOGIN', fetchedData);
-    history.push('/dashboard');
+      dispatch('LOGIN', { email: data.email, token });
+      setLoading(false);
+      history.push('/dashboard');
+    } catch (err) {
+      console.error(err);
+      toast.error('Uh oh! Something is wrong, please try again');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -67,12 +74,7 @@ const SignIn = () => {
                   </div>
 
                   <div>
-                    <button
-                      className='flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
-                      type='submit'
-                    >
-                      Sign in
-                    </button>
+                    <SubmitButton loading={loading}>Sign in</SubmitButton>
                   </div>
                 </form>
               </FormProvider>
