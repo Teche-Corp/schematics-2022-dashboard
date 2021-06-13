@@ -38,8 +38,11 @@ export default function PasswordInput({
           aria-describedby={id}
         />
         <button
-          onClick={togglePassword}
-          className='absolute inset-y-0 right-0 flex items-center pr-3'
+          onClick={(e) => {
+            e.preventDefault();
+            togglePassword();
+          }}
+          className='absolute inset-y-0 right-0 flex items-center p-1 mr-3 rounded-lg focus:outline-none focus:ring focus:ring-white'
         >
           {showPassword ? (
             <HiEyeOff className='text-xl text-gray-400 cursor-pointer hover:text-gray-500' />
