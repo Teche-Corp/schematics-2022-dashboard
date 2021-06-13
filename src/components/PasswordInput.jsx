@@ -37,7 +37,7 @@ export default function PasswordInput({
           placeholder={placeholder}
           aria-describedby={id}
         />
-        <buton
+        <button
           onClick={togglePassword}
           className='absolute inset-y-0 right-0 flex items-center pr-3'
         >
@@ -46,7 +46,7 @@ export default function PasswordInput({
           ) : (
             <HiEye className='text-xl text-gray-400 cursor-pointer hover:text-gray-500' />
           )}
-        </buton>
+        </button>
       </div>
       {errors[id] && (
         <span className='text-sm text-red-500'>{errors[id].message}</span>
