@@ -1,12 +1,49 @@
-import { FormProvider, useForm } from 'react-hook-form';
+import { useEffect, useState } from 'react';
+import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 
 import DashboardShell from '@/layout/DashboardShell';
 import LightInput from '@/components/LightInput';
+import SelectCity from '@/components/SelectCity';
 
 export default function CreateTeam() {
+  const [cities, setCities] = useState([]);
+
   const methods = useForm();
-  const { handleSubmit } = methods;
+  const { control, handleSubmit, setValue } = methods;
+
+  const cityValue = useWatch({
+    control,
+    name: 'city',
+  });
+
+  useEffect(() => {
+    const fetchCities = async () => {
+      const res = await fetch(
+        'http://schematics-webkes-backend-dev.herokuapp.com/api/region/list',
+      );
+      const data = await res.json();
+
+      setCities(data.data);
+    };
+
+    fetchCities();
+  }, []);
+
+  useEffect(() => {
+    if (cityValue !== undefined) {
+      const id = cityValue?.value;
+      const city = cities.find((city) => city.id === id);
+      setValue('province', city?.province_name, {
+        shouldValidate: true,
+        shouldDirty: true,
+      });
+      setValue('region', city?.region_name, {
+        shouldValidate: true,
+        shouldDirty: true,
+      });
+    }
+  }, [cityValue, cities, setValue]);
 
   const handleCreateTeam = (data) => {
     console.log(data);
@@ -51,11 +88,10 @@ export default function CreateTeam() {
                       </div>
 
                       <div className='sm:col-span-3'>
-                        <LightInput
-                          label='City'
-                          id='city'
-                          type='text'
+                        <SelectCity
+                          cities={cities}
                           validation={{ required: 'City is required' }}
+                          disabled={cities.length === 0}
                         />
                       </div>
 
@@ -65,6 +101,7 @@ export default function CreateTeam() {
                           id='province'
                           type='text'
                           validation={{ required: 'Province is required' }}
+                          readOnly
                         />
                       </div>
 
@@ -74,6 +111,7 @@ export default function CreateTeam() {
                           id='region'
                           type='text'
                           validation={{ required: 'Region is required' }}
+                          readOnly
                         />
                       </div>
                     </div>
