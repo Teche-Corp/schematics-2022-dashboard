@@ -1,12 +1,14 @@
 import { useFormContext } from 'react-hook-form';
 import { HiExclamationCircle } from 'react-icons/hi';
 
+import { classNames } from '@/lib/helper';
+
 export default function LightInput({
   label,
   placeholder = '',
   id,
   type = 'text',
-  disabled = false,
+  readOnly = false,
   validation,
 }) {
   const {
@@ -25,12 +27,14 @@ export default function LightInput({
           type={type}
           name={id}
           id={id}
-          disabled={disabled}
-          className={`block w-full border-gray-300 rounded-md shadow-sm   ${
+          readOnly={readOnly}
+          className={classNames(
+            readOnly === true ? 'bg-gray-100' : '',
             errors[id]
               ? 'focus:ring-red-500 border-red-500 focus:border-red-500'
-              : 'focus:ring-dark-400 focus:border-dark-400'
-          } sm:text-sm`}
+              : 'focus:ring-dark-400 focus:border-dark-400',
+            'block w-full border-gray-300 rounded-md shadow-sm  sm:text-sm`',
+          )}
           placeholder={placeholder}
           aria-describedby={id}
         />
