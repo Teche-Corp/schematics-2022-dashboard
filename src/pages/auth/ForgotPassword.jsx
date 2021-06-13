@@ -1,15 +1,32 @@
-import React from 'react';
+import axios from 'axios';
+import toast from 'react-hot-toast';
+import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import Input from '@/components/Input';
 import AuthHeader from '@/components/AuthHeader';
+import SubmitButton from '@/components/SubmitButton';
 
 export default function ForgotPassword() {
   const methods = useForm();
+  const [loading, setLoading] = useState(false);
   const { handleSubmit } = methods;
 
-  const handleForgot = (data) => {
-    console.log(data);
+  const handleForgot = async (data) => {
+    try {
+      setLoading(true);
+      const res = await axios.post('/user/forgot-password', data);
+      const { jwt: token } = res.data.data;
+      localStorage.setItem('token', token);
+
+      setLoading(false);
+      toast.success(`Please check your email at ${data.email}`);
+    } catch (err) {
+      console.error(err);
+      toast.error('Uh oh! Something is wrong, please try again');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -32,12 +49,9 @@ export default function ForgotPassword() {
                   />
 
                   <div>
-                    <button
-                      className='flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
-                      type='submit'
-                    >
+                    <SubmitButton loading={loading}>
                       Reset Password
-                    </button>
+                    </SubmitButton>
                   </div>
                 </form>
               </FormProvider>
