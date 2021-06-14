@@ -6,6 +6,7 @@ import { classNames } from '@/lib/helper';
 export default function LightInput({
   label,
   placeholder = '',
+  helperText = '',
   id,
   type = 'text',
   readOnly = false,
@@ -38,15 +39,21 @@ export default function LightInput({
           placeholder={placeholder}
           aria-describedby={id}
         />
+
         {errors[id] && (
           <div className='absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none'>
             <HiExclamationCircle className='text-xl text-red-500' />
           </div>
         )}
       </div>
-      {errors[id] && (
-        <span className='text-sm text-red-500'>{errors[id].message}</span>
-      )}
+      <div className='mt-1'>
+        {helperText !== '' && (
+          <p className='text-xs text-gray-500'>{helperText}</p>
+        )}
+        {errors[id] && (
+          <span className='text-sm text-red-500'>{errors[id].message}</span>
+        )}
+      </div>
     </div>
   );
 }
