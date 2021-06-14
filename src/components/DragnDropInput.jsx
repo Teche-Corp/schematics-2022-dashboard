@@ -17,22 +17,33 @@ export default function DragnDropInput({
   const {
     register,
     setValue,
+    setError,
+    clearErrors,
     watch,
     formState: { errors },
   } = useFormContext();
 
   const files = watch(id);
   const onDrop = useCallback(
-    (droppedFiles) => {
-      setValue(id, droppedFiles, { shouldValidate: true });
+    (acceptedFiles, rejectedFiles) => {
+      if (rejectedFiles && rejectedFiles.length > 0) {
+        setValue(id, []);
+        setError(id, {
+          type: 'manual',
+          message: rejectedFiles && rejectedFiles[0].errors[0].message,
+        });
+      } else {
+        setValue(id, acceptedFiles, { shouldValidate: true });
+        clearErrors(id);
+      }
     },
-    [setValue, id],
+    [id, setValue, setError, clearErrors],
   );
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
     accept,
-    maxFiles: 3,
+    maxFiles,
   });
 
   return (
@@ -56,7 +67,7 @@ export default function DragnDropInput({
                 <img
                   src={URL.createObjectURL(file)}
                   alt={file.name}
-                  className='object-cover rounded-lg shadow-lg '
+                  className='object-cover rounded-lg shadow-lg'
                 />
               </div>
             );
