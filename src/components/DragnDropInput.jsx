@@ -3,6 +3,7 @@ import { useFormContext } from 'react-hook-form';
 import { useDropzone } from 'react-dropzone';
 
 import { FaFilePdf } from 'react-icons/fa';
+import { HiX } from 'react-icons/hi';
 
 import { classNames } from '@/lib/helper';
 
@@ -40,11 +41,26 @@ export default function DragnDropInput({
     [id, setValue, setError, clearErrors],
   );
 
+  const deleteFile = (e, file) => {
+    e.preventDefault();
+    const newFiles = [...files];
+
+    newFiles.splice(newFiles.indexOf(file), 1);
+
+    if (newFiles.length > 0) {
+      setValue(id, newFiles);
+    } else {
+      setValue(id, []);
+    }
+  };
+
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
     accept,
     maxFiles,
   });
+
+  console.log(files?.length, maxFiles, files?.length >= maxFiles);
 
   return (
     <>
@@ -69,6 +85,12 @@ export default function DragnDropInput({
                   alt={file.name}
                   className='object-cover rounded-lg shadow-lg'
                 />
+                <button
+                  onClick={(e) => deleteFile(e, file)}
+                  className='absolute top-0 right-0 flex p-2 leading-none'
+                >
+                  <HiX size={24} className='text-red-500 cursor-pointer' />
+                </button>
               </div>
             );
           })}
@@ -108,8 +130,17 @@ export default function DragnDropInput({
                         <img
                           src={URL.createObjectURL(file)}
                           alt={file.name}
-                          className='object-cover rounded-lg shadow-lg '
+                          className='object-cover rounded-lg shadow-lg'
                         />
+                        <button
+                          onClick={(e) => deleteFile(e, file)}
+                          className='absolute top-0 right-0 flex p-2 leading-none'
+                        >
+                          <HiX
+                            size={24}
+                            className='text-red-500 cursor-pointer'
+                          />
+                        </button>
                       </div>
                     );
                   })}
