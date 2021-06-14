@@ -10,7 +10,7 @@
       "@/routes/*": ["./routes/*"],
       "@/layout/*": ["./layout/*"],
       "@/lib/*": ["./lib/*"],
-      "@/hooks/*": ["./hooks/*"],
+      "@/hooks/*": ["./hooks/*"]
     }
   },
   "typeAcquisition": {
