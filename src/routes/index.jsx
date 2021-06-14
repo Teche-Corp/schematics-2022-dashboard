@@ -18,6 +18,7 @@ import SignIn from '@/pages/auth/SignIn';
 import SignUp from '@/pages/auth/SignUp';
 import ForgotPassword from '@/pages/auth/ForgotPassword';
 import ChangePassword from '@/pages/auth/ChangePassword';
+import ResetPassword from '@/pages/auth/ResetPassword';
 
 import EventNLC from '@/pages/nlc/EventNLC';
 import CreateTeam from '@/pages/nlc/CreateTeam';
@@ -125,6 +126,13 @@ const routeItems = [
     key: 'change-password',
     path: '/change-password',
     component: ChangePassword,
+  },
+  {
+    auth: 'none',
+    route: Route,
+    key: 'reset-password',
+    path: '/reset-password',
+    component: ResetPassword,
   },
 ];
 
