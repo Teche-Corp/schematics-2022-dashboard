@@ -2,6 +2,8 @@ import { useCallback } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useDropzone } from 'react-dropzone';
 
+import { FaFilePdf } from 'react-icons/fa';
+
 import { classNames } from '@/lib/helper';
 
 export default function DragnDropInput({
@@ -30,7 +32,7 @@ export default function DragnDropInput({
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
     accept,
-    maxFiles,
+    maxFiles: 3,
   });
 
   return (
@@ -40,9 +42,16 @@ export default function DragnDropInput({
       </label>
 
       {files?.length >= maxFiles ? (
-        <div className='grid grid-cols-3 gap-2 mt-1'>
+        <div className='grid grid-cols-1 gap-2 mt-1 sm:grid-cols-3'>
           {files.map((file) => {
-            return (
+            return file.type === 'application/pdf' ? (
+              <div key={file.name} className='shadow-lg aspect-w-3 aspect-h-2'>
+                <div className='flex flex-col items-center justify-center'>
+                  <FaFilePdf className='text-red-600' size={32} />
+                  <p className='mt-1'>{file.name}</p>
+                </div>
+              </div>
+            ) : (
               <div key={file.name} className='aspect-w-3 aspect-h-2'>
                 <img
                   src={URL.createObjectURL(file)}
@@ -73,7 +82,17 @@ export default function DragnDropInput({
               {!!files?.length && (
                 <div className='grid grid-cols-4 gap-1 mt-2'>
                   {files.map((file) => {
-                    return (
+                    return file.type === 'application/pdf' ? (
+                      <div
+                        key={file.name}
+                        className='shadow-lg aspect-w-3 aspect-h-2'
+                      >
+                        <div className='flex flex-col items-center justify-center'>
+                          <FaFilePdf className='text-red-600' size={32} />
+                          <p className='mt-1'>{file.name}</p>
+                        </div>
+                      </div>
+                    ) : (
                       <div key={file.name} className='aspect-w-3 aspect-h-2'>
                         <img
                           src={URL.createObjectURL(file)}
