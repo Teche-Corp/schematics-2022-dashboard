@@ -125,7 +125,7 @@ export default function CreateTeam() {
                           validation={{
                             required: 'Phone Number is required',
                             pattern: {
-                              value: /^+628[1-9][0-9]{8,11}$/,
+                              value: /^\+628[1-9][0-9]{8,11}$/,
                               message:
                                 'Please fill in phone number starting with +62 and correct format',
                             },
