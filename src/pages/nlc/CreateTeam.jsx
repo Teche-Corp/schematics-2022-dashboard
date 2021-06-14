@@ -167,6 +167,8 @@ export default function CreateTeam() {
                           label='Nomor Telepon'
                           id='leader-phone'
                           type='text'
+                          placeholder='+6281234567890'
+                          helperText='Nomor Telepon diawali +62'
                           validation={{
                             required: 'Nomor Telepon tidak boleh kosong',
                             pattern: {
@@ -204,7 +206,8 @@ export default function CreateTeam() {
                         <DragnDropInput
                           label='Foto Kartu Pelajar'
                           id='leader-id'
-                          accept='image/png, image/jpg, image/jpeg, image/gif'
+                          accept='image/png, image/jpg, image/jpeg, application/pdf'
+                          helperText='File dalam format jpg, png, jpeg, atau pdf'
                           maxFiles={1}
                           validation={{
                             required: 'Foto Kartu Pelajar tidak boleh kosong',
@@ -257,6 +260,8 @@ export default function CreateTeam() {
                           label='Nomor Telepon'
                           id='member-phone'
                           type='text'
+                          placeholder='+6281234567890'
+                          helperText='Nomor Telepon diawali +62'
                           validation={{
                             required: 'Nomor Telepon tidak boleh kosong',
                             pattern: {
@@ -294,7 +299,8 @@ export default function CreateTeam() {
                         <DragnDropInput
                           label='Foto Kartu Pelajar'
                           id='member-id'
-                          accept='image/png, image/jpg, image/jpeg, image/gif'
+                          accept='image/png, image/jpg, image/jpeg, application/pdf'
+                          helperText='File dalam format jpg, png, jpeg, atau pdf'
                           maxFiles={1}
                           validation={{
                             required: 'Foto Kartu Pelajar tidak boleh kosong',
