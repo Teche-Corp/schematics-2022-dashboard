@@ -7,6 +7,37 @@ import { HiX } from 'react-icons/hi';
 
 import { classNames } from '@/lib/helper';
 
+const FilePreview = ({ file, deleteFile }) => {
+  return file.type === 'application/pdf' ? (
+    <div key={file.name} className='shadow-lg aspect-w-3 aspect-h-2'>
+      <div className='flex flex-col items-center justify-center'>
+        <FaFilePdf className='text-red-600' size={32} />
+        <p className='mt-1'>{file.name}</p>
+      </div>
+      <button
+        onClick={(e) => deleteFile(e, file)}
+        className='absolute top-0 right-0 flex p-2 leading-none'
+      >
+        <HiX size={24} className='text-red-500 cursor-pointer' />
+      </button>
+    </div>
+  ) : (
+    <div key={file.name} className='aspect-w-3 aspect-h-2'>
+      <img
+        src={URL.createObjectURL(file)}
+        alt={file.name}
+        className='object-cover rounded-lg shadow-lg'
+      />
+      <button
+        onClick={(e) => deleteFile(e, file)}
+        className='absolute top-0 right-0 flex p-2 leading-none'
+      >
+        <HiX size={24} className='text-red-500 cursor-pointer' />
+      </button>
+    </div>
+  );
+};
+
 export default function DragnDropInput({
   accept,
   id,
@@ -70,36 +101,9 @@ export default function DragnDropInput({
 
       {files?.length >= maxFiles ? (
         <div className='grid grid-cols-1 gap-2 mt-1 sm:grid-cols-3'>
-          {files.map((file) => {
-            return file.type === 'application/pdf' ? (
-              <div key={file.name} className='shadow-lg aspect-w-3 aspect-h-2'>
-                <div className='flex flex-col items-center justify-center'>
-                  <FaFilePdf className='text-red-600' size={32} />
-                  <p className='mt-1'>{file.name}</p>
-                </div>
-                <button
-                  onClick={(e) => deleteFile(e, file)}
-                  className='absolute top-0 right-0 flex p-2 leading-none'
-                >
-                  <HiX size={24} className='text-red-500 cursor-pointer' />
-                </button>
-              </div>
-            ) : (
-              <div key={file.name} className='aspect-w-3 aspect-h-2'>
-                <img
-                  src={URL.createObjectURL(file)}
-                  alt={file.name}
-                  className='object-cover rounded-lg shadow-lg'
-                />
-                <button
-                  onClick={(e) => deleteFile(e, file)}
-                  className='absolute top-0 right-0 flex p-2 leading-none'
-                >
-                  <HiX size={24} className='text-red-500 cursor-pointer' />
-                </button>
-              </div>
-            );
-          })}
+          {files.map((file) => (
+            <FilePreview file={file} deleteFile={deleteFile} />
+          ))}
         </div>
       ) : (
         <>
@@ -120,45 +124,9 @@ export default function DragnDropInput({
 
               {!!files?.length && (
                 <div className='grid grid-cols-4 gap-1 mt-2'>
-                  {files.map((file) => {
-                    return file.type === 'application/pdf' ? (
-                      <div
-                        key={file.name}
-                        className='shadow-lg aspect-w-3 aspect-h-2'
-                      >
-                        <div className='flex flex-col items-center justify-center'>
-                          <FaFilePdf className='text-red-600' size={32} />
-                          <p className='mt-1'>{file.name}</p>
-                        </div>
-                        <button
-                          onClick={(e) => deleteFile(e, file)}
-                          className='absolute top-0 right-0 flex p-2 leading-none'
-                        >
-                          <HiX
-                            size={24}
-                            className='text-red-500 cursor-pointer'
-                          />
-                        </button>
-                      </div>
-                    ) : (
-                      <div key={file.name} className='aspect-w-3 aspect-h-2'>
-                        <img
-                          src={URL.createObjectURL(file)}
-                          alt={file.name}
-                          className='object-cover rounded-lg shadow-lg'
-                        />
-                        <button
-                          onClick={(e) => deleteFile(e, file)}
-                          className='absolute top-0 right-0 flex p-2 leading-none'
-                        >
-                          <HiX
-                            size={24}
-                            className='text-red-500 cursor-pointer'
-                          />
-                        </button>
-                      </div>
-                    );
-                  })}
+                  {files.map((file) => (
+                    <FilePreview file={file} deleteFile={deleteFile} />
+                  ))}
                 </div>
               )}
             </div>
