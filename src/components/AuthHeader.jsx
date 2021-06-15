@@ -2,7 +2,7 @@ export default function AuthHeader({ headerText }) {
   return (
     <div className='sm:mx-auto sm:w-full sm:max-w-md'>
       <img
-        className='w-3/4 mx-auto md:w-5/6'
+        className='w-1/2 mx-auto'
         src='/images/logo/colored-title.png'
         alt='Logo Colored'
       />

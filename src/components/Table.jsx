@@ -40,25 +40,7 @@ export default function Table() {
                     scope='col'
                     className='px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase'
                   >
-                    Institusi
-                  </th>
-                  <th
-                    scope='col'
-                    className='px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase'
-                  >
                     Email
-                  </th>
-                  <th
-                    scope='col'
-                    className='px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase'
-                  >
-                    Event
-                  </th>
-                  <th
-                    scope='col'
-                    className='px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase'
-                  >
-                    Status
                   </th>
                 </tr>
               </thead>
@@ -75,16 +57,7 @@ export default function Table() {
                       {person.name}
                     </td>
                     <td className='px-6 py-4 text-sm text-gray-500 whitespace-nowrap'>
-                      {person.institusi}
-                    </td>
-                    <td className='px-6 py-4 text-sm text-gray-500 whitespace-nowrap'>
                       {person.email}
-                    </td>
-                    <td className='px-6 py-4 text-sm text-gray-500 whitespace-nowrap'>
-                      {person.event}
-                    </td>
-                    <td className='px-6 py-4 text-sm text-gray-500 whitespace-nowrap'>
-                      {person.status}
                     </td>
                   </tr>
                 ))}

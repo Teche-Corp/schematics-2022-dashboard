@@ -41,7 +41,7 @@ const SignIn = () => {
   return (
     <>
       <div className='mx-auto'>
-        <div className='flex flex-col justify-center min-h-screen px-10 py-12 bg-dark lg:px-8'>
+        <div className='flex flex-col justify-center min-h-screen px-10 py-8 bg-dark lg:px-8'>
           <AuthHeader headerText='Sign in to your account' />
           <div className='mt-8 sm:mx-auto sm:w-full sm:max-w-md'>
             <div className='px-4 py-8 text-white border border-gray-700 shadow bg-dark sm:rounded-lg sm:px-10'>

@@ -1,25 +1,56 @@
 import DashboardAdminShell from '@/layout/DashboardAdminShell';
-import { HiCheckCircle, HiOfficeBuilding, HiUserGroup } from 'react-icons/hi';
+import {
+  HiCheckCircle,
+  HiDesktopComputer,
+  HiOfficeBuilding,
+  HiOutlineSpeakerphone,
+  HiSpeakerphone,
+  HiUserGroup,
+} from 'react-icons/hi';
 import Table from '@/components/Table';
+import { BiBrain } from 'react-icons/bi';
+import { FaMoneyCheck } from 'react-icons/fa';
 
 const cards = [
   {
-    name: 'Jumlah Peserta Terdaftar',
+    name: 'Total Pendaftaran',
     href: '#',
     icon: HiUserGroup,
     amount: '2',
   },
   {
-    name: 'Jumlah Peserta Pending',
+    name: 'Total Pendapatan',
     href: '#',
-    icon: HiUserGroup,
-    amount: '1',
+    icon: FaMoneyCheck,
+    amount: 'Rp.10.000',
   },
   {
-    name: 'Jumlah Peserta Terkonfirmasi',
+    name: 'Schematics NPC',
     href: '#',
-    icon: HiUserGroup,
+    icon: HiDesktopComputer,
     amount: '1',
+    date: 'Juni 2021',
+  },
+  {
+    name: 'Shematics NLC',
+    href: '#',
+    icon: BiBrain,
+    amount: '1',
+    date: 'Juli 2021',
+  },
+  {
+    name: 'Schematics NST',
+    href: '#',
+    icon: HiSpeakerphone,
+    amount: '0',
+    date: 'Oktober 2021',
+  },
+  {
+    name: 'Schematics Reeva',
+    href: '#',
+    icon: HiOutlineSpeakerphone,
+    amount: '0',
+    date: 'Juni 2021',
   },
 ];
 
@@ -82,7 +113,7 @@ export default function Admin() {
           {/* children */}
           <div className='max-w-6xl px-4 mx-auto sm:px-6 lg:px-8'>
             <h2 className='text-lg font-medium leading-6 text-gray-900'>
-              Overview
+              Statistik Pendaftaran
             </h2>
             <div className='grid grid-cols-1 gap-5 mt-2 sm:grid-cols-2 lg:grid-cols-3'>
               {/* Card */}
@@ -99,7 +130,7 @@ export default function Admin() {
                           aria-hidden='true'
                         />
                       </div>
-                      <div className='flex-1 w-0 ml-5'>
+                      <div className='flex-1 w-0 ml-5 '>
                         <dl>
                           <dt className='text-sm font-medium text-gray-500 truncate'>
                             {card.name}
@@ -109,6 +140,9 @@ export default function Admin() {
                               {card.amount}
                             </div>
                           </dd>
+                          <p className='text-xs text-gray-900'>
+                            {card.date ?? undefined}
+                          </p>
                         </dl>
                       </div>
                     </div>
