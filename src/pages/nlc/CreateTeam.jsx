@@ -1,6 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import useSWR from 'swr';
 
 import DashboardShell from '@/layout/DashboardShell';
 import LightInput from '@/components/LightInput';
@@ -8,28 +10,16 @@ import SelectCity from '@/components/SelectCity';
 import DragnDropInput from '@/components/DragnDropInput';
 
 export default function CreateTeam() {
-  const [cities, setCities] = useState([]);
-
   const methods = useForm();
   const { control, handleSubmit, setValue } = methods;
+
+  const { data, error } = useSWR('/region/list');
+  const cities = data?.data;
 
   const cityValue = useWatch({
     control,
     name: 'city',
   });
-
-  useEffect(() => {
-    const fetchCities = async () => {
-      const res = await fetch(
-        'http://schematics-webkes-backend-dev.herokuapp.com/api/region/list',
-      );
-      const data = await res.json();
-
-      setCities(data.data);
-    };
-
-    fetchCities();
-  }, []);
 
   useEffect(() => {
     if (cityValue !== undefined) {
@@ -49,6 +39,10 @@ export default function CreateTeam() {
   const handleCreateTeam = (data) => {
     console.log(data);
   };
+
+  if (error) {
+    return toast.error('Uh oh! Something is wrong, please try again');
+  }
 
   return (
     <DashboardShell>
@@ -94,9 +88,9 @@ export default function CreateTeam() {
 
                       <div className='sm:col-span-3'>
                         <SelectCity
-                          cities={cities}
+                          cities={cities || []}
                           validation={{ required: 'Kota tidak boleh kosong' }}
-                          disabled={cities.length === 0}
+                          disabled={!cities}
                         />
                       </div>
 

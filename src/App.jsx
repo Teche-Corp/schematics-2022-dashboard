@@ -1,6 +1,6 @@
 import axios from 'axios';
-import React from 'react';
 import { Toaster } from 'react-hot-toast';
+import { SWRConfig } from 'swr';
 
 import Routes from '@/routes/index';
 import { AuthProvider } from '@/contexts/AuthContext';
@@ -31,7 +31,14 @@ const App = () => {
           }}
         />
       </div>
-      <Routes />
+      <SWRConfig
+        value={{
+          refreshInterval: 3000,
+          fetcher: (url) => axios.get(url).then((res) => res.data),
+        }}
+      >
+        <Routes />
+      </SWRConfig>
     </AuthProvider>
   );
 };
