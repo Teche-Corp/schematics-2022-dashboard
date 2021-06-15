@@ -27,6 +27,7 @@ import PaymentNLC from '@/pages/nlc/PaymentNLC';
 import EventNPC from '@/pages/npc/EventNPC';
 import CreateTeamNPCJunior from '@/pages/npc/CreateTeamNPCJunior';
 import CreateTeamNPCSenior from '@/pages/npc/CreateTeamNPCSenior';
+import Admin from '@/pages/admin/Admin';
 
 const routeItems = [
   {
@@ -98,6 +99,13 @@ const routeItems = [
     key: 'nlc-event',
     path: '/sch-npc/team',
     component: DashboardTeam,
+  },
+  {
+    auth: 'none',
+    route: Route,
+    key: 'admin-dashboard',
+    path: '/admin/dashboard',
+    component: Admin,
   },
   {
     auth: 'none',

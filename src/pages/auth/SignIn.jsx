@@ -23,6 +23,7 @@ const SignIn = () => {
     try {
       setLoading(true);
       const res = await axios.post('/user/login', data);
+      console.log(res.data);
       const { jwt: token } = res.data.data;
       localStorage.setItem('token', token);
 
