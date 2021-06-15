@@ -77,6 +77,12 @@ export default function DragnDropInput({
                   <FaFilePdf className='text-red-600' size={32} />
                   <p className='mt-1'>{file.name}</p>
                 </div>
+                <button
+                  onClick={(e) => deleteFile(e, file)}
+                  className='absolute top-0 right-0 flex p-2 leading-none'
+                >
+                  <HiX size={24} className='text-red-500 cursor-pointer' />
+                </button>
               </div>
             ) : (
               <div key={file.name} className='aspect-w-3 aspect-h-2'>
@@ -124,6 +130,15 @@ export default function DragnDropInput({
                           <FaFilePdf className='text-red-600' size={32} />
                           <p className='mt-1'>{file.name}</p>
                         </div>
+                        <button
+                          onClick={(e) => deleteFile(e, file)}
+                          className='absolute top-0 right-0 flex p-2 leading-none'
+                        >
+                          <HiX
+                            size={24}
+                            className='text-red-500 cursor-pointer'
+                          />
+                        </button>
                       </div>
                     ) : (
                       <div key={file.name} className='aspect-w-3 aspect-h-2'>
