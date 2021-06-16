@@ -3,17 +3,17 @@ import { classNames } from '@/lib/helper';
 export default function HorizontalTimeline({ data = [] }) {
   return (
     <div className='flow-root'>
-      <ul className='flex flex-row -mb-8'>
+      <ul className='-mb-8 sm:flex sm:flex-row sm:mb-0'>
         {data.map((event, eventIdx) => (
-          <li key={event.id} className={`w-1/${data.length}`}>
-            <div className='relative'>
+          <li key={event.id} className={`sm:w-1/${data.length}`}>
+            <div className='relative pb-8 sm:pb-0'>
               {eventIdx !== data.length - 1 ? (
                 <span
-                  className='absolute top-4 left-4 ml-20 w-full h-0.5 bg-gray-200'
+                  className='absolute top-4 left-4 sm:ml-20 sm:w-full sm:h-0.5 bg-gray-200  -ml-px h-full w-0.5'
                   aria-hidden='true'
                 />
               ) : null}
-              <div className='relative flex flex-col items-center space-y-3'>
+              <div className='relative flex space-x-3 sm:flex-col sm:items-center sm:space-x-0 sm:space-y-3'>
                 <div>
                   <span
                     className={classNames(
@@ -27,13 +27,13 @@ export default function HorizontalTimeline({ data = [] }) {
                     />
                   </span>
                 </div>
-                <div className='min-w-0 flex-1 flex-col flex items-center justify-center space-y-0.5'>
+                <div className='min-w-0 flex-1 sm:flex-col flex items-center sm:justify-center sm:space-x-0 sm:space-y-0.5   pt-1.5 sm:pt-0  justify-between space-x-4'>
                   <div>
-                    <p className='text-sm font-medium leading-4 text-center text-gray-900'>
+                    <p className='text-sm font-medium text-gray-900 sm:leading-4 sm:text-center'>
                       {event.target}
                     </p>
                   </div>
-                  <div className='text-sm text-gray-500 whitespace-nowrap'>
+                  <div className='text-sm text-right text-gray-500 sm:text-left whitespace-nowrap'>
                     <time dateTime={event.datetime}>{event.date}</time>
                   </div>
                 </div>
