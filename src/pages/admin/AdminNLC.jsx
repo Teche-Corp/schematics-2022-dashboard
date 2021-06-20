@@ -1,6 +1,5 @@
 import DashboardAdminShell from '@/layout/DashboardAdminShell';
 import { HiCheckCircle, HiOfficeBuilding, HiUserGroup } from 'react-icons/hi';
-import { BiBrain } from 'react-icons/bi';
 import { FaMoneyCheck } from 'react-icons/fa';
 
 const cards = [
@@ -15,14 +14,6 @@ const cards = [
     href: '#',
     icon: FaMoneyCheck,
     amount: 'Rp.30.000',
-  },
-
-  {
-    name: 'Shematics NLC',
-    href: '#',
-    icon: BiBrain,
-    amount: '1',
-    date: 'Juli 2021',
   },
 ];
 
