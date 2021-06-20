@@ -27,9 +27,11 @@ import PaymentNLC from '@/pages/nlc/PaymentNLC';
 import EventNPC from '@/pages/npc/EventNPC';
 import CreateTeamNPCJunior from '@/pages/npc/CreateTeamNPCJunior';
 import CreateTeamNPCSenior from '@/pages/npc/CreateTeamNPCSenior';
+
 import Admin from '@/pages/admin/Admin';
 import Voucher from '@/pages/admin/Voucher';
 import AddVoucher from '@/pages/admin/AddVoucher';
+import AdminNLC from '@/pages/admin/AdminNLC';
 
 const routeItems = [
   {
@@ -103,8 +105,8 @@ const routeItems = [
     component: DashboardTeam,
   },
   {
-    auth: 'none',
-    route: Route,
+    auth: 'private',
+    route: PrivateRoute,
     key: 'admin-dashboard',
     path: '/admin/dashboard',
     component: Admin,
@@ -122,6 +124,13 @@ const routeItems = [
     key: 'admin-voucher',
     path: '/admin/voucher',
     component: Voucher,
+  },
+  {
+    auth: 'none',
+    route: Route,
+    key: 'admin-sch-nlc-user',
+    path: '/admin/sch-nlc-user',
+    component: AdminNLC,
   },
   {
     auth: 'none',
