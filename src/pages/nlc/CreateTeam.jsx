@@ -200,8 +200,8 @@ export default function CreateTeam() {
                         <DragnDropInput
                           label='Foto Kartu Pelajar'
                           id='leader-id'
-                          accept='image/png, image/jpg, image/jpeg, application/pdf'
-                          helperText='File dalam format jpg, png, jpeg, atau pdf'
+                          accept='image/png, image/jpg, image/jpeg'
+                          helperText='File dalam format jpg, png, atau jpeg'
                           maxFiles={1}
                           validation={{
                             required: 'Foto Kartu Pelajar tidak boleh kosong',
@@ -293,8 +293,8 @@ export default function CreateTeam() {
                         <DragnDropInput
                           label='Foto Kartu Pelajar'
                           id='member-id'
-                          accept='image/png, image/jpg, image/jpeg, application/pdf'
-                          helperText='File dalam format jpg, png, jpeg, atau pdf'
+                          accept='image/png, image/jpg, image/jpeg'
+                          helperText='File dalam format jpg, png, atau jpeg'
                           maxFiles={1}
                           validation={{
                             required: 'Foto Kartu Pelajar tidak boleh kosong',
