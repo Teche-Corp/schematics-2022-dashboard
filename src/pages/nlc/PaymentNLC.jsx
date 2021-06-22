@@ -2,7 +2,9 @@ import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import DashboardShell from '@/layout/DashboardShell';
+import DragnDropInput from '@/components/DragnDropInput';
 import LightInput from '@/components/LightInput';
+import SelectInput from '@/components/SelectInput';
 
 import { classNames } from '@/lib/helper';
 
@@ -14,10 +16,10 @@ export default function PaymentNLC() {
 
   const { handleSubmit: handleSubmit2, register } = useForm();
 
-  const tabs = [
-    { name: 'OVO', id: 0 },
-    { name: 'Gopay', id: 1 },
-    { name: 'Mandiri', id: 2 },
+  const paymentMethod = [
+    { text: 'OVO', value: 0 },
+    { text: 'Gopay', value: 1 },
+    { text: 'Mandiri', value: 2 },
   ];
 
   const handleTabChange = (e) => {
@@ -87,58 +89,34 @@ export default function PaymentNLC() {
                       Upload Bukti Pembayaran
                     </h2>
                     <div className='mt-2 space-y-4 sm:mt-4'>
+                      <SelectInput
+                        label='Metode Pembayaran'
+                        id='payment-method'
+                        placeholder='Pilih metode pembayaran'
+                        options={paymentMethod}
+                        validation={{
+                          required: 'Metode Pembayaran tidak boleh kosong',
+                        }}
+                      />
                       <LightInput
-                        label='Nomor Rekening'
+                        label='Nomor Rekening/Nama Rekening'
                         id='account-id'
                         type='text'
+                        helperText='Isi dengan nama rekening apabila menggunakan OVO/Gopay'
                         validation={{
                           required: 'Nomor Rekening tidak boleh kosong',
                         }}
                       />
-                      <div>
-                        <label
-                          htmlFor='cover_photo'
-                          className='block text-sm font-normal text-gray-700'
-                        >
-                          Bukti Pembayaran
-                        </label>
-                        <div className='flex justify-center px-6 pt-5 pb-6 mt-1 border-2 border-gray-300 border-dashed rounded-md'>
-                          <div className='space-y-1 text-center'>
-                            <svg
-                              className='w-12 h-12 mx-auto text-gray-400'
-                              stroke='currentColor'
-                              fill='none'
-                              viewBox='0 0 48 48'
-                              aria-hidden='true'
-                            >
-                              <path
-                                d='M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02'
-                                strokeWidth={2}
-                                strokeLinecap='round'
-                                strokeLinejoin='round'
-                              />
-                            </svg>
-                            <div className='flex text-sm text-gray-600'>
-                              <label
-                                htmlFor='file-upload'
-                                className='relative font-medium bg-white rounded-md cursor-pointer text-nlc hover:text-nlc-400 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-nlc-400'
-                              >
-                                <span>Upload a file</span>
-                                <input
-                                  id='file-upload'
-                                  name='file-upload'
-                                  type='file'
-                                  className='sr-only'
-                                />
-                              </label>
-                              <p className='pl-1'>or drag and drop</p>
-                            </div>
-                            <p className='text-xs text-gray-500'>
-                              PNG, JPG, GIF up to 10MB
-                            </p>
-                          </div>
-                        </div>
-                      </div>
+                      <DragnDropInput
+                        label='Bukti Pembayaran'
+                        id='payment-receipt'
+                        accept='image/png, image/jpg, image/jpeg'
+                        helperText='File dalam format jpg, png, atau jpeg'
+                        maxFiles={1}
+                        validation={{
+                          required: 'Bukti Pembayaran tidak boleh kosong',
+                        }}
+                      />
                       <div className='flex justify-end'>
                         <button
                           type='submit'
@@ -159,7 +137,7 @@ export default function PaymentNLC() {
                   <div className='mt-6 sm:mt-2'>
                     <div className='sm:hidden'>
                       <label htmlFor='tabs' className='sr-only'>
-                        Select a tab
+                        Pilih metode
                       </label>
                       <select
                         id='tabs'
@@ -168,9 +146,9 @@ export default function PaymentNLC() {
                         onChange={handleTabChange}
                         value={currentTab}
                       >
-                        {tabs.map((tab) => (
-                          <option key={tab.id} value={tab.id}>
-                            {tab.name}
+                        {paymentMethod.map((tab) => (
+                          <option key={tab.value} value={tab.value}>
+                            {tab.text}
                           </option>
                         ))}
                       </select>
@@ -181,19 +159,19 @@ export default function PaymentNLC() {
                           className='flex -mb-px space-x-8'
                           aria-label='Tabs'
                         >
-                          {tabs.map((tab) => (
+                          {paymentMethod.map((tab) => (
                             <button
-                              key={tab.name}
-                              onClick={() => setCurrentTab(tab.id)}
+                              key={tab.text}
+                              onClick={() => setCurrentTab(tab.value)}
                               className={classNames(
-                                tab.id === currentTab
+                                tab.value === currentTab
                                   ? 'border-nlc-400 text-nlc'
                                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-200',
                                 'whitespace-nowrap flex py-4 px-1 border-b-2 font-medium text-sm',
                               )}
                               aria-current={tab.current ? 'page' : undefined}
                             >
-                              {tab.name}
+                              {tab.text}
                             </button>
                           ))}
                         </nav>
