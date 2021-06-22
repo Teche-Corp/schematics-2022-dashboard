@@ -1,13 +1,17 @@
 import { useAuthState } from '@/contexts/AuthContext';
 import DashboardShell from '@/layout/DashboardShell';
 import HorizontalTimeline from '@/components/HorizontalTimeline';
+import TeamDetail from '@/components/TeamDetail';
+import TeamMemberDetail from '@/components/TeamMemberDetail';
 import {
   HiCheckCircle,
   HiOfficeBuilding,
   HiClipboardCheck,
   HiFire,
+  HiUserGroup,
+  HiUsers,
+  HiUser,
 } from 'react-icons/hi';
-import { CheckIcon } from '@heroicons/react/solid';
 import { Link } from 'react-router-dom';
 
 const dataTimeline = [
@@ -19,7 +23,7 @@ const dataTimeline = [
     date: 'Jun 26 - Sep 25',
     datetime: '2021-09-21',
     icon: HiClipboardCheck,
-    iconBackground: 'bg-gray-400',
+    iconBackground: 'bg-gray-900',
   },
   {
     id: 2,
@@ -29,7 +33,7 @@ const dataTimeline = [
     date: 'Okt 02 - Okt 03',
     datetime: '2021-10-03',
     icon: HiFire,
-    iconBackground: 'bg-blue-500',
+    iconBackground: 'bg-nlc',
   },
   {
     id: 3,
@@ -38,8 +42,8 @@ const dataTimeline = [
     href: '#',
     date: 'Okt 09',
     datetime: '2021-10-09',
-    icon: CheckIcon,
-    iconBackground: 'bg-green-500',
+    icon: HiUserGroup,
+    iconBackground: 'bg-gray-900',
   },
   {
     id: 4,
@@ -48,8 +52,8 @@ const dataTimeline = [
     href: '#',
     date: 'Okt 16',
     datetime: '2021-10-16',
-    icon: CheckIcon,
-    iconBackground: 'bg-blue-500',
+    icon: HiUsers,
+    iconBackground: 'bg-nlc',
   },
   {
     id: 5,
@@ -58,13 +62,83 @@ const dataTimeline = [
     href: '#',
     date: 'Okt 17',
     datetime: '2021-10-17',
-    icon: CheckIcon,
-    iconBackground: 'bg-green-500',
+    icon: HiUser,
+    iconBackground: 'bg-gray-900',
   },
 ];
 
 export default function EventNLC() {
   const { user } = useAuthState();
+
+  const dataTeam = {
+    name: 'Belajar Logika',
+    school: 'SMA Taruna Nusantara',
+    region: 'Surabaya',
+    city: 'Surabaya',
+    province: 'Jawa Timur',
+    payment: 'Lunas',
+    phase: 'Final',
+  };
+
+  const dataTeamMember = [
+    {
+      title: 'Ketua Tim',
+      name: 'Margot Foster',
+      email: user.email,
+      nisn: '05123940000123',
+      phone: '08512345678',
+      line: 'someone',
+      address: 'Street',
+      attachment: [
+        {
+          name: 'Surat Keterangan Aktif',
+          link: '#',
+        },
+        {
+          name: 'Surat Perizinan',
+          link: '#',
+        },
+      ],
+    },
+    {
+      title: 'Anggota 1',
+      name: 'Margot Faster',
+      email: user.email,
+      nisn: '05123940000123',
+      phone: '08512345678',
+      line: 'someone',
+      address: 'Street',
+      attachment: [
+        {
+          name: 'Surat Keterangan Aktif',
+          link: '#',
+        },
+        {
+          name: 'Surat Perizinan',
+          link: '#',
+        },
+      ],
+    },
+    {
+      title: 'Anggota 2',
+      name: 'Margot Fuster',
+      email: user.email,
+      nisn: '05123940000123',
+      phone: '08512345678',
+      line: 'someone',
+      address: 'Street',
+      attachment: [
+        {
+          name: 'Surat Keterangan Aktif',
+          link: '#',
+        },
+        {
+          name: 'Surat Perizinan',
+          link: '#',
+        },
+      ],
+    },
+  ];
 
   return (
     <DashboardShell>
@@ -88,7 +162,7 @@ export default function EventNLC() {
                   alt=''
                 /> */}
                       <h1 className='text-2xl font-bold leading-7 text-gray-900 md:ml-3 sm:leading-9 sm:truncate'>
-                        Hello, {user?.name}
+                        Hello, {user.email}
                       </h1>
                     </div>
                     <dl className='flex flex-col mt-6 sm:ml-3 sm:mt-1 sm:flex-row sm:flex-wrap'>
@@ -116,7 +190,7 @@ export default function EventNLC() {
           </div>
         </div>
         <div className='w-full px-4 py-20 mx-auto mt-1 bg-white'>
-          <div className='px-4 sm:px-6 lg:max-w-4xl lg:mx-auto lg:px-8'>
+          <div className='min-h-full px-4 sm:px-6 lg:max-w-4xl lg:mx-auto lg:px-8'>
             <div className='text-center'>
               <h1 className='text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:text-6xl'>
                 <span className='block xl:inline'>Schematics</span>{' '}
@@ -137,9 +211,9 @@ export default function EventNLC() {
                 </div>
               </div>
             </div>
-            <section className='px-4 py-12 mx-auto mt-9 align-items-center'>
+            <section className='px-4 py-12 mx-auto mt-12 align-items-center'>
               <div className='text-center'>
-                <h2 className='text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl md:text-5xl'>
+                <h2 className='text-2xl font-extrabold tracking-tight text-gray-900 sm:text-4xl md:text-5xl'>
                   <span className='block xl:inline'>Timeline</span>{' '}
                   <span className='block text-nlc xl:inline'>NLC</span>
                 </h2>
@@ -147,6 +221,18 @@ export default function EventNLC() {
               <div className='my-8'>
                 <HorizontalTimeline data={dataTimeline} />
               </div>
+            </section>
+            <section>
+              <div className='text-center'>
+                <h2 className='text-2xl font-extrabold tracking-tight text-gray-900 sm:text-4xl md:text-5xl'>
+                  <span className='block xl:inline'>Detail</span>{' '}
+                  <span className='block text-nlc xl:inline'>Tim</span>
+                </h2>
+              </div>
+              <TeamDetail data={dataTeam} />
+              {dataTeamMember.map((item) => (
+                <TeamMemberDetail data={item} />
+              ))}
             </section>
           </div>
         </div>
