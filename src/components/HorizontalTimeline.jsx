@@ -1,11 +1,13 @@
 import { classNames } from '@/lib/helper';
 
 export default function HorizontalTimeline({ data = [] }) {
+  const width = data.length === 5 ? 'sm:w-1/5' : '';
+
   return (
     <div className='flow-root'>
       <ul className='-mb-8 sm:flex sm:flex-row sm:mb-0'>
         {data.map((event, eventIdx) => (
-          <li key={event.id} className={`sm:w-1/${data.length}`}>
+          <li key={event.id} className={classNames(width)}>
             <div className='relative pb-8 sm:pb-0'>
               {eventIdx !== data.length - 1 ? (
                 <span
