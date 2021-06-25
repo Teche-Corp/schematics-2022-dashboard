@@ -2,10 +2,11 @@ import { FormProvider, useForm } from 'react-hook-form';
 
 import DashboardAdminShell from '@/layout/DashboardAdminShell';
 import LightInput from '@/components/LightInput';
+import CheckboxInput from '@/components/CheckboxInput';
 
 export default function AddVoucher() {
   const methods = useForm();
-  const { handleSubmit } = methods;
+  const { handleSubmit, register } = methods;
 
   const handleCreateVoucher = (data) => {
     console.log(data);
@@ -26,8 +27,8 @@ export default function AddVoucher() {
                     <h1 className='mb-6 text-xl font-medium tracking-tight text-gray-900'>
                       Buat Voucher
                     </h1>
-                    <div className='grid grid-cols-3 mt-6 gap-y-6 gap-x-4 sm:grid-cols-6'>
-                      <div className='col-span-2 sm:col-span-5'>
+                    <div className='flex col-span-6 mt-6 gap-y-6 gap-x-4'>
+                      <div className='flex-grow'>
                         <LightInput
                           label='Kode Voucher'
                           id='kode-voucher'
@@ -38,11 +39,10 @@ export default function AddVoucher() {
                         />
                       </div>
 
-                      <div className='col-span-1 sm:col-span-1'>
-                        <LightInput
-                          label='Aktivasi Voucher'
+                      <div>
+                        <CheckboxInput
                           id='status-voucher'
-                          type='checkbox'
+                          label='Aktivasi Voucher'
                         />
                       </div>
                     </div>
@@ -117,6 +117,7 @@ export default function AddVoucher() {
                         Keterangan
                       </label>
                       <textarea
+                        {...register('keterangan')}
                         name='keterangan'
                         id='keterangan'
                         rows='3'
