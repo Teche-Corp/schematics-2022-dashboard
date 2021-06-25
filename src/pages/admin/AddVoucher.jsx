@@ -105,22 +105,22 @@ export default function AddVoucher() {
                         />
                       </div>
                     </div>
-                  </div>
-                </div>
 
-                <div className='grid grid-cols-1 mt-6 gap-y-1'>
-                  <label
-                    htmlFor='keterangan'
-                    className='block text-sm font-normal text-gray-700'
-                  >
-                    Keterangan
-                  </label>
-                  <textarea
-                    name='keterangan'
-                    id='keterangan'
-                    rows='3'
-                    className='block w-full border-gray-300 rounded-md shadow-sm sm:text-sm focus:ring-dark-400 focus:border-dark-400'
-                  ></textarea>
+                    <div className='grid grid-cols-1 mt-6 gap-y-1'>
+                      <label
+                        htmlFor='keterangan'
+                        className='block text-sm font-normal text-gray-700'
+                      >
+                        Keterangan
+                      </label>
+                      <textarea
+                        name='keterangan'
+                        id='keterangan'
+                        rows='3'
+                        className='block w-full border-gray-300 rounded-md shadow-sm sm:text-sm focus:ring-dark-400 focus:border-dark-400'
+                      ></textarea>
+                    </div>
+                  </div>
                 </div>
 
                 <div className='pt-5'>
