@@ -3,9 +3,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import DashboardAdminShell from '@/layout/DashboardAdminShell';
 import LightInput from '@/components/LightInput';
 
-import { HiCheckCircle, HiOfficeBuilding } from 'react-icons/hi';
-
-export default function Admin() {
+export default function AddVoucher() {
   const methods = useForm();
   const { handleSubmit } = methods;
 
