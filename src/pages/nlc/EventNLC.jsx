@@ -1,5 +1,6 @@
 import { useAuthState } from '@/contexts/AuthContext';
 import DashboardShell from '@/layout/DashboardShell';
+import CenteredAccordion from '@/components/CenteredAccordion';
 import HorizontalTimeline from '@/components/HorizontalTimeline';
 import TeamDetail from '@/components/TeamDetail';
 import TeamMemberDetail from '@/components/TeamMemberDetail';
@@ -230,9 +231,10 @@ export default function EventNLC() {
                 </h2>
               </div>
               <TeamDetail data={dataTeam} />
-              {dataTeamMember.map((item) => (
-                <TeamMemberDetail data={item} />
-              ))}
+              <CenteredAccordion
+                dataAccordion={dataTeamMember}
+                component={TeamMemberDetail}
+              ></CenteredAccordion>
             </section>
           </div>
         </div>
