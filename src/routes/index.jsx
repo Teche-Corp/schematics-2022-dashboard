@@ -28,6 +28,7 @@ import EventNPC from '@/pages/npc/EventNPC';
 import CreateTeamNPCJunior from '@/pages/npc/CreateTeamNPCJunior';
 import CreateTeamNPCSenior from '@/pages/npc/CreateTeamNPCSenior';
 import Admin from '@/pages/admin/Admin';
+import Voucher from '@/pages/admin/Voucher';
 
 const routeItems = [
   {
@@ -106,6 +107,13 @@ const routeItems = [
     key: 'admin-dashboard',
     path: '/admin/dashboard',
     component: Admin,
+  },
+  {
+    auth: 'none',
+    route: Route,
+    key: 'admin-voucher',
+    path: '/admin/voucher',
+    component: Voucher,
   },
   {
     auth: 'none',
