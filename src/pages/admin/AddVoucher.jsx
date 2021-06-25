@@ -16,43 +16,6 @@ export default function Admin() {
   return (
     <DashboardAdminShell>
       <main className='relative z-0 flex-1 pb-8 overflow-y-auto'>
-        {/* Page header */}
-        <div className='bg-white shadow'>
-          <div className='px-4 sm:px-6 lg:max-w-6xl lg:mx-auto lg:px-8'>
-            <div className='py-6 md:flex md:items-center md:justify-between lg:border-t lg:border-gray-200'>
-              <div className='flex-1 min-w-0'>
-                <div className='flex items-center'>
-                  <div>
-                    <div className='flex items-center'>
-                      <h1 className='text-2xl font-bold leading-7 text-gray-900 md:ml-3 sm:leading-9 sm:truncate'>
-                        Hello, Admin Schematics 2021
-                      </h1>
-                    </div>
-                    <dl className='flex flex-col mt-6 sm:ml-3 sm:mt-1 sm:flex-row sm:flex-wrap'>
-                      <dt className='sr-only'>Company</dt>
-                      <dd className='flex items-center text-sm font-medium text-gray-500 capitalize sm:mr-6'>
-                        <HiOfficeBuilding
-                          className='flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400'
-                          aria-hidden='true'
-                        />
-                        Institut Teknologi Sepuluh Nopember
-                      </dd>
-                      <dt className='sr-only'>Account status</dt>
-                      <dd className='flex items-center mt-3 text-sm font-medium text-gray-500 capitalize sm:mr-6 sm:mt-0'>
-                        <HiCheckCircle
-                          className='flex-shrink-0 mr-1.5 h-5 w-5 text-green-400'
-                          aria-hidden='true'
-                        />
-                        Akun Admin
-                      </dd>
-                    </dl>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
         <div className='relative max-w-4xl mx-auto md:px-8 xl:px-0'>
           <div className='px-4 pt-10 pb-16 sm:px-6 md:px-0'>
             <FormProvider {...methods}>
