@@ -53,6 +53,7 @@ export default function AddVoucher() {
                           label='Limit Jumlah'
                           id='limit-jumlah'
                           type='number'
+                          min='0'
                           validation={{
                             required: 'Limit jumlah tidak boleh kosong',
                             pattern: {
@@ -68,6 +69,8 @@ export default function AddVoucher() {
                           label='Potongan Persen'
                           id='potongan-persen'
                           type='number'
+                          min='0'
+                          max='100'
                           validation={{
                             required: 'Potongan persen tidak boleh kosong',
                             pattern: {

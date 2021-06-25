@@ -11,6 +11,8 @@ export default function LightInput({
   type = 'text',
   readOnly = false,
   validation,
+  min = '',
+  max = '',
 }) {
   const {
     register,
@@ -38,6 +40,8 @@ export default function LightInput({
           )}
           placeholder={placeholder}
           aria-describedby={id}
+          min={min}
+          max={max}
         />
 
         {errors[id] && (
