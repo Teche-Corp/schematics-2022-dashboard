@@ -15,7 +15,7 @@ export default function Admin() {
 
   return (
     <DashboardAdminShell>
-      <main className='relative z-0 flex-1 pb-8 overflow-y-auto'>
+      <main className='relative z-0 flex-1 pb-8 overflow-y-auto bg-white border-t'>
         <div className='relative max-w-4xl mx-auto md:px-8 xl:px-0'>
           <div className='px-4 pt-10 pb-16 sm:px-6 md:px-0'>
             <FormProvider {...methods}>
@@ -121,7 +121,7 @@ export default function Admin() {
                     name='keterangan'
                     id='keterangan'
                     rows='3'
-                    className='block w-full border-gray-300 rounded-md shadow-sm sm:text-sm'
+                    className='block w-full border-gray-300 rounded-md shadow-sm sm:text-sm focus:ring-dark-400 focus:border-dark-400'
                   ></textarea>
                 </div>
 
