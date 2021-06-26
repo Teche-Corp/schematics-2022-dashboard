@@ -49,7 +49,7 @@ export default function TeamMemberDetail({ data = {} }) {
                     </div>
                     <div className='flex-shrink-0 ml-4'>
                       <a
-                        href='{item.link}'
+                        href={item.link}
                         className='font-medium text-indigo-600 hover:text-indigo-500'
                       >
                         Unduh

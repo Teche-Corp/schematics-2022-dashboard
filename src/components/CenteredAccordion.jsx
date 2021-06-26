@@ -1,4 +1,3 @@
-/* This example requires Tailwind CSS v2.0+ */
 import { Disclosure } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/outline';
 import { classNames } from '@/lib/helper';
@@ -16,7 +15,7 @@ export default function CenteredAccordion({
               {({ open }) => (
                 <>
                   <dt className='text-lg'>
-                    <Disclosure.Button className='flex items-start justify-between w-full text-left text-gray-400'>
+                    <Disclosure.Button className='flex items-start justify-between w-full text-left text-gray-400 focus:outline-none'>
                       <h3 className='text-2xl font-bold text-gray-900'>
                         {item.title}
                       </h3>
