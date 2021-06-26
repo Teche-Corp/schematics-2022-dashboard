@@ -17,7 +17,7 @@ export default function CenteredAccordion({
                 <>
                   <dt className='text-lg'>
                     <Disclosure.Button className='flex items-start justify-between w-full text-left text-gray-400'>
-                      <h3 className='text-2xl font-bold leading-6 text-gray-900'>
+                      <h3 className='text-2xl font-bold text-gray-900'>
                         {item.title}
                       </h3>
                       <span className='flex items-center ml-6 h-7'>
