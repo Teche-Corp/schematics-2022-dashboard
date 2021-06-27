@@ -2,7 +2,6 @@
   "name": "fe-dashboard-schematics-2021",
   "version": "0.1.0",
   "private": true,
-  "homepage": "dashboard",
   "dependencies": {
     "@craco/craco": "^6.1.1",
     "@headlessui/react": "^1.1.0",
@@ -31,8 +30,9 @@
     ]
   },
   "scripts": {
-    "start": "PUBLIC_URL=/ craco start",
+    "start": "craco start",
     "build": "craco build",
+    "build-prod": "PUBLIC_URL=dashboard craco build",
     "test": "craco test",
     "eject": "react-scripts eject",
     "format": "prettier --write src/**/*.{js,jsx,ts,tsx,json,css,scss,md}",
