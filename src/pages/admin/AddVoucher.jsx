@@ -39,7 +39,7 @@ export default function AddVoucher() {
                         />
                       </div>
 
-                      <div>
+                      <div className='flex-shrink-0'>
                         <CheckboxInput
                           id='status-voucher'
                           label='Aktivasi Voucher'
