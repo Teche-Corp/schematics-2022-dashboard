@@ -31,7 +31,8 @@ import CreateTeamNPCSenior from '@/pages/npc/CreateTeamNPCSenior';
 import Admin from '@/pages/admin/Admin';
 import Voucher from '@/pages/admin/Voucher';
 import AddVoucher from '@/pages/admin/AddVoucher';
-import AdminNLC from '@/pages/admin/AdminNLC';
+import AdminNLC from '@/pages/admin/nlc/AdminNLC';
+import UpdateUserNLC from '@/pages/admin/nlc/UpdateUserNLC';
 
 const routeItems = [
   {
@@ -129,7 +130,7 @@ const routeItems = [
     auth: 'none',
     route: Route,
     key: 'admin-sch-nlc-user',
-    path: '/admin/sch-nlc-user',
+    path: '/admin/sch-nlc/user',
     component: AdminNLC,
   },
   {
@@ -176,6 +177,8 @@ const Routes = () => {
         <Route exact path='/'>
           <Redirect to='/signin' />
         </Route>
+        <Route path='/admin/sch-nlc/user/:id/edit' component={UpdateUserNLC} />
+
         {routeItems.map((routeItem) => {
           return (
             <routeItem.route

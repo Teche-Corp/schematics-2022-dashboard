@@ -1,6 +1,8 @@
 import DashboardAdminShell from '@/layout/DashboardAdminShell';
 import { HiCheckCircle, HiOfficeBuilding, HiUserGroup } from 'react-icons/hi';
 import { FaMoneyCheck } from 'react-icons/fa';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const cards = [
   {
@@ -18,6 +20,11 @@ const cards = [
 ];
 
 export default function AdminNLC() {
+  const [open, setOpen] = useState(false);
+  const [accountID, setAccountId] = useState(0);
+
+  console.log(accountID);
+
   return (
     <DashboardAdminShell>
       <main className='relative z-0 flex-1 pb-8 overflow-y-auto'>
@@ -54,20 +61,6 @@ export default function AdminNLC() {
                   </div>
                 </div>
               </div>
-              {/* <div className='flex mt-6 space-x-3 md:mt-0 md:ml-4'>
-                <button
-                  type='button'
-                  className='inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500'
-                >
-                  Add money
-                </button>
-                <button
-                  type='button'
-                  className='inline-flex items-center px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-cyan-600 hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500'
-                >
-                  Send money
-                </button>
-              </div> */}
             </div>
           </div>
         </div>
@@ -82,7 +75,7 @@ export default function AdminNLC() {
               {/* Card */}
               {cards.map((card) => (
                 <div
-                  key={card.name}
+                  key={card.id}
                   className='overflow-hidden bg-white rounded-lg shadow'
                 >
                   <div className='p-5'>
@@ -119,6 +112,7 @@ export default function AdminNLC() {
             <h2 className='mx-auto text-lg font-medium leading-6 text-gray-900 max-w-7xl mt-7 '>
               Tabel Pendaftaran
             </h2>
+
             {/****  TABLE START HERE  *****/}
             <div className='flex flex-col'>
               <div className='-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8'>
@@ -219,10 +213,17 @@ export default function AdminNLC() {
                               {person.provinsi}
                             </td>
                             <td className='px-6 py-4 text-sm text-gray-500 whitespace-nowrap'>
-                              {person.anggota}
+                              {person.anggota.nama} - {person.anggota.email} -{' '}
+                              {person.anggota.id_line} -{' '}
+                              {person.anggota.phone_number}
                             </td>
-                            <td className='px-6 py-4 text-sm text-indigo-500 hover:text-indigo-400 whitespace-nowrap'>
-                              Edit
+                            <td className='px-6 py-4 text-sm text-nlc-400 hover:text-nlc-500 whitespace-nowrap focus:outline-none'>
+                              <Link
+                                id={person.id}
+                                to={`/admin/sch-nlc/user/${person.id}/edit`}
+                              >
+                                Edit
+                              </Link>
                             </td>
                           </tr>
                         ))}
@@ -242,30 +243,45 @@ export default function AdminNLC() {
 
 const dummyData = [
   {
+    id: 1,
     region: 'Jawa Barat',
     namaTim: 'Doa Ibu',
     verified: 'Yes',
     sekolah: 'SMAN 3 BEKASI',
     kota: 'BEKASI',
     provinsi: 'Jawa Barat',
-    anggota: 'Rizqi Tsani - tsani@mail.com - 0813837162 - tsaniii',
+    anggota: {
+      nama: 'Rizqi Tsani',
+      email: 'tsani@mail.com',
+      phone_number: '0813837162',
+      id_line: 'tsaniii',
+    },
+    anggota2: {
+      nama: 'Agus Budi',
+      email: 'budi@mail.com',
+      phone_number: '0813837162',
+      id_line: 'budii',
+    },
   },
   {
-    region: 'Jawa Barat',
-    namaTim: 'Cloud Inside',
-    verified: 'Yes',
-    sekolah: 'SMAN 1 BEKASI',
-    kota: 'BEKASI',
-    provinsi: 'Jawa Barat',
-    anggota: 'Theodorus Clarence - clarance@mail.com - 0813837162 - clarenceee',
-  },
-  {
-    region: 'Jawa Barat',
-    namaTim: "Child's Play",
+    id: 2,
+    region: 'Jawa Timur',
+    namaTim: 'TEAM OP',
     verified: 'No',
-    sekolah: 'SMAN 2 BEKASI',
-    kota: 'BEKASI',
-    provinsi: 'Jawa Barat',
-    anggota: 'Agus Budi - agus@mail.com - 0813837162 - agusss',
+    sekolah: 'SMAN 3 Surabaya',
+    kota: 'Surabaya',
+    provinsi: 'Jawa Timur',
+    anggota: {
+      nama: 'Bobu Tsani',
+      email: 'bobu@mail.com',
+      phone_number: '0813837162',
+      id_line: 'bobuii',
+    },
+    anggota2: {
+      nama: 'Bibu Budi',
+      email: 'bibu@mail.com',
+      phone_number: '0813837162',
+      id_line: 'bibui',
+    },
   },
 ];
