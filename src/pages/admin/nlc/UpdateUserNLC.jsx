@@ -39,7 +39,7 @@ export default function UpdateUserNLC() {
           <div className='pt-10 pb-16'>
             <div className='px-4 sm:px-6 md:px-0'>
               <h1 className='text-3xl font-extrabold text-gray-900'>
-                Edit Profile
+                Edit Tim NLC
               </h1>
             </div>
             <div className='px-4 sm:px-6 md:px-0'>
@@ -47,7 +47,7 @@ export default function UpdateUserNLC() {
                 <div className='mt-10 divide-y divide-gray-200'>
                   <div className='space-y-1'>
                     <h3 className='text-lg font-medium leading-6 text-gray-900'>
-                      Profile Ketua
+                      Profil Ketua
                     </h3>
                     <p className='max-w-2xl text-sm text-gray-500'>
                       Informasi team NLC{' '}
@@ -146,7 +146,7 @@ export default function UpdateUserNLC() {
                       </dl>
                       <div className='my-3 space-y-1'>
                         <h3 className='text-lg font-medium leading-6 text-gray-900 '>
-                          Profile Anggota 1
+                          Profil Anggota 1
                         </h3>
                         <p className='max-w-2xl text-sm text-gray-500'>
                           Informasi team NLC{' '}

@@ -1,7 +1,6 @@
 import DashboardAdminShell from '@/layout/DashboardAdminShell';
 import { HiCheckCircle, HiOfficeBuilding, HiUserGroup } from 'react-icons/hi';
 import { FaMoneyCheck } from 'react-icons/fa';
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const cards = [
@@ -20,11 +19,6 @@ const cards = [
 ];
 
 export default function AdminNLC() {
-  const [open, setOpen] = useState(false);
-  const [accountID, setAccountId] = useState(0);
-
-  console.log(accountID);
-
   return (
     <DashboardAdminShell>
       <main className='relative z-0 flex-1 pb-8 overflow-y-auto'>
