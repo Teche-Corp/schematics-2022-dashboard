@@ -45,13 +45,6 @@ const routeItems = [
   {
     auth: 'private',
     route: PrivateRoute,
-    key: 'dashboard',
-    path: '/my',
-    component: Dashboard,
-  },
-  {
-    auth: 'private',
-    route: PrivateRoute,
     key: 'edit-profile',
     path: '/my/edit-profile',
     component: EditProfile,
@@ -104,6 +97,13 @@ const routeItems = [
     key: 'nlc-event',
     path: 'my/sch-npc/payment',
     component: DashboardTeam,
+  },
+  {
+    auth: 'private',
+    route: PrivateRoute,
+    key: 'dashboard',
+    path: '/my',
+    component: Dashboard,
   },
   {
     auth: 'private',
