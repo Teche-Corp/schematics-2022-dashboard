@@ -63,7 +63,7 @@ export default function Navbar({ setSidebarOpen }) {
                     <Menu.Item>
                       {({ active }) => (
                         <Link
-                          to='edit-profile'
+                          to='/my/edit-profile'
                           className={classNames(
                             active ? 'bg-gray-100' : '',
                             'block px-4 py-2 text-sm text-gray-700',

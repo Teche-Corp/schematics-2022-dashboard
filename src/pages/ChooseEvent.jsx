@@ -9,7 +9,7 @@ export default function ChooseEvent() {
         <AuthHeader headerText='Choose the event!' />
         <div className='flex flex-col w-full mt-8 space-y-4 lg:mt-20 lg:space-y-0 lg:space-x-8 lg:flex-row sm:max-w-md md:max-w-none lg:justify-center'>
           <Link
-            to='/dashboard'
+            to='/my'
             className='px-4 py-8 transition transform border-2 border-gray-600 shadow-lg group sm:px-10 hover:shadow-xl hover:scale-105 rounded-xl'
           >
             <h4 className='text-xl font-bold text-center transition transform text-nlc-100 group-hover:scale-105'>
@@ -17,7 +17,7 @@ export default function ChooseEvent() {
             </h4>
           </Link>
           <Link
-            to='/dashboard'
+            to='/my'
             className='px-4 py-8 transition transform border-2 border-gray-600 shadow-lg group sm:px-10 hover:shadow-xl hover:scale-105 rounded-xl'
           >
             <h4 className='text-xl font-bold text-center transition transform text-npc-100 group-hover:scale-105'>
@@ -25,7 +25,7 @@ export default function ChooseEvent() {
             </h4>
           </Link>
           <Link
-            to='/dashboard'
+            to='/my'
             className='px-4 py-8 transition transform border-2 border-gray-600 shadow-lg group sm:px-10 hover:shadow-xl hover:scale-105 rounded-xl'
           >
             <h4 className='text-xl font-bold text-center transition transform text-nst-100 group-hover:scale-105'>
@@ -33,7 +33,7 @@ export default function ChooseEvent() {
             </h4>
           </Link>
           <Link
-            to='/dashboard'
+            to='/my'
             className='px-4 py-8 transition transform border-2 border-gray-600 shadow-lg group sm:px-10 hover:shadow-xl hover:scale-105 rounded-xl'
           >
             <h4 className='text-xl font-bold text-center transition transform text-reeva-100 group-hover:scale-105'>

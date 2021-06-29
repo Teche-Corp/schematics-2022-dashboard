@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 const actions = [
   {
     title: 'Schematics NLC',
-    href: '/sch-nlc',
+    href: '/my/sch-nlc/team',
     icon: BiBrain,
     iconForeground: 'text-yellow-700',
     iconBackground: 'bg-nlc-100',
@@ -20,7 +20,7 @@ const actions = [
   },
   {
     title: 'Schematics NPC',
-    href: '/sch-npc',
+    href: '/my/sch-npc/team',
     icon: HiDesktopComputer,
     iconForeground: 'text-npc',
     iconBackground: 'bg-npc-100',

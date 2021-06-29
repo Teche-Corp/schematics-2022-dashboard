@@ -204,7 +204,7 @@ export default function EventNLC() {
               <div className='max-w-md mx-auto mt-5 sm:flex sm:justify-center md:mt-8'>
                 <div className='rounded-md shadow'>
                   <Link
-                    to='/sch-nlc/create-team'
+                    to='/my/sch-nlc/team/create'
                     className='flex items-center justify-center w-full px-8 py-3 text-base font-medium text-white border border-transparent rounded-md bg-nlc hover:bg-nlc-400 md:py-4 md:text-lg md:px-10'
                   >
                     Buat Tim

@@ -17,7 +17,7 @@ import { BiBrain } from 'react-icons/bi';
 import { Link, useLocation } from 'react-router-dom';
 
 const navigation = [
-  { name: 'Home', href: '/dashboard', icon: HiHome, current: false },
+  { name: 'Home', href: '/my', icon: HiHome, current: false },
   {
     name: 'Schematics NPC',
     href: '/sch-npc',

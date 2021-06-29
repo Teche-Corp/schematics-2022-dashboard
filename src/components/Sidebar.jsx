@@ -14,17 +14,17 @@ import { BiBrain } from 'react-icons/bi';
 import { Link, useLocation } from 'react-router-dom';
 
 const navigation = [
-  { name: 'Home', href: '/dashboard', icon: HiHome, current: false },
+  { name: 'Home', href: '/my', icon: HiHome, current: false },
   {
     name: 'Schematics NPC',
-    href: '/sch-npc',
+    href: '/my/sch-npc/team',
     color: 'text-npc-100',
     icon: HiDesktopComputer,
     current: false,
   },
   {
     name: 'Schematics NLC',
-    href: '/sch-nlc',
+    href: '/my/sch-nlc/team',
     color: 'text-nlc-100',
     icon: BiBrain,
     current: false,
