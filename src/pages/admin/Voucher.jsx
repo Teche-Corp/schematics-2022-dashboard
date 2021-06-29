@@ -46,7 +46,7 @@ export default function Admin() {
 
         <div className='mt-8'>
           <div className='px-4 pb-16 sm:px-6 md:px-0'>
-            <div className='max-w-6xl px-4 mx-auto space-y-3 sm:px-6 lg:px-8'>
+            <div className='max-w-6xl px-4 mx-auto space-y-3 sm:px-6 lg:px-6'>
               <div className='flex flex-wrap content-start'>
                 <h2 className='max-w-6xl pl-2 text-lg font-medium leading-6 text-gray-900 mt-7 '>
                   Daftar Voucher
@@ -62,11 +62,9 @@ export default function Admin() {
                   </div>
                 </div>
               </div>
-              <div className='grid grid-cols-1 mt-6 gap-y-1'>
+              <div className='grid grid-cols-1 mx-2 sm:mr-8 lg:mx-0 mt-6 gap-y-1'>
                 <VoucherTable />
               </div>
-
-              <hr />
             </div>
           </div>
         </div>
