@@ -131,7 +131,7 @@ export default function AdminSibebar({ sidebarOpen, setSidebarOpen }) {
               <div className='flex items-center flex-shrink-0 px-4'>
                 <img
                   className='h-20 mx-auto'
-                  src='/images/logo/colored-title.png'
+                  src={`${process.env.PUBLIC_URL}/images/logo/colored-title.png`}
                   alt='colored-title'
                 />
               </div>
@@ -197,7 +197,7 @@ export default function AdminSibebar({ sidebarOpen, setSidebarOpen }) {
             <div className='flex items-center flex-shrink-0 px-4'>
               <img
                 className='h-20'
-                src='/images/logo/colored-title.png'
+                src={`${process.env.PUBLIC_URL}/images/logo/colored-title.png`}
                 alt='colored-title'
               />
             </div>

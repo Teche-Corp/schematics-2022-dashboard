@@ -3,7 +3,7 @@ export default function AuthHeader({ headerText }) {
     <div className='sm:mx-auto sm:w-full sm:max-w-md'>
       <img
         className='w-1/2 mx-auto'
-        src='/images/logo/colored-title.png'
+        src={`${process.env.PUBLIC_URL}/images/logo/colored-title.png`}
         alt='Logo Colored'
       />
       <h1 className='mt-6 text-4xl font-extrabold text-center text-white'>
