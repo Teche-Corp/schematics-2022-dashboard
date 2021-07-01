@@ -10,7 +10,7 @@ const FilePreview = ({ file, deleteFile }) => {
   return (
     <div key={file.name} className='aspect-w-3 aspect-h-2'>
       <img
-        src={`${URL.createObjectURL(file)}`}
+        src={URL.createObjectURL(file)}
         alt={file.name}
         className='object-cover rounded-lg shadow-lg'
       />
