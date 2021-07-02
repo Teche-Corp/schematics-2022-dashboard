@@ -61,7 +61,9 @@ export default function CreateTeam() {
                   <div>
                     <h1 className='mb-6 text-4xl font-extrabold tracking-tight text-gray-900 sm:text-3xl md:text-4xl'>
                       <span className='block xl:inline'>Buat Tim</span>{' '}
-                      <span className='block text-nlc xl:inline'>NLC</span>
+                      <span className='block text-nlc xl:inline'>
+                        Schematics NLC
+                      </span>
                     </h1>
                     <div className='grid grid-cols-1 mt-6 gap-y-6 gap-x-4 sm:grid-cols-6'>
                       <div className='sm:col-span-4'>
@@ -176,12 +178,9 @@ export default function CreateTeam() {
 
                       <div className='sm:col-span-2'>
                         <LightInput
-                          label='ID Line'
+                          label='ID Line (Opsional)'
                           id='leader-line'
                           type='text'
-                          validation={{
-                            required: 'ID Line tidak boleh kosong',
-                          }}
                         />
                       </div>
 
@@ -198,7 +197,7 @@ export default function CreateTeam() {
 
                       <div className='sm:col-span-6'>
                         <DragnDropInput
-                          label='Foto Kartu Pelajar'
+                          label='Foto Kartu Pelajar/Surat Keterangan Siswa Aktif'
                           id='leader-id'
                           accept='image/png, image/jpg, image/jpeg'
                           helperText='File dalam format jpg, png, atau jpeg'
@@ -269,12 +268,9 @@ export default function CreateTeam() {
 
                       <div className='sm:col-span-2'>
                         <LightInput
-                          label='ID Line'
+                          label='ID Line (Opsional)'
                           id='member-line'
                           type='text'
-                          validation={{
-                            required: 'ID Line tidak boleh kosong',
-                          }}
                         />
                       </div>
 
@@ -291,7 +287,7 @@ export default function CreateTeam() {
 
                       <div className='sm:col-span-6'>
                         <DragnDropInput
-                          label='Foto Kartu Pelajar'
+                          label='Foto Kartu Pelajar/Surat Keterangan Siswa Aktif'
                           id='member-id'
                           accept='image/png, image/jpg, image/jpeg'
                           helperText='File dalam format jpg, png, atau jpeg'
