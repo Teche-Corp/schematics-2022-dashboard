@@ -1,5 +1,5 @@
-// import axios from 'axios';
-import { createContext, useContext, useReducer } from 'react';
+import axios from 'axios';
+import { createContext, useContext, useEffect, useReducer } from 'react';
 
 const StateContext = createContext({
   authenticated: false,
@@ -53,31 +53,35 @@ export const AuthProvider = ({ children }) => {
 
   const dispatch = (type, payload) => defaultDispatch({ type, payload });
 
-  // useEffect(() => {
-  //   const loadUser = async () => {
-  //     try {
-  //       const token = localStorage.getItem('token');
-  //       if (token === null || token === undefined) {
-  //         return;
-  //       }
-  //       const res = await axios.get('/profile', {
-  //         headers: {
-  //           'Content-Type': 'application/json',
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       });
-  //       dispatch('LOGIN', res.data.data);
-  //     } catch (err) {
-  //       console.log(err);
-  //       localStorage.removeItem('token');
-  //     } finally {
-  //       dispatch('STOP_LOADING');
-  //     }
-  //   };
+  useEffect(() => {
+    const loadUser = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        if (token === null || token === undefined) {
+          return;
+        }
 
-  //   loadUser();
-  //   // eslint-disable-next-line
-  // }, []);
+        const res = await axios.post(
+          '/user/get-user-info',
+          {},
+          {
+            headers: {
+              Token: token,
+            },
+          },
+        );
+
+        dispatch('LOGIN', res.data.data);
+      } catch (err) {
+        console.log(err);
+        localStorage.removeItem('token');
+      } finally {
+        dispatch('STOP_LOADING');
+      }
+    };
+
+    loadUser();
+  }, []);
 
   return (
     <StateContext.Provider value={state}>

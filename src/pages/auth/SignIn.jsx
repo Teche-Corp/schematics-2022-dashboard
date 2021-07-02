@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Link, useHistory } from 'react-router-dom';
 
-import { useAuthDispatch } from '@/contexts/AuthContext';
+import { useAuthDispatch, useAuthState } from '@/contexts/AuthContext';
 
 import Input from '@/components/Input';
 import PasswordInput from '@/components/PasswordInput';
@@ -13,21 +13,36 @@ import SubmitButton from '@/components/SubmitButton';
 
 const SignIn = () => {
   const dispatch = useAuthDispatch();
+  const { authenticated } = useAuthState();
+
   const history = useHistory();
   const [loading, setLoading] = useState(false);
 
   const methods = useForm();
   const { handleSubmit } = methods;
 
+  if (authenticated) {
+    history.replace('/my');
+  }
+
   const handleLogin = async (data) => {
     try {
       setLoading(true);
       const res = await axios.post('/user/login', data);
-      console.log(res.data);
       const { jwt: token } = res.data.data;
       localStorage.setItem('token', token);
 
-      dispatch('LOGIN', { email: data.email, token });
+      const user = await axios.post(
+        '/user/get-user-info',
+        {},
+        {
+          headers: {
+            Token: token,
+          },
+        },
+      );
+
+      dispatch('LOGIN', { ...user.data.data, token });
       setLoading(false);
       history.replace('/my');
     } catch (err) {
