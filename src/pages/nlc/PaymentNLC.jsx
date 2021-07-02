@@ -200,7 +200,10 @@ export default function PaymentNLC() {
                           <li>
                             Peserta melakukan pembayaran sebesar{' '}
                             <strong>Rp 101.000</strong> ke QR Code QRIS di bawah
-                            ini dengan atas nama <strong>Schematics ITS</strong>
+                            ini dengan atas nama{' '}
+                            <strong>
+                              Schematics ITS / Schematics 2020 ITS
+                            </strong>
                             <img
                               className='h-48'
                               src={`${process.env.PUBLIC_URL}/images/qris.png`}
