@@ -1,16 +1,26 @@
 import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
+import { useHistory } from 'react-router';
+
 import { Menu, Transition } from '@headlessui/react';
 import { HiBell, HiChevronDown, HiMenuAlt1 } from 'react-icons/hi';
 import { VscAccount } from 'react-icons/vsc';
 
-import { useAuthState } from '@/contexts/AuthContext';
+import { useAuthDispatch, useAuthState } from '@/contexts/AuthContext';
 
 import { classNames } from '@/lib/helper';
 
 export default function Navbar({ setSidebarOpen }) {
   const { user } = useAuthState();
+  const dispatch = useAuthDispatch();
+  const history = useHistory();
+
+  const handleLogout = () => {
+    dispatch('LOGOUT');
+    history.replace('/signin');
+  };
+
   return (
     <div className='relative z-10 flex flex-shrink-0 h-16 bg-white border-b border-gray-200 lg:border-none'>
       <button
@@ -86,19 +96,12 @@ export default function Navbar({ setSidebarOpen }) {
                         </a>
                       )}
                     </Menu.Item>
-                    <Menu.Item>
-                      {({ active }) => (
-                        <a
-                          href='a'
-                          className={classNames(
-                            active ? 'bg-gray-100' : '',
-                            'block px-4 py-2 text-sm text-gray-700',
-                          )}
-                        >
-                          Logout
-                        </a>
-                      )}
-                    </Menu.Item>
+                    <button
+                      onClick={handleLogout}
+                      className='block w-full px-4 py-2 text-sm text-left text-gray-700 hover:bg-gray-100'
+                    >
+                      Logout
+                    </button>
                   </Menu.Items>
                 </Transition>
               </>
