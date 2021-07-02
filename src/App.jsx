@@ -9,7 +9,9 @@ import '@/App.css';
 
 const App = () => {
   axios.defaults.baseURL =
-    'https://schematics-webkes-backend-dev.herokuapp.com/api';
+    process.env.NODE_ENV === 'production'
+      ? 'https://schematics.its.ac.id/api'
+      : 'https://schematics-webkes-backend-dev.herokuapp.com/api';
 
   return (
     <AuthProvider>
