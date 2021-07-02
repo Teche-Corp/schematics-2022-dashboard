@@ -1,34 +1,27 @@
 import { useAuthState } from '@/contexts/AuthContext';
 import DashboardShell from '@/layout/DashboardShell';
 import MainCard from '@/components/MainCard';
-import {
-  HiCheckCircle,
-  HiClipboardList,
-  HiCreditCard,
-  HiOfficeBuilding,
-  HiUserGroup,
-} from 'react-icons/hi';
 
-const cards = [
-  {
-    name: 'Team',
-    href: '#',
-    icon: HiUserGroup,
-    amount: 'Doa-Ibu',
-  },
-  {
-    name: 'Payment Status',
-    href: '#',
-    icon: HiCreditCard,
-    amount: 'Success',
-  },
-  {
-    name: 'Events Verified',
-    href: '#',
-    icon: HiClipboardList,
-    amount: '0',
-  },
-];
+// const cards = [
+//   {
+//     name: 'Team',
+//     href: '#',
+//     icon: HiUserGroup,
+//     amount: 'Doa-Ibu',
+//   },
+//   {
+//     name: 'Payment Status',
+//     href: '#',
+//     icon: HiCreditCard,
+//     amount: 'Success',
+//   },
+//   {
+//     name: 'Events Verified',
+//     href: '#',
+//     icon: HiClipboardList,
+//     amount: '0',
+//   },
+// ];
 
 export default function Dashboard() {
   const { user } = useAuthState();
@@ -43,40 +36,12 @@ export default function Dashboard() {
               <div className='flex-1 min-w-0'>
                 {/* Profile */}
                 <div className='flex items-center'>
-                  {/* <img
-              className='hidden w-16 h-16 rounded-full sm:block'
-              src='https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.6&w=256&h=256&q=80'
-              alt=''
-            /> */}
                   <div>
                     <div className='flex items-center'>
-                      {/* <img
-                  className='w-16 h-16 rounded-full sm:hidden'
-                  src='https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.6&w=256&h=256&q=80'
-                  alt=''
-                /> */}
                       <h1 className='text-2xl font-bold leading-7 text-gray-900 md:ml-3 sm:leading-9 sm:truncate'>
                         Hello, {user?.email}
                       </h1>
                     </div>
-                    <dl className='flex flex-col mt-6 sm:ml-3 sm:mt-1 sm:flex-row sm:flex-wrap'>
-                      <dt className='sr-only'>Company</dt>
-                      <dd className='flex items-center text-sm font-medium text-gray-500 capitalize sm:mr-6'>
-                        <HiOfficeBuilding
-                          className='flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400'
-                          aria-hidden='true'
-                        />
-                        Institut Teknologi Sepuluh Nopember
-                      </dd>
-                      <dt className='sr-only'>Account status</dt>
-                      <dd className='flex items-center mt-3 text-sm font-medium text-gray-500 capitalize sm:mr-6 sm:mt-0'>
-                        <HiCheckCircle
-                          className='flex-shrink-0 mr-1.5 h-5 w-5 text-green-400'
-                          aria-hidden='true'
-                        />
-                        Verified account
-                      </dd>
-                    </dl>
                   </div>
                 </div>
               </div>
@@ -100,13 +65,13 @@ export default function Dashboard() {
 
         <div className='mt-8 '>
           {/* children */}
-          <div className='max-w-6xl px-4 mx-auto sm:px-6 lg:px-8'>
+          {/* <div className='max-w-6xl px-4 mx-auto sm:px-6 lg:px-8'>
             <h2 className='text-lg font-medium leading-6 text-gray-900'>
               Overview
             </h2>
-            <div className='grid grid-cols-1 gap-5 mt-2 sm:grid-cols-2 lg:grid-cols-3'>
-              {/* Card */}
-              {cards.map((card) => (
+            <div className='grid grid-cols-1 gap-5 mt-2 sm:grid-cols-2 lg:grid-cols-3'> */}
+          {/* Card */}
+          {/* {cards.map((card) => (
                 <div
                   key={card.name}
                   className='overflow-hidden bg-white rounded-lg shadow'
@@ -146,7 +111,7 @@ export default function Dashboard() {
                 </div>
               ))}
             </div>
-          </div>
+          </div> */}
 
           <div className='max-w-6xl px-4 mx-auto space-y-3 sm:px-6 lg:px-8'>
             <h2 className='max-w-6xl mx-auto text-lg font-medium leading-6 text-gray-900 mt-7 '>
