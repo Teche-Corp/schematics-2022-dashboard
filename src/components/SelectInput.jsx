@@ -35,8 +35,9 @@ export default function SelectInput({
             'block w-full border-gray-300 rounded-md shadow-sm  sm:text-sm`',
           )}
           aria-describedby={id}
+          defaultValue=''
         >
-          <option value='' selected disabled hidden>
+          <option value='' disabled hidden>
             {placeholder}
           </option>
           {options.map((option) => (
