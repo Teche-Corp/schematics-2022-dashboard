@@ -39,7 +39,7 @@ export default function Dashboard() {
                   <div>
                     <div className='flex items-center'>
                       <h1 className='text-2xl font-bold leading-7 text-gray-900 md:ml-3 sm:leading-9 sm:truncate'>
-                        Hello, {user?.email}
+                        Hello, {user?.name}
                       </h1>
                     </div>
                   </div>
