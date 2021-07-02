@@ -170,7 +170,9 @@ export default function EventNLC() {
               <div className='text-center'>
                 <h2 className='text-2xl font-extrabold tracking-tight text-gray-900 sm:text-4xl md:text-5xl'>
                   <span className='block xl:inline'>Timeline</span>{' '}
-                  <span className='block text-nlc xl:inline'>NLC</span>
+                  <span className='block text-nlc xl:inline'>
+                    Schematics NLC
+                  </span>
                 </h2>
               </div>
               <div className='my-8'>
