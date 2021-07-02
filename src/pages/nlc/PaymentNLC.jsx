@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { useEffect, useState } from 'react';
+import { FormProvider, useForm, useWatch } from 'react-hook-form';
 
 import DashboardShell from '@/layout/DashboardShell';
 import DragnDropInput from '@/components/DragnDropInput';
@@ -9,18 +9,33 @@ import SelectInput from '@/components/SelectInput';
 import { classNames } from '@/lib/helper';
 
 export default function PaymentNLC() {
-  const [currentTab, setCurrentTab] = useState(2);
+  const [currentTab, setCurrentTab] = useState(0);
+  const [total, setTotal] = useState('Rp100.000');
 
   const methods = useForm();
-  const { handleSubmit } = methods;
+  const { control, handleSubmit } = methods;
 
   const { handleSubmit: handleSubmit2, register } = useForm();
 
   const paymentMethod = [
-    { text: 'OVO', value: 0 },
-    { text: 'Gopay', value: 1 },
-    { text: 'Mandiri', value: 2 },
+    { text: 'QRIS', value: 0 },
+    { text: 'Mandiri', value: 1 },
   ];
+
+  const usedMethod = useWatch({
+    control,
+    name: 'payment-method',
+  });
+
+  useEffect(() => {
+    console.log(typeof usedMethod);
+
+    if (usedMethod === '0') {
+      setTotal('Rp101.000');
+    } else if (usedMethod === '1') {
+      setTotal('Rp100.000');
+    }
+  }, [usedMethod]);
 
   const handleTabChange = (e) => {
     setCurrentTab(parseInt(e.target.value));
@@ -44,14 +59,14 @@ export default function PaymentNLC() {
           <div className='px-4 pt-10 pb-16 sm:px-6 md:px-0'>
             <h1 className='mb-6 text-4xl font-extrabold tracking-tight text-gray-900 sm:text-3xl md:text-4xl'>
               <span className='block xl:inline'>Pembayaran</span>{' '}
-              <span className='block text-nlc xl:inline'>NLC</span>
+              <span className='block text-nlc xl:inline'>Schematics NLC</span>
             </h1>
             <div className='grid grid-cols-1 gap-8 mt-6 sm:grid-cols-6'>
               <div className='sm:col-span-2'>
                 <h2 className='text-lg font-semibold'>Total</h2>
-                <p className='line-through'>Rp200.000</p>
-                <h4 className='text-4xl font-bold'>Rp180.000</h4>
-                <form
+                {/* <p className='line-through'>Rp200.000</p> */}
+                <h4 className='text-4xl font-bold'>{total}</h4>
+                {/* <form
                   className='mt-5 sm:flex sm:items-center'
                   onSubmit={handleSubmit2(handleAddVoucher)}
                 >
@@ -78,7 +93,7 @@ export default function PaymentNLC() {
                 </form>
                 <div className='mt-2'>
                   <span className='font-bold'>SCHEMATICS</span> digunakan
-                </div>
+                </div> */}
               </div>
 
               <div className='sm:col-span-4'>
@@ -180,11 +195,85 @@ export default function PaymentNLC() {
                   </div>
                   <div>
                     {currentTab === 0 ? (
-                      <div>tes 1</div>
+                      <div className='space-y-4 divide-y divide-gray-200'>
+                        <ol className='pt-3 pl-4 space-y-3 list-decimal list-outside'>
+                          <li>
+                            Peserta melakukan pembayaran sebesar{' '}
+                            <strong>Rp 101.000</strong> ke QR Code QRIS di bawah
+                            ini dengan atas nama <strong>Schematics ITS</strong>
+                            <img
+                              className='h-48'
+                              src={`${process.env.PUBLIC_URL}/images/qris.png`}
+                              alt='qris-code'
+                            />
+                          </li>
+                          <li>Pastikan nominal yang dibayarkan sudah sesuai</li>
+                          <li>
+                            Setelah melakukan pembayaran, peserta dapat
+                            mengunggah bukti pembayaran yang sah pada formulir
+                            yang telah disediakan
+                          </li>
+                          <li>
+                            Verifikasi pembayaran akan dilakukan selama 3 x 24
+                            jam
+                          </li>
+                          <li>
+                            Biaya admin atau biaya tambahan transaksi ditanggung
+                            oleh peserta
+                          </li>
+                        </ol>
+                        <ul className='pt-3 pl-4 italic list-disc list-outside'>
+                          <li>
+                            Biaya tambahan Rp 1.000 sebagai biaya admin QRIS
+                          </li>
+                          <li>
+                            Jika mengalami kendala pembayaran, silakan{' '}
+                            <a
+                              href='https://liff.line.me/1645278921-kWRPP32q?accountId=schematics.its&openerPlatform=webview&openerKey=webview%3AunifiedSearch'
+                              className='underline cursor-pointer text-nlc'
+                            >
+                              klik disini
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
                     ) : currentTab === 1 ? (
-                      <div>tes 2</div>
-                    ) : currentTab === 2 ? (
-                      <div>tes 3</div>
+                      <div className='space-y-4 divide-y divide-gray-200'>
+                        <ol className='pt-3 pl-4 space-y-3 list-decimal list-outside'>
+                          <li>
+                            Peserta melakukan pembayaran sebesar{' '}
+                            <strong>Rp 100.000</strong> ke rekening{' '}
+                            <strong>
+                              Bank Mandiri 1020009828846 a.n RAFIQI RACHMAT
+                            </strong>
+                          </li>
+                          <li>Pastikan nominal yang dibayarkan sudah sesuai</li>
+                          <li>
+                            Setelah melakukan pembayaran, peserta dapat
+                            mengunggah bukti pembayaran yang sah pada formulir
+                            yang telah disediakan
+                          </li>
+                          <li>
+                            Verifikasi pembayaran akan dilakukan selama 3 x 24
+                            jam
+                          </li>
+                          <li>
+                            Biaya admin atau biaya tambahan transaksi ditanggung
+                            oleh peserta
+                          </li>
+                        </ol>
+                        <ul className='pt-3 pl-4 italic list-disc list-outside'>
+                          <li>
+                            Jika mengalami kendala pembayaran, silakan{' '}
+                            <a
+                              href='https://liff.line.me/1645278921-kWRPP32q?accountId=schematics.its&openerPlatform=webview&openerKey=webview%3AunifiedSearch'
+                              className='underline cursor-pointer text-nlc'
+                            >
+                              klik disini
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
                     ) : null}
                   </div>
                 </div>
