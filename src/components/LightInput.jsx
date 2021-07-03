@@ -13,6 +13,7 @@ export default function LightInput({
   validation,
   min = '',
   max = '',
+  ...rest
 }) {
   const {
     register,
@@ -27,6 +28,7 @@ export default function LightInput({
       <div className='relative mt-1'>
         <input
           {...register(id, validation)}
+          {...rest}
           type={type}
           name={id}
           id={id}
