@@ -13,6 +13,23 @@ const App = () => {
       ? 'https://schematics.its.ac.id/api'
       : 'https://schematics-webkes-backend-dev.herokuapp.com/api';
 
+  axios.interceptors.response.use(undefined, async function (err) {
+    const originalRequest = err.config;
+
+    if (err.response === 403 && !originalRequest._retry) {
+      originalRequest._retry = true;
+
+      const res = await axios.post('/user/refresh-auth-token', {});
+
+      const { jwt: token } = res.data.data;
+      localStorage.setItem('token', token);
+
+      return axios(originalRequest);
+    }
+
+    return Promise.reject(err);
+  });
+
   return (
     <AuthProvider>
       <div>
