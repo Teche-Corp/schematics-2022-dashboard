@@ -28,6 +28,11 @@ const reducer = (state, { type, payload }) => {
         authenticated: false,
         user: null,
       };
+    case 'EDIT_PROFILE':
+      return {
+        ...state,
+        user: payload,
+      };
     case 'POPULATE':
       return {
         ...state,
