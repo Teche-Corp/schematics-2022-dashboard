@@ -101,7 +101,7 @@ export default function DragnDropInput({
       {files?.length >= maxFiles ? (
         <div className='grid grid-cols-1 gap-2 mt-1 sm:grid-cols-3'>
           {files.map((file) => (
-            <FilePreview file={file} deleteFile={deleteFile} />
+            <FilePreview key={file} file={file} deleteFile={deleteFile} />
           ))}
         </div>
       ) : (
@@ -124,7 +124,11 @@ export default function DragnDropInput({
               {!!files?.length && (
                 <div className='grid grid-cols-4 gap-1 mt-2'>
                   {files.map((file) => (
-                    <FilePreview file={file} deleteFile={deleteFile} />
+                    <FilePreview
+                      key={file}
+                      file={file}
+                      deleteFile={deleteFile}
+                    />
                   ))}
                 </div>
               )}
