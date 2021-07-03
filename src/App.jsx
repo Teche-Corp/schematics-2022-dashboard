@@ -41,12 +41,6 @@ const App = () => {
               background: '#333',
               color: '#fff',
             },
-            error: {
-              icon: '😦',
-            },
-            success: {
-              icon: '✅',
-            },
           }}
         />
       </div>
