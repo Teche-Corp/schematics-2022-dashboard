@@ -8,6 +8,7 @@ import {
 } from 'react-router-dom';
 
 import PrivateRoute from './PrivateRoute';
+import AuthRoute from './AuthRoute';
 
 import ChooseEvent from '@/pages/ChooseEvent';
 import Dashboard from '@/pages/Dashboard';
@@ -134,36 +135,36 @@ const routeItems = [
     component: AdminNLC,
   },
   {
-    auth: 'none',
-    route: Route,
+    auth: 'auth',
+    route: AuthRoute,
     key: 'signin',
     path: '/signin',
     component: SignIn,
   },
   {
-    auth: 'none',
-    route: Route,
+    auth: 'auth',
+    route: AuthRoute,
     key: 'signup',
     path: '/signup',
     component: SignUp,
   },
   {
-    auth: 'none',
-    route: Route,
+    auth: 'auth',
+    route: AuthRoute,
     key: 'forgot',
     path: '/forgot',
     component: ForgotPassword,
   },
   {
-    auth: 'none',
-    route: Route,
+    auth: 'auth',
+    route: AuthRoute,
     key: 'change-password',
     path: '/change-password',
     component: ChangePassword,
   },
   {
-    auth: 'none',
-    route: Route,
+    auth: 'auth',
+    route: AuthRoute,
     key: 'reset-password',
     path: '/reset-password',
     component: ResetPassword,

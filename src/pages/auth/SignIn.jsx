@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Link, useHistory } from 'react-router-dom';
 
-import { useAuthDispatch, useAuthState } from '@/contexts/AuthContext';
+import { useAuthDispatch } from '@/contexts/AuthContext';
 
 import Input from '@/components/Input';
 import PasswordInput from '@/components/PasswordInput';
@@ -13,17 +13,12 @@ import SubmitButton from '@/components/SubmitButton';
 
 const SignIn = () => {
   const dispatch = useAuthDispatch();
-  const { authenticated } = useAuthState();
 
   const history = useHistory();
   const [loading, setLoading] = useState(false);
 
   const methods = useForm();
   const { handleSubmit } = methods;
-
-  if (authenticated) {
-    history.replace('/my');
-  }
 
   const handleLogin = async (data) => {
     try {
