@@ -1,10 +1,19 @@
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import axios from 'axios';
+import toast from 'react-hot-toast';
+
+import { useAuthDispatch, useAuthState } from '@/contexts/AuthContext';
 
 import DashboardShell from '@/layout/DashboardShell';
 import StandAloneInput from '@/components/StandAloneInput';
 
+import { bearerToken } from '@/lib/helper';
+
 export default function EditProfile() {
+  const { user } = useAuthState();
+  const dispatch = useAuthDispatch();
+
   const [isEditing, setIsEditing] = useState(false);
 
   const methods = useForm();
@@ -14,13 +23,25 @@ export default function EditProfile() {
     setIsEditing((prevState) => !prevState);
   };
 
-  const handleEditProfile = (data) => {
-    const fetchedData = {
-      email: data.email,
-      name: data.email,
-    };
+  const handleEditProfile = async (data) => {
+    try {
+      const res = await axios.put('/user/edit', data, {
+        headers: { ...bearerToken() },
+      });
+      const { jwt: token } = res.data.data;
+      localStorage.setItem('token', token);
 
-    console.log(fetchedData);
+      const user = await axios.post(
+        '/user/get-user-info',
+        {},
+        { headers: { ...bearerToken() } },
+      );
+
+      dispatch('EDIT_PROFILE', { ...user.data.data, token });
+      toast.success('Profil berhasil diubah.');
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
   };
 
   return (
@@ -33,20 +54,19 @@ export default function EditProfile() {
           <div className='pt-10 pb-16'>
             <div className='px-4 sm:px-6 md:px-0'>
               <h1 className='text-3xl font-extrabold text-gray-900'>
-                Edit Profile
+                Edit Profil
               </h1>
             </div>
             <div className='px-4 sm:px-6 md:px-0'>
               <div className='py-6'>
                 {/* Description list with inline editing */}
-                <div className='mt-10 divide-y divide-gray-200'>
+                <div className='mt-8 divide-y divide-gray-200'>
                   <div className='space-y-1'>
                     <h3 className='text-lg font-medium leading-6 text-gray-900'>
-                      Profile
+                      Profil
                     </h3>
                     <p className='max-w-2xl text-sm text-gray-500'>
-                      This information will be displayed publicly so be careful
-                      what you share.
+                      Data profil Anda akan digunakan saat membuat tim.
                     </p>
                   </div>
                   <FormProvider {...methods}>
@@ -57,19 +77,20 @@ export default function EditProfile() {
                       <dl className='divide-y divide-gray-200'>
                         <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4'>
                           <dt className='text-sm font-medium text-gray-500'>
-                            Name
+                            Nama
                           </dt>
                           <div className='flex flex-col mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>
                             {isEditing ? (
                               <StandAloneInput
+                                label='Nama'
                                 id='name'
-                                placeholder='Chelsea Hagon'
+                                defaultValue={user.name}
                                 validation={{
-                                  required: 'Full name is required',
+                                  required: 'Nama tidak boleh kosong',
                                 }}
                               />
                             ) : (
-                              <span className='flex-grow'>Chelsea Hagon</span>
+                              <span className='flex-grow'>{user.name}</span>
                             )}
                           </div>
                         </div>
@@ -80,35 +101,44 @@ export default function EditProfile() {
                           <div className='flex flex-col mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>
                             {isEditing ? (
                               <StandAloneInput
+                                label='Email'
                                 id='email'
                                 type='email'
-                                placeholder='chelsea.hagon@example.com'
+                                defaultValue={user.email}
                                 validation={{
-                                  required: 'Email is required',
+                                  required: 'Email tidak boleh kosong',
+                                  pattern: {
+                                    value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                                    message: 'Email tidak valid',
+                                  },
                                 }}
                               />
                             ) : (
-                              <span className='flex-grow'>
-                                chelsea.hagon@example.com
-                              </span>
+                              <span className='flex-grow'>{user.email}</span>
                             )}
                           </div>
                         </div>
                         <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-b sm:border-gray-200'>
                           <dt className='text-sm font-medium text-gray-500'>
-                            Phone Number
+                            Nomor Telepon
                           </dt>
                           <div className='flex flex-col mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>
                             {isEditing ? (
                               <StandAloneInput
-                                id='phone-number'
-                                placeholder='+628123456789'
+                                label='Nomor Telepon'
+                                id='phone'
+                                defaultValue='+628123456789'
                                 validation={{
-                                  required: 'Phone number is required',
+                                  required: 'Nomor Telepon tidak boleh kosong',
+                                  pattern: {
+                                    value: /^\+628[1-9][0-9]{8,11}$/,
+                                    message:
+                                      'Nomor Telepon harus diawali +62 dan memiliki panjang 13-15 karakter',
+                                  },
                                 }}
                               />
                             ) : (
-                              <span className='flex-grow'>+628123456789</span>
+                              <span className='flex-grow'>{user.phone}</span>
                             )}
                           </div>
                         </div>
@@ -121,13 +151,13 @@ export default function EditProfile() {
                               onClick={handleEditClick}
                               className='px-4 py-2 text-sm font-medium text-gray-700 bg-white border rounded-md shadow-sm border-300 text-dark-900 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-dark-400'
                             >
-                              Cancel
+                              Batal
                             </button>
                             <button
                               type='submit'
                               className='inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-dark-100 bg-dark-600 hover:bg-dark-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-dark-100'
                             >
-                              Save
+                              Simpan
                             </button>
                           </>
                         ) : (
