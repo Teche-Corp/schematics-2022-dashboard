@@ -4,7 +4,7 @@ import { createContext, useContext, useEffect, useReducer } from 'react';
 const StateContext = createContext({
   authenticated: false,
   user: null,
-  // loading: true,
+  loading: true,
 });
 StateContext.displayName = 'AuthState';
 
@@ -37,7 +37,7 @@ const reducer = (state, { type, payload }) => {
     case 'STOP_LOADING':
       return {
         ...state,
-        // loading: false,
+        loading: false,
       };
     default:
       throw new Error(`Unknown action type: ${type}`);
@@ -48,7 +48,7 @@ export const AuthProvider = ({ children }) => {
   const [state, defaultDispatch] = useReducer(reducer, {
     user: null,
     authenticated: false,
-    // loading: true,
+    loading: true,
   });
 
   const dispatch = (type, payload) => defaultDispatch({ type, payload });
