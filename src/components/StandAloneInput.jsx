@@ -2,11 +2,13 @@ import { useFormContext } from 'react-hook-form';
 import { HiExclamationCircle } from 'react-icons/hi';
 
 export default function StandAloneInput({
+  label,
   placeholder = '',
   id,
   type = 'text',
   disabled = false,
   validation,
+  ...rest
 }) {
   const {
     register,
@@ -15,8 +17,12 @@ export default function StandAloneInput({
   return (
     <>
       <div className='relative w-full'>
+        <label htmlFor={id} className='sr-only'>
+          {label}
+        </label>
         <input
           {...register(id, validation)}
+          {...rest}
           type={type}
           name={id}
           id={id}
