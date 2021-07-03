@@ -4,6 +4,7 @@ import { SWRConfig } from 'swr';
 
 import Routes from '@/routes/index';
 import { AuthProvider } from '@/contexts/AuthContext';
+import { TeamProvider } from '@/contexts/TeamContext';
 
 import '@/App.css';
 
@@ -32,26 +33,28 @@ const App = () => {
 
   return (
     <AuthProvider>
-      <div>
-        <Toaster
-          reverseOrder={false}
-          toastOptions={{
-            style: {
-              borderRadius: '8px',
-              background: '#333',
-              color: '#fff',
-            },
+      <TeamProvider>
+        <div>
+          <Toaster
+            reverseOrder={false}
+            toastOptions={{
+              style: {
+                borderRadius: '8px',
+                background: '#333',
+                color: '#fff',
+              },
+            }}
+          />
+        </div>
+        <SWRConfig
+          value={{
+            refreshInterval: 3000,
+            fetcher: (url) => axios.get(url).then((res) => res.data),
           }}
-        />
-      </div>
-      <SWRConfig
-        value={{
-          refreshInterval: 3000,
-          fetcher: (url) => axios.get(url).then((res) => res.data),
-        }}
-      >
-        <Routes />
-      </SWRConfig>
+        >
+          <Routes />
+        </SWRConfig>
+      </TeamProvider>
     </AuthProvider>
   );
 };
