@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { createContext, useContext, useEffect, useReducer } from 'react';
 
+import { bearerToken } from '@/lib/helper';
+
 const StateContext = createContext({
   authenticated: false,
   user: null,
@@ -64,16 +66,12 @@ export const AuthProvider = ({ children }) => {
         const res = await axios.post(
           '/user/get-user-info',
           {},
-          {
-            headers: {
-              Token: token,
-            },
-          },
+          { headers: { ...bearerToken() } },
         );
 
         dispatch('LOGIN', res.data.data);
       } catch (err) {
-        console.log(err);
+        console.log('error context', err);
         localStorage.removeItem('token');
       } finally {
         dispatch('STOP_LOADING');

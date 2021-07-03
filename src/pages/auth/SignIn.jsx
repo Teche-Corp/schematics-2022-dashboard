@@ -11,6 +11,8 @@ import PasswordInput from '@/components/PasswordInput';
 import AuthHeader from '@/components/AuthHeader';
 import SubmitButton from '@/components/SubmitButton';
 
+import { bearerToken } from '@/lib/helper';
+
 const SignIn = () => {
   const dispatch = useAuthDispatch();
 
@@ -30,19 +32,14 @@ const SignIn = () => {
       const user = await axios.post(
         '/user/get-user-info',
         {},
-        {
-          headers: {
-            Token: token,
-          },
-        },
+        { headers: { ...bearerToken() } },
       );
 
       dispatch('LOGIN', { ...user.data.data, token });
       setLoading(false);
       history.replace('/my');
     } catch (err) {
-      console.error(err);
-      toast.error('Uh oh! Something is wrong, please try again');
+      toast.error(err.response.data.msg);
     } finally {
       setLoading(false);
     }
