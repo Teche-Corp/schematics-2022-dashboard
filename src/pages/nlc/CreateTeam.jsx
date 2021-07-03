@@ -1,25 +1,35 @@
 import { useEffect } from 'react';
+import { useHistory } from 'react-router';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import axios from 'axios';
 import useSWR from 'swr';
+
+import { useAuthState } from '@/contexts/AuthContext';
 
 import DashboardShell from '@/layout/DashboardShell';
 import LightInput from '@/components/LightInput';
 import SelectCity from '@/components/SelectCity';
 import DragnDropInput from '@/components/DragnDropInput';
 
+import { bearerToken } from '@/lib/helper';
+
 export default function CreateTeam() {
+  const history = useHistory();
+
   const methods = useForm();
   const { control, handleSubmit, setValue } = methods;
 
-  const { data, error } = useSWR('/region/list');
+  const { data, error: fetchError } = useSWR('/region/list');
   const cities = data?.data;
 
   const cityValue = useWatch({
     control,
     name: 'city',
   });
+
+  const { user } = useAuthState();
 
   useEffect(() => {
     if (cityValue !== undefined) {
@@ -36,12 +46,47 @@ export default function CreateTeam() {
     }
   }, [cityValue, cities, setValue]);
 
-  const handleCreateTeam = (data) => {
-    console.log(data);
+  const handleCreateTeam = async (data) => {
+    try {
+      const formData = new FormData();
+
+      const newBody = {
+        kota_id: data.city.value,
+        ketua_nisn: data['leader-nisn'],
+        ketua_alamat: data['leader-address'],
+        ketua_id_line: data['leader-line'],
+        status_id: 2,
+        team_name: data['team-name'],
+        team_password: `schnlc${user.name}`,
+        team_institusi: data['school-name'],
+        kp_ketua: data['leader-id'][0],
+        'anggota[0][name]': data['member-name'],
+        'anggota[0][email]': data['member-email'],
+        'anggota[0][nisn]': data['member-nisn'],
+        'anggota[0][phone]': data['member-phone'],
+        'anggota[0][alamat]': data['member-address'],
+        'anggota[0][id_line]': data['member-line'],
+        'anggota[0][kp_anggota]': data['member-id'][0],
+      };
+
+      for (let key in newBody) {
+        formData.append(key, newBody[key]);
+      }
+
+      await axios.post('/nlc/team/create', formData, {
+        headers: { ...bearerToken(), 'Content-Type': 'multipart/form-data' },
+      });
+
+      history.push('/my/sch-nlc/team');
+      toast.success('Berhasil membuat tim!');
+    } catch (err) {
+      console.error(err.response.data);
+      toast.error(err.response.data.msg);
+    }
   };
 
-  if (error) {
-    return toast.error('Uh oh! Something is wrong, please try again');
+  if (fetchError) {
+    return toast.error('Gagal mengambil data kota.');
   }
 
   return (
@@ -130,6 +175,8 @@ export default function CreateTeam() {
                           label='Nama'
                           id='leader-name'
                           type='text'
+                          defaultValue={user.name}
+                          readOnly
                           validation={{ required: 'Nama tidak boleh kosong' }}
                         />
                       </div>
@@ -139,6 +186,8 @@ export default function CreateTeam() {
                           label='Email'
                           id='leader-email'
                           type='email'
+                          defaultValue={user.email}
+                          readOnly
                           validation={{
                             required: 'Email tidak boleh kosong',
                             pattern: {
@@ -163,8 +212,9 @@ export default function CreateTeam() {
                           label='Nomor Telepon'
                           id='leader-phone'
                           type='text'
-                          placeholder='+6281234567890'
                           helperText='Nomor Telepon diawali +62'
+                          defaultValue={user.phone}
+                          readOnly
                           validation={{
                             required: 'Nomor Telepon tidak boleh kosong',
                             pattern: {
