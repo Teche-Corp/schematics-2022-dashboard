@@ -25,7 +25,9 @@ const SignIn = () => {
   const handleLogin = async (data) => {
     try {
       setLoading(true);
-      const res = await axios.post('/user/login', data);
+      const res = await axios.post('/user/login', data, {
+        withCredentials: process.env.NODE_ENV === 'production' ? true : false,
+      });
       const { jwt: token } = res.data.data;
       localStorage.setItem('token', token);
 

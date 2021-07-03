@@ -27,6 +27,7 @@ export default function EditProfile() {
     try {
       const res = await axios.put('/user/edit', data, {
         headers: { ...bearerToken() },
+        withCredentials: process.env.NODE_ENV === 'production' ? true : false,
       });
       const { jwt: token } = res.data.data;
       localStorage.setItem('token', token);
