@@ -12,8 +12,8 @@ const AuthRoute = ({ component: Component, ...rest }) => {
       {...rest}
       render={(props) =>
         loading ? (
-          <div className='flex flex-col items-center justify-center min-h-screen bg-dark'>
-            <ImSpinner8 className='mb-2 text-4xl text-light animate-spin' />
+          <div className='flex flex-col items-center justify-center min-h-screen bg-dark text-light'>
+            <ImSpinner8 className='mb-2 text-4xl animate-spin' />
             <p>Loading...</p>
           </div>
         ) : authenticated ? (
