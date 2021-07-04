@@ -4,7 +4,7 @@ export default function TeamMemberDetail({ data = {} }) {
   return (
     <div className='overflow-hidden bg-white sm:rounded-lg'>
       <div className='px-4 py-5 sm:px-6'>
-        <dl className='grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2'>
+        <dl className='grid grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-2'>
           <div className='sm:col-span-1'>
             <dt className='text-sm font-medium text-gray-500'>Nama</dt>
             <dd className='mt-1 text-sm text-gray-900'>{data.name}</dd>
@@ -29,7 +29,7 @@ export default function TeamMemberDetail({ data = {} }) {
             <dt className='text-sm font-medium text-gray-500'>Alamat</dt>
             <dd className='mt-1 text-sm text-gray-900'>{data.address}</dd>
           </div>
-          <div className='sm:col-span-2'>
+          {/* <div className='sm:col-span-2'>
             <dt className='text-sm font-medium text-gray-500'>Berkas</dt>
             <dd className='mt-1 text-sm text-gray-900'>
               <ul className='border border-gray-200 divide-y divide-gray-200 rounded-md'>
@@ -50,7 +50,7 @@ export default function TeamMemberDetail({ data = {} }) {
                     <div className='flex-shrink-0 ml-4'>
                       <a
                         href={item.link}
-                        className='font-medium text-indigo-600 hover:text-indigo-500'
+                        className='font-medium text-nlc hover:text-nlc-400'
                       >
                         Unduh
                       </a>
@@ -59,7 +59,7 @@ export default function TeamMemberDetail({ data = {} }) {
                 ))}
               </ul>
             </dd>
-          </div>
+          </div> */}
         </dl>
       </div>
     </div>
