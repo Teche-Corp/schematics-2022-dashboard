@@ -33,6 +33,22 @@ const reducer = (state, { type, payload }) => {
         ...state,
         user: payload,
       };
+    case 'ASSIGN_NLC':
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          team: [...state.user.team, { nlc: payload }],
+        },
+      };
+    case 'ASSIGN_NPC':
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          team: [...state.user.team, { npc: payload }],
+        },
+      };
     case 'POPULATE':
       return {
         ...state,
