@@ -32,7 +32,7 @@ export default function PasswordInput({
           className={`block w-full border-gray-600 bg-dark rounded-md shadow-sm   ${
             errors[id]
               ? 'focus:ring-red-500 border-red-500 focus:border-red-500'
-              : 'focus:ring-indigo-500 focus:border-indigo-500'
+              : 'focus:ring-light-100 focus:border-light-100'
           } sm:text-sm`}
           placeholder={placeholder}
           aria-describedby={id}

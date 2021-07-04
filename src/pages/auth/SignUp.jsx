@@ -100,7 +100,7 @@ export default function SignUp() {
 
                 <div className='mt-6'>
                   <Link
-                    className='flex justify-center w-full px-4 py-2 text-sm font-medium text-indigo-600 border-2 border-indigo-600 rounded-md shadow-sm hover:text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+                    className='flex justify-center w-full px-4 py-2 text-sm font-medium border-2 rounded-md shadow-sm text-light-100 border-light-100 hover:text-dark hover:bg-light-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-light-100'
                     to='/signin'
                   >
                     Sign In
