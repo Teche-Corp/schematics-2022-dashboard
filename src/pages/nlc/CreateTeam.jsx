@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 import axios from 'axios';
 import useSWR from 'swr';
 
-import { useAuthState } from '@/contexts/AuthContext';
+import { useAuthDispatch, useAuthState } from '@/contexts/AuthContext';
 
 import DashboardShell from '@/layout/DashboardShell';
 import LightInput from '@/components/LightInput';
@@ -30,6 +30,7 @@ export default function CreateTeam() {
   });
 
   const { user } = useAuthState();
+  const dispatch = useAuthDispatch();
 
   useEffect(() => {
     if (cityValue !== undefined) {
@@ -73,14 +74,14 @@ export default function CreateTeam() {
         formData.append(key, newBody[key]);
       }
 
-      await axios.post('/nlc/team/create', formData, {
+      const res = await axios.post('/nlc/team/create', formData, {
         headers: { ...bearerToken(), 'Content-Type': 'multipart/form-data' },
       });
 
+      dispatch('ASSIGN_NLC', res.data.data);
       history.push('/my/sch-nlc/team');
       toast.success('Berhasil membuat tim!');
     } catch (err) {
-      console.error(err.response.data);
       toast.error(err.response.data.msg);
     }
   };
