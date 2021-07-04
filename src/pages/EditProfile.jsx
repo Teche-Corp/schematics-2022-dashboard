@@ -17,7 +17,10 @@ export default function EditProfile() {
   const [isEditing, setIsEditing] = useState(false);
 
   const methods = useForm();
-  const { handleSubmit } = methods;
+  const {
+    handleSubmit,
+    formState: { isDirty },
+  } = methods;
 
   const handleEditClick = () => {
     setIsEditing((prevState) => !prevState);
@@ -27,7 +30,11 @@ export default function EditProfile() {
     try {
       const res = await axios.put('/user/edit', data, {
         headers: { ...bearerToken() },
-        withCredentials: process.env.NODE_ENV === 'production' ? true : false,
+        withCredentials:
+          process.env.NODE_ENV === 'production' &&
+          process.env.PUBLIC_URL === '/dashboard'
+            ? true
+            : false,
       });
       const { jwt: token } = res.data.data;
       localStorage.setItem('token', token);
@@ -42,6 +49,8 @@ export default function EditProfile() {
       toast.success('Profil berhasil diubah.');
     } catch (err) {
       toast.error(err.response.data.msg);
+    } finally {
+      setIsEditing(false);
     }
   };
 
@@ -54,7 +63,7 @@ export default function EditProfile() {
         <div className='relative max-w-4xl mx-auto md:px-8 xl:px-0'>
           <div className='pt-10 pb-16'>
             <div className='px-4 sm:px-6 md:px-0'>
-              <h1 className='text-3xl font-extrabold text-gray-900'>
+              <h1 className='text-3xl font-extrabold text-gray-900 sm:text-4xl md:text-5xl'>
                 Edit Profil
               </h1>
             </div>
@@ -156,6 +165,7 @@ export default function EditProfile() {
                             </button>
                             <button
                               type='submit'
+                              disabled={!isDirty}
                               className='inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-dark-100 bg-dark-600 hover:bg-dark-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-dark-100'
                             >
                               Simpan
