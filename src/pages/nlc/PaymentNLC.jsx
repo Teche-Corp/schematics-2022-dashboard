@@ -1,21 +1,32 @@
 import { useEffect, useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
+import axios from 'axios';
+import toast from 'react-hot-toast';
+
+import { HiOutlineArrowCircleLeft } from 'react-icons/hi';
+
+import { useAuthState } from '@/contexts/AuthContext';
 
 import DashboardShell from '@/layout/DashboardShell';
 import DragnDropInput from '@/components/DragnDropInput';
 import LightInput from '@/components/LightInput';
 import SelectInput from '@/components/SelectInput';
 
-import { classNames } from '@/lib/helper';
+import { classNames, bearerToken } from '@/lib/helper';
 
 export default function PaymentNLC() {
+  const { user } = useAuthState();
+
   const [currentTab, setCurrentTab] = useState(0);
   const [total, setTotal] = useState('Rp100.000');
+
+  const history = useHistory();
 
   const methods = useForm();
   const { control, handleSubmit } = methods;
 
-  const { handleSubmit: handleSubmit2, register } = useForm();
+  // const { handleSubmit: handleSubmit2, register } = useForm();
 
   const paymentMethod = [
     { text: 'QRIS', value: 0 },
@@ -28,8 +39,6 @@ export default function PaymentNLC() {
   });
 
   useEffect(() => {
-    console.log(typeof usedMethod);
-
     if (usedMethod === '0') {
       setTotal('Rp101.000');
     } else if (usedMethod === '1') {
@@ -41,12 +50,39 @@ export default function PaymentNLC() {
     setCurrentTab(parseInt(e.target.value));
   };
 
-  const handleAddVoucher = (data) => {
-    console.log(data);
-  };
+  // const handleAddVoucher = (data) => {
+  //   console.log(data);
+  // };
 
-  const handleUpload = (data) => {
-    console.log(data);
+  const handleUpload = async (data) => {
+    try {
+      const formData = new FormData();
+
+      const newBody = {
+        team_id: user.team[0].nlc,
+        jumlah: data['payment-method'] === '0' ? 101000 : 100000,
+        sumber: data['payment-method'] === '0' ? 'QRIS' : 'Mandiri',
+        kode_voucher: '',
+        img: data['payment-receipt'][0],
+      };
+
+      console.log(newBody);
+
+      for (const key in newBody) {
+        formData.append(key, newBody[key]);
+      }
+
+      const res = await axios.post('/pembayaran/bukti/insert', formData, {
+        headers: { ...bearerToken(), 'Content-Type': 'multipart/form-data' },
+      });
+
+      console.log('respond', res);
+      history.push('/my/sch-nlc/team');
+      toast.success('Payment success!');
+    } catch (err) {
+      console.error(err);
+      toast.error(err.response.data.msg);
+    }
   };
 
   return (
@@ -57,10 +93,15 @@ export default function PaymentNLC() {
       >
         <div className='relative max-w-5xl mx-auto md:px-8 xl:px-0'>
           <div className='px-4 pt-10 pb-16 sm:px-6 md:px-0'>
-            <h1 className='mb-6 text-4xl font-extrabold tracking-tight text-gray-900 sm:text-3xl md:text-4xl'>
-              <span className='block xl:inline'>Pembayaran</span>{' '}
-              <span className='block text-nlc xl:inline'>Schematics NLC</span>
-            </h1>
+            <div className='flex items-center mb-6'>
+              <Link to='/my/sch-nlc/team'>
+                <HiOutlineArrowCircleLeft className='w-6 h-6' />
+              </Link>
+              <h1 className='ml-3 text-4xl font-extrabold tracking-tight text-gray-900 sm:text-3xl md:text-4xl'>
+                <span className='block xl:inline'>Pembayaran</span>{' '}
+                <span className='block text-nlc xl:inline'>Schematics NLC</span>
+              </h1>
+            </div>
             <div className='grid grid-cols-1 gap-8 mt-6 sm:grid-cols-6'>
               <div className='sm:col-span-2'>
                 <h2 className='text-lg font-semibold'>Total</h2>
@@ -114,10 +155,9 @@ export default function PaymentNLC() {
                         }}
                       />
                       <LightInput
-                        label='Nomor Rekening/Nama Rekening'
+                        label='Nomor Rekening'
                         id='account-id'
                         type='text'
-                        helperText='Isi dengan nama rekening apabila menggunakan OVO/Gopay'
                         validation={{
                           required: 'Nomor Rekening tidak boleh kosong',
                         }}
@@ -182,7 +222,7 @@ export default function PaymentNLC() {
                                 tab.value === currentTab
                                   ? 'border-nlc-400 text-nlc'
                                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-200',
-                                'whitespace-nowrap flex py-4 px-1 border-b-2 font-medium text-sm',
+                                'whitespace-nowrap flex py-4 px-1 border-b-2 font-medium text-sm focus:outline-none',
                               )}
                               aria-current={tab.current ? 'page' : undefined}
                             >
