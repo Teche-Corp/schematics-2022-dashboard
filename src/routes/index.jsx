@@ -66,6 +66,7 @@ const routeItems = [
     key: 'nlc-create-team',
     path: '/my/sch-nlc/payment',
     component: PaymentNLC,
+    visible: true,
   },
   {
     auth: 'private',
