@@ -171,7 +171,7 @@ export default function EventNLC() {
         <div className='relative max-w-4xl mx-auto md:px-8 xl:px-0'>
           <div className='pt-10 pb-16'>
             {!nlc ? (
-              <div className='text-center'>
+              <div className='px-4 text-center sm:px-6 md:px-0'>
                 <h1 className='text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:text-6xl'>
                   <span className='block xl:inline'>Schematics</span>{' '}
                   <span className='block text-nlc xl:inline'>NLC</span>
@@ -206,7 +206,7 @@ export default function EventNLC() {
                   </div>
                 </section>
                 <section className='px-4 mt-10 space-y-10 sm:px-6 md:px-0'>
-                  <h2 className='text-2xl font-extrabold tracking-tight text-center text-gray-900 sm:text-4xl md:text-5xl'>
+                  <h2 className='text-3xl font-extrabold tracking-tight text-center text-gray-900 sm:text-4xl md:text-5xl'>
                     <span className='block xl:inline'>Detail</span>{' '}
                     <span className='block text-nlc xl:inline'>Tim</span>
                   </h2>
