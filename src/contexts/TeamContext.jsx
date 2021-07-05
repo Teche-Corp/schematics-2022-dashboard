@@ -21,6 +21,11 @@ const reducer = (state, { type, payload }) => {
         ...state,
         npc: payload,
       };
+    case 'CLEAR':
+      return {
+        nlc: null,
+        npc: null,
+      };
     default:
       throw new Error(`Unknown action type: ${type}`);
   }
