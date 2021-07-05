@@ -48,7 +48,6 @@ const App = () => {
         </div>
         <SWRConfig
           value={{
-            refreshInterval: 3000,
             fetcher: (url) => axios.get(url).then((res) => res.data),
           }}
         >
