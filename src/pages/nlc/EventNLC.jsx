@@ -95,7 +95,7 @@ export default function EventNLC() {
       }
     };
 
-    if (user?.team[0]?.nlc) {
+    if (user?.team?.[0]?.nlc) {
       loadTeam();
     } else {
       setLoading(false);
