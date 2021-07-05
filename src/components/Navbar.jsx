@@ -8,16 +8,20 @@ import { HiBell, HiChevronDown, HiMenuAlt1 } from 'react-icons/hi';
 import { VscAccount } from 'react-icons/vsc';
 
 import { useAuthDispatch, useAuthState } from '@/contexts/AuthContext';
+import { useTeamDispatch } from '@/contexts/TeamContext';
 
 import { classNames } from '@/lib/helper';
 
 export default function Navbar({ setSidebarOpen }) {
   const { user } = useAuthState();
-  const dispatch = useAuthDispatch();
+  const authDispatch = useAuthDispatch();
+  const teamDispatch = useTeamDispatch();
+
   const history = useHistory();
 
   const handleLogout = () => {
-    dispatch('LOGOUT');
+    authDispatch('LOGOUT');
+    teamDispatch('CLEAR');
     history.replace('/signin');
   };
 
