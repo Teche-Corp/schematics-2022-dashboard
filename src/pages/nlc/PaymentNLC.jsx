@@ -7,6 +7,7 @@ import toast from 'react-hot-toast';
 import { HiOutlineArrowCircleLeft } from 'react-icons/hi';
 
 import { useAuthState } from '@/contexts/AuthContext';
+import useLoadingToast from '@/hooks/useLoadingToast';
 
 import DashboardShell from '@/layout/DashboardShell';
 import DragnDropInput from '@/components/DragnDropInput';
@@ -17,6 +18,7 @@ import { classNames, bearerToken } from '@/lib/helper';
 
 export default function PaymentNLC() {
   const { user } = useAuthState();
+  const isLoading = useLoadingToast();
 
   const [currentTab, setCurrentTab] = useState(0);
   const [total, setTotal] = useState('Rp100.000');
@@ -55,34 +57,37 @@ export default function PaymentNLC() {
   // };
 
   const handleUpload = async (data) => {
-    try {
-      const formData = new FormData();
+    const formData = new FormData();
 
-      const newBody = {
-        team_id: user.team[0].nlc,
-        jumlah: data['payment-method'] === '0' ? 101000 : 100000,
-        sumber: data['payment-method'] === '0' ? 'QRIS' : 'Mandiri',
-        kode_voucher: '',
-        img: data['payment-receipt'][0],
-      };
+    const newBody = {
+      team_id: user.team[0].nlc,
+      jumlah: data['payment-method'] === '0' ? 101000 : 100000,
+      sumber: data['payment-method'] === '0' ? 'QRIS' : 'Mandiri',
+      kode_voucher: '',
+      img: data['payment-receipt'][0],
+    };
 
-      console.log(newBody);
-
-      for (const key in newBody) {
-        formData.append(key, newBody[key]);
-      }
-
-      const res = await axios.post('/pembayaran/bukti/insert', formData, {
-        headers: { ...bearerToken(), 'Content-Type': 'multipart/form-data' },
-      });
-
-      console.log('respond', res);
-      history.push('/my/sch-nlc/team');
-      toast.success('Payment success!');
-    } catch (err) {
-      console.error(err);
-      toast.error(err.response.data.msg);
+    for (const key in newBody) {
+      formData.append(key, newBody[key]);
     }
+
+    toast.promise(
+      axios
+        .post('/pembayaran/bukti/insert', formData, {
+          headers: {
+            ...bearerToken(),
+            'Content-Type': 'multipart/form-data',
+          },
+        })
+        .then((res) => {
+          history.push('/my/sch-nlc/team');
+        }),
+      {
+        loading: 'Loading...',
+        success: 'Bukti pembayaran berhasil diupload!',
+        error: (err) => err.response.data.msg,
+      },
+    );
   };
 
   return (
@@ -175,7 +180,11 @@ export default function PaymentNLC() {
                       <div className='flex justify-end'>
                         <button
                           type='submit'
-                          className='inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-nlc hover:bg-nlc-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-nlc-400'
+                          disabled={isLoading}
+                          className={classNames(
+                            'inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-nlc hover:bg-nlc-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-nlc-400',
+                            isLoading && 'filter brightness-90 cursor-wait',
+                          )}
                         >
                           Simpan
                         </button>

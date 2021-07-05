@@ -13,10 +13,12 @@ import LightInput from '@/components/LightInput';
 import SelectCity from '@/components/SelectCity';
 import DragnDropInput from '@/components/DragnDropInput';
 
-import { bearerToken } from '@/lib/helper';
+import { bearerToken, classNames } from '@/lib/helper';
+import useLoadingToast from '@/hooks/useLoadingToast';
 
 export default function CreateTeam() {
   const history = useHistory();
+  const isLoading = useLoadingToast();
 
   const methods = useForm();
   const { control, handleSubmit, setValue } = methods;
@@ -48,42 +50,46 @@ export default function CreateTeam() {
   }, [cityValue, cities, setValue]);
 
   const handleCreateTeam = async (data) => {
-    try {
-      const formData = new FormData();
+    const formData = new FormData();
 
-      const newBody = {
-        kota_id: data.city.value,
-        ketua_nisn: data['leader-nisn'],
-        ketua_alamat: data['leader-address'],
-        ketua_id_line: data['leader-line'],
-        status_id: 2,
-        team_name: data['team-name'],
-        team_password: `schnlc${user.name}`,
-        team_institusi: data['school-name'],
-        kp_ketua: data['leader-id'][0],
-        'anggota[0][name]': data['member-name'],
-        'anggota[0][email]': data['member-email'],
-        'anggota[0][nisn]': data['member-nisn'],
-        'anggota[0][phone]': data['member-phone'],
-        'anggota[0][alamat]': data['member-address'],
-        'anggota[0][id_line]': data['member-line'],
-        'anggota[0][kp_anggota]': data['member-id'][0],
-      };
+    const newBody = {
+      kota_id: data.city.value,
+      ketua_nisn: data['leader-nisn'],
+      ketua_alamat: data['leader-address'],
+      ketua_id_line: data['leader-line'],
+      status_id: 2,
+      team_name: data['team-name'],
+      team_password: `schnlc${user.name}`,
+      team_institusi: data['school-name'],
+      kp_ketua: data['leader-id'][0],
+      'anggota[0][name]': data['member-name'],
+      'anggota[0][email]': data['member-email'],
+      'anggota[0][nisn]': data['member-nisn'],
+      'anggota[0][phone]': data['member-phone'],
+      'anggota[0][alamat]': data['member-address'],
+      'anggota[0][id_line]': data['member-line'],
+      'anggota[0][kp_anggota]': data['member-id'][0],
+    };
 
-      for (let key in newBody) {
-        formData.append(key, newBody[key]);
-      }
-
-      const res = await axios.post('/nlc/team/create', formData, {
-        headers: { ...bearerToken(), 'Content-Type': 'multipart/form-data' },
-      });
-
-      dispatch('ASSIGN_NLC', res.data.data);
-      history.push('/my/sch-nlc/team');
-      toast.success('Berhasil membuat tim!');
-    } catch (err) {
-      toast.error(err.response.data.msg);
+    for (let key in newBody) {
+      formData.append(key, newBody[key]);
     }
+
+    toast.promise(
+      axios
+        .post('/nlc/team/create', formData, {
+          headers: { ...bearerToken(), 'Content-Type': 'multipart/form-data' },
+        })
+        .then((res) => {
+          dispatch('ASSIGN_NLC', res.data.data);
+          history.push('/my/sch-nlc/team');
+        }),
+      {
+        loading: 'Loading...',
+        success: 'Berhasil membuat tim!',
+        error: (err) => err.response.data.msg,
+      },
+    );
   };
 
   if (fetchError) {
@@ -362,7 +368,11 @@ export default function CreateTeam() {
                     </Link>
                     <button
                       type='submit'
-                      className='inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-nlc hover:bg-nlc-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-nlc-400'
+                      disabled={isLoading}
+                      className={classNames(
+                        'inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-nlc hover:bg-nlc-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-nlc-400',
+                        isLoading && 'filter brightness-90 cursor-wait',
+                      )}
                     >
                       Buat Tim
                     </button>
