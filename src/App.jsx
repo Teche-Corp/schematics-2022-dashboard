@@ -10,7 +10,8 @@ import '@/App.css';
 
 const App = () => {
   axios.defaults.baseURL =
-    process.env.NODE_ENV === 'production'
+    process.env.NODE_ENV === 'production' &&
+    process.env.PUBLIC_URL === '/dashboard'
       ? 'https://schematics.its.ac.id/api'
       : 'https://schematics-webkes-backend-dev.herokuapp.com/api';
 
