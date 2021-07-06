@@ -18,8 +18,9 @@
       content="
       worker-src blob:; 
       child-src blob: gap:;
-      img-src 'self' blob: data:;
-      default-src * 'self' 'unsafe-inline' 'unsafe-eval' data: gap: content:"
+      frame-src 'self' blob:;
+      img-src 'self' https://schematics.its.ac.id blob: data:;
+      default-src * 'self' blob: https://schematics.its.ac.id 'unsafe-inline' 'unsafe-eval' data: gap: content:"
     />
 
     <link
