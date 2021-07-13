@@ -1,9 +1,11 @@
 import DashboardShell from '@/layout/DashboardShell';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Modal from '@/components/Modal';
 import { Link } from 'react-router-dom';
 import HorizontalTimeline from '@/components/HorizontalTimeline';
 import TeamDetail from '@/components/TeamDetail';
+import axios from 'axios';
+
 import CenteredAccordion from '@/components/CenteredAccordion';
 import {
   HiClipboardCheck,
@@ -13,11 +15,50 @@ import {
   HiUsers,
 } from 'react-icons/hi';
 import TeamMemberDetail from '@/components/TeamMemberDetail';
+import { useTeamDispatch, useTeamState } from '@/contexts/TeamContext';
+import { useAuthState } from '@/contexts/AuthContext';
+import toast from 'react-hot-toast';
+import { bearerToken } from '@/lib/helper';
 
 export default function EventNPC() {
   const [open, setOpen] = useState(false);
   /* ------ FALSE TO SHOW DETAIL TEAM ---- */
   const npc = true;
+  const [loading, setLoading] = useState(true);
+
+  const { user } = useAuthState();
+  // const { npc } = useTeamState();
+  const dispatch = useTeamDispatch();
+
+  useEffect(() => {
+    const loadTeam = async () => {
+      try {
+        const res = await axios.post(
+          '/npc/team/find',
+          { team_id: user.team[0].npc },
+          {
+            headers: { ...bearerToken() },
+          },
+        );
+
+        console.log(res.data.data);
+
+        dispatch('STORE_NPC', res.data.data);
+      } catch (err) {
+        console.log(err.response.data);
+        toast.error('Gagal mengambil data tim!');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (user?.team?.[0]?.npc) {
+      loadTeam();
+    } else {
+      setLoading(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const dataTeam = {
     name: 'Doa ibu' ?? npc?.nama_tim,
@@ -35,6 +76,25 @@ export default function EventNPC() {
     phase: npc?.tahapan ?? '-',
   };
 
+  const dataTeamMemberJunior = [
+    {
+      title: 'Ketua Tim',
+      name: 'Tsani' ?? npc?.anggota[1].nama,
+      email: 'tsani@mail.com' ?? npc?.anggota[1].email,
+      nisn: '3213131' ?? npc?.anggota[1].nisn,
+      phone: '089123123' ?? npc?.anggota[1].nomor_telepon,
+      line: 'tsani' ?? npc?.anggota[1].id_line,
+      address: 'surabata' ?? npc?.anggota[1].alamat,
+      attachment: [
+        {
+          name: 'Surat Keterangan Aktif',
+          link: '#',
+        },
+      ],
+    },
+  ];
+
+  //Senior
   const dataTeamMember = [
     {
       title: 'Ketua Tim',
@@ -53,6 +113,21 @@ export default function EventNPC() {
     },
     {
       title: 'Anggota 1',
+      name: 'Budi' ?? npc?.anggota[0].nama,
+      email: 'budi@mail.com' ?? npc?.anggota[0].email,
+      nisn: '123213' ?? npc?.anggota[0].nisn,
+      phone: '081231312' ?? npc?.anggota[0].nomor_telepon,
+      line: 'budiss' ?? npc?.anggota[0].id_line,
+      address: 'bekasi' ?? npc?.anggota[0].alamat,
+      attachment: [
+        {
+          name: 'Surat Keterangan Aktif',
+          link: '#',
+        },
+      ],
+    },
+    {
+      title: 'Anggota 2',
       name: 'Budi' ?? npc?.anggota[0].nama,
       email: 'budi@mail.com' ?? npc?.anggota[0].email,
       nisn: '123213' ?? npc?.anggota[0].nisn,
