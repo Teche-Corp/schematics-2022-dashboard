@@ -68,20 +68,22 @@ export default function CreateTeamNPCSenior() {
                     <div className='grid grid-cols-1 mt-6 gap-y-6 gap-x-4 sm:grid-cols-6'>
                       <div className='sm:col-span-4'>
                         <LightInput
-                          label='Team Name'
+                          label='Nama Tim'
                           id='team-name'
                           type='text'
-                          validation={{ required: 'Team name is required' }}
+                          validation={{
+                            required: 'Nama Tim tidak boleh kosong',
+                          }}
                         />
                       </div>
 
                       <div className='sm:col-span-4'>
                         <LightInput
-                          label='University Name'
+                          label='Asal Universitas'
                           id='university-name'
                           type='text'
                           validation={{
-                            required: 'University name is required',
+                            required: 'Asal Universitas tidak boleh kosong',
                           }}
                         />
                       </div>
@@ -96,11 +98,13 @@ export default function CreateTeamNPCSenior() {
 
                       <div className='sm:col-span-3'>
                         <LightInput
-                          label='Province'
+                          label='Provinsi'
                           id='province'
                           type='text'
                           readOnly
-                          validation={{ required: 'Province is required' }}
+                          validation={{
+                            required: 'Provinsi tidak boleh kosong',
+                          }}
                         />
                       </div>
                     </div>
@@ -108,15 +112,15 @@ export default function CreateTeamNPCSenior() {
 
                   <div className='pt-8'>
                     <h3 className='text-lg font-semibold leading-6 text-gray-900'>
-                      Team Leader Information
+                      Data Ketua Tim
                     </h3>
                     <div className='grid grid-cols-1 mt-6 gap-y-6 gap-x-4 sm:grid-cols-6'>
                       <div className='sm:col-span-4'>
                         <LightInput
-                          label='Name'
+                          label='Nama'
                           id='leader-name'
                           type='text'
-                          validation={{ required: 'Name is required' }}
+                          validation={{ required: 'Nama tidak boleh kosong' }}
                         />
                       </div>
 
@@ -126,10 +130,10 @@ export default function CreateTeamNPCSenior() {
                           id='leader-email'
                           type='email'
                           validation={{
-                            required: 'Email is required',
+                            required: 'Email tidak boleh kosong',
                             pattern: {
                               value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                              message: 'Please input correct email address',
+                              message: 'Email tidak valid',
                             },
                           }}
                         />
@@ -140,21 +144,22 @@ export default function CreateTeamNPCSenior() {
                           label='NIM'
                           id='leader-nim'
                           type='text'
-                          validation={{ required: 'NIM is required' }}
+                          validation={{ required: 'NIM tidak boleh kosong' }}
                         />
                       </div>
 
                       <div className='sm:col-span-4'>
                         <LightInput
-                          label='Phone Number'
+                          label='Nomor Telepon'
                           id='leader-phone'
                           type='text'
+                          helperText='Nomor Telepon diawali +62'
                           validation={{
-                            required: 'Phone Number is required',
+                            required: 'Nomor Telepon tidak boleh kosong',
                             pattern: {
                               value: /^\+628[1-9][0-9]{8,11}$/,
                               message:
-                                'Please fill in phone number starting with +62 and correct format',
+                                'Nomor Telepon harus diawali +62 dan memiliki panjang 13-15 karakter',
                             },
                           }}
                         />
@@ -162,10 +167,9 @@ export default function CreateTeamNPCSenior() {
 
                       <div className='sm:col-span-2'>
                         <LightInput
-                          label='Line ID'
+                          label='ID Line (Opsional)'
                           id='leader-line'
                           type='text'
-                          validation={{ required: 'Line ID is required' }}
                         />
                       </div>
 
@@ -174,7 +178,7 @@ export default function CreateTeamNPCSenior() {
                           label='Address'
                           id='leader-address'
                           type='text'
-                          validation={{ required: 'Address is required' }}
+                          validation={{ required: 'Alamat tidak boleh kosong' }}
                         />
                       </div>
 
@@ -196,15 +200,15 @@ export default function CreateTeamNPCSenior() {
 
                   <div className='pt-8'>
                     <h3 className='text-lg font-semibold leading-6 text-gray-900'>
-                      Team Member 1 Information
+                      Data Anggota 1
                     </h3>
                     <div className='grid grid-cols-1 mt-6 gap-y-6 gap-x-4 sm:grid-cols-6'>
                       <div className='sm:col-span-4'>
                         <LightInput
-                          label='Name'
+                          label='Nama'
                           id='member1-name'
                           type='text'
-                          validation={{ required: 'Name is required' }}
+                          validation={{ required: 'Nama tidak boleh kosong' }}
                         />
                       </div>
 
@@ -214,10 +218,10 @@ export default function CreateTeamNPCSenior() {
                           id='member1-email'
                           type='email'
                           validation={{
-                            required: 'Email is required',
+                            required: 'Email tidak boleh kosong',
                             pattern: {
                               value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                              message: 'Please input correct email address',
+                              message: 'Email tidak valid',
                             },
                           }}
                         />
@@ -228,21 +232,21 @@ export default function CreateTeamNPCSenior() {
                           label='NIM'
                           id='member1-nim'
                           type='text'
-                          validation={{ required: 'NIM is required' }}
+                          validation={{ required: 'NIM tidak boleh kosong' }}
                         />
                       </div>
 
                       <div className='sm:col-span-4'>
                         <LightInput
-                          label='Phone Number'
+                          label='Nomor Telepon'
                           id='member1-phone'
                           type='text'
                           validation={{
-                            required: 'Phone Number is required',
+                            required: 'Nomor Telepon tidak boleh kosong',
                             pattern: {
                               value: /^\+628[1-9][0-9]{8,11}$/,
                               message:
-                                'Please fill in phone number starting with +62 and correct format',
+                                'Nomor Telepon harus diawali +62 dan memiliki panjang 13-15 karakter',
                             },
                           }}
                         />
@@ -250,19 +254,18 @@ export default function CreateTeamNPCSenior() {
 
                       <div className='sm:col-span-2'>
                         <LightInput
-                          label='Line ID'
+                          label='ID Line (Opsional)'
                           id='member1-line'
                           type='text'
-                          validation={{ required: 'Line ID is required' }}
                         />
                       </div>
 
                       <div className='sm:col-span-6'>
                         <LightInput
-                          label='Address'
+                          label='Alamat'
                           id='member1-address'
                           type='text'
-                          validation={{ required: 'Address is required' }}
+                          validation={{ required: 'Alamat tidak boleh kosong' }}
                         />
                       </div>
 
@@ -284,15 +287,15 @@ export default function CreateTeamNPCSenior() {
 
                   <div className='pt-8'>
                     <h3 className='text-lg font-semibold leading-6 text-gray-900'>
-                      Team Member 2 Information
+                      Data Anggota 2
                     </h3>
                     <div className='grid grid-cols-1 mt-6 gap-y-6 gap-x-4 sm:grid-cols-6'>
                       <div className='sm:col-span-4'>
                         <LightInput
-                          label='Name'
+                          label='Nama'
                           id='member2-name'
                           type='text'
-                          validation={{ required: 'Name is required' }}
+                          validation={{ required: 'Nama tidak boleh kosong' }}
                         />
                       </div>
 
@@ -302,10 +305,10 @@ export default function CreateTeamNPCSenior() {
                           id='member2-email'
                           type='email'
                           validation={{
-                            required: 'Email is required',
+                            required: 'Email tidak boleh kosong',
                             pattern: {
                               value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                              message: 'Please input correct email address',
+                              message: 'Email tidak valid',
                             },
                           }}
                         />
@@ -322,15 +325,15 @@ export default function CreateTeamNPCSenior() {
 
                       <div className='sm:col-span-4'>
                         <LightInput
-                          label='Phone Number'
+                          label='Nomor Telepon'
                           id='member2-phone'
                           type='text'
                           validation={{
-                            required: 'Phone Number is required',
+                            required: 'Nomor Telepon tidak boleh kosong',
                             pattern: {
                               value: /^\+628[1-9][0-9]{8,11}$/,
                               message:
-                                'Please fill in phone number starting with +62 and correct format',
+                                'Nomor Telepon harus diawali +62 dan memiliki panjang 13-15 karakter',
                             },
                           }}
                         />
@@ -338,19 +341,18 @@ export default function CreateTeamNPCSenior() {
 
                       <div className='sm:col-span-2'>
                         <LightInput
-                          label='Line ID'
+                          label='ID Line (Opsional)'
                           id='member2-line'
                           type='text'
-                          validation={{ required: 'Line ID is required' }}
                         />
                       </div>
 
                       <div className='sm:col-span-6'>
                         <LightInput
-                          label='Address'
+                          label='Alamat'
                           id='member2-address'
                           type='text'
-                          validation={{ required: 'Address is required' }}
+                          validation={{ required: 'Alamat tidak boleh kosong' }}
                         />
                       </div>
 
@@ -377,13 +379,13 @@ export default function CreateTeamNPCSenior() {
                       to='/my/sch-npc/team'
                       className='px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-dark-400'
                     >
-                      Cancel
+                      Kembali
                     </Link>
                     <button
                       type='submit'
                       className='inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-npc-400 hover:bg-npc-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-npc-400'
                     >
-                      Save
+                      Buat Tim
                     </button>
                   </div>
                 </div>
