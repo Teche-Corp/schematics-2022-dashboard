@@ -1,12 +1,6 @@
-import DashboardShell from '@/layout/DashboardShell';
-import { useEffect, useState } from 'react';
-import Modal from '@/components/Modal';
-import { Link } from 'react-router-dom';
-import HorizontalTimeline from '@/components/HorizontalTimeline';
-import TeamDetail from '@/components/TeamDetail';
 import axios from 'axios';
-
-import CenteredAccordion from '@/components/CenteredAccordion';
+import toast from 'react-hot-toast';
+import { useEffect, useState } from 'react';
 import {
   HiClipboardCheck,
   HiFire,
@@ -14,10 +8,16 @@ import {
   HiUserGroup,
   HiUsers,
 } from 'react-icons/hi';
+import { Link } from 'react-router-dom';
+
+import CenteredAccordion from '@/components/CenteredAccordion';
+import HorizontalTimeline from '@/components/HorizontalTimeline';
+import Modal from '@/components/Modal';
+import TeamDetail from '@/components/TeamDetail';
 import TeamMemberDetail from '@/components/TeamMemberDetail';
-import { useTeamDispatch, useTeamState } from '@/contexts/TeamContext';
 import { useAuthState } from '@/contexts/AuthContext';
-import toast from 'react-hot-toast';
+import { useTeamDispatch } from '@/contexts/TeamContext';
+import DashboardShell from '@/layout/DashboardShell';
 import { bearerToken } from '@/lib/helper';
 
 export default function EventNPC() {
