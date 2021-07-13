@@ -28,6 +28,7 @@ import PaymentNLC from '@/pages/nlc/PaymentNLC';
 import EventNPC from '@/pages/npc/EventNPC';
 import CreateTeamNPCJunior from '@/pages/npc/CreateTeamNPCJunior';
 import CreateTeamNPCSenior from '@/pages/npc/CreateTeamNPCSenior';
+import PaymentNPC from '@/pages/npc/PaymentNPC';
 
 import Admin from '@/pages/admin/Admin';
 import Voucher from '@/pages/admin/Voucher';
@@ -75,6 +76,14 @@ const routeItems = [
     path: '/my/sch-nlc/team',
     component: EventNLC,
     visible: true,
+  },
+  {
+    auth: 'private',
+    route: PrivateRoute,
+    key: 'nlc-create-team',
+    path: '/my/sch-npc/payment',
+    component: PaymentNPC,
+    visible: false,
   },
   {
     auth: 'private',
