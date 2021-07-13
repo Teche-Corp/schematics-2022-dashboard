@@ -81,8 +81,8 @@ export default function CreateTeam() {
           headers: { ...bearerToken(), 'Content-Type': 'multipart/form-data' },
         })
         .then((res) => {
-          dispatch('ASSIGN_NLC', res.data.data);
-          history.push('/my/sch-npc/team/junior');
+          dispatch('ASSIGN_NPC', res.data.data);
+          history.push('/my/sch-npc/team');
         }),
       {
         loading: 'Loading...',
