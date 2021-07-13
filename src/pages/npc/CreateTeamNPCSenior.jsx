@@ -1,17 +1,48 @@
-import { FormProvider, useForm } from 'react-hook-form';
+import { useEffect } from 'react';
+import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import useSWR from 'swr';
 
 import DashboardShell from '@/layout/DashboardShell';
 import LightInput from '@/components/LightInput';
+import SelectCity from '@/components/SelectCity';
 import DragnDropInput from '@/components/DragnDropInput';
 
 export default function CreateTeamNPCSenior() {
   const methods = useForm();
-  const { handleSubmit } = methods;
+  const { control, handleSubmit, setValue } = methods;
+
+  const { data, error: fetchError } = useSWR('/region/list');
+  const cities = data?.data;
+
+  const cityValue = useWatch({
+    control,
+    name: 'city',
+  });
+
+  useEffect(() => {
+    if (cityValue !== undefined) {
+      const id = cityValue?.value;
+      const city = cities.find((city) => city.id === id);
+      setValue('province', city?.province_name, {
+        shouldValidate: true,
+        shouldDirty: true,
+      });
+      setValue('region', city?.region_name, {
+        shouldValidate: true,
+        shouldDirty: true,
+      });
+    }
+  }, [cityValue, cities, setValue]);
 
   const handleCreateTeam = (data) => {
     console.log(data);
   };
+
+  if (fetchError) {
+    return toast.error('Gagal mengambil data kota.');
+  }
 
   return (
     <DashboardShell>
@@ -56,11 +87,10 @@ export default function CreateTeamNPCSenior() {
                       </div>
 
                       <div className='sm:col-span-3'>
-                        <LightInput
-                          label='City'
-                          id='city'
-                          type='text'
-                          validation={{ required: 'City is required' }}
+                        <SelectCity
+                          cities={cities || []}
+                          validation={{ required: 'Kota tidak boleh kosong' }}
+                          disabled={!cities}
                         />
                       </div>
 
@@ -69,6 +99,7 @@ export default function CreateTeamNPCSenior() {
                           label='Province'
                           id='province'
                           type='text'
+                          readOnly
                           validation={{ required: 'Province is required' }}
                         />
                       </div>
