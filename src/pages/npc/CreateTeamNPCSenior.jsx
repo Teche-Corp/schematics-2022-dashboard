@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import useSWR from 'swr';
 
+import { useAuthState } from '@/contexts/AuthContext';
+
 import DashboardShell from '@/layout/DashboardShell';
 import LightInput from '@/components/LightInput';
 import SelectCity from '@/components/SelectCity';
@@ -20,6 +22,8 @@ export default function CreateTeamNPCSenior() {
     control,
     name: 'city',
   });
+
+  const { user } = useAuthState();
 
   useEffect(() => {
     if (cityValue !== undefined) {
@@ -120,6 +124,8 @@ export default function CreateTeamNPCSenior() {
                           label='Nama'
                           id='leader-name'
                           type='text'
+                          defaultValue={user.name}
+                          readOnly
                           validation={{ required: 'Nama tidak boleh kosong' }}
                         />
                       </div>
@@ -129,6 +135,8 @@ export default function CreateTeamNPCSenior() {
                           label='Email'
                           id='leader-email'
                           type='email'
+                          defaultValue={user.email}
+                          readOnly
                           validation={{
                             required: 'Email tidak boleh kosong',
                             pattern: {
@@ -154,6 +162,8 @@ export default function CreateTeamNPCSenior() {
                           id='leader-phone'
                           type='text'
                           helperText='Nomor Telepon diawali +62'
+                          defaultValue={user.phone}
+                          readOnly
                           validation={{
                             required: 'Nomor Telepon tidak boleh kosong',
                             pattern: {
