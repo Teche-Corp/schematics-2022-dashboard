@@ -172,7 +172,7 @@ export default function CreateTeam() {
                       <div className='sm:col-span-4'>
                         <LightInput
                           label='Nama'
-                          id='member-name'
+                          id='leader-name'
                           type='text'
                           validation={{ required: 'Nama tidak boleh kosong' }}
                         />
@@ -181,7 +181,7 @@ export default function CreateTeam() {
                       <div className='sm:col-span-4'>
                         <LightInput
                           label='Email'
-                          id='member-email'
+                          id='leader-email'
                           type='email'
                           validation={{
                             required: 'Email tidak boleh kosong',
@@ -196,7 +196,7 @@ export default function CreateTeam() {
                       <div className='sm:col-span-3'>
                         <LightInput
                           label='NISN'
-                          id='member-nisn'
+                          id='leader-nisn'
                           type='text'
                           validation={{ required: 'NISN tidak boleh kosong' }}
                         />
@@ -205,7 +205,7 @@ export default function CreateTeam() {
                       <div className='sm:col-span-4'>
                         <LightInput
                           label='Nomor Telepon'
-                          id='member-phone'
+                          id='leader-phone'
                           type='text'
                           placeholder='+6281234567890'
                           helperText='Nomor Telepon diawali +62'
@@ -223,7 +223,7 @@ export default function CreateTeam() {
                       <div className='sm:col-span-2'>
                         <LightInput
                           label='ID Line (Opsional)'
-                          id='member-line'
+                          id='leader-line'
                           type='text'
                         />
                       </div>
@@ -231,7 +231,7 @@ export default function CreateTeam() {
                       <div className='sm:col-span-6'>
                         <LightInput
                           label='Alamat'
-                          id='member-address'
+                          id='leader-address'
                           type='text'
                           validation={{
                             required: 'Alamat tidak boleh kosong',
@@ -242,7 +242,7 @@ export default function CreateTeam() {
                       <div className='sm:col-span-6'>
                         <DragnDropInput
                           label='Foto Kartu Pelajar/Surat Keterangan Siswa Aktif'
-                          id='member-id'
+                          id='leader-id'
                           accept='image/png, image/jpg, image/jpeg'
                           helperText='File dalam format jpg, png, atau jpeg'
                           maxFiles={1}
