@@ -1,17 +1,25 @@
 import { useEffect } from 'react';
+import { useHistory } from 'react-router';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import axios from 'axios';
 import useSWR from 'swr';
 
-import { useAuthState } from '@/contexts/AuthContext';
+import { useAuthDispatch, useAuthState } from '@/contexts/AuthContext';
 
 import DashboardShell from '@/layout/DashboardShell';
 import LightInput from '@/components/LightInput';
 import SelectCity from '@/components/SelectCity';
 import DragnDropInput from '@/components/DragnDropInput';
 
+import { bearerToken, classNames } from '@/lib/helper';
+import useLoadingToast from '@/hooks/useLoadingToast';
+
 export default function CreateTeamNPCSenior() {
+  const history = useHistory();
+  const isLoading = useLoadingToast();
+
   const methods = useForm();
   const { control, handleSubmit, setValue } = methods;
 
@@ -24,6 +32,7 @@ export default function CreateTeamNPCSenior() {
   });
 
   const { user } = useAuthState();
+  const dispatch = useAuthDispatch();
 
   useEffect(() => {
     if (cityValue !== undefined) {
@@ -41,7 +50,58 @@ export default function CreateTeamNPCSenior() {
   }, [cityValue, cities, setValue]);
 
   const handleCreateTeam = (data) => {
-    console.log(data);
+    const formData = new FormData();
+
+    const newBody = {
+      kota_id: data.city.value,
+      ketua_nim: data['leader-nim'],
+      ketua_alamat: data['leader-address'],
+      ketua_id_line: data['leader-line'],
+      team_name: data['team-name'],
+      team_password: `schnpc{user.name}`,
+      team_institusi: data['university-name'],
+      kp_ketua: data['leader-student-id'][0],
+      anggota: [
+        {
+          name: data['member1-name'],
+          email: data['member1-email'],
+          nim: data['member1-nim'],
+          phone: data['member1-phone'],
+          alamat: data['member1-address'],
+          id_line: data['member1-line'],
+          kp_anggota: data['member1-student-id'][0],
+        },
+        {
+          name: data['member2-name'],
+          email: data['member2-email'],
+          nim: data['member2-nim'],
+          phone: data['member2-phone'],
+          alamat: data['member2-address'],
+          id_line: data['member2-line'],
+          kp_anggota: data['member2-student-id'][0],
+        },
+      ],
+    };
+
+    for (let key in newBody) {
+      formData.append(key, newBody[key]);
+    }
+
+    toast.promise(
+      axios
+        .post('/npc/team/create', formData, {
+          headers: { ...bearerToken(), 'Content-Type': 'multipart/form-data' },
+        })
+        .then((res) => {
+          dispatch('ASSIGN_NPC', res.data.data);
+          history.push('/my/sch-npc/team');
+        }),
+      {
+        loading: 'Loading...',
+        success: 'Berhasil membuat tim!',
+        error: (err) => err.response.data.msg,
+      },
+    );
   };
 
   if (fetchError) {
@@ -393,7 +453,11 @@ export default function CreateTeamNPCSenior() {
                     </Link>
                     <button
                       type='submit'
-                      className='inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-npc-400 hover:bg-npc-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-npc-400'
+                      disabled={isLoading}
+                      className={classNames(
+                        'inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-npc-400 hover:bg-npc-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-npc-400',
+                        isLoading && 'filter brightness-90 cursor-wait',
+                      )}
                     >
                       Buat Tim
                     </button>
