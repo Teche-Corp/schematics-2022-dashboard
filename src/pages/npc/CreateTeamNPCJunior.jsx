@@ -57,18 +57,10 @@ export default function CreateTeam() {
       ketua_nisn: data['leader-nisn'],
       ketua_alamat: data['leader-address'],
       ketua_id_line: data['leader-line'],
-      status_id: 2,
       team_name: data['team-name'],
       team_password: `schnpc${user.name}`,
       team_institusi: data['school-name'],
       kp_ketua: data['leader-id'][0],
-      'anggota[0][name]': data['member-name'],
-      'anggota[0][email]': data['member-email'],
-      'anggota[0][nisn]': data['member-nisn'],
-      'anggota[0][phone]': data['member-phone'],
-      'anggota[0][alamat]': data['member-address'],
-      'anggota[0][id_line]': data['member-line'],
-      'anggota[0][kp_anggota]': data['member-id'][0],
     };
 
     for (let key in newBody) {
