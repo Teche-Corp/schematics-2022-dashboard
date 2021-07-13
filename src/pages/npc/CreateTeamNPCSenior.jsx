@@ -124,9 +124,9 @@ export default function CreateTeamNPCSenior() {
                 <div className='space-y-8 divide-y divide-gray-200'>
                   <div>
                     <h1 className='mb-6 text-4xl font-extrabold tracking-tight text-gray-900 sm:text-3xl md:text-4xl'>
-                      <span className='block xl:inline'>Create Team</span>{' '}
+                      <span className='block xl:inline'>Buat Tim</span>{' '}
                       <span className='block text-red-400 xl:inline'>
-                        NPC Senior
+                        Schematics NPC Senior
                       </span>
                     </h1>
                     <div className='grid grid-cols-1 mt-6 gap-y-6 gap-x-4 sm:grid-cols-6'>
