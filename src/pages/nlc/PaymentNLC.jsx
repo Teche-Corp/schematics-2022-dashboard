@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 
 import { HiOutlineArrowCircleLeft } from 'react-icons/hi';
 
-import { useAuthState } from '@/contexts/AuthContext';
+import { useTeamState } from '@/contexts/TeamContext';
 import useLoadingToast from '@/hooks/useLoadingToast';
 
 import DashboardShell from '@/layout/DashboardShell';
@@ -15,9 +15,10 @@ import LightInput from '@/components/LightInput';
 import SelectInput from '@/components/SelectInput';
 
 import { classNames, bearerToken } from '@/lib/helper';
+import useTeamId from '@/hooks/useTeamId';
 
 export default function PaymentNLC() {
-  const { user } = useAuthState();
+  const { nlc } = useTeamState();
   const isLoading = useLoadingToast();
 
   const [currentTab, setCurrentTab] = useState(0);
@@ -29,6 +30,12 @@ export default function PaymentNLC() {
   const { control, handleSubmit } = methods;
 
   // const { handleSubmit: handleSubmit2, register } = useForm();
+
+  const teamId = useTeamId('nlc');
+
+  if (!teamId || nlc?.status_pembayaran !== null) {
+    history.push('/my/sch-nlc/team');
+  }
 
   const paymentMethod = [
     { text: 'QRIS', value: 0 },
@@ -60,7 +67,7 @@ export default function PaymentNLC() {
     const formData = new FormData();
 
     const newBody = {
-      team_id: user.team[0].nlc,
+      team_id: teamId,
       jumlah: data['payment-method'] === '0' ? 101000 : 100000,
       sumber: data['payment-method'] === '0' ? 'QRIS' : 'Mandiri',
       kode_voucher: '',

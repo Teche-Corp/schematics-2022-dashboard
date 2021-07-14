@@ -12,7 +12,6 @@ import {
 } from 'react-icons/hi';
 import { ImSpinner8 } from 'react-icons/im';
 
-import { useAuthState } from '@/contexts/AuthContext';
 import { useTeamDispatch, useTeamState } from '@/contexts/TeamContext';
 
 import DashboardShell from '@/layout/DashboardShell';
@@ -22,6 +21,7 @@ import TeamDetail from '@/components/TeamDetail';
 import TeamMemberDetail from '@/components/TeamMemberDetail';
 
 import { bearerToken } from '@/lib/helper';
+import useTeamId from '@/hooks/useTeamId';
 
 const dataTimeline = [
   {
@@ -69,16 +69,17 @@ const dataTimeline = [
 export default function EventNLC() {
   const [loading, setLoading] = useState(true);
 
-  const { user } = useAuthState();
   const { nlc } = useTeamState();
   const dispatch = useTeamDispatch();
+
+  const teamId = useTeamId('nlc');
 
   useEffect(() => {
     const loadTeam = async () => {
       try {
         const res = await axios.post(
           '/nlc/team/find',
-          { team_id: user.team[0].nlc },
+          { team_id: teamId },
           {
             headers: { ...bearerToken() },
           },
@@ -95,7 +96,7 @@ export default function EventNLC() {
       }
     };
 
-    if (user?.team?.[0]?.nlc) {
+    if (teamId) {
       loadTeam();
     } else {
       setLoading(false);

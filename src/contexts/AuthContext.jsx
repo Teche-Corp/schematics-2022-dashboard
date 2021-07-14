@@ -33,14 +33,26 @@ const reducer = (state, { type, payload }) => {
         ...state,
         user: payload,
       };
-    case 'ASSIGN_NLC':
+    case 'ASSIGN_NLC': {
+      let newTeam = [...state.user.team];
+      const index = newTeam.findIndex(
+        (teamElement) => teamElement.event === 'nlc',
+      );
+
+      if (index === -1) {
+        newTeam.push({ event: 'nlc', team_id: payload });
+      } else {
+        newTeam[index] = { event: 'nlc', team_id: payload };
+      }
+
       return {
         ...state,
         user: {
           ...state.user,
-          team: [...state.user.team, { nlc: payload }],
+          team: newTeam,
         },
       };
+    }
     case 'ASSIGN_NPC':
       return {
         ...state,

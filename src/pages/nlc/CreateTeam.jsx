@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
-import { useHistory } from 'react-router';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import axios from 'axios';
 import useSWR from 'swr';
@@ -15,6 +14,7 @@ import DragnDropInput from '@/components/DragnDropInput';
 
 import { bearerToken, classNames } from '@/lib/helper';
 import useLoadingToast from '@/hooks/useLoadingToast';
+import useTeamId from '@/hooks/useTeamId';
 
 export default function CreateTeam() {
   const history = useHistory();
@@ -33,6 +33,12 @@ export default function CreateTeam() {
 
   const { user } = useAuthState();
   const dispatch = useAuthDispatch();
+
+  const teamId = useTeamId('nlc');
+
+  if (teamId) {
+    history.push('/my/sch-nlc/team');
+  }
 
   useEffect(() => {
     if (cityValue !== undefined) {
