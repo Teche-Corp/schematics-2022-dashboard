@@ -7,7 +7,6 @@ import {
   HiSpeakerphone,
   HiUserGroup,
 } from 'react-icons/hi';
-import Table from '@/components/Table';
 import { BiBrain } from 'react-icons/bi';
 import { FaMoneyCheck } from 'react-icons/fa';
 
@@ -150,13 +149,6 @@ export default function Admin() {
                 </div>
               ))}
             </div>
-          </div>
-
-          <div className='max-w-6xl px-4 mx-auto space-y-3 sm:px-6 lg:px-8'>
-            <h2 className='max-w-6xl mx-auto text-lg font-medium leading-6 text-gray-900 mt-7 '>
-              Tabel Pendaftaran
-            </h2>
-            <Table />
           </div>
         </div>
       </main>
