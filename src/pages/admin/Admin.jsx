@@ -144,7 +144,7 @@ export default function Admin() {
                             </div>
                           </dd>
                           <p className='text-xs text-gray-900'>
-                            {card.paid ? `sudah membayar: ${card.paid}` : ''}
+                            {card.paid ? `${card.paid} sudah membayar` : ''}
                           </p>
                         </dl>
                       </div>
