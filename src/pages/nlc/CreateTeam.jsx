@@ -21,7 +21,7 @@ export default function CreateTeam() {
   const isLoading = useLoadingToast();
 
   const methods = useForm();
-  const { control, handleSubmit, setValue } = methods;
+  const { control, getValues, handleSubmit, setValue } = methods;
 
   const { data, error: fetchError } = useSWR('/region/list');
   const cities = data?.data;
@@ -298,6 +298,9 @@ export default function CreateTeam() {
                               value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
                               message: 'Email tidak valid',
                             },
+                            validate: (value) =>
+                              value !== getValues('leader-email') ||
+                              'Email tidak boleh sama dengan email ketua tim',
                           }}
                         />
                       </div>
