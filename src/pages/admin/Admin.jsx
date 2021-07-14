@@ -144,8 +144,9 @@ export default function Admin() {
                             </div>
                           </dd>
                           <p className='text-xs text-gray-900'>
-                            {card.paid ? 'sudah membayar: ' : undefined}
-                            {card.paid ?? undefined}
+                            {card.paid
+                              ? `sudah membayar: ${card.paid}`
+                              : undefined}
                           </p>
                         </dl>
                       </div>
