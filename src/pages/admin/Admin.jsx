@@ -28,6 +28,7 @@ const cards = [
     href: '#',
     icon: HiDesktopComputer,
     amount: '1',
+    paid: '1',
     date: 'Juni 2021',
   },
   {
@@ -35,6 +36,7 @@ const cards = [
     href: '#',
     icon: BiBrain,
     amount: '1',
+    paid: '1',
     date: 'Juli 2021',
   },
   {
@@ -42,6 +44,7 @@ const cards = [
     href: '#',
     icon: HiSpeakerphone,
     amount: '0',
+    paid: '0',
     date: 'Oktober 2021',
   },
   {
@@ -49,6 +52,7 @@ const cards = [
     href: '#',
     icon: HiOutlineSpeakerphone,
     amount: '0',
+    paid: '0',
     date: 'Juni 2021',
   },
 ];
@@ -140,7 +144,8 @@ export default function Admin() {
                             </div>
                           </dd>
                           <p className='text-xs text-gray-900'>
-                            {card.date ?? undefined}
+                            {card.paid ? 'sudah membayar: ' : undefined}
+                            {card.paid ?? undefined}
                           </p>
                         </dl>
                       </div>
