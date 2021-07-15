@@ -109,7 +109,7 @@ export default function EventNLC() {
     region: nlc?.region,
     city: nlc?.kota,
     province: nlc?.provinsi,
-    password: `schnlc${nlc?.anggota[1].nama}`,
+    password: `schnlc${ketua?.nama}`,
     payment:
       nlc?.status_pembayaran === null
         ? '-'
