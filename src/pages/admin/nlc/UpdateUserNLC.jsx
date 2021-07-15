@@ -9,6 +9,7 @@ import { useAuthState } from '@/contexts/AuthContext';
 import DashboardShell from '@/layout/DashboardShell';
 import LightInput from '@/components/LightInput';
 import SelectCity from '@/components/SelectCity';
+import SelectInput from '@/components/SelectInput';
 
 import { classNames } from '@/lib/helper';
 import useLoadingToast from '@/hooks/useLoadingToast';
@@ -27,6 +28,21 @@ export default function UpdateUserNLC() {
 
   let { id } = useParams();
   const getDatabyID = dummyData.find((data) => data.id === Number(id));
+
+  const paymentMethod = [
+    { text: 'QRIS', value: 0 },
+    { text: 'Mandiri', value: 1 },
+  ];
+
+  useEffect(() => {
+    const value = paymentMethod.find(
+      (method) => method.text === getDatabyID['payment-method'],
+    ).value;
+    setValue('payment-method', value.toString(), {
+      shouldValidate: true,
+      shouldDirty: true,
+    });
+  }, []);
 
   const cityValue = useWatch({
     control,
@@ -69,7 +85,6 @@ export default function UpdateUserNLC() {
   };
 
   const handleEditProfile = (data) => {
-    console.log(data);
     const formData = new FormData();
 
     const newBody = {
@@ -81,6 +96,8 @@ export default function UpdateUserNLC() {
       team_name: data['team-name'],
       team_password: `schnlc${user.name}`,
       team_institusi: data['school-name'],
+      'payment-method': data['payment-method'] === 0 ? 'QRIS' : 'Mandiri',
+      'account-id': data['account-id'],
       'anggota[0][name]': data['member-name'],
       'anggota[0][email]': data['member-email'],
       'anggota[0][nisn]': data['member-nisn'],
@@ -92,6 +109,8 @@ export default function UpdateUserNLC() {
     for (let key in newBody) {
       formData.append(key, newBody[key]);
     }
+
+    console.log(newBody);
   };
 
   if (fetchError) {
@@ -354,6 +373,45 @@ export default function UpdateUserNLC() {
                       </div>
                     </div>
                   </div>
+
+                  <div className='pt-8'>
+                    <h3 className='text-lg font-semibold leading-6 text-gray-900'>
+                      Upload Bukti Pembayaran
+                    </h3>
+                    <div className='grid grid-cols-1 mt-6 gap-y-6 gap-x-4 sm:grid-cols-6'>
+                      <div className='sm:col-span-4'>
+                        <SelectInput
+                          label='Metode Pembayaran'
+                          id='payment-method'
+                          placeholder='Pilih metode pembayaran'
+                          defaultValue={
+                            paymentMethod.find(
+                              (method) =>
+                                method.text === getDatabyID['payment-method'],
+                            ).value
+                          }
+                          options={paymentMethod}
+                          disabled={!isEditing}
+                          validation={{
+                            required: 'Metode Pembayaran tidak boleh kosong',
+                          }}
+                        />
+                      </div>
+
+                      <div className='sm:col-span-4'>
+                        <LightInput
+                          label='Nomor Rekening'
+                          id='account-id'
+                          type='text'
+                          defaultValue={getDatabyID['account-id']}
+                          readOnly={!isEditing}
+                          validation={{
+                            required: 'Nomor Rekening tidak boleh kosong',
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 <div className='pt-5'>
@@ -407,6 +465,8 @@ const dummyData = [
     sekolah: 'SMAN 3 BEKASI',
     kota: 'KOTA BEKASI',
     provinsi: 'Jawa Barat',
+    'payment-method': 'Mandiri',
+    'account-id': 11223344,
     anggota: {
       nama: 'Rizqi Tsani',
       email: 'tsani@mail.com',
@@ -432,6 +492,8 @@ const dummyData = [
     sekolah: 'SMAN 3 Surabaya',
     kota: 'KOTA SURABAYA',
     provinsi: 'Jawa Timur',
+    'payment-method': 'QRIS',
+    'account-id': 99887766,
     anggota: {
       nama: 'Bobu Tsani',
       email: 'bobu@mail.com',
