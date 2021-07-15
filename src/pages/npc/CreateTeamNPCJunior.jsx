@@ -152,16 +152,6 @@ export default function CreateTeam() {
                           readOnly
                         />
                       </div>
-
-                      <div className='sm:col-span-3'>
-                        <LightInput
-                          label='Region'
-                          id='region'
-                          type='text'
-                          validation={{ required: 'Region tidak boleh kosong' }}
-                          readOnly
-                        />
-                      </div>
                     </div>
                   </div>
 
