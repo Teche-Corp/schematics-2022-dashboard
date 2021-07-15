@@ -13,41 +13,73 @@ export default function TeamDetail({ data = {} }) {
           <dl className='grid grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-2'>
             <div className='sm:col-span-1'>
               <dt className='text-sm font-medium text-gray-500'>Nama Tim</dt>
-              <dd className='mt-1 text-sm text-gray-900'>{data.name}</dd>
+              {data.name ? (
+                <dd className='mt-1 text-sm text-gray-900'>{data.name}</dd>
+              ) : (
+                <TextSkeleton />
+              )}
             </div>
             <div className='sm:col-span-1'>
               <dt className='text-sm font-medium text-gray-500'>
                 Asal Sekolah
               </dt>
-              <dd className='mt-1 text-sm text-gray-900'>{data.school}</dd>
+              {data.school ? (
+                <dd className='mt-1 text-sm text-gray-900'>{data.school}</dd>
+              ) : (
+                <TextSkeleton />
+              )}
             </div>
             <div className='sm:col-span-1'>
               <dt className='text-sm font-medium text-gray-500'>Kota</dt>
-              <dd className='mt-1 text-sm text-gray-900'>{data.city}</dd>
+              {data.city ? (
+                <dd className='mt-1 text-sm text-gray-900'>{data.city}</dd>
+              ) : (
+                <TextSkeleton />
+              )}
             </div>
             <div className='sm:col-span-1'>
               <dt className='text-sm font-medium text-gray-500'>Provinsi</dt>
-              <dd className='mt-1 text-sm text-gray-900'>{data.province}</dd>
+              {data.province ? (
+                <dd className='mt-1 text-sm text-gray-900'>{data.province}</dd>
+              ) : (
+                <TextSkeleton />
+              )}
             </div>
             <div className='sm:col-span-1'>
               <dt className='text-sm font-medium text-gray-500'>Region</dt>
-              <dd className='mt-1 text-sm text-gray-900'>{data.region}</dd>
+              {data.region ? (
+                <dd className='mt-1 text-sm text-gray-900'>{data.region}</dd>
+              ) : (
+                <TextSkeleton />
+              )}
             </div>
             <div className='sm:col-span-1'>
               <dt className='text-sm font-medium text-gray-500'>
                 Password Tim
               </dt>
-              <dd className='mt-1 text-sm text-gray-900'>{data.password}</dd>
+              {data.password ? (
+                <dd className='mt-1 text-sm text-gray-900'>{data.password}</dd>
+              ) : (
+                <TextSkeleton />
+              )}
             </div>
             <div className='sm:col-span-1'>
               <dt className='text-sm font-medium text-gray-500'>
                 Status Pembayaran
               </dt>
-              <dd className='mt-1 text-sm text-gray-900'>{data.payment}</dd>
+              {data.payment ? (
+                <dd className='mt-1 text-sm text-gray-900'>{data.payment}</dd>
+              ) : (
+                <TextSkeleton />
+              )}
             </div>
             <div className='sm:col-span-1'>
               <dt className='text-sm font-medium text-gray-500'>Tahap</dt>
-              <dd className='mt-1 text-sm text-gray-900'>{data.phase}</dd>
+              {data.phase ? (
+                <dd className='mt-1 text-sm text-gray-900'>{data.phase}</dd>
+              ) : (
+                <TextSkeleton />
+              )}
             </div>
           </dl>
         </div>
@@ -71,4 +103,8 @@ export default function TeamDetail({ data = {} }) {
       </div>
     </div>
   );
+}
+
+function TextSkeleton() {
+  return <div className='w-48 h-5 mt-1 bg-gray-400 rounded animate-pulse' />;
 }
