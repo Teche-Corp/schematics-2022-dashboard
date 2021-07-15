@@ -57,6 +57,7 @@ export default function CreateTeamNPCSenior() {
       ketua_nim: data['leader-nim'],
       ketua_alamat: data['leader-address'],
       ketua_id_line: data['leader-line'],
+      ketua_id_discord: data['leader-discord'],
       team_name: data['team-name'],
       team_password: `schnpc{user.name}`,
       team_institusi: data['university-name'],
@@ -67,6 +68,7 @@ export default function CreateTeamNPCSenior() {
       'anggota[0][phone]': data['member1-phone'],
       'anggota[0][address]': data['member1-address'],
       'anggota[0][line]': data['member1-line'],
+      'anggota[0][discord]': data['member1-discord'],
       'anggota[0][kp_anggota]': data['member1-student-id'][0],
       'anggota[1][name]': data['member2-name'],
       'anggota[1][email]': data['member2-email'],
@@ -74,6 +76,7 @@ export default function CreateTeamNPCSenior() {
       'anggota[1][phone]': data['member2-phone'],
       'anggota[1][address]': data['member2-address'],
       'anggota[1][line]': data['member2-line'],
+      'anggota[1][discord]': data['member2-discord'],
       'anggota[1][kp_anggota]': data['member2-student-id'][0],
     };
 
@@ -210,6 +213,17 @@ export default function CreateTeamNPCSenior() {
                         />
                       </div>
 
+                      <div className='sm:col-span-3'>
+                        <LightInput
+                          label='ID Discord'
+                          id='leader-discord'
+                          type='text'
+                          validation={{
+                            required: 'ID Discord tidak boleh kosong',
+                          }}
+                        />
+                      </div>
+
                       <div className='sm:col-span-4'>
                         <LightInput
                           label='Nomor Telepon'
@@ -300,6 +314,17 @@ export default function CreateTeamNPCSenior() {
                         />
                       </div>
 
+                      <div className='sm:col-span-3'>
+                        <LightInput
+                          label='ID Discord'
+                          id='member1-discord'
+                          type='text'
+                          validation={{
+                            required: 'ID Discord tidak boleh kosong',
+                          }}
+                        />
+                      </div>
+
                       <div className='sm:col-span-4'>
                         <LightInput
                           label='Nomor Telepon'
@@ -384,6 +409,17 @@ export default function CreateTeamNPCSenior() {
                           id='member2-nim'
                           type='text'
                           validation={{ required: 'NIM is required' }}
+                        />
+                      </div>
+
+                      <div className='sm:col-span-3'>
+                        <LightInput
+                          label='ID Discord'
+                          id='member2-discord'
+                          type='text'
+                          validation={{
+                            required: 'ID Discord tidak boleh kosong',
+                          }}
                         />
                       </div>
 
