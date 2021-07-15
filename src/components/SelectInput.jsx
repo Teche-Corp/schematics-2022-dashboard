@@ -11,6 +11,8 @@ export default function SelectInput({
   readOnly = false,
   options = [],
   validation,
+  disabled = false,
+  defaultValue = undefined,
 }) {
   const {
     register,
@@ -28,20 +30,24 @@ export default function SelectInput({
           name={id}
           id={id}
           className={classNames(
-            readOnly === true ? 'bg-gray-100' : '',
+            readOnly || disabled === true ? 'bg-gray-100' : '',
             errors[id]
               ? 'focus:ring-red-500 border-red-500 focus:border-red-500'
               : 'focus:ring-dark-400 focus:border-dark-400',
             'block w-full border-gray-300 rounded-md shadow-sm  sm:text-sm`',
           )}
           aria-describedby={id}
-          defaultValue=''
+          defaultValue={defaultValue}
         >
           <option value='' disabled hidden>
             {placeholder}
           </option>
           {options.map((option) => (
-            <option key={option.value} value={option.value}>
+            <option
+              key={option.value}
+              value={option.value}
+              selected={defaultValue === option.value}
+            >
               {option.text}
             </option>
           ))}
