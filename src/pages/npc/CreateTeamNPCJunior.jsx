@@ -204,7 +204,7 @@ export default function CreateTeam() {
                         />
                       </div>
 
-                      <div className='sm:col-span-4'>
+                      <div className='sm:col-span-3'>
                         <LightInput
                           label='Nomor Telepon'
                           id='leader-phone'
@@ -222,7 +222,7 @@ export default function CreateTeam() {
                         />
                       </div>
 
-                      <div className='sm:col-span-2'>
+                      <div className='sm:col-span-3'>
                         <LightInput
                           label='ID Line (Opsional)'
                           id='leader-line'
