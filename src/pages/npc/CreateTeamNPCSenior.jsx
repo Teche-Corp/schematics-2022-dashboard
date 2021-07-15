@@ -224,7 +224,7 @@ export default function CreateTeamNPCSenior() {
                         />
                       </div>
 
-                      <div className='sm:col-span-4'>
+                      <div className='sm:col-span-3'>
                         <LightInput
                           label='Nomor Telepon'
                           id='leader-phone'
@@ -243,7 +243,7 @@ export default function CreateTeamNPCSenior() {
                         />
                       </div>
 
-                      <div className='sm:col-span-2'>
+                      <div className='sm:col-span-3'>
                         <LightInput
                           label='ID Line (Opsional)'
                           id='leader-line'
@@ -325,7 +325,7 @@ export default function CreateTeamNPCSenior() {
                         />
                       </div>
 
-                      <div className='sm:col-span-4'>
+                      <div className='sm:col-span-3'>
                         <LightInput
                           label='Nomor Telepon'
                           id='member1-phone'
@@ -341,7 +341,7 @@ export default function CreateTeamNPCSenior() {
                         />
                       </div>
 
-                      <div className='sm:col-span-2'>
+                      <div className='sm:col-span-3'>
                         <LightInput
                           label='ID Line (Opsional)'
                           id='member1-line'
@@ -423,7 +423,7 @@ export default function CreateTeamNPCSenior() {
                         />
                       </div>
 
-                      <div className='sm:col-span-4'>
+                      <div className='sm:col-span-3'>
                         <LightInput
                           label='Nomor Telepon'
                           id='member2-phone'
@@ -439,7 +439,7 @@ export default function CreateTeamNPCSenior() {
                         />
                       </div>
 
-                      <div className='sm:col-span-2'>
+                      <div className='sm:col-span-3'>
                         <LightInput
                           label='ID Line (Opsional)'
                           id='member2-line'
