@@ -1,24 +1,13 @@
 import { useCallback, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useDropzone } from 'react-dropzone';
-import Lightbox from 'react-image-lightbox';
 
 import { HiOutlineEye, HiOutlinePaperClip, HiX } from 'react-icons/hi';
 
 import { classNames } from '@/lib/helper';
+import UnstyledLink from '@/components/UnstyledLink';
 
 const FilePreview = ({ file, deleteFile }) => {
-  const [index, setIndex] = useState(0);
-  const [isOpen, setIsOpen] = useState(false);
-
-  const images = [URL.createObjectURL(file)];
-
-  const handleView = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsOpen(true);
-  };
-
   const handleDelete = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -39,12 +28,12 @@ const FilePreview = ({ file, deleteFile }) => {
           <span className='flex-1 w-0 ml-2 truncate'>{file.name}</span>
         </div>
         <div className='flex-shrink-0 ml-4'>
-          <button
-            onClick={handleView}
-            className='mr-2 text-xl font-medium text-gray-500 focus:outline-none hover:text-gray-700'
+          <UnstyledLink
+            href={URL.createObjectURL(file)}
+            className='inline-block mr-2 text-xl font-medium text-gray-500 focus:outline-none hover:text-gray-700'
           >
             <HiOutlineEye />
-          </button>
+          </UnstyledLink>
           <button
             onClick={handleDelete}
             className='text-xl font-medium text-red-500 focus:outline-none hover:text-red-700'
@@ -53,22 +42,6 @@ const FilePreview = ({ file, deleteFile }) => {
           </button>
         </div>
       </li>
-      {isOpen && (
-        <Lightbox
-          mainSrc={images[index]}
-          nextSrc={images[(index + 1) % images.length]}
-          prevSrc={images[(index + images.length - 1) % images.length]}
-          onCloseRequest={() => setIsOpen(false)}
-          onMovePrevRequest={() =>
-            setIndex(
-              (prevIndex) => (prevIndex + images.length - 1) % images.length,
-            )
-          }
-          onMoveNextRequest={() =>
-            setIndex((prevIndex) => (index + 1) % images.length)
-          }
-        />
-      )}
     </>
     // <div key={file.name} className='aspect-w-3 aspect-h-2'>
     //   <img
