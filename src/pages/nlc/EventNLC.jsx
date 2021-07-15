@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
@@ -10,7 +10,6 @@ import {
   HiUsers,
   HiUser,
 } from 'react-icons/hi';
-import { ImSpinner8 } from 'react-icons/im';
 
 import { useTeamDispatch, useTeamState } from '@/contexts/TeamContext';
 
@@ -20,7 +19,7 @@ import HorizontalTimeline from '@/components/HorizontalTimeline';
 import TeamDetail from '@/components/TeamDetail';
 import TeamMemberDetail from '@/components/TeamMemberDetail';
 
-import { bearerToken } from '@/lib/helper';
+import { bearerToken, classNames } from '@/lib/helper';
 import useTeamId from '@/hooks/useTeamId';
 
 const dataTimeline = [
@@ -67,8 +66,6 @@ const dataTimeline = [
 ];
 
 export default function EventNLC() {
-  const [loading, setLoading] = useState(true);
-
   const { nlc } = useTeamState();
   const dispatch = useTeamDispatch();
 
@@ -77,6 +74,8 @@ export default function EventNLC() {
   const anggota = nlc?.anggota.find(
     (anggotaEl) => anggotaEl.role === 'anggota',
   );
+
+  const teamLoaded = Boolean(nlc);
 
   useEffect(() => {
     const loadTeam = async () => {
@@ -95,15 +94,11 @@ export default function EventNLC() {
       } catch (err) {
         console.log(err.response.data);
         toast.error('Gagal mengambil data tim!');
-      } finally {
-        setLoading(false);
       }
     };
 
     if (teamId) {
       loadTeam();
-    } else {
-      setLoading(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -157,16 +152,6 @@ export default function EventNLC() {
     },
   ];
 
-  if (loading) {
-    return (
-      <DashboardShell>
-        <div className='flex flex-col items-center justify-center min-h-screen bg-white text-dark'>
-          <ImSpinner8 className='mb-2 text-4xl animate-spin' />
-        </div>
-      </DashboardShell>
-    );
-  }
-
   return (
     <DashboardShell>
       <main
@@ -175,7 +160,8 @@ export default function EventNLC() {
       >
         <div className='relative max-w-4xl mx-auto md:px-8 xl:px-0'>
           <div className='pt-10 pb-16'>
-            {!nlc ? (
+            {/* If in AuthContext has teamId, then show the team detail page, and show skeleton */}
+            {!teamId ? (
               <div className='px-4 text-center sm:px-6 md:px-0'>
                 <h1 className='text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:text-6xl'>
                   <span className='block xl:inline'>Schematics</span>{' '}
@@ -216,17 +202,23 @@ export default function EventNLC() {
                     <span className='block text-nlc xl:inline'>Tim</span>
                   </h2>
                   <div className='py-4 overflow-hidden bg-white sm:border sm:shadow sm:py-8 sm:px-6 lg:px-8 sm:rounded-lg'>
-                    <TeamDetail data={dataTeam} />
+                    {/* if not loaded yet, then pass undefined */}
+                    <TeamDetail data={teamLoaded ? dataTeam : undefined} />
                     <CenteredAccordion
+                      loading={!teamLoaded}
                       dataAccordion={dataTeamMember}
                       component={TeamMemberDetail}
                     />
                     {nlc?.status_pembayaran ?? (
                       <div className='mx-auto mt-5 sm:flex sm:justify-center md:mt-8'>
                         <div className='rounded-md shadow'>
+                          {/* passing undefined so link won't be clickable */}
                           <Link
-                            to='/my/sch-nlc/payment'
-                            className='flex items-center justify-center px-4 py-2 font-medium text-white border border-transparent rounded-md shadow-sm bg-nlc hover:bg-nlc-400'
+                            to={teamLoaded ? '/my/sch-nlc/payment' : undefined}
+                            className={classNames(
+                              'flex items-center justify-center px-4 py-2 font-medium text-white border border-transparent rounded-md shadow-sm bg-nlc hover:bg-nlc-400',
+                              !teamLoaded && 'filter brightness-75 cursor-wait',
+                            )}
                           >
                             Lakukan Pembayaran
                           </Link>
