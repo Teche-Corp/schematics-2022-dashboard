@@ -1,7 +1,13 @@
 import { Controller, useFormContext } from 'react-hook-form';
 import Select from 'react-select';
 
-export default function SelectCity({ cities, disabled, validation }) {
+export default function SelectCity({
+  cities,
+  disabled,
+  validation,
+  showLabel = true,
+  defaultValue = {},
+}) {
   const customStyles = {
     control: (styles, state) => ({
       ...styles,
@@ -54,7 +60,7 @@ export default function SelectCity({ cities, disabled, validation }) {
   return (
     <div>
       <label htmlFor='city' className='block text-sm font-normal text-gray-700'>
-        Kota
+        {showLabel && 'Kota'}
       </label>
       <div className='relative mt-1'>
         <Controller
@@ -72,6 +78,7 @@ export default function SelectCity({ cities, disabled, validation }) {
                 placeholder='Pilih kota'
                 options={options}
                 styles={styles}
+                defaultValue={defaultValue}
               />
             );
           }}
