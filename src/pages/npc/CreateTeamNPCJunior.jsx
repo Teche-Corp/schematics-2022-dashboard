@@ -57,6 +57,7 @@ export default function CreateTeam() {
       ketua_nisn: data['leader-nisn'],
       ketua_alamat: data['leader-address'],
       ketua_id_line: data['leader-line'],
+      ketua_id_discord: data['leader-discord'],
       team_name: data['team-name'],
       team_password: `schnpc${user.name}`,
       team_institusi: data['school-name'],
@@ -199,6 +200,17 @@ export default function CreateTeam() {
                           id='leader-nisn'
                           type='text'
                           validation={{ required: 'NISN tidak boleh kosong' }}
+                        />
+                      </div>
+
+                      <div className='sm:col-span-3'>
+                        <LightInput
+                          label='ID Discord'
+                          id='leader-discord'
+                          type='text'
+                          validation={{
+                            required: 'ID Discord tidak boleh kosong',
+                          }}
                         />
                       </div>
 
