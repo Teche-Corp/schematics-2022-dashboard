@@ -5,6 +5,7 @@ import { classNames } from '@/lib/helper';
 export default function CenteredAccordion({
   dataAccordion,
   component: Component,
+  loading = false,
 }) {
   return (
     <div className='divide-y-2 divide-gray-200 '>
@@ -14,7 +15,13 @@ export default function CenteredAccordion({
             {({ open }) => (
               <>
                 <dt className='text-lg'>
-                  <Disclosure.Button className='flex items-start justify-between w-full text-left text-gray-400 focus:outline-none'>
+                  <Disclosure.Button
+                    disabled={loading}
+                    className={classNames(
+                      'flex items-start justify-between w-full text-left text-gray-400 focus:outline-none',
+                      loading && 'cursor-wait',
+                    )}
+                  >
                     <h3 className='text-lg font-bold text-gray-900'>
                       {item.title}
                     </h3>
