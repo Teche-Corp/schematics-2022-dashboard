@@ -57,7 +57,7 @@ export default function CreateTeam() {
       ketua_nisn: data['leader-nisn'],
       ketua_alamat: data['leader-address'],
       ketua_id_line: data['leader-line'],
-      ketua_id_discord: data['leader-discord'],
+      ketua_id_facebook: data['leader-discord'],
       team_name: data['team-name'],
       team_password: `schnpc${user.name}`,
       team_institusi: data['school-name'],
