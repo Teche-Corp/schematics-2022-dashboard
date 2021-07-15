@@ -10,7 +10,6 @@ import DashboardShell from '@/layout/DashboardShell';
 import LightInput from '@/components/LightInput';
 import StandAloneInput from '@/components/StandAloneInput';
 import SelectCity from '@/components/SelectCity';
-import DragnDropInput from '@/components/DragnDropInput';
 
 import { classNames } from '@/lib/helper';
 import useLoadingToast from '@/hooks/useLoadingToast';
@@ -83,14 +82,12 @@ export default function UpdateUserNLC() {
       team_name: data['team-name'],
       team_password: `schnlc${user.name}`,
       team_institusi: data['school-name'],
-      kp_ketua: data['leader-id'][0],
       'anggota[0][name]': data['member-name'],
       'anggota[0][email]': data['member-email'],
       'anggota[0][nisn]': data['member-nisn'],
       'anggota[0][phone]': data['member-phone'],
       'anggota[0][alamat]': data['member-address'],
       'anggota[0][id_line]': data['member-line'],
-      'anggota[0][kp_anggota]': data['member-id'][0],
     };
 
     for (let key in newBody) {
@@ -380,30 +377,6 @@ export default function UpdateUserNLC() {
                             )}
                           </div>
                         </div>
-                        <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-b sm:border-gray-200'>
-                          <dt className='text-sm font-medium text-gray-500'>
-                            Foto Kartu Pelajar/Surat Keterangan Siswa Aktif
-                          </dt>
-                          <div className='flex flex-col mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>
-                            {isEditing ? (
-                              <DragnDropInput
-                                label='Foto Kartu Pelajar/Surat Keterangan Siswa Aktif'
-                                id='leader-id'
-                                accept='image/png, image/jpg, image/jpeg'
-                                helperText='File dalam format jpg, png, atau jpeg'
-                                maxFiles={1}
-                                validation={{
-                                  required:
-                                    'Foto Kartu Pelajar tidak boleh kosong',
-                                }}
-                              />
-                            ) : (
-                              <span className='flex-grow'>
-                                {getDatabyID.anggota.kp}
-                              </span>
-                            )}
-                          </div>
-                        </div>
                       </dl>
                       <div className='my-3 space-y-1'>
                         <h3 className='text-lg font-medium leading-6 text-gray-900 '>
@@ -540,30 +513,6 @@ export default function UpdateUserNLC() {
                             )}
                           </div>
                         </div>
-                        <div className='py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-b sm:border-gray-200'>
-                          <dt className='text-sm font-medium text-gray-500'>
-                            Foto Kartu Pelajar/Surat Keterangan Siswa Aktif
-                          </dt>
-                          <div className='flex flex-col mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>
-                            {isEditing ? (
-                              <DragnDropInput
-                                label='Foto Kartu Pelajar/Surat Keterangan Siswa Aktif'
-                                id='member-id'
-                                accept='image/png, image/jpg, image/jpeg'
-                                helperText='File dalam format jpg, png, atau jpeg'
-                                maxFiles={1}
-                                validation={{
-                                  required:
-                                    'Foto Kartu Pelajar tidak boleh kosong',
-                                }}
-                              />
-                            ) : (
-                              <span className='flex-grow'>
-                                {getDatabyID.anggota2.kp}
-                              </span>
-                            )}
-                          </div>
-                        </div>
                       </dl>
                       <div className='flex justify-end pt-8'>
                         {isEditing ? (
@@ -624,7 +573,6 @@ const dummyData = [
       id_line: 'tsaniii',
       nisn: '1111',
       alamat: 'Jalan Raya No 1',
-      kp: '[File1_1]',
     },
     anggota2: {
       nama: 'Agus Budi',
@@ -633,7 +581,6 @@ const dummyData = [
       id_line: 'budii',
       nisn: '1122',
       alamat: 'Jalan Raya No 2',
-      kp: '[File1_2]',
     },
   },
   {
@@ -651,7 +598,6 @@ const dummyData = [
       id_line: 'bobuii',
       nisn: '2211',
       alamat: 'Jalan Raya No 3',
-      kp: '[File2_1]',
     },
     anggota2: {
       nama: 'Bibu Budi',
@@ -660,7 +606,6 @@ const dummyData = [
       id_line: 'bibui',
       nisn: '2222',
       alamat: 'Jalan Raya No 4',
-      kp: '[File2_2]',
     },
   },
 ];
