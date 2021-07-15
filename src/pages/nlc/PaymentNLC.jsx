@@ -13,6 +13,7 @@ import DashboardShell from '@/layout/DashboardShell';
 import DragnDropInput from '@/components/DragnDropInput';
 import LightInput from '@/components/LightInput';
 import SelectInput from '@/components/SelectInput';
+import UnstyledLink from '@/components/UnstyledLink';
 
 import { classNames, bearerToken } from '@/lib/helper';
 import useTeamId from '@/hooks/useTeamId';
@@ -284,12 +285,12 @@ export default function PaymentNLC() {
                           </li>
                           <li>
                             Jika mengalami kendala pembayaran, silakan{' '}
-                            <a
+                            <UnstyledLink
                               href='https://liff.line.me/1645278921-kWRPP32q?accountId=schematics.its&openerPlatform=webview&openerKey=webview%3AunifiedSearch'
                               className='underline cursor-pointer text-nlc'
                             >
                               klik disini
-                            </a>
+                            </UnstyledLink>
                           </li>
                         </ul>
                       </div>
