@@ -73,6 +73,10 @@ export default function EventNLC() {
   const dispatch = useTeamDispatch();
 
   const teamId = useTeamId('nlc');
+  const ketua = nlc?.anggota.find((anggotaEl) => anggotaEl.role === 'ketua');
+  const anggota = nlc?.anggota.find(
+    (anggotaEl) => anggotaEl.role === 'anggota',
+  );
 
   useEffect(() => {
     const loadTeam = async () => {
@@ -123,31 +127,31 @@ export default function EventNLC() {
   const dataTeamMember = [
     {
       title: 'Ketua Tim',
-      name: nlc?.anggota[1].nama,
-      email: nlc?.anggota[1].email,
-      nisn: nlc?.anggota[1].nisn,
-      phone: nlc?.anggota[1].nomor_telepon,
-      line: nlc?.anggota[1].id_line,
-      address: nlc?.anggota[1].alamat,
+      name: ketua.nama,
+      email: ketua.email,
+      nisn: ketua.nisn,
+      phone: ketua.nomor_telepon,
+      line: ketua.id_line,
+      address: ketua.alamat,
       attachment: [
         {
           name: 'Surat Keterangan Aktif',
-          link: '#',
+          link: ketua.link_bukti_sah,
         },
       ],
     },
     {
       title: 'Anggota 1',
-      name: nlc?.anggota[0].nama,
-      email: nlc?.anggota[0].email,
-      nisn: nlc?.anggota[0].nisn,
-      phone: nlc?.anggota[0].nomor_telepon,
-      line: nlc?.anggota[0].id_line,
-      address: nlc?.anggota[0].alamat,
+      name: anggota.nama,
+      email: anggota.email,
+      nisn: anggota.nisn,
+      phone: anggota.nomor_telepon,
+      line: anggota.id_line,
+      address: anggota.alamat,
       attachment: [
         {
           name: 'Surat Keterangan Aktif',
-          link: '#',
+          link: anggota.link_bukti_sah,
         },
       ],
     },
