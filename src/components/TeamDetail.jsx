@@ -1,8 +1,10 @@
+import { HiInformationCircle } from 'react-icons/hi';
+
 export default function TeamDetail({ data = {} }) {
   return (
-    <div className=''>
+    <div>
       <div className='overflow-hidden sm:rounded-lg'>
-        <div className=''>
+        <div>
           <h3 className='text-lg font-bold leading-6 text-gray-900'>
             Informasi Tim
           </h3>
@@ -48,6 +50,22 @@ export default function TeamDetail({ data = {} }) {
               <dd className='mt-1 text-sm text-gray-900'>{data.phase}</dd>
             </div>
           </dl>
+        </div>
+        <div className='p-4 rounded-md bg-blue-50'>
+          <div className='flex'>
+            <div className='flex-shrink-0'>
+              <HiInformationCircle
+                className='w-5 h-5 text-blue-400'
+                aria-hidden='true'
+              />
+            </div>
+            <div className='ml-3'>
+              <p className='text-sm text-blue-700'>
+                Team Password dapat digunakan anggota sebagai password untuk
+                sign in menggunakan email yang didaftarkan
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
