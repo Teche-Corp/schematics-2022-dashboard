@@ -1,26 +1,86 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useDropzone } from 'react-dropzone';
+import Lightbox from 'react-image-lightbox';
 
-import { HiX } from 'react-icons/hi';
+import { HiOutlineEye, HiOutlinePaperClip, HiX } from 'react-icons/hi';
 
 import { classNames } from '@/lib/helper';
 
 const FilePreview = ({ file, deleteFile }) => {
+  const [index, setIndex] = useState(0);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const images = [URL.createObjectURL(file)];
+
+  const handleView = (e) => {
+    e.stopPropagation();
+    setIsOpen(true);
+  };
+
+  const handleDelete = (e) => {
+    e.stopPropagation();
+    deleteFile(e, file);
+  };
+
   return (
-    <div key={file.name} className='aspect-w-3 aspect-h-2'>
-      <img
-        src={URL.createObjectURL(file)}
-        alt={file.name}
-        className='object-cover rounded-lg shadow-lg'
-      />
-      <button
-        onClick={(e) => deleteFile(e, file)}
-        className='absolute top-0 right-0 flex p-2 leading-none'
+    <>
+      <li
+        className='flex items-center justify-between py-3 pl-3 pr-4 text-sm'
+        key={file.name}
       >
-        <HiX size={24} className='text-red-500 cursor-pointer' />
-      </button>
-    </div>
+        <div className='flex items-center flex-1 w-0'>
+          <HiOutlinePaperClip
+            className='flex-shrink-0 w-5 h-5 text-gray-400'
+            aria-hidden='true'
+          />
+          <span className='flex-1 w-0 ml-2 truncate'>{file.name}</span>
+        </div>
+        <div className='flex-shrink-0 ml-4'>
+          <button
+            onClick={handleView}
+            className='mr-2 text-xl font-medium focus:outline-none text-nlc hover:text-nlc-400'
+          >
+            <HiOutlineEye />
+          </button>
+          <button
+            onClick={handleDelete}
+            className='text-xl font-medium text-red-500 focus:outline-none hover:text-red-700'
+          >
+            <HiX />
+          </button>
+        </div>
+      </li>
+      {isOpen && (
+        <Lightbox
+          mainSrc={images[index]}
+          nextSrc={images[(index + 1) % images.length]}
+          prevSrc={images[(index + images.length - 1) % images.length]}
+          onCloseRequest={() => setIsOpen(false)}
+          onMovePrevRequest={() =>
+            setIndex(
+              (prevIndex) => (prevIndex + images.length - 1) % images.length,
+            )
+          }
+          onMoveNextRequest={() =>
+            setIndex((prevIndex) => (index + 1) % images.length)
+          }
+        />
+      )}
+    </>
+    // <div key={file.name} className='aspect-w-3 aspect-h-2'>
+    //   <img
+    //     src={URL.createObjectURL(file)}
+    //     alt={file.name}
+    //     className='object-cover rounded-lg shadow-lg'
+    //   />
+    //   <button
+    //     onClick={(e) => deleteFile(e, file)}
+    //     className='absolute top-0 right-0 flex p-2 leading-none'
+    //   >
+    //     <HiX size={24} className='text-red-500 cursor-pointer' />
+    //   </button>
+    // </div>
   );
 
   // file.type === 'application/pdf' ? (
@@ -99,11 +159,11 @@ export default function DragnDropInput({
       </label>
 
       {files?.length >= maxFiles ? (
-        <div className='grid grid-cols-1 gap-2 mt-1 sm:grid-cols-3'>
+        <ul className='border border-gray-200 divide-y divide-gray-200 rounded-md'>
           {files.map((file) => (
             <FilePreview key={file} file={file} deleteFile={deleteFile} />
           ))}
-        </div>
+        </ul>
       ) : (
         <>
           <div className='mt-1' {...getRootProps()}>
@@ -120,20 +180,9 @@ export default function DragnDropInput({
                 Tarik dan letakkan file ke kotak ini atau klik untuk memilih
                 file
               </p>
-
-              {!!files?.length && (
-                <div className='grid grid-cols-4 gap-1 mt-2'>
-                  {files.map((file) => (
-                    <FilePreview
-                      key={file}
-                      file={file}
-                      deleteFile={deleteFile}
-                    />
-                  ))}
-                </div>
-              )}
             </div>
           </div>
+
           <div className='mt-1'>
             {helperText !== '' && (
               <p className='text-xs text-gray-500'>{helperText}</p>
@@ -142,6 +191,13 @@ export default function DragnDropInput({
               <p className='text-sm text-red-500'>{errors[id].message}</p>
             )}
           </div>
+          {!!files?.length && (
+            <ul className='border border-gray-200 divide-y divide-gray-200 rounded-md'>
+              {files.map((file) => (
+                <FilePreview key={file} file={file} deleteFile={deleteFile} />
+              ))}
+            </ul>
+          )}
         </>
       )}
     </>

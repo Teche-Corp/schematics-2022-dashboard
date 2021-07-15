@@ -2,6 +2,8 @@ import axios from 'axios';
 import { Toaster } from 'react-hot-toast';
 import { SWRConfig } from 'swr';
 
+import 'react-image-lightbox/style.css';
+
 import Routes from '@/routes/index';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { TeamProvider } from '@/contexts/TeamContext';
