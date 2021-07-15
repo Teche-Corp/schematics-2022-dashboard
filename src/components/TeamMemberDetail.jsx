@@ -63,7 +63,7 @@ export default function TeamMemberDetail({ data = {} }) {
                       <div className='flex-shrink-0 ml-4'>
                         <button
                           onClick={() => setIsOpen(true)}
-                          className='font-medium focus:outline-none text-nlc hover:text-nlc-400'
+                          className='font-medium text-gray-500 focus:outline-none hover:text-gray-700'
                         >
                           Lihat
                         </button>

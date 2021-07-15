@@ -14,11 +14,13 @@ const FilePreview = ({ file, deleteFile }) => {
   const images = [URL.createObjectURL(file)];
 
   const handleView = (e) => {
+    e.preventDefault();
     e.stopPropagation();
     setIsOpen(true);
   };
 
   const handleDelete = (e) => {
+    e.preventDefault();
     e.stopPropagation();
     deleteFile(e, file);
   };
@@ -39,7 +41,7 @@ const FilePreview = ({ file, deleteFile }) => {
         <div className='flex-shrink-0 ml-4'>
           <button
             onClick={handleView}
-            className='mr-2 text-xl font-medium focus:outline-none text-nlc hover:text-nlc-400'
+            className='mr-2 text-xl font-medium text-gray-500 focus:outline-none hover:text-gray-700'
           >
             <HiOutlineEye />
           </button>
