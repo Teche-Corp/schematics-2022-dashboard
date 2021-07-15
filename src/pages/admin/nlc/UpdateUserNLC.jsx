@@ -7,7 +7,6 @@ import useSWR from 'swr';
 import { useAuthState } from '@/contexts/AuthContext';
 
 import DashboardShell from '@/layout/DashboardShell';
-import LightInput from '@/components/LightInput';
 import StandAloneInput from '@/components/StandAloneInput';
 import SelectCity from '@/components/SelectCity';
 
@@ -301,7 +300,7 @@ export default function UpdateUserNLC() {
                           </dt>
                           <div className='flex flex-col mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>
                             {isEditing ? (
-                              <LightInput
+                              <StandAloneInput
                                 id='leader-nisn'
                                 type='text'
                                 defaultValue={getDatabyID.anggota.nisn}
@@ -437,7 +436,7 @@ export default function UpdateUserNLC() {
                           </dt>
                           <div className='flex flex-col mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2'>
                             {isEditing ? (
-                              <LightInput
+                              <StandAloneInput
                                 id='member-nisn'
                                 type='text'
                                 defaultValue={getDatabyID.anggota2.nisn}
