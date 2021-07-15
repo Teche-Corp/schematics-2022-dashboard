@@ -59,10 +59,11 @@ export default function TeamDetail({ data = {} }) {
                 aria-hidden='true'
               />
             </div>
-            <div className='ml-3'>
+            <div className='ml-2'>
               <p className='text-sm text-blue-700'>
-                Team Password dapat digunakan anggota sebagai password untuk
-                sign in menggunakan email yang didaftarkan
+                Anggota dapat melakukan login menggunakan email masing-masing
+                yang telah didaftarkan dan{' '}
+                <span className='font-bold'>Password Tim</span> yang tertera
               </p>
             </div>
           </div>
