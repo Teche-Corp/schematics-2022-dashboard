@@ -322,12 +322,12 @@ export default function PaymentNLC() {
                         <ul className='pt-3 pl-4 italic list-disc list-outside'>
                           <li>
                             Jika mengalami kendala pembayaran, silakan{' '}
-                            <a
+                            <UnstyledLink
                               href='https://liff.line.me/1645278921-kWRPP32q?accountId=schematics.its&openerPlatform=webview&openerKey=webview%3AunifiedSearch'
                               className='underline cursor-pointer text-nlc'
                             >
                               klik disini
-                            </a>
+                            </UnstyledLink>
                           </li>
                         </ul>
                       </div>

@@ -6,10 +6,8 @@ export default function UnstyledLink(props) {
 
   if (isInternalLink) {
     return (
-      <Link href={href}>
-        <a {...props} className={`${props?.className}`}>
-          {props.children}
-        </a>
+      <Link to={href} className={`${props?.className}`}>
+        {props.children}
       </Link>
     );
   }
