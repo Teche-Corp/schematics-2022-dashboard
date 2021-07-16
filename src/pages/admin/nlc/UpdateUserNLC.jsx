@@ -440,8 +440,11 @@ export default function UpdateUserNLC() {
                           type='submit'
                           disabled={isLoading || !isDirty}
                           className={classNames(
-                            'inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-nlc hover:bg-nlc-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-nlc-400',
+                            'inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white border border-transparent rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-nlc-400',
                             isLoading && 'filter brightness-90 cursor-wait',
+                            !isDirty
+                              ? 'cursor-not-allowed bg-gray-400'
+                              : 'bg-nlc hover:bg-nlc-400',
                           )}
                         >
                           Simpan
