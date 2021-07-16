@@ -62,6 +62,8 @@ export default function CreateTeam() {
       team_password: `schnpc${user.name}`,
       team_institusi: data['school-name'],
       kp_ketua: data['leader-id'][0],
+      event: 'npc_junior',
+      status_id: 0,
     };
 
     for (let key in newBody) {
@@ -70,11 +72,11 @@ export default function CreateTeam() {
 
     toast.promise(
       axios
-        .post('/npc/team/create/junior', formData, {
+        .post('/npc/team/junior', formData, {
           headers: { ...bearerToken(), 'Content-Type': 'multipart/form-data' },
         })
         .then((res) => {
-          dispatch('ASSIGN_NPC', res.data.data);
+          dispatch('ASSIGN_NPC_JUNIOR', res.data.data.team_id);
           history.push('/my/sch-npc/team');
         }),
       {

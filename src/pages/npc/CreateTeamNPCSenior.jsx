@@ -54,28 +54,30 @@ export default function CreateTeamNPCSenior() {
 
     const newBody = {
       kota_id: data.city.value,
-      ketua_nim: data['leader-nim'],
+      ketua_nisn: data['leader-nim'],
       ketua_alamat: data['leader-address'],
       ketua_id_line: data['leader-line'],
       ketua_id_facebook: data['leader-discord'],
       team_name: data['team-name'],
-      team_password: `schnpc{user.name}`,
+      team_password: `schnpc${user.name}`,
       team_institusi: data['university-name'],
       kp_ketua: data['leader-student-id'][0],
+      event: 'npc_senior',
+      status_id: 0,
       'anggota[0][name]': data['member1-name'],
       'anggota[0][email]': data['member1-email'],
-      'anggota[0][nim]': data['member1-nim'],
+      'anggota[0][nisn]': data['member1-nim'],
       'anggota[0][phone]': data['member1-phone'],
-      'anggota[0][address]': data['member1-address'],
-      'anggota[0][line]': data['member1-line'],
+      'anggota[0][alamat]': data['member1-address'],
+      'anggota[0][id_line]': data['member1-line'],
       'anggota[0][id_facebook]': data['member1-discord'],
       'anggota[0][kp_anggota]': data['member1-student-id'][0],
       'anggota[1][name]': data['member2-name'],
       'anggota[1][email]': data['member2-email'],
-      'anggota[1][nim]': data['member2-nim'],
+      'anggota[1][nisn]': data['member2-nim'],
       'anggota[1][phone]': data['member2-phone'],
-      'anggota[1][address]': data['member2-address'],
-      'anggota[1][line]': data['member2-line'],
+      'anggota[1][alamat]': data['member2-address'],
+      'anggota[1][id_line]': data['member2-line'],
       'anggota[1][id_facebook]': data['member2-discord'],
       'anggota[1][kp_anggota]': data['member2-student-id'][0],
     };
@@ -86,11 +88,11 @@ export default function CreateTeamNPCSenior() {
 
     toast.promise(
       axios
-        .post('/npc/team/create', formData, {
+        .post('/npc/team/senior', formData, {
           headers: { ...bearerToken(), 'Content-Type': 'multipart/form-data' },
         })
         .then((res) => {
-          dispatch('ASSIGN_NPC', res.data.data);
+          dispatch('ASSIGN_NPC_SENIOR', res.data.data.team_id);
           history.push('/my/sch-npc/team');
         }),
       {
