@@ -19,7 +19,12 @@ export default function UpdateUserNLC() {
   const isLoading = useLoadingToast();
 
   const methods = useForm();
-  const { control, handleSubmit, setValue } = methods;
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    formState: { isDirty },
+  } = methods;
 
   const { user } = useAuthState();
 
@@ -40,7 +45,6 @@ export default function UpdateUserNLC() {
     ).value;
     setValue('payment-method', value.toString(), {
       shouldValidate: true,
-      shouldDirty: true,
     });
   }, []);
 
@@ -51,32 +55,39 @@ export default function UpdateUserNLC() {
 
   useEffect(() => {
     if (cities !== undefined) {
-      const value = cities.find(
+      const city = cities.find(
         (city) => city.regency_name === getDatabyID.kota,
-      ).id;
+      );
       setValue(
         'city',
-        { value, label: getDatabyID.kota },
+        { value: city.id, label: city.regency_name },
         {
           shouldValidate: true,
-          shouldDirty: true,
         },
       );
+      setValue('province', city?.province_name, {
+        shouldValidate: true,
+      });
+      setValue('region', city?.region_name, {
+        shouldValidate: true,
+      });
     }
-  }, [cities]);
+  }, [cities, getDatabyID.kota, setValue]);
 
   useEffect(() => {
     if (cityValue !== undefined) {
       const id = cityValue?.value;
       const city = cities.find((city) => city.id === id);
-      setValue('province', city?.province_name, {
-        shouldValidate: true,
-        shouldDirty: true,
-      });
-      setValue('region', city?.region_name, {
-        shouldValidate: true,
-        shouldDirty: true,
-      });
+      if (city.regency_name !== getDatabyID.kota) {
+        setValue('province', city?.province_name, {
+          shouldValidate: true,
+          shouldDirty: true,
+        });
+        setValue('region', city?.region_name, {
+          shouldValidate: true,
+          shouldDirty: true,
+        });
+      }
     }
   }, [cityValue, cities, setValue]);
 
@@ -427,7 +438,7 @@ export default function UpdateUserNLC() {
                         </button>
                         <button
                           type='submit'
-                          disabled={isLoading}
+                          disabled={isLoading || !isDirty}
                           className={classNames(
                             'inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-nlc hover:bg-nlc-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-nlc-400',
                             isLoading && 'filter brightness-90 cursor-wait',
