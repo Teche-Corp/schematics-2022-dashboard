@@ -1,6 +1,8 @@
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
-import { useEffect, useState } from 'react';
+
 import {
   HiClipboardCheck,
   HiFire,
@@ -8,65 +10,65 @@ import {
   HiUserGroup,
   HiUsers,
 } from 'react-icons/hi';
-import { Link } from 'react-router-dom';
 
+import { useTeamDispatch, useTeamState } from '@/contexts/TeamContext';
+
+import DashboardShell from '@/layout/DashboardShell';
 import CenteredAccordion from '@/components/CenteredAccordion';
 import HorizontalTimeline from '@/components/HorizontalTimeline';
 import Modal from '@/components/Modal';
 import TeamDetail from '@/components/TeamDetail';
 import TeamMemberDetail from '@/components/TeamMemberDetail';
-import { useAuthState } from '@/contexts/AuthContext';
-import { useTeamDispatch } from '@/contexts/TeamContext';
-import DashboardShell from '@/layout/DashboardShell';
+
 import { bearerToken } from '@/lib/helper';
+import useTeamId from '@/hooks/useTeamId';
 
 export default function EventNPC() {
   const [open, setOpen] = useState(false);
-  /* ------ FALSE TO SHOW DETAIL TEAM ---- */
-  const npc = true;
-  const [loading, setLoading] = useState(true);
 
-  const { user } = useAuthState();
-  // const { npc } = useTeamState();
+  const { npc } = useTeamState();
   const dispatch = useTeamDispatch();
+
+  const teamId = useTeamId('npc');
+
+  const ketua = npc?.anggota.find((anggotaEl) => anggotaEl.role === 'ketua');
+  const anggota = npc?.anggota.filter(
+    (anggotaEl) => anggotaEl.role === 'anggota',
+  );
+
+  const teamLoaded = Boolean(npc);
 
   useEffect(() => {
     const loadTeam = async () => {
       try {
         const res = await axios.post(
           '/npc/team/find',
-          { team_id: user.team[0].npc },
+          { team_id: teamId },
           {
             headers: { ...bearerToken() },
           },
         );
 
-        console.log(res.data.data);
-
         dispatch('STORE_NPC', res.data.data);
       } catch (err) {
-        console.log(err.response.data);
         toast.error('Gagal mengambil data tim!');
-      } finally {
-        setLoading(false);
       }
     };
 
-    if (user?.team?.[0]?.npc) {
+    if (teamId) {
       loadTeam();
-    } else {
-      setLoading(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const dataTeam = {
-    name: 'Doa ibu' ?? npc?.nama_tim,
-    school: 'SMAN 1 SURABAYA' ?? npc?.asal_sekolah,
-    region: 'SURABAYA' ?? npc?.region,
-    city: 'SURABAYA' ?? npc?.kota,
-    province: 'SURABAYA' ?? npc?.provinsi,
-    // password: `schnlc${npc?.anggota[1].nama}`,
+    name: npc?.nama_tim,
+    school: npc?.asal_sekolah,
+    region: npc?.region,
+    city: npc?.kota,
+    province: npc?.provinsi,
+    // TODO hilangkan password di junior
+    password: `schnpc${ketua?.nama}`,
     payment:
       npc?.status_pembayaran === null
         ? '-'
@@ -78,66 +80,66 @@ export default function EventNPC() {
 
   const dataTeamMemberJunior = [
     {
-      title: 'Ketua Tim',
-      name: 'Tsani' ?? npc?.anggota[1].nama,
-      email: 'tsani@mail.com' ?? npc?.anggota[1].email,
-      nisn: '3213131' ?? npc?.anggota[1].nisn,
-      phone: '089123123' ?? npc?.anggota[1].nomor_telepon,
-      line: 'tsani' ?? npc?.anggota[1].id_line,
-      address: 'surabata' ?? npc?.anggota[1].alamat,
+      title: 'Data Pribadi',
+      name: ketua?.nama,
+      email: ketua?.email,
+      nisn: ketua?.nisn,
+      phone: ketua?.nomor_telepon,
+      line: ketua?.id_line,
+      address: ketua?.alamat,
       attachment: [
         {
           name: 'Surat Keterangan Aktif',
-          link: '#',
+          link: ketua?.link_bukti_sah,
         },
       ],
     },
   ];
 
   //Senior
-  const dataTeamMember = [
+  const dataTeamMemberSenior = [
     {
       title: 'Ketua Tim',
-      name: 'Tsani' ?? npc?.anggota[1].nama,
-      email: 'tsani@mail.com' ?? npc?.anggota[1].email,
-      nisn: '3213131' ?? npc?.anggota[1].nisn,
-      phone: '089123123' ?? npc?.anggota[1].nomor_telepon,
-      line: 'tsani' ?? npc?.anggota[1].id_line,
-      address: 'surabata' ?? npc?.anggota[1].alamat,
+      name: ketua?.nama,
+      email: ketua?.email,
+      nisn: ketua?.nisn,
+      phone: ketua?.nomor_telepon,
+      line: ketua?.id_line,
+      address: ketua?.alamat,
       attachment: [
         {
           name: 'Surat Keterangan Aktif',
-          link: '#',
+          link: ketua?.link_bukti_sah,
         },
       ],
     },
     {
       title: 'Anggota 1',
-      name: 'Budi' ?? npc?.anggota[0].nama,
-      email: 'budi@mail.com' ?? npc?.anggota[0].email,
-      nisn: '123213' ?? npc?.anggota[0].nisn,
-      phone: '081231312' ?? npc?.anggota[0].nomor_telepon,
-      line: 'budiss' ?? npc?.anggota[0].id_line,
-      address: 'bekasi' ?? npc?.anggota[0].alamat,
+      name: anggota?.[0].nama,
+      email: anggota?.[0].email,
+      nisn: anggota?.[0].nisn,
+      phone: anggota?.[0].nomor_telepon,
+      line: anggota?.[0].id_line,
+      address: anggota?.[0].alamat,
       attachment: [
         {
           name: 'Surat Keterangan Aktif',
-          link: '#',
+          link: anggota?.[0].link_bukti_sah,
         },
       ],
     },
     {
       title: 'Anggota 2',
-      name: 'Budi' ?? npc?.anggota[0].nama,
-      email: 'budi@mail.com' ?? npc?.anggota[0].email,
-      nisn: '123213' ?? npc?.anggota[0].nisn,
-      phone: '081231312' ?? npc?.anggota[0].nomor_telepon,
-      line: 'budiss' ?? npc?.anggota[0].id_line,
-      address: 'bekasi' ?? npc?.anggota[0].alamat,
+      name: anggota?.[1].nama,
+      email: anggota?.[1].email,
+      nisn: anggota?.[1].nisn,
+      phone: anggota?.[1].nomor_telepon,
+      line: anggota?.[1].id_line,
+      address: anggota?.[1].alamat,
       attachment: [
         {
           name: 'Surat Keterangan Aktif',
-          link: '#',
+          link: anggota?.[1].link_bukti_sah,
         },
       ],
     },
@@ -151,7 +153,8 @@ export default function EventNPC() {
       >
         <div className='bg-white shadow'></div>
         <main className='w-full h-full px-4 pt-10 pb-16 mx-auto mt-0.5 bg-white'>
-          {npc ? (
+          {/* If in AuthContext has teamId, then show the team detail page, and show skeleton */}
+          {!teamId ? (
             <div className='text-center'>
               <h1 className='text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:text-6xl'>
                 <span className='block xl:inline'>Schematics</span>{' '}
@@ -194,16 +197,23 @@ export default function EventNPC() {
                     <span className='block text-npc xl:inline'>Tim</span>
                   </h2>
                   <div className='py-4 overflow-hidden bg-white sm:border sm:shadow sm:py-8 sm:px-6 lg:px-8 sm:rounded-lg'>
-                    <TeamDetail data={dataTeam} />
+                    {/* if not loaded yet, then pass undefined */}
+                    <TeamDetail data={teamLoaded ? dataTeam : undefined} />
                     <CenteredAccordion
-                      dataAccordion={dataTeamMember}
+                      loading={!teamLoaded}
+                      dataAccordion={
+                        npc?.event === 'npc_junior'
+                          ? dataTeamMemberJunior
+                          : dataTeamMemberSenior
+                      }
                       component={TeamMemberDetail}
                     />
                     {npc?.status_pembayaran ?? (
                       <div className='mx-auto mt-5 sm:flex sm:justify-center md:mt-8'>
                         <div className='rounded-md shadow'>
+                          {/* passing undefined so link won't be clickable */}
                           <Link
-                            to='/my/sch-npc/payment'
+                            to={teamLoaded ? '/my/sch-npc/payment' : undefined}
                             className='flex items-center justify-center px-4 py-2 font-medium text-white border border-transparent rounded-md shadow-sm bg-npc hover:bg-npc-400'
                           >
                             Lakukan Pembayaran
