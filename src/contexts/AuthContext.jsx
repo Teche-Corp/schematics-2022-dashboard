@@ -53,14 +53,46 @@ const reducer = (state, { type, payload }) => {
         },
       };
     }
-    case 'ASSIGN_NPC':
+    case 'ASSIGN_NPC_JUNIOR': {
+      let newTeam = [...state.user.team];
+      const index = newTeam.findIndex(
+        (teamElement) => teamElement.event === 'npc_junior',
+      );
+
+      if (index === -1) {
+        newTeam.push({ event: 'npc_junior', team_id: payload });
+      } else {
+        newTeam[index] = { event: 'npc_junior', team_id: payload };
+      }
+
       return {
         ...state,
         user: {
           ...state.user,
-          team: [...state.user.team, { npc: payload }],
+          team: newTeam,
         },
       };
+    }
+    case 'ASSIGN_NPC_SENIOR': {
+      let newTeam = [...state.user.team];
+      const index = newTeam.findIndex(
+        (teamElement) => teamElement.event === 'npc_senior',
+      );
+
+      if (index === -1) {
+        newTeam.push({ event: 'npc_senior', team_id: payload });
+      } else {
+        newTeam[index] = { event: 'npc_senior', team_id: payload };
+      }
+
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          team: newTeam,
+        },
+      };
+    }
     case 'POPULATE':
       return {
         ...state,
