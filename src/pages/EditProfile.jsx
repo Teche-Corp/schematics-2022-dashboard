@@ -141,7 +141,7 @@ export default function EditProfile() {
                                 validation={{
                                   required: 'Nomor Telepon tidak boleh kosong',
                                   pattern: {
-                                    value: /^\+628[1-9][0-9]{8,11}$/,
+                                    value: /^\+628[1-9][0-9]{7,11}$/,
                                     message:
                                       'Nomor Telepon harus diawali +62 dan memiliki panjang 13-15 karakter',
                                   },
