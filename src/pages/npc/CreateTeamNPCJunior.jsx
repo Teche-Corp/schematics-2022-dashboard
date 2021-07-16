@@ -165,6 +165,8 @@ export default function CreateTeam() {
                           label='Nama'
                           id='leader-name'
                           type='text'
+                          defaultValue={user.name}
+                          readOnly
                           validation={{ required: 'Nama tidak boleh kosong' }}
                         />
                       </div>
@@ -174,6 +176,8 @@ export default function CreateTeam() {
                           label='Email'
                           id='leader-email'
                           type='email'
+                          defaultValue={user.email}
+                          readOnly
                           validation={{
                             required: 'Email tidak boleh kosong',
                             pattern: {
@@ -209,8 +213,9 @@ export default function CreateTeam() {
                           label='Nomor Telepon'
                           id='leader-phone'
                           type='text'
-                          placeholder='+6281234567890'
                           helperText='Nomor Telepon diawali +62'
+                          defaultValue={user.phone}
+                          readOnly
                           validation={{
                             required: 'Nomor Telepon tidak boleh kosong',
                             pattern: {
