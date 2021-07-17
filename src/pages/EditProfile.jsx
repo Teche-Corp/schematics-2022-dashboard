@@ -8,13 +8,15 @@ import { useAuthDispatch, useAuthState } from '@/contexts/AuthContext';
 import DashboardShell from '@/layout/DashboardShell';
 import StandAloneInput from '@/components/StandAloneInput';
 
-import { bearerToken } from '@/lib/helper';
+import { bearerToken, classNames } from '@/lib/helper';
+import useLoadingToast from '@/hooks/useLoadingToast';
 
 export default function EditProfile() {
   const { user } = useAuthState();
   const dispatch = useAuthDispatch();
 
   const [isEditing, setIsEditing] = useState(false);
+  const isLoading = useLoadingToast();
 
   const methods = useForm();
   const {
@@ -27,6 +29,7 @@ export default function EditProfile() {
   };
 
   const handleEditProfile = async (data) => {
+    const loadingToast = toast.loading('loading...');
     try {
       const res = await axios.put('/user/edit', data, {
         headers: { ...bearerToken() },
@@ -46,9 +49,9 @@ export default function EditProfile() {
       );
 
       dispatch('EDIT_PROFILE', { ...user.data.data, token });
-      toast.success('Profil berhasil diubah.');
+      toast.success('Profil berhasil diubah.', { id: loadingToast });
     } catch (err) {
-      toast.error(err.response.data.msg);
+      toast.error(err.response.data.msg, { id: loadingToast });
     } finally {
       setIsEditing(false);
     }
@@ -165,8 +168,14 @@ export default function EditProfile() {
                             </button>
                             <button
                               type='submit'
-                              disabled={!isDirty}
-                              className='inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-dark-100 bg-dark-600 hover:bg-dark-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-dark-100'
+                              disabled={isLoading || !isDirty}
+                              className={classNames(
+                                'inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white border border-transparent rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-dark-100',
+                                isLoading && 'filter brightness-90 cursor-wait',
+                                !isDirty
+                                  ? 'cursor-not-allowed bg-gray-400'
+                                  : 'bg-dark-100 hover:bg-dark-400',
+                              )}
                             >
                               Simpan
                             </button>
