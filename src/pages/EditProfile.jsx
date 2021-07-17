@@ -29,7 +29,6 @@ export default function EditProfile() {
   };
 
   const handleEditProfile = async (data) => {
-    const loadingToast = toast.loading('loading...');
     try {
       const res = await axios.put('/user/edit', data, {
         headers: { ...bearerToken() },
@@ -49,9 +48,9 @@ export default function EditProfile() {
       );
 
       dispatch('EDIT_PROFILE', { ...user.data.data, token });
-      toast.success('Profil berhasil diubah.', { id: loadingToast });
+      toast.success('Profil berhasil diubah.');
     } catch (err) {
-      toast.error(err.response.data.msg, { id: loadingToast });
+      toast.error(err.response.data.msg);
     } finally {
       setIsEditing(false);
     }
