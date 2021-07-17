@@ -10,6 +10,7 @@ import Input from '@/components/Input';
 import PasswordInput from '@/components/PasswordInput';
 import AuthHeader from '@/components/AuthHeader';
 import SubmitButton from '@/components/SubmitButton';
+import UnstyledLink from '@/components/UnstyledLink';
 
 import { bearerToken } from '@/lib/helper';
 
@@ -78,12 +79,12 @@ const SignIn = () => {
                   />
                   <div className='flex flex-row-reverse items-center'>
                     <div className='text-sm'>
-                      <a
+                      <UnstyledLink
                         href='/forgot'
                         className='font-medium text-light-100 hover:text-light-700'
                       >
                         Forgot your password?
-                      </a>
+                      </UnstyledLink>
                     </div>
                   </div>
 
