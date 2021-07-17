@@ -56,7 +56,7 @@ const SignIn = () => {
     <>
       <div className='mx-auto'>
         <div className='flex flex-col justify-center min-h-screen px-10 py-8 bg-dark lg:px-8'>
-          <AuthHeader headerText='Sign in to your account' />
+          <AuthHeader headerText='Masuk ke akun anda' />
           <div className='mt-8 sm:mx-auto sm:w-full sm:max-w-md'>
             <div className='px-4 py-8 text-white border border-gray-700 shadow bg-dark sm:rounded-lg sm:px-10'>
               <FormProvider {...methods}>
@@ -68,13 +68,23 @@ const SignIn = () => {
                     label='Email'
                     id='email'
                     type='email'
-                    validation={{ required: 'Email is required' }}
+                    validation={{
+                      required: 'Email tidak boleh kosong',
+                      pattern: {
+                        value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                        message: 'Email tidak valid',
+                      },
+                    }}
                   />
                   <PasswordInput
                     label='Password'
                     id='password'
                     validation={{
-                      required: 'Password is required',
+                      required: 'Password tidak boleh kosong',
+                      minLength: {
+                        value: 8,
+                        message: 'Password harus lebih dari 8 karakter',
+                      },
                     }}
                   />
                   <div className='flex flex-row-reverse items-center'>
@@ -83,13 +93,13 @@ const SignIn = () => {
                         href='/forgot'
                         className='font-medium text-light-100 hover:text-light-700'
                       >
-                        Forgot your password?
+                        Lupa password?
                       </UnstyledLink>
                     </div>
                   </div>
 
                   <div>
-                    <SubmitButton loading={loading}>Sign in</SubmitButton>
+                    <SubmitButton loading={loading}>Masuk</SubmitButton>
                   </div>
                 </form>
               </FormProvider>
@@ -101,7 +111,7 @@ const SignIn = () => {
                   </div>
                   <div className='relative flex justify-center text-sm'>
                     <span className='px-2 text-gray-50 bg-dark'>
-                      Don't have an account?
+                      Belum punya akun?
                     </span>
                   </div>
                 </div>
@@ -111,7 +121,7 @@ const SignIn = () => {
                     className='flex justify-center w-full px-4 py-2 text-sm font-medium border-2 rounded-md shadow-sm text-light-100 border-light-100 hover:text-dark hover:bg-light-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-light-100'
                     to='/signup'
                   >
-                    Sign Up
+                    Buat Akun
                   </Link>
                 </div>
               </div>

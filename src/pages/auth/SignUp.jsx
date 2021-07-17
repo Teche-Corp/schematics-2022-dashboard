@@ -20,11 +20,11 @@ export default function SignUp() {
     try {
       setLoading(true);
       await axios.post('/user/register', data);
-      toast.success('Success! You can continue to log in');
+      toast.success('Berhasil! Anda bisa masuk ke akun anda');
       history.push('/signin');
     } catch (err) {
       console.error(err);
-      toast.error('Uh oh! Something is wrong, please try again');
+      toast.error(err.response.data.msg);
     } finally {
       setLoading(false);
     }
@@ -34,7 +34,7 @@ export default function SignUp() {
     <>
       <div className='mx-auto'>
         <div className='flex flex-col justify-center min-h-screen px-10 py-12 bg-dark lg:px-8'>
-          <AuthHeader headerText='Sign up for new account' />
+          <AuthHeader headerText='Buat akun baru' />
           <div className='mt-8 sm:mx-auto sm:w-full sm:max-w-md'>
             <div className='px-4 py-8 text-white border border-gray-700 shadow bg-dark sm:rounded-lg sm:px-10'>
               <FormProvider {...methods}>
@@ -43,27 +43,33 @@ export default function SignUp() {
                   onSubmit={handleSubmit(handleSignup)}
                 >
                   <Input
-                    label='Full Name'
+                    label='Nama Lengkap'
                     id='name'
-                    validation={{ required: 'Full Name is required' }}
+                    validation={{ required: 'Nama Lengkap tidak boleh kosong' }}
                   />
                   <Input
                     label='Email'
                     id='email'
                     type='email'
-                    validation={{ required: 'Email is required' }}
+                    validation={{
+                      required: 'Email tidak boleh kosong',
+                      pattern: {
+                        value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                        message: 'Email tidak valid',
+                      },
+                    }}
                   />
 
                   <Input
-                    label='Phone Number'
+                    label='Nomor Telepon'
                     id='phone'
                     placeholder='+6285123456'
                     validation={{
-                      required: 'Phone Number is required',
+                      required: 'Nomor Telepon tidak boleh kosong',
                       pattern: {
                         value: /^\+628[1-9][0-9]{7,11}$/,
                         message:
-                          'Please fill in phone number starting with +62 and correct format',
+                          'Nomor Telepon harus diawali +62 dan memiliki panjang 13-15 karakter',
                       },
                     }}
                   />
@@ -72,17 +78,16 @@ export default function SignUp() {
                     label='Password'
                     id='password'
                     validation={{
-                      required: 'Password is required',
+                      required: 'Password tidak boleh kosong',
                       minLength: {
                         value: 8,
-                        message:
-                          'Please enter password more than 8 characters.',
+                        message: 'Password harus lebih dari 8 karakter',
                       },
                     }}
                   />
 
                   <div>
-                    <SubmitButton loading={loading}>Sign Up</SubmitButton>
+                    <SubmitButton loading={loading}>Buat Akun</SubmitButton>
                   </div>
                 </form>
               </FormProvider>
@@ -93,7 +98,7 @@ export default function SignUp() {
                   </div>
                   <div className='relative flex justify-center text-sm'>
                     <span className='px-2 text-gray-50 bg-dark'>
-                      Already have an account?
+                      Sudah punya akun?
                     </span>
                   </div>
                 </div>
@@ -103,7 +108,7 @@ export default function SignUp() {
                     className='flex justify-center w-full px-4 py-2 text-sm font-medium border-2 rounded-md shadow-sm text-light-100 border-light-100 hover:text-dark hover:bg-light-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-light-100'
                     to='/signin'
                   >
-                    Sign In
+                    Masuk
                   </Link>
                 </div>
               </div>

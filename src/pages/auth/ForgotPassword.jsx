@@ -20,10 +20,10 @@ export default function ForgotPassword() {
       localStorage.setItem('token', token);
 
       setLoading(false);
-      toast.success(`Please check your email at ${data.email}`);
+      toast.success(`Mohon mengecek email ${data.email} untuk melakukan reset`);
     } catch (err) {
       console.error(err);
-      toast.error('Uh oh! Something is wrong, please try again');
+      toast.error(err.response.data.msg);
     } finally {
       setLoading(false);
     }
@@ -33,7 +33,7 @@ export default function ForgotPassword() {
     <>
       <div className='mx-auto'>
         <div className='flex flex-col justify-center min-h-screen px-10 py-12 bg-dark lg:px-8'>
-          <AuthHeader headerText='Reset your password' />
+          <AuthHeader headerText='Reset password anda' />
           <div className='mt-8 sm:mx-auto sm:w-full sm:max-w-md'>
             <div className='px-4 py-8 text-white border border-gray-700 shadow bg-dark sm:rounded-lg sm:px-10'>
               <FormProvider {...methods}>
@@ -45,7 +45,13 @@ export default function ForgotPassword() {
                     label='Email'
                     id='email'
                     type='email'
-                    validation={{ required: 'Email is required' }}
+                    validation={{
+                      required: 'Email tidak boleh kosong',
+                      pattern: {
+                        value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                        message: 'Email tidak valid',
+                      },
+                    }}
                   />
 
                   <div>
