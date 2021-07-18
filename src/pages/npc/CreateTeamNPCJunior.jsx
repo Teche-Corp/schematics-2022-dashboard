@@ -115,7 +115,7 @@ export default function CreateTeam() {
                   <div>
                     <h1 className='mb-6 text-4xl font-extrabold tracking-tight text-gray-900 sm:text-3xl md:text-4xl'>
                       <span className='block xl:inline'>Buat Tim</span>{' '}
-                      <span className='block text-red-400 xl:inline'>
+                      <span className='block text-npc-400 xl:inline'>
                         Schematics NPC Junior
                       </span>
                     </h1>

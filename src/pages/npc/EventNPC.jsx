@@ -158,7 +158,7 @@ export default function EventNPC() {
             <div className='text-center'>
               <h1 className='text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:text-6xl'>
                 <span className='block xl:inline'>Schematics</span>{' '}
-                <span className='block text-npc xl:inline'>NPC</span>
+                <span className='block text-npc-400 xl:inline'>NPC</span>
               </h1>
               <p className='max-w-md mx-auto mt-3 text-base text-gray-500 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl'>
                 Schematics NPC merupakan sebuah kompetisi pemrograman tingkat
@@ -169,7 +169,7 @@ export default function EventNPC() {
                 <div className='rounded-md shadow'>
                   <button
                     onClick={() => setOpen(true)}
-                    className='flex items-center justify-center w-full px-8 py-3 text-base font-medium text-white bg-red-600 border border-transparent rounded-md hover:bg-red-700 md:py-4 md:text-lg md:px-10'
+                    className='flex items-center justify-center w-full px-8 py-3 text-base font-medium text-white border border-transparent rounded-md bg-npc-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-npc-400 hover:bg-npc-700 md:py-4 md:text-lg md:px-10'
                   >
                     Buat Tim
                   </button>
@@ -183,7 +183,7 @@ export default function EventNPC() {
                 <section className='max-w-4xl px-4 mx-auto space-y-10 sm:px-6 md:px-0'>
                   <h2 className='text-3xl font-extrabold tracking-tight text-center text-gray-900 sm:text-4xl md:text-5xl'>
                     <span className='block xl:inline'>Timeline</span>{' '}
-                    <span className='block text-npc xl:inline'>
+                    <span className='block text-npc-400 xl:inline'>
                       Schematics NPC
                     </span>
                   </h2>
@@ -194,7 +194,7 @@ export default function EventNPC() {
                 <section className='max-w-4xl px-4 mx-auto mt-10 space-y-10 sm:px-6 md:px-0'>
                   <h2 className='text-3xl font-extrabold tracking-tight text-center text-gray-900 sm:text-4xl md:text-5xl'>
                     <span className='block xl:inline'>Detail</span>{' '}
-                    <span className='block text-npc xl:inline'>Tim</span>
+                    <span className='block text-npc-400 xl:inline'>Tim</span>
                   </h2>
                   <div className='py-4 overflow-hidden bg-white sm:border sm:shadow sm:py-8 sm:px-6 lg:px-8 sm:rounded-lg'>
                     {/* if not loaded yet, then pass undefined */}
@@ -214,7 +214,7 @@ export default function EventNPC() {
                           {/* passing undefined so link won't be clickable */}
                           <Link
                             to={teamLoaded ? '/my/sch-npc/payment' : undefined}
-                            className='flex items-center justify-center px-4 py-2 font-medium text-white border border-transparent rounded-md shadow-sm bg-npc hover:bg-npc-400'
+                            className='flex items-center justify-center px-4 py-2 font-medium text-white border border-transparent rounded-md shadow-sm bg-npc-400 hover:bg-npc-700'
                           >
                             Lakukan Pembayaran
                           </Link>

@@ -53,7 +53,7 @@ export default function Modal({ open, setOpen }) {
                       as='h3'
                       className='text-2xl font-bold leading-6 text-center text-gray-900 '
                     >
-                      <span className='text-npc'>Pilih</span> Kategori Tim
+                      <span className='text-npc-400'>Pilih</span> Kategori Tim
                     </Dialog.Title>
                   </div>
                 </div>
