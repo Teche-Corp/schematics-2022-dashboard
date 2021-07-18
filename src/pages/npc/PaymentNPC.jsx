@@ -6,24 +6,37 @@ import toast from 'react-hot-toast';
 
 import { HiOutlineArrowCircleLeft } from 'react-icons/hi';
 
-import { useAuthState } from '@/contexts/AuthContext';
+import { useTeamState } from '@/contexts/TeamContext';
 import useLoadingToast from '@/hooks/useLoadingToast';
+import useTeamId from '@/hooks/useTeamId';
 
 import DashboardShell from '@/layout/DashboardShell';
 import DragnDropInput from '@/components/DragnDropInput';
 import LightInput from '@/components/LightInput';
 import SelectInput from '@/components/SelectInput';
+import UnstyledLink from '@/components/UnstyledLink';
 
-import { classNames, bearerToken } from '@/lib/helper';
+import { classNames, bearerToken, numberToRupiah } from '@/lib/helper';
 
 export default function PaymentNPC() {
-  const { user } = useAuthState();
+  const { npc } = useTeamState();
   const isLoading = useLoadingToast();
 
+  const teamId = useTeamId('npc');
+
+  const totalObject = {
+    npc_junior: 50000,
+    npc_senior: 120000,
+  };
+
   const [currentTab, setCurrentTab] = useState(0);
-  const [total, setTotal] = useState('Rp100.000');
+  const [total, setTotal] = useState(numberToRupiah(totalObject[npc?.event]));
 
   const history = useHistory();
+
+  if (!teamId || npc?.status_pembayaran !== null) {
+    history.push('/my/sch-npc/team');
+  }
 
   const methods = useForm();
   const { control, handleSubmit } = methods;
@@ -42,10 +55,11 @@ export default function PaymentNPC() {
 
   useEffect(() => {
     if (usedMethod === '0') {
-      setTotal('Rp101.000');
+      setTotal(numberToRupiah(totalObject[npc?.event] + 1000));
     } else if (usedMethod === '1') {
-      setTotal('Rp100.000');
+      setTotal(numberToRupiah(totalObject[npc?.event]));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [usedMethod]);
 
   const handleTabChange = (e) => {
@@ -60,8 +74,11 @@ export default function PaymentNPC() {
     const formData = new FormData();
 
     const newBody = {
-      team_id: user.team[0].npc,
-      jumlah: data['payment-method'] === '0' ? 101000 : 100000,
+      team_id: teamId,
+      jumlah:
+        data['payment-method'] === '0'
+          ? totalObject[npc?.event] + 1000
+          : totalObject[npc?.event],
       sumber: data['payment-method'] === '0' ? 'QRIS' : 'Mandiri',
       kode_voucher: '',
       img: data['payment-receipt'][0],
@@ -113,7 +130,7 @@ export default function PaymentNPC() {
               <div className='sm:col-span-2'>
                 <h2 className='text-lg font-semibold'>Total</h2>
                 {/* <p className='line-through'>Rp200.000</p> */}
-                <h4 className='text-4xl font-bold'>{total}</h4>
+                <h4 className='text-4xl font-bold tracking-tight'>{total}</h4>
                 {/* <form
                   className='mt-5 sm:flex sm:items-center'
                   onSubmit={handleSubmit2(handleAddVoucher)}
@@ -250,8 +267,11 @@ export default function PaymentNPC() {
                         <ol className='pt-3 pl-4 space-y-3 list-decimal list-outside'>
                           <li>
                             Peserta melakukan pembayaran sebesar{' '}
-                            <strong>Rp 101.000</strong> ke QR Code QRIS di bawah
-                            ini dengan atas nama <strong>Schematics ITS</strong>
+                            <strong>
+                              {numberToRupiah(totalObject[npc?.event] + 1000)}
+                            </strong>{' '}
+                            ke QR Code QRIS di bawah ini dengan atas nama{' '}
+                            <strong>Schematics ITS</strong>
                             <img
                               className='h-48'
                               src={`${process.env.PUBLIC_URL}/images/qris.jpg`}
@@ -279,12 +299,12 @@ export default function PaymentNPC() {
                           </li>
                           <li>
                             Jika mengalami kendala pembayaran, silakan{' '}
-                            <a
+                            <UnstyledLink
                               href='https://liff.line.me/1645278921-kWRPP32q?accountId=schematics.its&openerPlatform=webview&openerKey=webview%3AunifiedSearch'
                               className='underline cursor-pointer text-npc-400'
                             >
                               klik disini
-                            </a>
+                            </UnstyledLink>
                           </li>
                         </ul>
                       </div>
@@ -293,7 +313,10 @@ export default function PaymentNPC() {
                         <ol className='pt-3 pl-4 space-y-3 list-decimal list-outside'>
                           <li>
                             Peserta melakukan pembayaran sebesar{' '}
-                            <strong>Rp 100.000</strong> ke rekening{' '}
+                            <strong>
+                              {numberToRupiah(totalObject[npc?.event])}
+                            </strong>{' '}
+                            ke rekening{' '}
                             <strong>
                               Bank Mandiri 1020009828846 a.n RAFIQI RACHMAT
                             </strong>
@@ -316,12 +339,12 @@ export default function PaymentNPC() {
                         <ul className='pt-3 pl-4 italic list-disc list-outside'>
                           <li>
                             Jika mengalami kendala pembayaran, silakan{' '}
-                            <a
+                            <UnstyledLink
                               href='https://liff.line.me/1645278921-kWRPP32q?accountId=schematics.its&openerPlatform=webview&openerKey=webview%3AunifiedSearch'
                               className='underline cursor-pointer text-npc-400'
                             >
                               klik disini
-                            </a>
+                            </UnstyledLink>
                           </li>
                         </ul>
                       </div>
