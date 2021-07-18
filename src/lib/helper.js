@@ -12,3 +12,11 @@ export function bearerToken(contentType) {
 
   return headers;
 }
+
+export function numberToRupiah(number) {
+  return Intl.NumberFormat('id', {
+    style: 'currency',
+    currency: 'IDR',
+    maximumFractionDigits: 0,
+  }).format(number);
+}
