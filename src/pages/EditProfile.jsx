@@ -48,7 +48,7 @@ export default function EditProfile() {
               ? true
               : false,
         })
-        .then(async (res) => {
+        .then((res) => {
           const { jwt: token } = res.data.data;
           localStorage.setItem('token', token);
           return token;
