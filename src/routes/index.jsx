@@ -13,7 +13,6 @@ import AuthRoute from './AuthRoute';
 import ChooseEvent from '@/pages/ChooseEvent';
 import Dashboard from '@/pages/Dashboard';
 import EditProfile from '@/pages/EditProfile';
-import DashboardTeam from '@/components/DashboardTeam';
 
 import SignIn from '@/pages/auth/SignIn';
 import SignUp from '@/pages/auth/SignUp';
@@ -83,7 +82,7 @@ const routeItems = [
     key: 'nlc-create-team',
     path: '/my/sch-npc/payment',
     component: PaymentNPC,
-    visible: false,
+    visible: true,
   },
   {
     auth: 'private',
@@ -91,7 +90,7 @@ const routeItems = [
     key: 'npc-event',
     path: '/my/sch-npc/team/create/senior',
     component: CreateTeamNPCSenior,
-    visible: false,
+    visible: true,
   },
   {
     auth: 'private',
@@ -99,7 +98,7 @@ const routeItems = [
     key: 'npc-create-team-junior',
     path: '/my/sch-npc/team/create/junior',
     component: CreateTeamNPCJunior,
-    visible: false,
+    visible: true,
   },
   {
     auth: 'private',
@@ -107,15 +106,7 @@ const routeItems = [
     key: 'nlc-event',
     path: '/my/sch-npc/team',
     component: EventNPC,
-    visible: false,
-  },
-  {
-    auth: 'private',
-    route: PrivateRoute,
-    key: 'nlc-event',
-    path: 'my/sch-npc/payment',
-    component: DashboardTeam,
-    visible: false,
+    visible: true,
   },
   {
     auth: 'private',
