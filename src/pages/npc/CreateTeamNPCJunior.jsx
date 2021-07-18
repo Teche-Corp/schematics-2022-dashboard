@@ -15,6 +15,7 @@ import DragnDropInput from '@/components/DragnDropInput';
 
 import { bearerToken, classNames } from '@/lib/helper';
 import useLoadingToast from '@/hooks/useLoadingToast';
+import useTeamId from '@/hooks/useTeamId';
 
 export default function CreateTeam() {
   const history = useHistory();
@@ -33,6 +34,12 @@ export default function CreateTeam() {
 
   const { user } = useAuthState();
   const dispatch = useAuthDispatch();
+
+  const teamId = useTeamId('npc');
+
+  if (teamId) {
+    history.push('/my/sch-nlc/team');
+  }
 
   useEffect(() => {
     if (cityValue !== undefined) {
