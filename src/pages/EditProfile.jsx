@@ -28,32 +28,36 @@ export default function EditProfile() {
     setIsEditing((prevState) => !prevState);
   };
 
-  const handleEditProfile = async (data) => {
-    try {
-      const res = await axios.put('/user/edit', data, {
-        headers: { ...bearerToken() },
-        withCredentials:
-          process.env.NODE_ENV === 'production' &&
-          process.env.PUBLIC_URL === '/dashboard'
-            ? true
-            : false,
-      });
-      const { jwt: token } = res.data.data;
-      localStorage.setItem('token', token);
-
-      const user = await axios.post(
-        '/user/get-user-info',
-        {},
-        { headers: { ...bearerToken() } },
-      );
-
-      dispatch('EDIT_PROFILE', { ...user.data.data, token });
-      toast.success('Profil berhasil diubah.');
-    } catch (err) {
-      toast.error(err.response.data.msg);
-    } finally {
-      setIsEditing(false);
-    }
+  const handleEditProfile = (data) => {
+    toast.promise(
+      axios
+        .put('/user/edit', data, {
+          headers: { ...bearerToken() },
+          withCredentials:
+            process.env.NODE_ENV === 'production' &&
+            process.env.PUBLIC_URL === '/dashboard'
+              ? true
+              : false,
+        })
+        .then(async (res) => {
+          const { jwt: token } = res.data.data;
+          localStorage.setItem('token', token);
+          return token;
+        })
+        .then((token) => {
+          axios
+            .post('/user/get-user-info', {}, { headers: { ...bearerToken() } })
+            .then((user) => {
+              dispatch('EDIT_PROFILE', { ...user.data.data, token });
+            })
+            .finally(() => setIsEditing(false));
+        }),
+      {
+        loading: 'Loading...',
+        success: 'Profil berhasil diubah',
+        error: (err) => err.response.data.msg,
+      },
+    );
   };
 
   return (
