@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import axios from 'axios';
 import toast from 'react-hot-toast';
@@ -18,11 +18,20 @@ export default function EditProfile() {
   const [isEditing, setIsEditing] = useState(false);
   const isLoading = useLoadingToast();
 
-  const methods = useForm();
+  const defaultValues = useMemo(() => {
+    return { name: user.name, email: user.email, phone: user.phone };
+  }, [user.name, user.email, user.phone]);
+  const methods = useForm({
+    defaultValues,
+  });
   const {
     handleSubmit,
     formState: { isDirty },
+    reset,
   } = methods;
+  useEffect(() => {
+    reset(user);
+  }, [reset, user]);
 
   const handleEditClick = () => {
     setIsEditing((prevState) => !prevState);
@@ -100,7 +109,6 @@ export default function EditProfile() {
                               <StandAloneInput
                                 label='Nama'
                                 id='name'
-                                defaultValue={user.name}
                                 validation={{
                                   required: 'Nama tidak boleh kosong',
                                 }}
@@ -120,7 +128,6 @@ export default function EditProfile() {
                                 label='Email'
                                 id='email'
                                 type='email'
-                                defaultValue={user.email}
                                 validation={{
                                   required: 'Email tidak boleh kosong',
                                   pattern: {
@@ -143,7 +150,6 @@ export default function EditProfile() {
                               <StandAloneInput
                                 label='Nomor Telepon'
                                 id='phone'
-                                defaultValue='+628123456789'
                                 validation={{
                                   required: 'Nomor Telepon tidak boleh kosong',
                                   pattern: {
