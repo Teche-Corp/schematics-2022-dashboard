@@ -56,3 +56,30 @@ export const TeamProvider = ({ children }) => {
 
 export const useTeamState = () => useContext(StateContext);
 export const useTeamDispatch = () => useContext(DispatchContext);
+
+// Example NLC
+const ExampleNLC = {
+  id: 5,
+  nama_tim: 'asedfasdf',
+  asal_sekolah: 'asdfasdfasdf',
+  kota: 'KABUPATEN ACEH TIMUR',
+  provinsi: 'ACEH',
+  region: 'SUMATRA',
+  nama_ketua: 'bambosa',
+  email_ketua: 'theodorusclarence@gmail.com',
+  nomor_telpon: '+628123456721',
+  nisn_ketua: 'sdfasd',
+  alamat_ketua: 'asdfasdf',
+  id_line_ketua: null,
+  link_bukti_sah:
+    'https://schematics-webkes-backend-dev.herokuapp.com/storage/npc_team_file/kartu_.ketua_teamNPC2.qsQoxY8u3I.jpg',
+  anggota: [
+    '{alamat: "asdfasdf", email: "theodorusclarence@gmai…}',
+    '{alamat: "asdf", email: "a@a.com", id_line: null, l…}',
+  ],
+  tahapan: null,
+  status_pembayaran: null,
+  event: 'nlc',
+  kode_voucher: 'SCHEMATICS20',
+  potongan_persen: 20.0,
+};
