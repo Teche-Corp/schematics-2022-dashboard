@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { FormProvider, useForm, useWatch } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
@@ -38,8 +38,8 @@ export default function PaymentNPC() {
     history.push('/my/sch-npc/team');
   }
 
-  const methods = useForm();
-  const { control, handleSubmit } = methods;
+  const methods = useForm({ defaultValues: { 'payment-method': '0' } });
+  const { handleSubmit, watch } = methods;
 
   // const { handleSubmit: handleSubmit2, register } = useForm();
 
@@ -48,10 +48,7 @@ export default function PaymentNPC() {
     { text: 'Mandiri', value: 1 },
   ];
 
-  const usedMethod = useWatch({
-    control,
-    name: 'payment-method',
-  });
+  const usedMethod = watch('payment-method');
 
   useEffect(() => {
     if (usedMethod === '0') {
@@ -59,6 +56,10 @@ export default function PaymentNPC() {
     } else if (usedMethod === '1') {
       setTotal(numberToRupiah(totalObject[npc?.event]));
     }
+
+    // set Tab according to method
+    setCurrentTab(parseInt(usedMethod));
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [usedMethod]);
 
@@ -227,7 +228,7 @@ export default function PaymentNPC() {
                         name='tabs'
                         className='block w-full py-2 pl-3 pr-10 text-base border-gray-300 rounded-md focus:outline-none focus:ring-dark-400 focus:border-dark-400 sm:text-sm'
                         onChange={handleTabChange}
-                        value={currentTab}
+                        selected={currentTab}
                       >
                         {paymentMethod.map((tab) => (
                           <option key={tab.value} value={tab.value}>
