@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { FormProvider, useForm } from 'react-hook-form';
 import axios from 'axios';
@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 
 import { HiOutlineArrowCircleLeft } from 'react-icons/hi';
 
-import { useTeamState } from '@/contexts/TeamContext';
+import { useTeamDispatch, useTeamState } from '@/contexts/TeamContext';
 import useLoadingToast from '@/hooks/useLoadingToast';
 
 import DashboardShell from '@/layout/DashboardShell';
@@ -15,7 +15,7 @@ import LightInput from '@/components/LightInput';
 import SelectInput from '@/components/SelectInput';
 import UnstyledLink from '@/components/UnstyledLink';
 
-import { classNames, bearerToken } from '@/lib/helper';
+import { classNames, bearerToken, numberToRupiah } from '@/lib/helper';
 import useTeamId from '@/hooks/useTeamId';
 
 const paymentMethod = [
@@ -25,31 +25,37 @@ const paymentMethod = [
 
 export default function PaymentNLC() {
   const { nlc } = useTeamState();
+  const teamDispatch = useTeamDispatch();
   const isLoading = useLoadingToast();
 
   const [currentTab, setCurrentTab] = useState(0);
-  const [total, setTotal] = useState('Rp100.000');
+  const [total, setTotal] = useState(numberToRupiah(50000));
 
   const history = useHistory();
 
   const methods = useForm({ defaultValues: { 'payment-method': '0' } });
   const { handleSubmit, watch } = methods;
 
-  // const { handleSubmit: handleSubmit2, register } = useForm();
+  const { handleSubmit: handleSubmitVoucher, register } = useForm();
 
   const teamId = useTeamId('nlc');
-
   if (!teamId || nlc?.status_pembayaran !== null) {
     history.push('/my/sch-nlc/team');
   }
 
-  const usedMethod = watch('payment-method');
+  // const voucherIsApplied = useMemo(
+  //   () => nlc?.kode_voucher && nlc?.potongan_persen,
+  //   [nlc],
+  // );
 
+  const voucherIsApplied = true;
+
+  const usedMethod = watch('payment-method');
   useEffect(() => {
     if (usedMethod === '0') {
-      setTotal('Rp101.000');
+      setTotal(numberToRupiah(51000));
     } else if (usedMethod === '1') {
-      setTotal('Rp100.000');
+      setTotal(numberToRupiah(50000));
     }
 
     // set Tab according to method
@@ -60,9 +66,36 @@ export default function PaymentNLC() {
     setCurrentTab(parseInt(e.target.value));
   };
 
-  // const handleAddVoucher = (data) => {
-  //   console.log(data);
-  // };
+  const handleAddVoucher = (data) => {
+    console.log(data);
+    const body = {
+      kode_voucher: data['kode-voucher'],
+      team_id: teamId,
+    };
+
+    toast.promise(
+      axios
+        .post('/pembayaran/apply_voucher/apply_voucher', body, {
+          headers: {
+            ...bearerToken(),
+            'Content-Type': 'application/json',
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          // teamDispatch('STORE_NLC', {
+          //   ...nlc,
+          //   kode_voucher: 'SCHEMATICS20',
+          //   potongan_persen: 20.0,
+          // });
+        }),
+      {
+        loading: 'Loading...',
+        success: 'Bukti pembayaran berhasil diupload!',
+        error: (err) => err.response.data.msg,
+      },
+    );
+  };
 
   const handleUpload = async (data) => {
     const formData = new FormData();
@@ -118,36 +151,48 @@ export default function PaymentNLC() {
             <div className='grid grid-cols-1 gap-8 mt-6 sm:grid-cols-6'>
               <div className='sm:col-span-2'>
                 <h2 className='text-lg font-semibold'>Total</h2>
-                {/* <p className='line-through'>Rp200.000</p> */}
+                {voucherIsApplied && (
+                  <p className='text-gray-600 line-through'>Rp200.000</p>
+                )}
                 <h4 className='text-4xl font-bold'>{total}</h4>
-                {/* <form
-                  className='mt-5 sm:flex sm:items-center'
-                  onSubmit={handleSubmit2(handleAddVoucher)}
-                >
-                  <div className='w-full sm:max-w-xs'>
-                    <label htmlFor='voucher-code' className='sr-only'>
-                      Kode Voucher
-                    </label>
-                    <input
-                      {...register('voucher-code')}
-                      type='text'
-                      name='voucher-code'
-                      id='voucher-code'
-                      className='block w-full border-gray-300 rounded-md shadow-sm focus:ring-dark-400 focus:border-dark-400 sm:text-sm'
-                      placeholder='Masukkan kode voucher'
-                      aria-describedby='voucher-code'
-                    />
-                  </div>
-                  <button
-                    type='submit'
-                    className='inline-flex items-center justify-center w-full px-4 py-2 mt-3 font-medium text-white border border-transparent rounded-md shadow-sm bg-nlc hover:bg-nlc-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-nlc-400 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm'
+                {!voucherIsApplied && (
+                  <form
+                    className='mt-5 sm:flex sm:items-center'
+                    onSubmit={handleSubmitVoucher(handleAddVoucher)}
                   >
-                    Gunakan
-                  </button>
-                </form>
-                <div className='mt-2'>
-                  <span className='font-bold'>SCHEMATICS</span> digunakan
-                </div> */}
+                    <div className='w-full sm:max-w-xs'>
+                      <label htmlFor='voucher-code' className='sr-only'>
+                        Kode Voucher
+                      </label>
+                      <input
+                        {...register('voucher-code')}
+                        type='text'
+                        name='voucher-code'
+                        id='voucher-code'
+                        className='block w-full border-gray-300 rounded-md shadow-sm focus:ring-dark-400 focus:border-dark-400 sm:text-sm'
+                        placeholder='Masukkan kode voucher'
+                        aria-describedby='voucher-code'
+                      />
+                    </div>
+                    <button
+                      type='submit'
+                      disabled={isLoading}
+                      className={classNames(
+                        'inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-nlc hover:bg-nlc-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-nlc-400',
+                        isLoading && 'filter brightness-90 cursor-wait',
+                      )}
+                    >
+                      Gunakan
+                    </button>
+                  </form>
+                )}
+                {voucherIsApplied && (
+                  <div className='px-4 py-2 mt-2 text-gray-700 bg-yellow-100 rounded shadow-sm'>
+                    Voucher{' '}
+                    <span className='font-bold text-gray-900'>SCHEMATICS</span>{' '}
+                    digunakan
+                  </div>
+                )}
               </div>
 
               <div className='sm:col-span-4'>
