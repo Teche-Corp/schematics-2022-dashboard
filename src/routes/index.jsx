@@ -143,6 +143,14 @@ const routeItems = [
   {
     auth: 'admin',
     route: PrivateRoute,
+    key: 'admin-sch-nlc-user-edit',
+    path: '/admin/sch-nlc/user/:id/edit',
+    component: UpdateUserNLC,
+    visible: false,
+  },
+  {
+    auth: 'admin',
+    route: PrivateRoute,
     key: 'admin-sch-nlc-user',
     path: '/admin/sch-nlc/user',
     component: AdminNLC,
@@ -197,7 +205,6 @@ const Routes = () => {
         <Route exact path='/'>
           <Redirect to='/signin' />
         </Route>
-        <Route path='/admin/sch-nlc/user/:id/edit' component={UpdateUserNLC} />
 
         {routeItems.map((routeItem) => {
           if (process.env.PUBLIC_URL === '/dashboard' && !routeItem.visible)
