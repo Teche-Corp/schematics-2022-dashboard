@@ -37,7 +37,7 @@ import UpdateUserNLC from '@/pages/admin/nlc/UpdateUserNLC';
 
 const routeItems = [
   {
-    auth: 'private',
+    auth: 'all',
     route: PrivateRoute,
     key: 'choose-event',
     path: '/choose-event',
@@ -45,7 +45,7 @@ const routeItems = [
     visible: false,
   },
   {
-    auth: 'private',
+    auth: 'user',
     route: PrivateRoute,
     key: 'edit-profile',
     path: '/my/edit-profile',
@@ -53,7 +53,7 @@ const routeItems = [
     visible: true,
   },
   {
-    auth: 'private',
+    auth: 'user',
     route: PrivateRoute,
     key: 'nlc-create-team',
     path: '/my/sch-nlc/team/create',
@@ -61,7 +61,7 @@ const routeItems = [
     visible: true,
   },
   {
-    auth: 'private',
+    auth: 'user',
     route: PrivateRoute,
     key: 'nlc-create-team',
     path: '/my/sch-nlc/payment',
@@ -69,7 +69,7 @@ const routeItems = [
     visible: true,
   },
   {
-    auth: 'private',
+    auth: 'user',
     route: PrivateRoute,
     key: 'nlc-event',
     path: '/my/sch-nlc/team',
@@ -77,7 +77,7 @@ const routeItems = [
     visible: true,
   },
   {
-    auth: 'private',
+    auth: 'user',
     route: PrivateRoute,
     key: 'nlc-create-team',
     path: '/my/sch-npc/payment',
@@ -85,7 +85,7 @@ const routeItems = [
     visible: true,
   },
   {
-    auth: 'private',
+    auth: 'user',
     route: PrivateRoute,
     key: 'npc-event',
     path: '/my/sch-npc/team/create/senior',
@@ -93,7 +93,7 @@ const routeItems = [
     visible: true,
   },
   {
-    auth: 'private',
+    auth: 'user',
     route: PrivateRoute,
     key: 'npc-create-team-junior',
     path: '/my/sch-npc/team/create/junior',
@@ -101,7 +101,7 @@ const routeItems = [
     visible: true,
   },
   {
-    auth: 'private',
+    auth: 'user',
     route: PrivateRoute,
     key: 'nlc-event',
     path: '/my/sch-npc/team',
@@ -109,7 +109,7 @@ const routeItems = [
     visible: true,
   },
   {
-    auth: 'private',
+    auth: 'user',
     route: PrivateRoute,
     key: 'dashboard',
     path: '/my',
@@ -117,7 +117,7 @@ const routeItems = [
     visible: true,
   },
   {
-    auth: 'private',
+    auth: 'admin',
     route: PrivateRoute,
     key: 'admin-dashboard',
     path: '/admin/dashboard',
@@ -125,31 +125,31 @@ const routeItems = [
     visible: false,
   },
   {
-    auth: 'none',
-    route: Route,
+    auth: 'admin',
+    route: PrivateRoute,
     key: 'admin-add-voucher',
     path: '/admin/voucher/add',
     component: AddVoucher,
     visible: false,
   },
   {
-    auth: 'none',
-    route: Route,
+    auth: 'admin',
+    route: PrivateRoute,
     key: 'admin-voucher',
     path: '/admin/voucher',
     component: Voucher,
     visible: false,
   },
   {
-    auth: 'none',
-    route: Route,
+    auth: 'admin',
+    route: PrivateRoute,
     key: 'admin-sch-nlc-user',
     path: '/admin/sch-nlc/user',
     component: AdminNLC,
     visible: false,
   },
   {
-    auth: 'auth',
+    auth: 'all',
     route: AuthRoute,
     key: 'signin',
     path: '/signin',
@@ -157,7 +157,7 @@ const routeItems = [
     visible: true,
   },
   {
-    auth: 'auth',
+    auth: 'all',
     route: AuthRoute,
     key: 'signup',
     path: '/signup',
@@ -165,7 +165,7 @@ const routeItems = [
     visible: true,
   },
   {
-    auth: 'auth',
+    auth: 'all',
     route: AuthRoute,
     key: 'forgot',
     path: '/forgot',
@@ -173,7 +173,7 @@ const routeItems = [
     visible: true,
   },
   {
-    auth: 'auth',
+    auth: 'all',
     route: AuthRoute,
     key: 'change-password',
     path: '/change-password',
@@ -181,7 +181,7 @@ const routeItems = [
     visible: true,
   },
   {
-    auth: 'auth',
+    auth: 'all',
     route: AuthRoute,
     key: 'reset-password',
     path: '/reset-password',
@@ -206,6 +206,7 @@ const Routes = () => {
           return (
             <routeItem.route
               key={routeItem.key}
+              auth={routeItem.auth}
               path={routeItem.path}
               component={routeItem.component}
             />
