@@ -20,8 +20,8 @@ const PrivateRoute = ({ component: Component, auth, ...rest }) => {
           );
         } else {
           if (authenticated) {
+            // If current user role not allowed to access this route
             if (auth !== 'all' && user?.user_role !== auth) {
-              console.log('halo', user?.user_role, auth);
               return user?.user_role === 'user' ? (
                 <Redirect to={'/my'} />
               ) : (
