@@ -42,9 +42,16 @@ const SignIn = () => {
         { headers: { ...bearerToken() } },
       );
 
+      const role = user.data.data.user_role;
+
       dispatch('LOGIN', { ...user.data.data, token });
       setLoading(false);
-      history.replace('/my');
+
+      if (role === 'user') {
+        history.replace('/my');
+      } else if (role === 'admin') {
+        history.replace('/admin/dashboard');
+      }
     } catch (err) {
       toast.error(err.response.data.msg);
     } finally {
