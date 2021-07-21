@@ -125,6 +125,7 @@ export default function DragnDropInput({
     onDrop,
     accept,
     maxFiles,
+    maxSize: 2000000,
   });
 
   return (
