@@ -1,24 +1,170 @@
-import DashboardAdminShell from '@/layout/DashboardAdminShell';
+import axios from 'axios';
+import { useEffect, useMemo, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useAsyncDebounce, useTable, useGlobalFilter } from 'react-table';
 import { HiCheckCircle, HiOfficeBuilding, HiUserGroup } from 'react-icons/hi';
 import { FaMoneyCheck } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid';
 
-const cards = [
-  {
-    name: 'Total Pendaftaran',
-    href: '#',
-    icon: HiUserGroup,
-    amount: '3',
-  },
-  {
-    name: 'Total Pendapatan',
-    href: '#',
-    icon: FaMoneyCheck,
-    amount: 'Rp.30.000',
-  },
-];
+import DashboardAdminShell from '@/layout/DashboardAdminShell';
+import { bearerToken } from '@/lib/helper';
+
+function GlobalFilter({
+  preGlobalFilteredRows,
+  globalFilter,
+  setGlobalFilter,
+}) {
+  const count = preGlobalFilteredRows.length;
+  const [value, setValue] = useState(globalFilter);
+  const onChange = useAsyncDebounce((value) => {
+    setGlobalFilter(value || undefined);
+  }, 200);
+
+  return (
+    <>
+      <div className='pb-3'>
+        <div className='flex space-x-10'>
+          <div className='flex'>
+            <label className='text-gray-500 '>Cari: </label>
+            <input
+              value={value || ''}
+              onChange={(e) => {
+                setValue(e.target.value);
+                onChange(e.target.value);
+              }}
+              className='block px-1 ml-2 border-gray-300 shadow-sm sm:text-sm'
+            />
+          </div>
+          <p className='text-gray-500'>Menampilkan {count} data</p>
+        </div>
+      </div>
+    </>
+  );
+}
 
 export default function AdminNLC() {
+  const [data, setData] = useState([]);
+  const [page, setPage] = useState(1);
+  const [pages, setPages] = useState();
+
+  const getTeamData = async () => {
+    const res = await axios
+      .get(`/admin/list/tim/nlc?page=${page}`, {
+        headers: { ...bearerToken() },
+      })
+      .catch((err) => err);
+
+    if (res.status === 200) {
+      setPages(res?.data?.data?.total_page);
+
+      setData(res?.data?.data?.teams);
+    } else {
+      setData([]);
+    }
+  };
+
+  useEffect(() => {
+    getTeamData();
+  }, [page]);
+
+  const cards = [
+    {
+      name: 'Total Pendaftaran',
+      href: '#',
+      icon: HiUserGroup,
+      amount: data?.length || 0,
+    },
+  ];
+
+  const columns = useMemo(
+    () => [
+      {
+        Header: 'No',
+        Cell: (d) => {
+          return d.row.index + 1;
+        },
+      },
+      {
+        Header: 'Nama Tim',
+        accessor: 'team_name',
+      },
+      {
+        Header: 'Verified',
+        accessor: (d) => {
+          if (d.bukti_pembayaran?.is_verified) {
+            <span className='text-green-500'>Ya</span>;
+          }
+          return <span className='text-red-500'>Tidak</span>;
+        },
+      },
+      {
+        Header: 'Region',
+        accessor: 'kota.region_name',
+      },
+      {
+        Header: 'Provinsi',
+        accessor: 'kota.province_name',
+      },
+      {
+        Header: 'Kota',
+        accessor: 'kota.regency_name',
+      },
+      {
+        Header: 'Anggota 1',
+        accessor: (d) => (
+          <>
+            {d?.user_ketua?.name} - {d?.user_ketua?.email} -{' '}
+            {d?.anggota_ketua?.anggota_id_line || 'Data line tidak dimasukan'} -{' '}
+            <a
+              className='text-blue-400 underline'
+              href={`https://wa.me/${d?.user_ketua?.phone}`}
+            >
+              ({d?.user_ketua?.phone})
+            </a>
+          </>
+        ),
+      },
+      {
+        Header: 'Edit',
+        Cell: (d) => {
+          return (
+            <Link
+              className='font-bold text-nlc'
+              id={d?.row?.id}
+              to={{
+                pathname: `/admin/sch-nlc/user/${Number(d?.row?.id) + 1}/edit`,
+                state: {
+                  page: page,
+                },
+              }}
+            >
+              Edit
+            </Link>
+          );
+        },
+      },
+    ],
+    [],
+  );
+
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    rows,
+    state,
+    preGlobalFilteredRows,
+    setGlobalFilter,
+    prepareRow,
+  } = useTable(
+    {
+      columns,
+      data,
+      initialState: { pageIndex: 1 },
+    },
+    useGlobalFilter,
+  );
+
   return (
     <DashboardAdminShell>
       <main className='relative z-0 flex-1 pb-8 overflow-y-auto'>
@@ -107,175 +253,148 @@ export default function AdminNLC() {
               Tabel Pendaftaran
             </h2>
 
-            {/****  TABLE START HERE  *****/}
             <div className='flex flex-col'>
               <div className='-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8'>
                 <div className='inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8'>
+                  <GlobalFilter
+                    preGlobalFilteredRows={preGlobalFilteredRows}
+                    globalFilter={state.globalFilter}
+                    setGlobalFilter={setGlobalFilter}
+                  />
                   <div className='overflow-hidden border-b border-gray-200 shadow sm:rounded-lg'>
-                    <table className='min-w-full divide-y divide-gray-200'>
-                      <thead className='bg-gray-50'>
-                        <tr>
-                          <th
-                            scope='col'
-                            className='px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase'
-                          >
-                            No
-                          </th>
-                          <th
-                            scope='col'
-                            className='px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase'
-                          >
-                            Region
-                          </th>
-                          <th
-                            scope='col'
-                            className='px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase'
-                          >
-                            Nama Tim
-                          </th>
-                          <th
-                            scope='col'
-                            className='px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase'
-                          >
-                            Verified
-                          </th>
-                          <th
-                            scope='col'
-                            className='px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase'
-                          >
-                            Sekolah
-                          </th>
-                          <th
-                            scope='col'
-                            className='px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase'
-                          >
-                            Kota
-                          </th>
-                          <th
-                            scope='col'
-                            className='px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase'
-                          >
-                            Provinsi
-                          </th>
-                          <th
-                            scope='col'
-                            className='px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase'
-                          >
-                            Anggota 1
-                          </th>
-                          <th
-                            scope='col'
-                            className='px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase '
-                          >
-                            Actions
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {dummyData.map((person, personIdx) => (
-                          <tr
-                            key={person.email}
-                            className={
-                              personIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50'
-                            }
-                          >
-                            <td className='px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap'>
-                              {personIdx + 1}
-                            </td>
-                            <td className='px-6 py-4 text-sm font-medium text-gray-500 whitespace-nowrap'>
-                              {person.region}
-                            </td>
-                            <td className='px-6 py-4 text-sm text-gray-500 whitespace-nowrap'>
-                              {person.namaTim}
-                            </td>
-                            <td
-                              className={`px-6 py-4 text-sm font-medium ${
-                                person.verified === 'Yes'
-                                  ? 'text-green-500'
-                                  : 'text-red-500'
-                              } whitespace-nowrap`}
-                            >
-                              {person.verified}
-                            </td>
-                            <td className='px-6 py-4 text-sm text-gray-500 whitespace-nowrap'>
-                              {person.sekolah}
-                            </td>
-                            <td className='px-6 py-4 text-sm text-gray-500 whitespace-nowrap'>
-                              {person.kota}
-                            </td>
-                            <td className='px-6 py-4 text-sm text-gray-500 whitespace-nowrap'>
-                              {person.provinsi}
-                            </td>
-                            <td className='px-6 py-4 text-sm text-gray-500 whitespace-nowrap'>
-                              {person.anggota.nama} - {person.anggota.email} -{' '}
-                              {person.anggota.id_line} -{' '}
-                              {person.anggota.phone_number}
-                            </td>
-                            <td className='px-6 py-4 text-sm text-nlc-400 hover:text-nlc-500 whitespace-nowrap focus:outline-none'>
-                              <Link
-                                id={person.id}
-                                to={`/admin/sch-nlc/user/${person.id}/edit`}
+                    {data === undefined ? (
+                      <div className='text-center'>
+                        <div className='py-4 text-sm text-gray-900'>
+                          Sedang menunggu data...
+                        </div>
+                      </div>
+                    ) : (
+                      <>
+                        <table
+                          columns={columns}
+                          data={data}
+                          {...getTableProps()}
+                          className='min-w-full divide-y divide-gray-200'
+                        >
+                          <thead className='bg-gray-50'>
+                            {headerGroups.map((headerGroup) => (
+                              <tr
+                                {...headerGroup.getHeaderGroupProps()}
+                                key={headerGroup.id}
                               >
-                                Edit
-                              </Link>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                                {headerGroup.headers.map((column) => (
+                                  <th
+                                    key={column.id}
+                                    {...column.getHeaderProps()}
+                                    className='px-6 py-3 text-xs font-bold tracking-wider text-left text-black uppercase'
+                                  >
+                                    {column.render('Header')}
+                                  </th>
+                                ))}
+                              </tr>
+                            ))}
+                          </thead>
+                          <tbody {...getTableBodyProps()}>
+                            {rows?.map((row) => {
+                              prepareRow(row);
+                              return (
+                                <tr
+                                  {...row.getRowProps()}
+                                  className={
+                                    row.id % 2 === 0
+                                      ? 'bg-white'
+                                      : 'bg-gray-100'
+                                  }
+                                  key={row.id}
+                                >
+                                  {row?.cells?.map((cell) => {
+                                    return (
+                                      <td
+                                        {...cell.getCellProps()}
+                                        className='px-6 py-4 text-sm font-light text-gray-900 whitespace-nowrap '
+                                        key={cell.id}
+                                      >
+                                        {cell.render('Cell')}
+                                      </td>
+                                    );
+                                  })}
+                                </tr>
+                              );
+                            })}
+                          </tbody>
+                        </table>
+                      </>
+                    )}
+                    <div className='flex items-center justify-between px-4 py-3 bg-white border-t border-gray-200 sm:px-6'>
+                      <div className='flex flex-1 sm:hidden'>
+                        <button
+                          href='#'
+                          className='relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50'
+                        >
+                          Previous
+                        </button>
+                        <button
+                          href='#'
+                          className='relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50'
+                        >
+                          Next
+                        </button>
+                      </div>
+                      <div className='hidden sm:flex-1 sm:flex sm:items-center sm:justify-between'>
+                        <div>
+                          <p className='text-sm text-gray-700'>
+                            Menampilkan halaman
+                            <span className='font-medium'> {page}</span>
+                          </p>
+                        </div>
+                        <div>
+                          <nav
+                            className='relative z-0 inline-flex -space-x-px rounded-md shadow-sm'
+                            aria-label='Pagination'
+                          >
+                            <button
+                              onClick={() => {
+                                if (page === 1) return;
+                                setPage(page - 1);
+                              }}
+                              className='relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-l-md hover:bg-gray-50'
+                            >
+                              <span className='sr-only'>Previous</span>
+                              <ChevronLeftIcon
+                                className='w-5 h-5'
+                                aria-hidden='true'
+                              />
+                            </button>
+
+                            <button
+                              onClick={() => {
+                                if (page >= pages) return;
+                                setPage(page + 1);
+                              }}
+                              disabled={page === pages}
+                              className={`relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 ${
+                                page === pages
+                                  ? 'bg-gray-300'
+                                  : 'bg-white hover:bg-gray-50'
+                              } border border-gray-300 rounded-r-md `}
+                            >
+                              <span className='sr-only'>Next</span>
+                              <ChevronRightIcon
+                                className='w-5 h-5'
+                                aria-hidden='true'
+                              />
+                            </button>
+                          </nav>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-            {/****  TABLE END HERE  *****/}
           </div>
         </div>
       </main>
     </DashboardAdminShell>
   );
 }
-
-const dummyData = [
-  {
-    id: 1,
-    region: 'Jawa Barat',
-    namaTim: 'Doa Ibu',
-    verified: 'Yes',
-    sekolah: 'SMAN 3 BEKASI',
-    kota: 'BEKASI',
-    provinsi: 'Jawa Barat',
-    anggota: {
-      nama: 'Rizqi Tsani',
-      email: 'tsani@mail.com',
-      phone_number: '0813837162',
-      id_line: 'tsaniii',
-    },
-    anggota2: {
-      nama: 'Agus Budi',
-      email: 'budi@mail.com',
-      phone_number: '0813837162',
-      id_line: 'budii',
-    },
-  },
-  {
-    id: 2,
-    region: 'Jawa Timur',
-    namaTim: 'TEAM OP',
-    verified: 'No',
-    sekolah: 'SMAN 3 Surabaya',
-    kota: 'Surabaya',
-    provinsi: 'Jawa Timur',
-    anggota: {
-      nama: 'Bobu Tsani',
-      email: 'bobu@mail.com',
-      phone_number: '0813837162',
-      id_line: 'bobuii',
-    },
-    anggota2: {
-      nama: 'Bibu Budi',
-      email: 'bibu@mail.com',
-      phone_number: '0813837162',
-      id_line: 'bibui',
-    },
-  },
-];
