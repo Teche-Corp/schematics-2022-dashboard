@@ -1,4 +1,6 @@
-import DashboardAdminShell from '@/layout/DashboardAdminShell';
+import useSWR from 'swr';
+import toast from 'react-hot-toast';
+
 import {
   HiCheckCircle,
   HiDesktopComputer,
@@ -10,54 +12,63 @@ import {
 import { BiBrain } from 'react-icons/bi';
 import { FaMoneyCheck } from 'react-icons/fa';
 
-const cards = [
-  {
-    name: 'Total Pendaftaran',
-    href: '#',
-    icon: HiUserGroup,
-    amount: '2',
-  },
-  {
-    name: 'Total Pendapatan',
-    href: '#',
-    icon: FaMoneyCheck,
-    amount: 'Rp.10.000',
-  },
-  {
-    name: 'Schematics NPC',
-    href: '#',
-    icon: HiDesktopComputer,
-    amount: '1',
-    paid: '1',
-    date: 'Juni 2021',
-  },
-  {
-    name: 'Shematics NLC',
-    href: '#',
-    icon: BiBrain,
-    amount: '1',
-    paid: '1',
-    date: 'Juli 2021',
-  },
-  {
-    name: 'Schematics NST',
-    href: '#',
-    icon: HiSpeakerphone,
-    amount: '0',
-    paid: '0',
-    date: 'Oktober 2021',
-  },
-  {
-    name: 'Schematics Reeva',
-    href: '#',
-    icon: HiOutlineSpeakerphone,
-    amount: '0',
-    paid: '0',
-    date: 'Juni 2021',
-  },
-];
+import DashboardAdminShell from '@/layout/DashboardAdminShell';
 
 export default function Admin() {
+  const { data, error } = useSWR(
+    '/statistics?total_daftar=1&total_pendapatan=1&nlc_sudah_bayar=1&npcj_sudah_bayar=1&npcs_sudah_bayar=1&total_tim_nlc=1&total_tim_npcj=1&total_tim_npcs=1&total_tiket_nst_sudah_bayar=1&total_tiket_nst=1&total_tiket_reeva_sudah_bayar=1&total_tiket_reeva=1',
+  );
+
+  if (error) {
+    return toast.error('Gagal mengambil data kota.');
+  }
+
+  const cards = [
+    {
+      name: 'Total Pendaftaran',
+      href: '#',
+      icon: HiUserGroup,
+      amount: data?.data?.total_pendaftaran,
+    },
+    {
+      name: 'Total Pendapatan',
+      href: '#',
+      icon: FaMoneyCheck,
+      amount: data?.data?.total_pendapatan,
+    },
+    {
+      name: 'Schematics NPC',
+      href: '#',
+      icon: HiDesktopComputer,
+      amount:
+        data?.data?.total_tim_npc_junior + data?.data?.total_tim_npc_senior,
+      paid:
+        data?.data?.total_tim_npc_junior_sudah_bayar +
+        data?.data?.total_tim_npc_senior_sudah_bayar,
+    },
+    {
+      name: 'Shematics NLC',
+      href: '#',
+      icon: BiBrain,
+      amount: data?.data?.total_tim_nlc,
+      paid: data?.data?.total_tim_nlc_sudah_bayar,
+    },
+    {
+      name: 'Schematics NST',
+      href: '#',
+      icon: HiSpeakerphone,
+      amount: data?.data?.total_tiket_nst,
+      paid: data?.data?.total_tiket_nst_sudah_bayar,
+    },
+    {
+      name: 'Schematics Reeva',
+      href: '#',
+      icon: HiOutlineSpeakerphone,
+      amount: data?.data?.total_tiket_reeva,
+      paid: data?.data?.total_tiket_reeva_sudah_bayar,
+    },
+  ];
+
   return (
     <DashboardAdminShell>
       <main className='relative z-0 flex-1 pb-8 overflow-y-auto'>
@@ -138,14 +149,22 @@ export default function Admin() {
                           <dt className='text-sm font-medium text-gray-500 truncate'>
                             {card.name}
                           </dt>
-                          <dd>
-                            <div className='text-lg font-medium text-gray-900'>
-                              {card.amount}
-                            </div>
-                          </dd>
-                          <p className='text-xs text-gray-900'>
-                            {card.paid ? `${card.paid} sudah membayar` : ''}
-                          </p>
+                          {data ? (
+                            <>
+                              <dd>
+                                <div className='text-lg font-medium text-gray-900'>
+                                  {card.amount}
+                                </div>
+                              </dd>
+                              <p className='text-xs text-gray-900'>
+                                {card.paid !== undefined
+                                  ? `${card.paid} sudah membayar`
+                                  : ''}
+                              </p>
+                            </>
+                          ) : (
+                            <div className='w-48 h-4 mt-1 bg-gray-400 rounded animate-pulse' />
+                          )}
                         </dl>
                       </div>
                     </div>
