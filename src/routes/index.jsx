@@ -40,6 +40,9 @@ import AdminReeva from '@/pages/admin/reeva/AdminReeva';
 import AdminNpc from '@/pages/admin/npc/AdminNpc';
 import AdminNpcJunior from '@/pages/admin/npc/AdminNpcJunior';
 
+import PageNotFound from '@/pages/error/404';
+import Error500 from '@/pages/error/500';
+
 const routeItems = [
   {
     auth: 'all',
@@ -241,6 +244,22 @@ const routeItems = [
     component: ResetPassword,
     visible: true,
   },
+  {
+    auth: 'all',
+    route: AuthRoute,
+    key: 'page-not-found',
+    path: '/page-not-found',
+    component: PageNotFound,
+    visible: true,
+  },
+  {
+    auth: 'all',
+    route: AuthRoute,
+    key: 'error-500',
+    path: '/error-500',
+    component: Error500,
+    visible: true,
+  },
 ];
 
 const Routes = () => {
@@ -264,6 +283,7 @@ const Routes = () => {
             />
           );
         })}
+        <Route path='*' component={PageNotFound} />
       </Switch>
     </Router>
   );
