@@ -18,8 +18,6 @@ const actions = [
     icon: BiBrain,
     iconForeground: 'text-npc',
     iconBackground: 'bg-npc-100',
-    description:
-      'Schematics NLC merupakan kompetisi logika terbesar di Indonesia, dengan jumlah peserta yang kerap meningkat tiap tahunnya',
   },
   {
     title: 'Schematics NPC Junior',
@@ -27,8 +25,6 @@ const actions = [
     icon: HiDesktopComputer,
     iconForeground: 'text-npc',
     iconBackground: 'bg-npc-100',
-    description:
-      'Schematics NPC merupakan sebuah kompetisi pemrograman tingkat nasional yang menguji kemampuan algoritma dan pemrograman dalam memecahkan masalah yang diberikan',
   },
 ];
 
