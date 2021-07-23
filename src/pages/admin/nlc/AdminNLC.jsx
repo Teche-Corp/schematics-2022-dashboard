@@ -12,6 +12,7 @@ import {
 
 import DashboardAdminShell from '@/layout/DashboardAdminShell';
 import { bearerToken } from '@/lib/helper';
+import UnstyledLink from '@/components/UnstyledLink';
 
 function GlobalFilter({
   preGlobalFilteredRows,
@@ -76,7 +77,7 @@ export default function AdminNLC() {
       name: 'Total Pendaftaran',
       href: '#',
       icon: HiUserGroup,
-      amount: data?.length || 0,
+      amount: data?.length || 'Menunggu data..',
     },
   ];
 
@@ -119,12 +120,12 @@ export default function AdminNLC() {
           <>
             {d?.user_ketua?.name} - {d?.user_ketua?.email} -{' '}
             {d?.anggota_ketua?.anggota_id_line || 'Data line tidak dimasukan'} -{' '}
-            <a
+            <UnstyledLink
               className='text-blue-400 underline'
               href={`https://wa.me/${d?.user_ketua?.phone}`}
             >
               ({d?.user_ketua?.phone})
-            </a>
+            </UnstyledLink>
           </>
         ),
       },
