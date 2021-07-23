@@ -7,7 +7,9 @@ import toast from 'react-hot-toast';
 import { HiOutlineArrowCircleLeft } from 'react-icons/hi';
 
 import { useTeamDispatch, useTeamState } from '@/contexts/TeamContext';
+
 import useLoadingToast from '@/hooks/useLoadingToast';
+import useTeamId from '@/hooks/useTeamId';
 
 import DashboardShell from '@/layout/DashboardShell';
 import DragnDropInput from '@/components/DragnDropInput';
@@ -15,13 +17,18 @@ import LightInput from '@/components/LightInput';
 import SelectInput from '@/components/SelectInput';
 import UnstyledLink from '@/components/UnstyledLink';
 
-import { classNames, bearerToken, numberToRupiah } from '@/lib/helper';
-import useTeamId from '@/hooks/useTeamId';
+import {
+  classNames,
+  bearerToken,
+  numberToRupiah,
+  calculateDiscount,
+} from '@/lib/helper';
 
 const paymentMethod = [
   { text: 'QRIS', value: 0 },
   { text: 'Mandiri', value: 1 },
 ];
+const BASE_PRICE = 50000;
 
 export default function PaymentNLC() {
   const { nlc } = useTeamState();
@@ -29,13 +36,11 @@ export default function PaymentNLC() {
   const isLoading = useLoadingToast();
 
   const [currentTab, setCurrentTab] = useState(0);
-  const [total, setTotal] = useState(numberToRupiah(50000));
 
   const history = useHistory();
 
   const methods = useForm({ defaultValues: { 'payment-method': '0' } });
   const { handleSubmit, watch } = methods;
-
   const { handleSubmit: handleSubmitVoucher, register } = useForm();
 
   const teamId = useTeamId('nlc');
@@ -43,21 +48,21 @@ export default function PaymentNLC() {
     history.push('/my/sch-nlc/team');
   }
 
-  // const voucherIsApplied = useMemo(
-  //   () => nlc?.kode_voucher && nlc?.potongan_persen,
-  //   [nlc],
-  // );
+  const voucherIsApplied = useMemo(
+    () => nlc?.voucher?.kode_voucher && nlc?.voucher?.potongan_persen,
+    [nlc],
+  );
 
-  const voucherIsApplied = true;
-
+  // PRICING LOGIC
   const usedMethod = watch('payment-method');
-  useEffect(() => {
-    if (usedMethod === '0') {
-      setTotal(numberToRupiah(51000));
-    } else if (usedMethod === '1') {
-      setTotal(numberToRupiah(50000));
-    }
+  const calculatedPrice = voucherIsApplied
+    ? calculateDiscount(BASE_PRICE, nlc?.voucher?.potongan_persen)
+    : BASE_PRICE;
+  const finalPrice =
+    usedMethod === '0' ? calculatedPrice + 1000 : calculatedPrice;
+  const finalBasePrice = usedMethod === '0' ? BASE_PRICE + 1000 : BASE_PRICE;
 
+  useEffect(() => {
     // set Tab according to method
     setCurrentTab(parseInt(usedMethod));
   }, [usedMethod]);
@@ -67,27 +72,24 @@ export default function PaymentNLC() {
   };
 
   const handleAddVoucher = (data) => {
-    console.log(data);
     const body = {
-      kode_voucher: data['kode-voucher'],
+      kode_voucher: data['voucher-code'],
       team_id: teamId,
     };
 
     toast.promise(
       axios
-        .post('/pembayaran/apply_voucher/apply_voucher', body, {
+        .post('/pembayaran/apply_voucher', body, {
           headers: {
             ...bearerToken(),
             'Content-Type': 'application/json',
           },
         })
         .then((res) => {
-          console.log(res);
-          // teamDispatch('STORE_NLC', {
-          //   ...nlc,
-          //   kode_voucher: 'SCHEMATICS20',
-          //   potongan_persen: 20.0,
-          // });
+          teamDispatch('STORE_NLC', {
+            ...nlc,
+            voucher: { ...res?.data?.data },
+          });
         }),
       {
         loading: 'Loading...',
@@ -102,7 +104,7 @@ export default function PaymentNLC() {
 
     const newBody = {
       team_id: teamId,
-      jumlah: data['payment-method'] === '0' ? 101000 : 100000,
+      jumlah: finalPrice,
       sumber: data['payment-method'] === '0' ? 'QRIS' : 'Mandiri',
       kode_voucher: '',
       img: data['payment-receipt'][0],
@@ -152,9 +154,13 @@ export default function PaymentNLC() {
               <div className='sm:col-span-2'>
                 <h2 className='text-lg font-semibold'>Total</h2>
                 {voucherIsApplied && (
-                  <p className='text-gray-600 line-through'>Rp200.000</p>
+                  <p className='text-gray-600 line-through'>
+                    {numberToRupiah(finalBasePrice)}
+                  </p>
                 )}
-                <h4 className='text-4xl font-bold'>{total}</h4>
+                <h4 className='text-4xl font-bold'>
+                  {numberToRupiah(finalPrice)}
+                </h4>
                 {!voucherIsApplied && (
                   <form
                     className='mt-5 sm:flex sm:items-center'
@@ -189,7 +195,9 @@ export default function PaymentNLC() {
                 {voucherIsApplied && (
                   <div className='px-4 py-2 mt-2 text-gray-700 bg-yellow-100 rounded shadow-sm'>
                     Voucher{' '}
-                    <span className='font-bold text-gray-900'>SCHEMATICS</span>{' '}
+                    <span className='font-bold text-gray-900'>
+                      {nlc?.voucher?.kode_voucher}
+                    </span>{' '}
                     digunakan
                   </div>
                 )}
@@ -301,8 +309,11 @@ export default function PaymentNLC() {
                         <ol className='pt-3 pl-4 space-y-3 list-decimal list-outside'>
                           <li>
                             Peserta melakukan pembayaran sebesar{' '}
-                            <strong>Rp 101.000</strong> ke QR Code QRIS di bawah
-                            ini dengan atas nama <strong>Schematics ITS</strong>
+                            <strong>
+                              {numberToRupiah(calculatedPrice + 1000)}
+                            </strong>{' '}
+                            ke QR Code QRIS di bawah ini dengan atas nama{' '}
+                            <strong>Schematics ITS</strong>
                             <img
                               className='h-48'
                               src={`${process.env.PUBLIC_URL}/images/qris.jpg`}
@@ -344,7 +355,8 @@ export default function PaymentNLC() {
                         <ol className='pt-3 pl-4 space-y-3 list-decimal list-outside'>
                           <li>
                             Peserta melakukan pembayaran sebesar{' '}
-                            <strong>Rp 100.000</strong> ke rekening{' '}
+                            <strong>{numberToRupiah(calculatedPrice)}</strong>{' '}
+                            ke rekening{' '}
                             <strong>
                               Bank Mandiri 1020009828846 a.n RAFIQI RACHMAT
                             </strong>

@@ -27,3 +27,10 @@ export const defaultToastMessage = {
   error: (err) =>
     err?.response?.data?.msg ?? 'Terjadi kesalahan, mohon coba lagi',
 };
+
+/**
+ * @param {number} percentage in decimal. Ex: 0.05
+ */
+export function calculateDiscount(base, percentage) {
+  return base * (1 - percentage);
+}
