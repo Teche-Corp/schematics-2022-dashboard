@@ -33,7 +33,7 @@ import Admin from '@/pages/admin/Admin';
 import Voucher from '@/pages/admin/voucher/Voucher';
 import AddVoucher from '@/pages/admin/voucher/AddVoucher';
 import UpdateUserNLC from '@/pages/admin/nlc/UpdateUserNLC';
-import AdminNlc from '@/pages/admin/nlc/AdminNLC';
+import AdminNlc from '@/pages/admin/nlc/AdminNlc';
 import AdminNpcSenior from '@/pages/admin/npc/AdminNpcSenior';
 import AdminNst from '@/pages/admin/nst/AdminNst';
 import AdminReeva from '@/pages/admin/reeva/AdminReeva';
@@ -149,7 +149,7 @@ const routeItems = [
     auth: 'admin',
     route: PrivateRoute,
     key: 'admin-npc-senior',
-    path: '/admin/event/sch-npc/senior',
+    path: '/admin/event/sch-npc/senior/user',
     component: AdminNpcSenior,
     visible: false,
   },
@@ -157,7 +157,7 @@ const routeItems = [
     auth: 'admin',
     route: PrivateRoute,
     key: 'admin-npc-junior',
-    path: '/admin/event/sch-npc/junior',
+    path: '/admin/event/sch-npc/junior/user',
     component: AdminNpcJunior,
     visible: false,
   },
@@ -173,7 +173,7 @@ const routeItems = [
     auth: 'admin',
     route: PrivateRoute,
     key: 'admin-nst',
-    path: '/admin/event/sch-nst',
+    path: '/admin/event/sch-nst/user',
     component: AdminNst,
     visible: false,
   },
@@ -181,7 +181,7 @@ const routeItems = [
     auth: 'admin',
     route: PrivateRoute,
     key: 'admin-reeva',
-    path: '/admin/event/sch-reeva',
+    path: '/admin/event/sch-reeva/user',
     component: AdminReeva,
     visible: false,
   },
