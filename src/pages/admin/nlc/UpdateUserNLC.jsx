@@ -11,12 +11,30 @@ import LightInput from '@/components/LightInput';
 import SelectCity from '@/components/SelectCity';
 import SelectInput from '@/components/SelectInput';
 
-import { classNames } from '@/lib/helper';
+import { bearerToken, classNames } from '@/lib/helper';
 import useLoadingToast from '@/hooks/useLoadingToast';
+import axios from 'axios';
 
-export default function UpdateUserNLC() {
+export default function UpdateUserNLC(props) {
   const [isEditing, setIsEditing] = useState(false);
   const isLoading = useLoadingToast();
+
+  const { page } = props.location.state;
+
+  const [team, setTeam] = useState([]);
+
+  const getTeamData = async () => {
+    const res = await axios.get(`/admin/list/tim/nlc?page=${page}`, {
+      headers: { ...bearerToken() },
+    });
+
+    setTeam(res.data?.data?.teams);
+  };
+
+  console.log('api', team);
+  useEffect(() => {
+    getTeamData();
+  }, [page]);
 
   const methods = useForm();
   const {
@@ -32,21 +50,24 @@ export default function UpdateUserNLC() {
   const cities = data?.data;
 
   let { id } = useParams();
-  const getDatabyID = dummyData.find((data) => data.id === Number(id));
+
+  const getDatabyID = team.find((data) => {
+    return String(data.team_id) === id;
+  });
 
   const paymentMethod = [
     { text: 'QRIS', value: 0 },
     { text: 'Mandiri', value: 1 },
   ];
 
-  useEffect(() => {
-    const value = paymentMethod.find(
-      (method) => method.text === getDatabyID['payment-method'],
-    ).value;
-    setValue('payment-method', value.toString(), {
-      shouldValidate: true,
-    });
-  }, []);
+  // useEffect(() => {
+  //   const value = paymentMethod.find(
+  //     (method) => method.text === getDatabyID['payment-method'],
+  //   ).value;
+  //   setValue('payment-method', value.toString(), {
+  //     shouldValidate: true,
+  //   });
+  // }, []);
 
   const cityValue = useWatch({
     control,
@@ -56,11 +77,11 @@ export default function UpdateUserNLC() {
   useEffect(() => {
     if (cities !== undefined) {
       const city = cities.find(
-        (city) => city.regency_name === getDatabyID.kota,
+        (city) => city?.regency_name === getDatabyID?.kota,
       );
       setValue(
         'city',
-        { value: city.id, label: city.regency_name },
+        { value: city?.id, label: city?.regency_name },
         {
           shouldValidate: true,
         },
@@ -72,13 +93,13 @@ export default function UpdateUserNLC() {
         shouldValidate: true,
       });
     }
-  }, [cities, getDatabyID.kota, setValue]);
+  }, [cities, getDatabyID?.kota, setValue]);
 
   useEffect(() => {
     if (cityValue !== undefined) {
       const id = cityValue?.value;
       const city = cities.find((city) => city.id === id);
-      if (city.regency_name !== getDatabyID.kota) {
+      if (city?.regency_name !== getDatabyID?.kota) {
         setValue('province', city?.province_name, {
           shouldValidate: true,
           shouldDirty: true,
@@ -155,7 +176,7 @@ export default function UpdateUserNLC() {
                           label='Nama Tim'
                           id='team-name'
                           type='text'
-                          defaultValue={getDatabyID.namaTim}
+                          defaultValue={getDatabyID?.team_name}
                           readOnly={!isEditing}
                           validation={{
                             required: 'Nama Tim tidak boleh kosong',
@@ -168,7 +189,7 @@ export default function UpdateUserNLC() {
                           label='Asal Sekolah'
                           id='school-name'
                           type='text'
-                          defaultValue={getDatabyID.sekolah}
+                          defaultValue={getDatabyID?.sekolah}
                           readOnly={!isEditing}
                           validation={{
                             required: 'Asal Sekolah tidak boleh kosong',
@@ -218,7 +239,7 @@ export default function UpdateUserNLC() {
                           label='Nama'
                           id='leader-name'
                           type='text'
-                          defaultValue={getDatabyID.anggota.nama}
+                          defaultValue={getDatabyID?.anggota?.nama}
                           readOnly={!isEditing}
                           validation={{ required: 'Nama tidak boleh kosong' }}
                         />
@@ -229,7 +250,7 @@ export default function UpdateUserNLC() {
                           label='Email'
                           id='leader-email'
                           type='email'
-                          defaultValue={getDatabyID.anggota.email}
+                          defaultValue={getDatabyID?.anggota?.email}
                           readOnly={!isEditing}
                           validation={{
                             required: 'Email tidak boleh kosong',
@@ -246,7 +267,7 @@ export default function UpdateUserNLC() {
                           label='NISN'
                           id='leader-nisn'
                           type='text'
-                          defaultValue={getDatabyID.anggota.nisn}
+                          defaultValue={getDatabyID?.anggota?.nisn}
                           readOnly={!isEditing}
                           validation={{ required: 'NISN tidak boleh kosong' }}
                         />
@@ -258,7 +279,7 @@ export default function UpdateUserNLC() {
                           id='leader-phone'
                           type='text'
                           helperText='Nomor Telepon diawali +62'
-                          defaultValue={getDatabyID.anggota.phone_number}
+                          defaultValue={getDatabyID?.anggota?.phone_number}
                           readOnly={!isEditing}
                           validation={{
                             required: 'Nomor Telepon tidak boleh kosong',
@@ -276,7 +297,7 @@ export default function UpdateUserNLC() {
                           label='ID Line (Opsional)'
                           id='leader-line'
                           type='text'
-                          defaultValue={getDatabyID.anggota.id_line}
+                          defaultValue={getDatabyID?.anggota?.id_line}
                           readOnly={!isEditing}
                         />
                       </div>
@@ -286,7 +307,7 @@ export default function UpdateUserNLC() {
                           label='Alamat'
                           id='leader-address'
                           type='text'
-                          defaultValue={getDatabyID.anggota.alamat}
+                          defaultValue={getDatabyID?.anggota?.alamat}
                           readOnly={!isEditing}
                           validation={{
                             required: 'Alamat tidak boleh kosong',
@@ -296,7 +317,7 @@ export default function UpdateUserNLC() {
                     </div>
                   </div>
 
-                  <div className='pt-8'>
+                  {/* <div className='pt-8'>
                     <h3 className='text-lg font-semibold leading-6 text-gray-900'>
                       Data Anggota
                     </h3>
@@ -306,7 +327,7 @@ export default function UpdateUserNLC() {
                           label='Nama'
                           id='member-name'
                           type='text'
-                          defaultValue={getDatabyID.anggota2.nama}
+                          defaultValue={getDatabyID?.anggota2.nama}
                           readOnly={!isEditing}
                           validation={{ required: 'Nama tidak boleh kosong' }}
                         />
@@ -383,7 +404,7 @@ export default function UpdateUserNLC() {
                         />
                       </div>
                     </div>
-                  </div>
+                  </div> */}
 
                   <div className='pt-8'>
                     <h3 className='text-lg font-semibold leading-6 text-gray-900'>
@@ -391,12 +412,12 @@ export default function UpdateUserNLC() {
                     </h3>
                     <div className='grid grid-cols-1 mt-6 gap-y-6 gap-x-4 sm:grid-cols-6'>
                       <div className='sm:col-span-4'>
-                        <SelectInput
+                        {/* <SelectInput
                           label='Metode Pembayaran'
                           id='payment-method'
                           placeholder='Pilih metode pembayaran'
                           defaultValue={
-                            paymentMethod.find(
+                            paymentMethod?.find(
                               (method) =>
                                 method.text === getDatabyID['payment-method'],
                             ).value
@@ -406,10 +427,10 @@ export default function UpdateUserNLC() {
                           validation={{
                             required: 'Metode Pembayaran tidak boleh kosong',
                           }}
-                        />
+                        /> */}
                       </div>
 
-                      <div className='sm:col-span-4'>
+                      {/* <div className='sm:col-span-4'>
                         <LightInput
                           label='Nomor Rekening'
                           id='account-id'
@@ -420,7 +441,7 @@ export default function UpdateUserNLC() {
                             required: 'Nomor Rekening tidak boleh kosong',
                           }}
                         />
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>

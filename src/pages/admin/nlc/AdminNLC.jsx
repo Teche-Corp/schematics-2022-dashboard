@@ -2,9 +2,13 @@ import axios from 'axios';
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAsyncDebounce, useTable, useGlobalFilter } from 'react-table';
-import { HiCheckCircle, HiOfficeBuilding, HiUserGroup } from 'react-icons/hi';
-import { FaMoneyCheck } from 'react-icons/fa';
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid';
+import {
+  HiCheckCircle,
+  HiChevronLeft,
+  HiChevronRight,
+  HiOfficeBuilding,
+  HiUserGroup,
+} from 'react-icons/hi';
 
 import DashboardAdminShell from '@/layout/DashboardAdminShell';
 import { bearerToken } from '@/lib/helper';
@@ -32,7 +36,7 @@ function GlobalFilter({
                 setValue(e.target.value);
                 onChange(e.target.value);
               }}
-              className='block px-1 ml-2 border-gray-300 shadow-sm sm:text-sm'
+              className='block px-1 ml-2 border border-black rounded-md shadow-sm focus:outline-none sm:text-sm'
             />
           </div>
           <p className='text-gray-500'>Menampilkan {count} data</p>
@@ -110,7 +114,7 @@ export default function AdminNLC() {
         accessor: 'kota.regency_name',
       },
       {
-        Header: 'Anggota 1',
+        Header: 'Ketua',
         accessor: (d) => (
           <>
             {d?.user_ketua?.name} - {d?.user_ketua?.email} -{' '}
@@ -328,14 +332,30 @@ export default function AdminNLC() {
                     <div className='flex items-center justify-between px-4 py-3 bg-white border-t border-gray-200 sm:px-6'>
                       <div className='flex flex-1 sm:hidden'>
                         <button
-                          href='#'
-                          className='relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50'
+                          onClick={() => {
+                            if (page === 1) return;
+                            setPage(page - 1);
+                          }}
+                          disabled={page === 1}
+                          className={`relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500  border border-gray-300 rounded-l-md ${
+                            page === 1
+                              ? 'bg-gray-200'
+                              : 'bg-white hover:bg-gray-50'
+                          } `}
                         >
                           Previous
                         </button>
                         <button
-                          href='#'
-                          className='relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50'
+                          onClick={() => {
+                            if (page >= pages) return;
+                            setPage(page + 1);
+                          }}
+                          disabled={page === pages}
+                          className={`relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 ${
+                            page === pages
+                              ? 'bg-gray-200'
+                              : 'bg-white hover:bg-gray-50'
+                          } border border-gray-300 rounded-r-md `}
                         >
                           Next
                         </button>
@@ -357,10 +377,15 @@ export default function AdminNLC() {
                                 if (page === 1) return;
                                 setPage(page - 1);
                               }}
-                              className='relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-l-md hover:bg-gray-50'
+                              disabled={page === 1}
+                              className={`relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500  border border-gray-300 rounded-l-md ${
+                                page === 1
+                                  ? 'bg-gray-200'
+                                  : 'bg-white hover:bg-gray-50'
+                              } `}
                             >
                               <span className='sr-only'>Previous</span>
-                              <ChevronLeftIcon
+                              <HiChevronLeft
                                 className='w-5 h-5'
                                 aria-hidden='true'
                               />
@@ -374,12 +399,12 @@ export default function AdminNLC() {
                               disabled={page === pages}
                               className={`relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 ${
                                 page === pages
-                                  ? 'bg-gray-300'
+                                  ? 'bg-gray-200'
                                   : 'bg-white hover:bg-gray-50'
                               } border border-gray-300 rounded-r-md `}
                             >
                               <span className='sr-only'>Next</span>
-                              <ChevronRightIcon
+                              <HiChevronRight
                                 className='w-5 h-5'
                                 aria-hidden='true'
                               />
