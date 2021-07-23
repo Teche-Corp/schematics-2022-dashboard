@@ -23,6 +23,37 @@
       default-src * 'self' blob: https://schematics.its.ac.id 'unsafe-inline' 'unsafe-eval' data: gap: content:"
     /> -->
 
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <% if (process.env.NODE_ENV === 'production') { %>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-TPK48WPM2K"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+
+      gtag('config', 'G-TPK48WPM2K');
+    </script>
+    <% } else { %>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-4MK9GYGMV0"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+
+      gtag('config', 'G-4MK9GYGMV0');
+    </script>
+    <% } %>
+
     <link
       rel="apple-touch-icon"
       sizes="57x57"
