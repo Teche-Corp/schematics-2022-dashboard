@@ -1,5 +1,5 @@
 import { Disclosure } from '@headlessui/react';
-import { ChevronDownIcon } from '@heroicons/react/outline';
+import { HiChevronDown } from 'react-icons/hi';
 import { classNames } from '@/lib/helper';
 
 export default function CenteredAccordion({
@@ -26,7 +26,7 @@ export default function CenteredAccordion({
                       {item.title}
                     </h3>
                     <span className='flex items-center ml-6 h-7'>
-                      <ChevronDownIcon
+                      <HiChevronDown
                         className={classNames(
                           open ? '-rotate-180' : 'rotate-0',
                           'h-6 w-6 transform',
