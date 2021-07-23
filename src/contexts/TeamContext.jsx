@@ -80,6 +80,5 @@ const ExampleNLC = {
   tahapan: null,
   status_pembayaran: null,
   event: 'nlc',
-  kode_voucher: 'SCHEMATICS20',
-  potongan_persen: 20.0,
+  voucher: { kode_voucher: 'SCHEMATICS20', potongan_persen: 20.0 },
 };
