@@ -8,9 +8,9 @@ import {
   HiChevronRight,
   HiOfficeBuilding,
   HiOutlineCloud,
+  HiOutlineDocumentReport,
   HiUserGroup,
 } from 'react-icons/hi';
-import { GrScorecard } from 'react-icons/gr';
 
 import DashboardAdminShell from '@/layout/DashboardAdminShell';
 import { bearerToken } from '@/lib/helper';
@@ -81,11 +81,7 @@ export default function AdminNst() {
       icon: HiUserGroup,
       amount: data?.length || 'Menunggu data..',
     },
-    {
-      name: 'Score Team',
-      href: '#',
-      icon: GrScorecard,
-    },
+
     {
       name: 'Upload Berkas',
       href: '#',
