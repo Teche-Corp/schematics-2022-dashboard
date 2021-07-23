@@ -14,14 +14,14 @@ import { Link } from 'react-router-dom';
 const actions = [
   {
     title: 'Schematics NPC Senior',
-    href: '/admin/event/sch-npc/senior',
+    href: '/admin/event/sch-npc/senior/user',
     icon: BiBrain,
     iconForeground: 'text-npc',
     iconBackground: 'bg-npc-100',
   },
   {
     title: 'Schematics NPC Junior',
-    href: '/admin/event/sch-npc/junior',
+    href: '/admin/event/sch-npc/junior/user',
     icon: HiDesktopComputer,
     iconForeground: 'text-npc',
     iconBackground: 'bg-npc-100',
@@ -51,19 +51,19 @@ export default function AdminNpc() {
                 'relative group bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-dark-100',
               )}
             >
-              <div>
+              <div className='flex justify-center'>
                 <span
                   className={classNames(
                     action.iconBackground,
                     action.iconForeground,
-                    'rounded-lg inline-flex p-3 ring-4 ring-white',
+                    'rounded-lg  inline-flex p-3 ring-4 ring-white',
                   )}
                 >
                   <action.icon className='w-6 h-6' aria-hidden='true' />
                 </span>
               </div>
               <div className='mt-8'>
-                <h3 className='text-lg font-medium'>
+                <h3 className='text-lg font-medium text-center'>
                   <Link to={action.href} className='focus:outline-none'>
                     {/* Extend touch target to entire panel */}
                     <span className='absolute inset-0' aria-hidden='true' />

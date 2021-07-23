@@ -85,13 +85,11 @@ export default function AdminNpcSenior() {
       name: 'Score Team',
       href: '#',
       icon: GrScorecard,
-      amount: 'Score',
     },
     {
       name: 'Upload Berkas',
       href: '#',
       icon: HiOutlineCloud,
-      amount: 'Upload',
     },
   ];
 
@@ -239,27 +237,34 @@ export default function AdminNpcSenior() {
                   key={card.id}
                   className='overflow-hidden bg-white rounded-lg shadow'
                 >
-                  <div className='p-5'>
-                    <div className='flex items-center'>
+                  <div className='p-5 '>
+                    <div
+                      className={`${
+                        card.name !== 'Total Pendaftaran' ? 'lg:mt-3' : null
+                      } flex items-center `}
+                    >
                       <div className='flex-shrink-0'>
                         <card.icon
                           className='w-6 h-6 text-gray-400'
                           aria-hidden='true'
                         />
                       </div>
-                      <div className='flex-1 w-0 ml-5 '>
+                      <div className='flex-1 w-0 ml-5'>
                         <dl>
-                          <dt className='text-sm font-medium text-gray-500 truncate'>
+                          <dt
+                            className={`${
+                              card.name !== 'Total Pendaftaran'
+                                ? 'text-gray-900 text-base'
+                                : 'text-gray-500'
+                            } text-sm  truncate`}
+                          >
                             {card.name}
                           </dt>
                           <dd>
                             <div className='text-lg font-medium text-gray-900'>
-                              {card.amount}
+                              {card.amount ?? undefined}
                             </div>
                           </dd>
-                          <p className='text-xs text-gray-900'>
-                            {card.date ?? undefined}
-                          </p>
                         </dl>
                       </div>
                     </div>
