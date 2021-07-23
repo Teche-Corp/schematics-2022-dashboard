@@ -47,7 +47,7 @@ const actions = [
   },
 ];
 
-export default function Example() {
+export default function MainCard() {
   return (
     <div className='overflow-hidden bg-gray-200 divide-y divide-gray-200 rounded-lg shadow sm:divide-y-0 sm:grid sm:grid-cols-2 sm:gap-px'>
       {actions.map((action, actionIdx) => (

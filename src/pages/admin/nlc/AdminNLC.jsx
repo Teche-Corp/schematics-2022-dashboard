@@ -7,8 +7,10 @@ import {
   HiChevronLeft,
   HiChevronRight,
   HiOfficeBuilding,
+  HiOutlineCloud,
   HiUserGroup,
 } from 'react-icons/hi';
+import { GrScorecard } from 'react-icons/gr';
 
 import DashboardAdminShell from '@/layout/DashboardAdminShell';
 import { bearerToken } from '@/lib/helper';
@@ -47,7 +49,7 @@ function GlobalFilter({
   );
 }
 
-export default function AdminNLC() {
+export default function AdminNlc() {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState();
@@ -78,6 +80,18 @@ export default function AdminNLC() {
       href: '#',
       icon: HiUserGroup,
       amount: data?.length || 'Menunggu data..',
+    },
+    {
+      name: 'Score Team',
+      href: '#',
+      icon: GrScorecard,
+      amount: 'Score',
+    },
+    {
+      name: 'Upload Berkas',
+      href: '#',
+      icon: HiOutlineCloud,
+      amount: 'Upload',
     },
   ];
 
@@ -137,7 +151,9 @@ export default function AdminNLC() {
               className='font-bold text-nlc'
               id={d?.row?.id}
               to={{
-                pathname: `/admin/sch-nlc/user/${Number(d?.row?.id) + 1}/edit`,
+                pathname: `/admin/event/sch-nlc/user/${
+                  Number(d?.row?.id) + 1
+                }/edit`,
                 state: {
                   page: page,
                 },

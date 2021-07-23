@@ -30,10 +30,13 @@ import CreateTeamNPCSenior from '@/pages/npc/CreateTeamNPCSenior';
 import PaymentNPC from '@/pages/npc/PaymentNPC';
 
 import Admin from '@/pages/admin/Admin';
-import Voucher from '@/pages/admin/Voucher';
-import AddVoucher from '@/pages/admin/AddVoucher';
-import AdminNLC from '@/pages/admin/nlc/AdminNLC';
+import Voucher from '@/pages/admin/voucher/Voucher';
+import AddVoucher from '@/pages/admin/voucher/AddVoucher';
 import UpdateUserNLC from '@/pages/admin/nlc/UpdateUserNLC';
+import AdminNlc from '@/pages/admin/nlc/AdminNLC';
+import AdminNpc from '@/pages/admin/npc/AdminNpc';
+import AdminNst from '@/pages/admin/nst/AdminNst';
+import AdminReeva from '@/pages/admin/reeva/AdminReeva';
 
 const routeItems = [
   {
@@ -127,6 +130,46 @@ const routeItems = [
   {
     auth: 'admin',
     route: PrivateRoute,
+    key: 'admin-sch-nlc-user-edit',
+    path: '/admin/event/sch-nlc/user/:id/edit',
+    component: UpdateUserNLC,
+    visible: false,
+  },
+  {
+    auth: 'admin',
+    route: PrivateRoute,
+    key: 'admin-nlc',
+    path: '/admin/event/sch-nlc/user',
+    component: AdminNlc,
+    visible: false,
+  },
+  {
+    auth: 'admin',
+    route: PrivateRoute,
+    key: 'admin-npc',
+    path: '/admin/event/sch-npc',
+    component: AdminNpc,
+    visible: false,
+  },
+  {
+    auth: 'admin',
+    route: PrivateRoute,
+    key: 'admin-nst',
+    path: '/admin/event/sch-nst',
+    component: AdminNst,
+    visible: false,
+  },
+  {
+    auth: 'admin',
+    route: PrivateRoute,
+    key: 'admin-reeva',
+    path: '/admin/event/sch-reeva',
+    component: AdminReeva,
+    visible: false,
+  },
+  {
+    auth: 'admin',
+    route: PrivateRoute,
     key: 'admin-add-voucher',
     path: '/admin/voucher/add',
     component: AddVoucher,
@@ -138,22 +181,6 @@ const routeItems = [
     key: 'admin-voucher',
     path: '/admin/voucher',
     component: Voucher,
-    visible: false,
-  },
-  {
-    auth: 'admin',
-    route: PrivateRoute,
-    key: 'admin-sch-nlc-user-edit',
-    path: '/admin/sch-nlc/user/:id/edit',
-    component: UpdateUserNLC,
-    visible: false,
-  },
-  {
-    auth: 'admin',
-    route: PrivateRoute,
-    key: 'admin-sch-nlc-user',
-    path: '/admin/sch-nlc/user',
-    component: AdminNLC,
     visible: false,
   },
   {
