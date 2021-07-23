@@ -34,9 +34,11 @@ import Voucher from '@/pages/admin/voucher/Voucher';
 import AddVoucher from '@/pages/admin/voucher/AddVoucher';
 import UpdateUserNLC from '@/pages/admin/nlc/UpdateUserNLC';
 import AdminNlc from '@/pages/admin/nlc/AdminNLC';
-import AdminNpc from '@/pages/admin/npc/AdminNpc';
+import AdminNpcSenior from '@/pages/admin/npc/AdminNpcSenior';
 import AdminNst from '@/pages/admin/nst/AdminNst';
 import AdminReeva from '@/pages/admin/reeva/AdminReeva';
+import AdminNpc from '@/pages/admin/npc/AdminNpc';
+import AdminNpcJunior from '@/pages/admin/npc/AdminNpcJunior';
 
 const routeItems = [
   {
@@ -141,6 +143,22 @@ const routeItems = [
     key: 'admin-nlc',
     path: '/admin/event/sch-nlc/user',
     component: AdminNlc,
+    visible: false,
+  },
+  {
+    auth: 'admin',
+    route: PrivateRoute,
+    key: 'admin-npc-senior',
+    path: '/admin/event/sch-npc/senior',
+    component: AdminNpcSenior,
+    visible: false,
+  },
+  {
+    auth: 'admin',
+    route: PrivateRoute,
+    key: 'admin-npc-junior',
+    path: '/admin/event/sch-npc/junior',
+    component: AdminNpcJunior,
     visible: false,
   },
   {
