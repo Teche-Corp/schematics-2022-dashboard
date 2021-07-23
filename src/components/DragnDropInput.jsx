@@ -9,7 +9,6 @@ import UnstyledLink from '@/components/UnstyledLink';
 
 const FilePreview = ({ file, deleteFile }) => {
   const handleDelete = (e) => {
-    e.preventDefault();
     e.stopPropagation();
     deleteFile(e, file);
   };
@@ -35,6 +34,7 @@ const FilePreview = ({ file, deleteFile }) => {
             <HiOutlineEye />
           </UnstyledLink>
           <button
+            type='button'
             onClick={handleDelete}
             className='text-xl font-medium text-red-500 focus:outline-none hover:text-red-700'
           >
