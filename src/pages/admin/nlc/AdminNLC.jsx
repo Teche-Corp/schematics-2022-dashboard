@@ -49,7 +49,7 @@ function GlobalFilter({
   );
 }
 
-export default function AdminNlc() {
+export default function AdminNLC() {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState();

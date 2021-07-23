@@ -33,7 +33,7 @@ import Admin from '@/pages/admin/Admin';
 import Voucher from '@/pages/admin/voucher/Voucher';
 import AddVoucher from '@/pages/admin/voucher/AddVoucher';
 import UpdateUserNLC from '@/pages/admin/nlc/UpdateUserNLC';
-import AdminNlc from '@/pages/admin/nlc/AdminNlc';
+import AdminNLC from '@/pages/admin/nlc/AdminNLC';
 import AdminNpcSenior from '@/pages/admin/npc/AdminNpcSenior';
 import AdminNst from '@/pages/admin/nst/AdminNst';
 import AdminReeva from '@/pages/admin/reeva/AdminReeva';
@@ -142,7 +142,7 @@ const routeItems = [
     route: PrivateRoute,
     key: 'admin-nlc',
     path: '/admin/event/sch-nlc/user',
-    component: AdminNlc,
+    component: AdminNLC,
     visible: false,
   },
   {
