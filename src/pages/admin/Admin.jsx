@@ -13,6 +13,9 @@ import { BiBrain } from 'react-icons/bi';
 import { FaMoneyCheck } from 'react-icons/fa';
 
 import DashboardAdminShell from '@/layout/DashboardAdminShell';
+import UnstyledLink from '@/components/UnstyledLink';
+
+import { numberToRupiah } from '@/lib/helper';
 
 export default function Admin() {
   const { data, error } = useSWR(
@@ -32,37 +35,41 @@ export default function Admin() {
     },
     {
       name: 'Total Pendapatan',
-      href: '#',
+      href: '/admin/earning',
       icon: FaMoneyCheck,
-      amount: data?.data?.total_pendapatan,
+      amount: numberToRupiah(data?.data?.total_pendapatan),
     },
     {
-      name: 'Schematics NPC',
-      href: '#',
+      name: 'Schematics NPC Junior',
+      href: '/admin/sch-npc/junior/user',
       icon: HiDesktopComputer,
-      amount:
-        data?.data?.total_tim_npc_junior + data?.data?.total_tim_npc_senior,
-      paid:
-        data?.data?.total_tim_npc_junior_sudah_bayar +
-        data?.data?.total_tim_npc_senior_sudah_bayar,
+      amount: data?.data?.total_tim_npc_junior,
+      paid: data?.data?.total_tim_npc_junior_sudah_bayar,
+    },
+    {
+      name: 'Schematics NPC Senior',
+      href: '/admin/sch-npc/senior/user',
+      icon: HiDesktopComputer,
+      amount: data?.data?.total_tim_npc_senior,
+      paid: data?.data?.total_tim_npc_senior_sudah_bayar,
     },
     {
       name: 'Shematics NLC',
-      href: '#',
+      href: '/admin/sch-nlc/user',
       icon: BiBrain,
       amount: data?.data?.total_tim_nlc,
       paid: data?.data?.total_tim_nlc_sudah_bayar,
     },
     {
       name: 'Schematics NST',
-      href: '#',
+      href: '/admin/sch-nst/user',
       icon: HiSpeakerphone,
       amount: data?.data?.total_tiket_nst,
       paid: data?.data?.total_tiket_nst_sudah_bayar,
     },
     {
       name: 'Schematics Reeva',
-      href: '#',
+      href: '/admin/sch-reeva/user',
       icon: HiOutlineSpeakerphone,
       amount: data?.data?.total_tiket_reeva,
       paid: data?.data?.total_tiket_reeva_sudah_bayar,
@@ -146,9 +153,12 @@ export default function Admin() {
                       </div>
                       <div className='flex-1 w-0 ml-5 '>
                         <dl>
-                          <dt className='text-sm font-medium text-gray-500 truncate'>
+                          <UnstyledLink
+                            href={card.href}
+                            className='text-sm font-medium text-gray-500 truncate'
+                          >
                             {card.name}
-                          </dt>
+                          </UnstyledLink>
                           {data ? (
                             <>
                               <dd>
