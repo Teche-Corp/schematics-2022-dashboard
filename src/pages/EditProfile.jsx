@@ -38,6 +38,7 @@ export default function EditProfile() {
   };
 
   const handleEditProfile = (data) => {
+    let tempToken;
     toast.promise(
       axios
         .put('/user/edit', data, {
@@ -51,15 +52,15 @@ export default function EditProfile() {
         .then((res) => {
           const { jwt: token } = res.data.data;
           localStorage.setItem('token', token);
-          return token;
+          tempToken = token;
+          return axios.post(
+            '/user/get-user-info',
+            {},
+            { headers: { ...bearerToken() } },
+          );
         })
-        .then((token) => {
-          axios
-            .post('/user/get-user-info', {}, { headers: { ...bearerToken() } })
-            .then((user) => {
-              dispatch('EDIT_PROFILE', { ...user.data.data, token });
-            })
-            .finally(() => setIsEditing(false));
+        .then((user) => {
+          dispatch('EDIT_PROFILE', { ...user.data.data, token: tempToken });
         }),
       {
         loading: 'Loading...',
