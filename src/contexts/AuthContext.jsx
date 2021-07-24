@@ -136,7 +136,8 @@ export const AuthProvider = ({ children }) => {
 
         dispatch('LOGIN', res.data.data);
       } catch (err) {
-        console.log('error context', err);
+        // eslint-disable-next-line no-console
+        console.error('error context', err);
         localStorage.removeItem('token');
       } finally {
         dispatch('STOP_LOADING');

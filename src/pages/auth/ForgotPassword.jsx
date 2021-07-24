@@ -22,6 +22,7 @@ export default function ForgotPassword() {
       setLoading(false);
       toast.success(`Mohon mengecek email ${data.email} untuk melakukan reset`);
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error(err);
       toast.error(err.response.data.msg);
     } finally {

@@ -1,6 +1,5 @@
 import { Fragment, useRef } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { HiDesktopComputer } from 'react-icons/hi';
 import { Link } from 'react-router-dom';
 
 export default function Modal({ open, setOpen }) {

@@ -23,6 +23,7 @@ export default function SignUp() {
       toast.success('Berhasil! Anda bisa masuk ke akun anda');
       history.push('/signin');
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error(err);
       toast.error(err.response.data.msg);
     } finally {

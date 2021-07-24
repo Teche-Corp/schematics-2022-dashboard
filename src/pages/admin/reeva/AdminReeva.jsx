@@ -32,6 +32,7 @@ export default function AdminReeva() {
 
   useEffect(() => {
     getTeamData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
   const cards = [
@@ -119,6 +120,7 @@ export default function AdminReeva() {
         },
       },
     ],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );
 

@@ -27,6 +27,7 @@ export default function ChangePassword() {
       );
       history.replace('/signin');
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error(err);
       toast.error(err.response.data.message);
     } finally {

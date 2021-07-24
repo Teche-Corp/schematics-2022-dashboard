@@ -38,6 +38,7 @@ export default function ResetPassword() {
       );
       history.replace('/signin');
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error(err);
       toast.error('Uh oh! Something is wrong, please try again');
     } finally {

@@ -9,6 +9,7 @@ export default function AddVoucher() {
   const { handleSubmit, register } = methods;
 
   const handleCreateVoucher = (data) => {
+    // eslint-disable-next-line no-console
     console.log(data);
   };
 

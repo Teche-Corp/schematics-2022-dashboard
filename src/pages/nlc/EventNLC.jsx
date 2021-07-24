@@ -88,11 +88,10 @@ export default function EventNLC() {
           },
         );
 
-        console.log(res.data.data);
-
         dispatch('STORE_NLC', res.data.data);
       } catch (err) {
-        console.log(err.response.data);
+        // eslint-disable-next-line no-console
+        console.error(err.response.data);
         toast.error('Gagal mengambil data tim!');
       }
     };

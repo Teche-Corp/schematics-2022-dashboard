@@ -35,6 +35,7 @@ export default function AdminNLC() {
 
   useEffect(() => {
     getTeamData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
   const cards = [
@@ -126,6 +127,7 @@ export default function AdminNLC() {
         },
       },
     ],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );
 

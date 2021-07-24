@@ -36,6 +36,7 @@ export default function AdminNpcJunior() {
 
   useEffect(() => {
     getTeamData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
   const cards = [
@@ -127,6 +128,7 @@ export default function AdminNpcJunior() {
         },
       },
     ],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );
 

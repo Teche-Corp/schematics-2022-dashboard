@@ -9,7 +9,6 @@ import { useAuthState } from '@/contexts/AuthContext';
 import DashboardShell from '@/layout/DashboardShell';
 import LightInput from '@/components/LightInput';
 import SelectCity from '@/components/SelectCity';
-import SelectInput from '@/components/SelectInput';
 
 import { bearerToken, classNames } from '@/lib/helper';
 import useLoadingToast from '@/hooks/useLoadingToast';
@@ -31,9 +30,9 @@ export default function UpdateUserNLC(props) {
     setTeam(res.data?.data?.teams);
   };
 
-  console.log('api', team);
   useEffect(() => {
     getTeamData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
   const methods = useForm();
@@ -55,10 +54,10 @@ export default function UpdateUserNLC(props) {
     return String(data.team_id) === id;
   });
 
-  const paymentMethod = [
-    { text: 'QRIS', value: 0 },
-    { text: 'Mandiri', value: 1 },
-  ];
+  // const paymentMethod = [
+  //   { text: 'QRIS', value: 0 },
+  //   { text: 'Mandiri', value: 1 },
+  // ];
 
   // useEffect(() => {
   //   const value = paymentMethod.find(
@@ -110,6 +109,7 @@ export default function UpdateUserNLC(props) {
         });
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cityValue, cities, setValue]);
 
   const handleEditClick = () => {
@@ -141,8 +141,6 @@ export default function UpdateUserNLC(props) {
     for (let key in newBody) {
       formData.append(key, newBody[key]);
     }
-
-    console.log(newBody);
   };
 
   if (fetchError) {
@@ -494,6 +492,7 @@ export default function UpdateUserNLC(props) {
   );
 }
 
+// eslint-disable-next-line no-unused-vars
 const dummyData = [
   {
     id: 1,
