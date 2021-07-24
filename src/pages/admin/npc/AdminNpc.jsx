@@ -1,12 +1,7 @@
-import MainCard from '@/components/MainCard';
 import DashboardAdminShell from '@/layout/DashboardAdminShell';
 
 import { classNames } from '@/lib/helper';
-import {
-  HiDesktopComputer,
-  HiSpeakerphone,
-  HiOutlineSparkles,
-} from 'react-icons/hi';
+import { HiDesktopComputer } from 'react-icons/hi';
 
 import { BiBrain } from 'react-icons/bi';
 import { Link } from 'react-router-dom';
@@ -33,7 +28,7 @@ export default function AdminNpc() {
     <DashboardAdminShell>
       <section className='max-w-sm py-10 mx-auto md:max-w-2xl'>
         <h1 className='py-5 text-3xl font-bold text-center'>
-          Menu admin <span className='text-npc'>NPC</span>{' '}
+          Menu Admin <span className='text-npc'>Schematics NPC</span>{' '}
         </h1>
         <div className='overflow-hidden bg-gray-200 divide-y divide-gray-200 rounded-lg shadow sm:divide-y-0 sm:grid sm:grid-cols-2 sm:gap-px'>
           {actions.map((action, actionIdx) => (
