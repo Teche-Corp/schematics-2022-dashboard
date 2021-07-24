@@ -2,8 +2,6 @@ import axios from 'axios';
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  HiCheckCircle,
-  HiOfficeBuilding,
   HiOutlineCloud,
   HiOutlineDocumentReport,
   HiUserGroup,
@@ -134,44 +132,7 @@ export default function AdminNpcJunior() {
 
   return (
     <DashboardAdminShell>
-      <main className='relative z-0 flex-1 pb-8 overflow-y-auto'>
-        {/* Page header */}
-        <div className='bg-white shadow'>
-          <div className='px-4 sm:px-6 lg:max-w-6xl lg:mx-auto lg:px-8'>
-            <div className='py-6 md:flex md:items-center md:justify-between lg:border-t lg:border-gray-200'>
-              <div className='flex-1 min-w-0'>
-                <div className='flex items-center'>
-                  <div>
-                    <div className='flex items-center'>
-                      <h1 className='text-2xl font-bold leading-7 text-gray-900 md:ml-3 sm:leading-9 sm:truncate'>
-                        Hello, Admin Schematics NPC Junior 2021
-                      </h1>
-                    </div>
-                    <dl className='flex flex-col mt-6 sm:ml-3 sm:mt-1 sm:flex-row sm:flex-wrap'>
-                      <dt className='sr-only'>Company</dt>
-                      <dd className='flex items-center text-sm font-medium text-gray-500 capitalize sm:mr-6'>
-                        <HiOfficeBuilding
-                          className='flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400'
-                          aria-hidden='true'
-                        />
-                        Institut Teknologi Sepuluh Nopember
-                      </dd>
-                      <dt className='sr-only'>Account status</dt>
-                      <dd className='flex items-center mt-3 text-sm font-medium text-gray-500 capitalize sm:mr-6 sm:mt-0'>
-                        <HiCheckCircle
-                          className='flex-shrink-0 mr-1.5 h-5 w-5 text-green-400'
-                          aria-hidden='true'
-                        />
-                        Akun Admin
-                      </dd>
-                    </dl>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
+      <main className='relative z-0 flex-1 pb-8 overflow-y-auto border-t'>
         <div className='mt-8 '>
           {/* children */}
           <div className='max-w-6xl px-4 mx-auto sm:px-6 lg:px-8 '>
@@ -222,7 +183,7 @@ export default function AdminNpcJunior() {
             </div>
           </div>
 
-          <div className='max-w-6xl px-4 mx-auto space-y-3 sm:px-6'>
+          <div className='max-w-6xl px-4 mx-auto space-y-3 sm:px-6 lg:px-8'>
             <h2 className='mx-auto text-lg font-medium leading-6 text-gray-900 max-w-7xl mt-7 '>
               Tabel Pendaftaran
             </h2>
