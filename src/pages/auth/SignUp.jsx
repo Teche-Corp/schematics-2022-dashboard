@@ -1,8 +1,9 @@
 import axios from 'axios';
-import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Link, useHistory } from 'react-router-dom';
+
+import useLoadingToast from '@/hooks/useLoadingToast';
 
 import Input from '@/components/Input';
 import PasswordInput from '@/components/PasswordInput';
@@ -14,21 +15,17 @@ export default function SignUp() {
   const methods = useForm();
   const { handleSubmit } = methods;
 
-  const [loading, setLoading] = useState(false);
+  const isLoading = useLoadingToast();
 
-  const handleSignup = async (data) => {
-    try {
-      setLoading(true);
-      await axios.post('/user/register', data);
-      toast.success('Berhasil! Anda bisa masuk ke akun anda');
-      history.push('/signin');
-    } catch (err) {
-      // eslint-disable-next-line no-console
-      console.error(err);
-      toast.error(err.response.data.msg);
-    } finally {
-      setLoading(false);
-    }
+  const handleSignup = (data) => {
+    toast.promise(
+      axios.post('/user/register', data).then((_) => history.push('/signin')),
+      {
+        loading: 'Loading...',
+        success: 'Berhasil! Anda bisa masuk ke akun anda',
+        error: (err) => err.response.data.msg,
+      },
+    );
   };
 
   return (
@@ -88,7 +85,7 @@ export default function SignUp() {
                   />
 
                   <div>
-                    <SubmitButton loading={loading}>Buat Akun</SubmitButton>
+                    <SubmitButton loading={isLoading}>Buat Akun</SubmitButton>
                   </div>
                 </form>
               </FormProvider>

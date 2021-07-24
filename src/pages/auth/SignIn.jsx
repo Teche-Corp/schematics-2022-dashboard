@@ -1,6 +1,5 @@
 import axios from 'axios';
 import toast from 'react-hot-toast';
-import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Link, useHistory } from 'react-router-dom';
 
@@ -13,50 +12,55 @@ import SubmitButton from '@/components/SubmitButton';
 import UnstyledLink from '@/components/UnstyledLink';
 
 import { bearerToken } from '@/lib/helper';
+import useLoadingToast from '@/hooks/useLoadingToast';
 
 const SignIn = () => {
   const dispatch = useAuthDispatch();
 
   const history = useHistory();
-  const [loading, setLoading] = useState(false);
+  const isLoading = useLoadingToast();
 
   const methods = useForm();
   const { handleSubmit } = methods;
 
-  const handleLogin = async (data) => {
-    try {
-      setLoading(true);
-      const res = await axios.post('/user/login', data, {
-        withCredentials:
-          process.env.NODE_ENV === 'production' &&
-          process.env.PUBLIC_URL === '/dashboard'
-            ? true
-            : false,
-      });
-      const { jwt: token } = res.data.data;
-      localStorage.setItem('token', token);
+  const handleLogin = (data) => {
+    let tempToken;
+    toast.promise(
+      axios
+        .post('/user/login', data, {
+          withCredentials:
+            process.env.NODE_ENV === 'production' &&
+            process.env.PUBLIC_URL === '/dashboard'
+              ? true
+              : false,
+        })
+        .then((res) => {
+          const { jwt: token } = res.data.data;
+          tempToken = token;
+          localStorage.setItem('token', token);
 
-      const user = await axios.post(
-        '/user/get-user-info',
-        {},
-        { headers: { ...bearerToken() } },
-      );
+          return axios.post(
+            '/user/get-user-info',
+            {},
+            { headers: { ...bearerToken() } },
+          );
+        })
+        .then((user) => {
+          const role = user.data.data.user_role;
+          dispatch('LOGIN', { ...user.data.data, token: tempToken });
 
-      const role = user.data.data.user_role;
-
-      dispatch('LOGIN', { ...user.data.data, token });
-      setLoading(false);
-
-      if (role === 'user') {
-        history.replace('/my');
-      } else if (role === 'admin') {
-        history.replace('/admin/dashboard');
-      }
-    } catch (err) {
-      toast.error(err.response.data.msg);
-    } finally {
-      setLoading(false);
-    }
+          if (role === 'user') {
+            history.replace('/my');
+          } else if (role === 'admin') {
+            history.replace('/admin/dashboard');
+          }
+        }),
+      {
+        loading: 'Loading...',
+        success: 'Berhasil masuk',
+        error: (err) => err.response.data.msg,
+      },
+    );
   };
 
   return (
@@ -106,7 +110,7 @@ const SignIn = () => {
                   </div>
 
                   <div>
-                    <SubmitButton loading={loading}>Masuk</SubmitButton>
+                    <SubmitButton loading={isLoading}>Masuk</SubmitButton>
                   </div>
                 </form>
               </FormProvider>
