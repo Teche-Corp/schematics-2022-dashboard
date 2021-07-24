@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { FormProvider, useForm } from 'react-hook-form';
 import axios from 'axios';
@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 
 import { HiOutlineArrowCircleLeft } from 'react-icons/hi';
 
-import { useTeamState } from '@/contexts/TeamContext';
+import { useTeamDispatch, useTeamState } from '@/contexts/TeamContext';
 import useLoadingToast from '@/hooks/useLoadingToast';
 import useTeamId from '@/hooks/useTeamId';
 
@@ -16,72 +16,97 @@ import LightInput from '@/components/LightInput';
 import SelectInput from '@/components/SelectInput';
 import UnstyledLink from '@/components/UnstyledLink';
 
-import { classNames, bearerToken, numberToRupiah } from '@/lib/helper';
+import {
+  classNames,
+  bearerToken,
+  numberToRupiah,
+  calculateDiscount,
+} from '@/lib/helper';
+
+const paymentMethod = [
+  { text: 'QRIS', value: 0 },
+  { text: 'Mandiri', value: 1 },
+];
+const priceVariants = {
+  npc_junior: 50000,
+  npc_senior: 120000,
+};
 
 export default function PaymentNPC() {
+  const history = useHistory();
   const { npc } = useTeamState();
+  const teamDispatch = useTeamDispatch();
   const isLoading = useLoadingToast();
 
-  const teamId = useTeamId('npc');
-
-  const totalObject = {
-    npc_junior: 50000,
-    npc_senior: 120000,
-  };
-
   const [currentTab, setCurrentTab] = useState(0);
-  const [total, setTotal] = useState(numberToRupiah(totalObject[npc?.event]));
 
-  const history = useHistory();
-
+  const teamId = useTeamId('npc');
   if (!teamId || npc?.status_pembayaran !== null) {
     history.push('/my/sch-npc/team');
   }
 
   const methods = useForm({ defaultValues: { 'payment-method': '0' } });
   const { handleSubmit, watch } = methods;
+  const { handleSubmit: handleSubmitVoucher, register } = useForm();
 
-  // const { handleSubmit: handleSubmit2, register } = useForm();
+  const voucherIsApplied = useMemo(
+    () => npc?.voucher?.kode_voucher && npc?.voucher?.potongan_persen,
+    [npc],
+  );
 
-  const paymentMethod = [
-    { text: 'QRIS', value: 0 },
-    { text: 'Mandiri', value: 1 },
-  ];
-
+  const BASE_PRICE = priceVariants[npc?.event];
   const usedMethod = watch('payment-method');
+  const calculatedPrice = voucherIsApplied
+    ? calculateDiscount(BASE_PRICE, npc?.voucher?.potongan_persen)
+    : BASE_PRICE;
+  const finalPrice =
+    usedMethod === '0' ? calculatedPrice + 1000 : calculatedPrice;
+  const finalBasePrice = usedMethod === '0' ? BASE_PRICE + 1000 : BASE_PRICE;
 
   useEffect(() => {
-    if (usedMethod === '0') {
-      setTotal(numberToRupiah(totalObject[npc?.event] + 1000));
-    } else if (usedMethod === '1') {
-      setTotal(numberToRupiah(totalObject[npc?.event]));
-    }
-
     // set Tab according to method
     setCurrentTab(parseInt(usedMethod));
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [usedMethod]);
 
   const handleTabChange = (e) => {
     setCurrentTab(parseInt(e.target.value));
   };
 
-  // const handleAddVoucher = (data) => {
-  //   console.log(data);
-  // };
+  const handleAddVoucher = (data) => {
+    const body = {
+      kode_voucher: data['voucher-code'],
+      team_id: teamId,
+    };
+
+    toast.promise(
+      axios
+        .post('/pembayaran/apply_voucher', body, {
+          headers: {
+            ...bearerToken(),
+            'Content-Type': 'application/json',
+          },
+        })
+        .then((res) => {
+          teamDispatch('STORE_NPC', {
+            ...npc,
+            voucher: { ...res?.data?.data },
+          });
+        }),
+      {
+        loading: 'Loading...',
+        success: 'Bukti pembayaran berhasil diupload!',
+        error: (err) => err.response.data.msg,
+      },
+    );
+  };
 
   const handleUpload = async (data) => {
     const formData = new FormData();
 
     const newBody = {
       team_id: teamId,
-      jumlah:
-        data['payment-method'] === '0'
-          ? totalObject[npc?.event] + 1000
-          : totalObject[npc?.event],
+      jumlah: finalPrice,
       sumber: data['payment-method'] === '0' ? 'QRIS' : 'Mandiri',
-      kode_voucher: '',
       img: data['payment-receipt'][0],
     };
 
@@ -130,36 +155,54 @@ export default function PaymentNPC() {
             <div className='grid grid-cols-1 gap-8 mt-6 sm:grid-cols-6'>
               <div className='sm:col-span-2'>
                 <h2 className='text-lg font-semibold'>Total</h2>
-                {/* <p className='line-through'>Rp200.000</p> */}
-                <h4 className='text-4xl font-bold tracking-tight'>{total}</h4>
-                {/* <form
-                  className='mt-5 sm:flex sm:items-center'
-                  onSubmit={handleSubmit2(handleAddVoucher)}
-                >
-                  <div className='w-full sm:max-w-xs'>
-                    <label htmlFor='voucher-code' className='sr-only'>
-                      Kode Voucher
-                    </label>
-                    <input
-                      {...register('voucher-code')}
-                      type='text'
-                      name='voucher-code'
-                      id='voucher-code'
-                      className='block w-full border-gray-300 rounded-md shadow-sm focus:ring-dark-400 focus:border-dark-400 sm:text-sm'
-                      placeholder='Masukkan kode voucher'
-                      aria-describedby='voucher-code'
-                    />
-                  </div>
-                  <button
-                    type='submit'
-                    className='inline-flex items-center justify-center w-full px-4 py-2 mt-3 font-medium text-white border border-transparent rounded-md shadow-sm bg-npc-400 hover:bg-npc-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-npc-700 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm'
+                {voucherIsApplied && (
+                  <p className='text-gray-600 line-through'>
+                    {numberToRupiah(finalBasePrice)}
+                  </p>
+                )}
+                <h4 className='text-4xl font-bold'>
+                  {numberToRupiah(finalPrice)}
+                </h4>
+                {!voucherIsApplied && (
+                  <form
+                    className='mt-5 sm:flex sm:items-center'
+                    onSubmit={handleSubmitVoucher(handleAddVoucher)}
                   >
-                    Gunakan
-                  </button>
-                </form>
-                <div className='mt-2'>
-                  <span className='font-bold'>SCHEMATICS</span> digunakan
-                </div> */}
+                    <div className='w-full sm:max-w-xs'>
+                      <label htmlFor='voucher-code' className='sr-only'>
+                        Kode Voucher
+                      </label>
+                      <input
+                        {...register('voucher-code')}
+                        type='text'
+                        name='voucher-code'
+                        id='voucher-code'
+                        className='block w-full border-gray-300 rounded-md shadow-sm focus:ring-dark-400 focus:border-dark-400 sm:text-sm'
+                        placeholder='Masukkan kode voucher'
+                        aria-describedby='voucher-code'
+                      />
+                    </div>
+                    <button
+                      type='submit'
+                      disabled={isLoading}
+                      className={classNames(
+                        'inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-npc-400 hover:bg-npc-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-npc-700',
+                        isLoading && 'filter brightness-90 cursor-wait',
+                      )}
+                    >
+                      Gunakan
+                    </button>
+                  </form>
+                )}
+                {voucherIsApplied && (
+                  <div className='px-4 py-2 mt-2 text-gray-700 bg-red-100 rounded shadow-sm'>
+                    Voucher{' '}
+                    <span className='font-bold text-gray-900'>
+                      {npc?.voucher?.kode_voucher}
+                    </span>{' '}
+                    digunakan
+                  </div>
+                )}
               </div>
 
               <div className='sm:col-span-4'>
@@ -269,7 +312,7 @@ export default function PaymentNPC() {
                           <li>
                             Peserta melakukan pembayaran sebesar{' '}
                             <strong>
-                              {numberToRupiah(totalObject[npc?.event] + 1000)}
+                              {numberToRupiah(calculatedPrice + 1000)}
                             </strong>{' '}
                             ke QR Code QRIS di bawah ini dengan atas nama{' '}
                             <strong>Schematics ITS</strong>
@@ -314,9 +357,7 @@ export default function PaymentNPC() {
                         <ol className='pt-3 pl-4 space-y-3 list-decimal list-outside'>
                           <li>
                             Peserta melakukan pembayaran sebesar{' '}
-                            <strong>
-                              {numberToRupiah(totalObject[npc?.event])}
-                            </strong>{' '}
+                            <strong>{numberToRupiah(calculatedPrice)}</strong>{' '}
                             ke rekening{' '}
                             <strong>
                               Bank Mandiri 1020009828846 a.n RAFIQI RACHMAT
