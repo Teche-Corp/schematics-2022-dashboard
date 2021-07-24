@@ -111,7 +111,7 @@ export default function EventNLC() {
     password: `schnlc${ketua?.nama}`,
     payment:
       nlc?.status_pembayaran === null
-        ? '-'
+        ? 'Belum Melakukan Pembayaran'
         : nlc?.status_pembayaran === false
         ? 'Sedang Diverifikasi'
         : 'Lunas',

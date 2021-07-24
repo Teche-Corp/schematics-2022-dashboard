@@ -71,7 +71,7 @@ export default function EventNPC() {
     password: `schnpc${ketua?.nama}`,
     payment:
       npc?.status_pembayaran === null
-        ? '-'
+        ? 'Belum Melakukan Pembayaran'
         : npc?.status_pembayaran === false
         ? 'Sedang Diverifikasi'
         : 'Lunas',

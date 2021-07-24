@@ -68,7 +68,9 @@ export default function TeamDetail({ data = {} }) {
                 Status Pembayaran
               </dt>
               {data.payment ? (
-                <dd className='mt-1 text-sm text-gray-900'>{data.payment}</dd>
+                <dd className='mt-1 text-sm font-bold text-green-600'>
+                  {data.payment}
+                </dd>
               ) : (
                 <TextSkeleton />
               )}
