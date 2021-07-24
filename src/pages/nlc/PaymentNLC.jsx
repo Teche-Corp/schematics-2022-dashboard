@@ -28,7 +28,7 @@ const paymentMethod = [
   { text: 'QRIS', value: 0 },
   { text: 'Mandiri', value: 1 },
 ];
-const BASE_PRICE = 50000;
+const BASE_PRICE = 100000;
 
 export default function PaymentNLC() {
   const { nlc } = useTeamState();
