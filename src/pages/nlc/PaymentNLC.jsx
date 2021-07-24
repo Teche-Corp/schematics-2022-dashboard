@@ -106,7 +106,6 @@ export default function PaymentNLC() {
       team_id: teamId,
       jumlah: finalPrice,
       sumber: data['payment-method'] === '0' ? 'QRIS' : 'Mandiri',
-      kode_voucher: '',
       img: data['payment-receipt'][0],
     };
 
