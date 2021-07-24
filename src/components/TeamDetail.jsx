@@ -1,5 +1,22 @@
 import { HiInformationCircle } from 'react-icons/hi';
 
+import { classNames } from '@/lib/helper';
+
+const paymentStatuses = {
+  not_paid: {
+    text: 'Belum Melakukan Pembayaran',
+    color: 'text-red-600',
+  },
+  wait: {
+    text: 'Sedang Diverifikasi',
+    color: 'text-yellow-600',
+  },
+  paid: {
+    text: 'Lunas',
+    color: 'text-green-600',
+  },
+};
+
 export default function TeamDetail({ data = {} }) {
   return (
     <div>
@@ -68,8 +85,13 @@ export default function TeamDetail({ data = {} }) {
                 Status Pembayaran
               </dt>
               {data.payment ? (
-                <dd className='mt-1 text-sm font-bold text-green-600'>
-                  {data.payment}
+                <dd
+                  className={classNames(
+                    'mt-1 text-sm font-bold',
+                    paymentStatuses[data.payment].color,
+                  )}
+                >
+                  {paymentStatuses[data.payment].text}
                 </dd>
               ) : (
                 <TextSkeleton />
