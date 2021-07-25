@@ -107,15 +107,15 @@ export default function AdminNLC() {
       },
       {
         Header: 'Edit',
-        Cell: (d) => {
+        accessor: (d) => {
           return (
             <Link
               className='font-bold text-nlc'
-              id={d?.row?.id}
+              id={d?.team_id}
               to={{
-                pathname: `/admin/event/sch-nlc/user/${
-                  Number(d?.row?.id) + 1
-                }/edit`,
+                pathname: `/admin/event/sch-nlc/user/${Number(
+                  d?.team_id,
+                )}/edit`,
                 state: {
                   page: page,
                 },
