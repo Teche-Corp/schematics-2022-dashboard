@@ -1,86 +1,129 @@
 import { useState, useEffect } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
 import toast from 'react-hot-toast';
 import useSWR from 'swr';
 
-import { useAuthState } from '@/contexts/AuthContext';
+import { useAuthDispatch } from '@/contexts/AuthContext';
 
 import DashboardShell from '@/layout/DashboardShell';
 import LightInput from '@/components/LightInput';
 import SelectCity from '@/components/SelectCity';
+import SelectInput from '@/components/SelectInput';
 
 import { bearerToken, classNames } from '@/lib/helper';
 import useLoadingToast from '@/hooks/useLoadingToast';
-import axios from 'axios';
 
-export default function UpdateUserNLC(props) {
+export default function UpdateUserNLC() {
   const [isEditing, setIsEditing] = useState(false);
   const isLoading = useLoadingToast();
+  const [teamData, setTeamData] = useState(undefined);
 
-  const { page } = props.location.state;
+  const methods = useForm({
+    defaultValues: {
+      'team-name': '',
+      'school-name': '',
+      'leader-name': '',
+      'leader-email': '',
+      'leader-nisn': '',
+      'leader-phone': '',
+      'leader-line': '',
+      'leader-address': '',
+      'member-name': '',
+      'member-email': '',
+      'member-nisn': '',
+      'member-phone': '',
+      'member-line': '',
+      'member-address': '',
+    },
+  });
 
-  const [team, setTeam] = useState([]);
-
-  const getTeamData = async () => {
-    const res = await axios.get(`/admin/list/tim/nlc?page=${page}`, {
-      headers: { ...bearerToken() },
-    });
-
-    setTeam(res.data?.data?.teams);
-  };
-
-  useEffect(() => {
-    getTeamData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page]);
-
-  const methods = useForm();
   const {
     control,
     handleSubmit,
     setValue,
+    reset,
     formState: { isDirty },
   } = methods;
 
-  const { user } = useAuthState();
+  useEffect(() => {
+    reset(teamData);
+  }, [reset, teamData]);
+
+  const dispatch = useAuthDispatch();
 
   const { data, error: fetchError } = useSWR('/region/list');
   const cities = data?.data;
 
   let { id } = useParams();
+  const getDatabyID = dummyData.find((data) => data.id === Number(id));
 
-  const getDatabyID = team.find((data) => {
-    return String(data.team_id) === id;
-  });
+  const paymentMethod = [
+    { text: 'QRIS', value: 0 },
+    { text: 'Mandiri', value: 1 },
+  ];
 
-  // const paymentMethod = [
-  //   { text: 'QRIS', value: 0 },
-  //   { text: 'Mandiri', value: 1 },
-  // ];
+  const handleSetTeamData = () => {
+    axios
+      .post(
+        '/admin/detail_tim',
+        { team_id: id },
+        { headers: { ...bearerToken() } },
+      )
+      .then((res) => {
+        setTeamData(res.data.data);
+      });
+  };
 
-  // useEffect(() => {
-  //   const value = paymentMethod.find(
-  //     (method) => method.text === getDatabyID['payment-method'],
-  //   ).value;
-  //   setValue('payment-method', value.toString(), {
-  //     shouldValidate: true,
-  //   });
-  // }, []);
+  useEffect(() => {
+    handleSetTeamData();
+  }, []);
+
+  useEffect(() => {
+    if (teamData !== undefined) {
+      setValue('team-name', teamData.team_name);
+      setValue('school-name', teamData.institusi);
+      setValue('leader-name', teamData.anggota[0].nama);
+      setValue('leader-email', teamData.anggota[0].email);
+      setValue('leader-nisn', teamData.anggota[0].nisn);
+      setValue('leader-phone', teamData.anggota[0].nomor_telepon);
+      setValue('leader-line', teamData.anggota[0].id_line);
+      setValue('leader-address', teamData.anggota[0].alamat);
+      setValue('member-name', teamData.anggota[1].nama);
+      setValue('member-email', teamData.anggota[1].email);
+      setValue('member-nisn', teamData.anggota[1].nisn);
+      setValue('member-phone', teamData.anggota[1].nomor_telepon);
+      setValue('member-line', teamData.anggota[1].id_line);
+      setValue('member-address', teamData.anggota[1].alamat);
+    }
+  }, [teamData, setValue]);
+
+  useEffect(() => {
+    const value = paymentMethod.find(
+      (method) => method.text === getDatabyID['payment-method'],
+    ).value;
+
+    setValue('payment-method', value.toString(), {
+      shouldValidate: true,
+    });
+  }, []);
 
   const cityValue = useWatch({
     control,
     name: 'city',
   });
 
+  console.log('yiha');
+
   useEffect(() => {
-    if (cities !== undefined) {
+    if (cities !== undefined && teamData !== undefined) {
       const city = cities.find(
-        (city) => city?.regency_name === getDatabyID?.kota,
+        (city) => city.regency_name === teamData.kota.regency_name,
       );
       setValue(
         'city',
-        { value: city?.id, label: city?.regency_name },
+        { value: city.id, label: city.regency_name },
         {
           shouldValidate: true,
         },
@@ -92,13 +135,13 @@ export default function UpdateUserNLC(props) {
         shouldValidate: true,
       });
     }
-  }, [cities, getDatabyID?.kota, setValue]);
+  }, [cities, teamData, setValue]);
 
   useEffect(() => {
-    if (cityValue !== undefined) {
+    if (cityValue !== undefined && teamData !== undefined) {
       const id = cityValue?.value;
       const city = cities.find((city) => city.id === id);
-      if (city?.regency_name !== getDatabyID?.kota) {
+      if (teamData.kota.regency_name !== city.regency_name) {
         setValue('province', city?.province_name, {
           shouldValidate: true,
           shouldDirty: true,
@@ -109,7 +152,6 @@ export default function UpdateUserNLC(props) {
         });
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cityValue, cities, setValue]);
 
   const handleEditClick = () => {
@@ -117,30 +159,47 @@ export default function UpdateUserNLC(props) {
   };
 
   const handleEditProfile = (data) => {
-    const formData = new FormData();
-
     const newBody = {
+      team_id: Number(id),
       kota_id: data.city.value,
-      ketua_nisn: data['leader-nisn'],
-      ketua_alamat: data['leader-address'],
-      ketua_id_line: data['leader-line'],
-      status_id: 2,
-      team_name: data['team-name'],
-      team_password: `schnlc${user.name}`,
-      team_institusi: data['school-name'],
-      'payment-method': data['payment-method'] === 0 ? 'QRIS' : 'Mandiri',
-      'account-id': data['account-id'],
-      'anggota[0][name]': data['member-name'],
-      'anggota[0][email]': data['member-email'],
-      'anggota[0][nisn]': data['member-nisn'],
-      'anggota[0][phone]': data['member-phone'],
-      'anggota[0][alamat]': data['member-address'],
-      'anggota[0][id_line]': data['member-line'],
+      nama_team: data['team-name'],
+      institusi: data['school-name'],
+      ketua_anggota_id: teamData.anggota[0].anggota_id,
+      nama_ketua: data['leader-name'],
+      email_ketua: data['leader-email'],
+      telp_ketua: data['leader-phone'],
+      nisn_ketua: data['leader-nisn'],
+      alamat_ketua: data['leader-address'],
+      line_ketua: data['leader-line'],
+      anggota: [
+        {
+          anggota_id: teamData.anggota[1].anggota_id,
+          nama: data['member-name'],
+          email: data['member-email'],
+          telp: data['member-phone'],
+          nisn: data['member-nisn'],
+          alamat: data['member-address'],
+          line: data['member-line'],
+        },
+      ],
     };
 
-    for (let key in newBody) {
-      formData.append(key, newBody[key]);
-    }
+    toast.promise(
+      axios
+        .post('/admin/update_tim', newBody, {
+          headers: { ...bearerToken() },
+        })
+        .then((res) => {
+          dispatch('ASSIGN_NLC', res.data.data);
+        })
+        .then(() => handleSetTeamData())
+        .finally(() => setIsEditing(false)),
+      {
+        loading: 'Loading...',
+        success: 'Tim berhasil diperbarui',
+        error: (err) => err.response.data.msg,
+      },
+    );
   };
 
   if (fetchError) {
@@ -174,7 +233,6 @@ export default function UpdateUserNLC(props) {
                           label='Nama Tim'
                           id='team-name'
                           type='text'
-                          defaultValue={getDatabyID?.team_name}
                           readOnly={!isEditing}
                           validation={{
                             required: 'Nama Tim tidak boleh kosong',
@@ -187,7 +245,6 @@ export default function UpdateUserNLC(props) {
                           label='Asal Sekolah'
                           id='school-name'
                           type='text'
-                          defaultValue={getDatabyID?.sekolah}
                           readOnly={!isEditing}
                           validation={{
                             required: 'Asal Sekolah tidak boleh kosong',
@@ -237,7 +294,6 @@ export default function UpdateUserNLC(props) {
                           label='Nama'
                           id='leader-name'
                           type='text'
-                          defaultValue={getDatabyID?.anggota?.nama}
                           readOnly={!isEditing}
                           validation={{ required: 'Nama tidak boleh kosong' }}
                         />
@@ -248,7 +304,6 @@ export default function UpdateUserNLC(props) {
                           label='Email'
                           id='leader-email'
                           type='email'
-                          defaultValue={getDatabyID?.anggota?.email}
                           readOnly={!isEditing}
                           validation={{
                             required: 'Email tidak boleh kosong',
@@ -265,7 +320,6 @@ export default function UpdateUserNLC(props) {
                           label='NISN'
                           id='leader-nisn'
                           type='text'
-                          defaultValue={getDatabyID?.anggota?.nisn}
                           readOnly={!isEditing}
                           validation={{ required: 'NISN tidak boleh kosong' }}
                         />
@@ -277,7 +331,6 @@ export default function UpdateUserNLC(props) {
                           id='leader-phone'
                           type='text'
                           helperText='Nomor Telepon diawali +62'
-                          defaultValue={getDatabyID?.anggota?.phone_number}
                           readOnly={!isEditing}
                           validation={{
                             required: 'Nomor Telepon tidak boleh kosong',
@@ -295,7 +348,6 @@ export default function UpdateUserNLC(props) {
                           label='ID Line (Opsional)'
                           id='leader-line'
                           type='text'
-                          defaultValue={getDatabyID?.anggota?.id_line}
                           readOnly={!isEditing}
                         />
                       </div>
@@ -305,7 +357,6 @@ export default function UpdateUserNLC(props) {
                           label='Alamat'
                           id='leader-address'
                           type='text'
-                          defaultValue={getDatabyID?.anggota?.alamat}
                           readOnly={!isEditing}
                           validation={{
                             required: 'Alamat tidak boleh kosong',
@@ -325,7 +376,6 @@ export default function UpdateUserNLC(props) {
                           label='Nama'
                           id='member-name'
                           type='text'
-                          defaultValue={getDatabyID?.anggota2.nama}
                           readOnly={!isEditing}
                           validation={{ required: 'Nama tidak boleh kosong' }}
                         />
@@ -336,7 +386,6 @@ export default function UpdateUserNLC(props) {
                           label='Email'
                           id='member-email'
                           type='email'
-                          defaultValue={getDatabyID.anggota2.email}
                           readOnly={!isEditing}
                           validation={{
                             required: 'Email tidak boleh kosong',
@@ -353,7 +402,6 @@ export default function UpdateUserNLC(props) {
                           label='NISN'
                           id='member-nisn'
                           type='text'
-                          defaultValue={getDatabyID.anggota2.nisn}
                           readOnly={!isEditing}
                           validation={{ required: 'NISN tidak boleh kosong' }}
                         />
@@ -364,7 +412,6 @@ export default function UpdateUserNLC(props) {
                           label='Nomor Telepon'
                           id='member-phone'
                           type='text'
-                          defaultValue={getDatabyID.anggota2.phone_number}
                           readOnly={!isEditing}
                           placeholder='+6281234567890'
                           helperText='Nomor Telepon diawali +62'
@@ -384,7 +431,6 @@ export default function UpdateUserNLC(props) {
                           label='ID Line (Opsional)'
                           id='member-line'
                           type='text'
-                          defaultValue={getDatabyID.anggota2.id_line}
                           readOnly={!isEditing}
                         />
                       </div>
@@ -394,7 +440,6 @@ export default function UpdateUserNLC(props) {
                           label='Alamat'
                           id='member-address'
                           type='text'
-                          defaultValue={getDatabyID.anggota2.alamat}
                           readOnly={!isEditing}
                           validation={{
                             required: 'Alamat tidak boleh kosong',
@@ -428,7 +473,7 @@ export default function UpdateUserNLC(props) {
                         /> */}
                       </div>
 
-                      {/* <div className='sm:col-span-4'>
+                      {/* <div className='sm:col-span-4'
                         <LightInput
                           label='Nomor Rekening'
                           id='account-id'
