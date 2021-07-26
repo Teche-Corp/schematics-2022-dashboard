@@ -82,20 +82,44 @@ export default function UpdateUserNLC() {
 
   useEffect(() => {
     if (teamData !== undefined) {
-      setValue('team-name', teamData.team_name);
-      setValue('school-name', teamData.institusi);
-      setValue('leader-name', teamData.anggota[0].nama);
-      setValue('leader-email', teamData.anggota[0].email);
-      setValue('leader-nisn', teamData.anggota[0].nisn);
-      setValue('leader-phone', teamData.anggota[0].nomor_telepon);
-      setValue('leader-line', teamData.anggota[0].id_line);
-      setValue('leader-address', teamData.anggota[0].alamat);
-      setValue('member-name', teamData.anggota[1].nama);
-      setValue('member-email', teamData.anggota[1].email);
-      setValue('member-nisn', teamData.anggota[1].nisn);
-      setValue('member-phone', teamData.anggota[1].nomor_telepon);
-      setValue('member-line', teamData.anggota[1].id_line);
-      setValue('member-address', teamData.anggota[1].alamat);
+      setValue('team-name', teamData?.team_name, { shouldDirty: false });
+      setValue('school-name', teamData?.institusi, { shouldDirty: false });
+      setValue('leader-name', teamData?.anggota[0]?.nama, {
+        shouldDirty: false,
+      });
+      setValue('leader-email', teamData?.anggota[0]?.email, {
+        shouldDirty: false,
+      });
+      setValue('leader-nisn', teamData?.anggota[0]?.nisn, {
+        shouldDirty: false,
+      });
+      setValue('leader-phone', teamData?.anggota[0]?.nomor_telepon, {
+        shouldDirty: false,
+      });
+      setValue('leader-line', teamData?.anggota[0]?.id_line, {
+        shouldDirty: false,
+      });
+      setValue('leader-address', teamData?.anggota[0]?.alamat, {
+        shouldDirty: false,
+      });
+      setValue('member-name', teamData?.anggota[1]?.nama, {
+        shouldDirty: false,
+      });
+      setValue('member-email', teamData?.anggota[1]?.email, {
+        shouldDirty: false,
+      });
+      setValue('member-nisn', teamData?.anggota[1]?.nisn, {
+        shouldDirty: false,
+      });
+      setValue('member-phone', teamData?.anggota[1]?.nomor_telepon, {
+        shouldDirty: false,
+      });
+      setValue('member-line', teamData?.anggota[1]?.id_line, {
+        shouldDirty: false,
+      });
+      setValue('member-address', teamData?.anggota[1]?.alamat, {
+        shouldDirty: false,
+      });
     }
   }, [teamData, setValue]);
 
@@ -114,8 +138,6 @@ export default function UpdateUserNLC() {
     name: 'city',
   });
 
-  console.log('yiha');
-
   useEffect(() => {
     if (cities !== undefined && teamData !== undefined) {
       const city = cities.find(
@@ -123,7 +145,7 @@ export default function UpdateUserNLC() {
       );
       setValue(
         'city',
-        { value: city.id, label: city.regency_name },
+        { value: city?.id, label: city?.regency_name },
         {
           shouldValidate: true,
         },
@@ -141,7 +163,7 @@ export default function UpdateUserNLC() {
     if (cityValue !== undefined && teamData !== undefined) {
       const id = cityValue?.value;
       const city = cities.find((city) => city.id === id);
-      if (teamData.kota.regency_name !== city.regency_name) {
+      if (teamData.kota.regency_name !== city?.regency_name) {
         setValue('province', city?.province_name, {
           shouldValidate: true,
           shouldDirty: true,
@@ -205,6 +227,8 @@ export default function UpdateUserNLC() {
   if (fetchError) {
     return toast.error('Gagal mengambil data kota.');
   }
+
+  console.log(isDirty);
 
   return (
     <DashboardShell>
