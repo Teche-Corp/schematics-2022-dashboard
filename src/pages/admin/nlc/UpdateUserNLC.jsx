@@ -20,24 +20,7 @@ export default function UpdateUserNLC() {
   const isLoading = useLoadingToast();
   const [teamData, setTeamData] = useState(undefined);
 
-  const methods = useForm({
-    defaultValues: {
-      'team-name': '',
-      'school-name': '',
-      'leader-name': '',
-      'leader-email': '',
-      'leader-nisn': '',
-      'leader-phone': '',
-      'leader-line': '',
-      'leader-address': '',
-      'member-name': '',
-      'member-email': '',
-      'member-nisn': '',
-      'member-phone': '',
-      'member-line': '',
-      'member-address': '',
-    },
-  });
+  const methods = useForm();
 
   const {
     control,
@@ -227,8 +210,6 @@ export default function UpdateUserNLC() {
   if (fetchError) {
     return toast.error('Gagal mengambil data kota.');
   }
-
-  console.log(isDirty);
 
   return (
     <DashboardShell>
