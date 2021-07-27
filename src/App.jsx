@@ -20,7 +20,9 @@ const App = () => {
   axios.interceptors.response.use(undefined, async function (err) {
     const originalRequest = err.config;
 
-    if (err.response === 403 && !originalRequest._retry) {
+    if (err.response.status === 503) {
+      return (window.location.href = `${process.env.PUBLIC_URL}/maintenance`);
+    } else if (err.response === 403 && !originalRequest._retry) {
       originalRequest._retry = true;
 
       const res = await axios.post('/user/refresh-auth-token', {});

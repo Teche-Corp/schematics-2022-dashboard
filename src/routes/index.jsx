@@ -247,16 +247,8 @@ const routeItems = [
   {
     auth: 'all',
     route: AuthRoute,
-    key: 'page-not-found',
-    path: '/page-not-found',
-    component: PageNotFound,
-    visible: true,
-  },
-  {
-    auth: 'all',
-    route: AuthRoute,
     key: 'error-500',
-    path: '/error-500',
+    path: '/maintenance',
     component: Error500,
     visible: true,
   },
