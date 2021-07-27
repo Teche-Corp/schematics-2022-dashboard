@@ -40,12 +40,11 @@ export default function UpdateUserNLC() {
   const cities = data?.data;
 
   let { id } = useParams();
-  const getDatabyID = dummyData.find((data) => data.id === Number(id));
 
-  const paymentMethod = [
-    { text: 'QRIS', value: 0 },
-    { text: 'Mandiri', value: 1 },
-  ];
+  // const paymentMethod = [
+  //   { text: 'QRIS', value: 0 },
+  //   { text: 'Mandiri', value: 1 },
+  // ];
 
   const handleSetTeamData = () => {
     axios
@@ -106,15 +105,15 @@ export default function UpdateUserNLC() {
     }
   }, [teamData, setValue]);
 
-  useEffect(() => {
-    const value = paymentMethod.find(
-      (method) => method.text === getDatabyID['payment-method'],
-    ).value;
+  // useEffect(() => {
+  //   const value = paymentMethod.find(
+  //     (method) => method.text === getDatabyID['payment-method'],
+  //   ).value;
 
-    setValue('payment-method', value.toString(), {
-      shouldValidate: true,
-    });
-  }, []);
+  //   setValue('payment-method', value.toString(), {
+  //     shouldValidate: true,
+  //   });
+  // }, []);
 
   const cityValue = useWatch({
     control,
@@ -541,61 +540,3 @@ export default function UpdateUserNLC() {
     </DashboardShell>
   );
 }
-
-// eslint-disable-next-line no-unused-vars
-const dummyData = [
-  {
-    id: 1,
-    region: 'Jawa Barat',
-    namaTim: 'Doa Ibu',
-    verified: 'Yes',
-    sekolah: 'SMAN 3 BEKASI',
-    kota: 'KOTA BEKASI',
-    provinsi: 'Jawa Barat',
-    'payment-method': 'Mandiri',
-    'account-id': 11223344,
-    anggota: {
-      nama: 'Rizqi Tsani',
-      email: 'tsani@mail.com',
-      phone_number: '0813837162',
-      id_line: 'tsaniii',
-      nisn: '1111',
-      alamat: 'Jalan Raya No 1',
-    },
-    anggota2: {
-      nama: 'Agus Budi',
-      email: 'budi@mail.com',
-      phone_number: '0813837162',
-      id_line: 'budii',
-      nisn: '1122',
-      alamat: 'Jalan Raya No 2',
-    },
-  },
-  {
-    id: 2,
-    region: 'Jawa Timur',
-    namaTim: 'TEAM OP',
-    verified: 'No',
-    sekolah: 'SMAN 3 Surabaya',
-    kota: 'KOTA SURABAYA',
-    provinsi: 'Jawa Timur',
-    'payment-method': 'QRIS',
-    'account-id': 99887766,
-    anggota: {
-      nama: 'Bobu Tsani',
-      email: 'bobu@mail.com',
-      phone_number: '0813837162',
-      id_line: 'bobuii',
-      nisn: '2211',
-      alamat: 'Jalan Raya No 3',
-    },
-    anggota2: {
-      nama: 'Bibu Budi',
-      email: 'bibu@mail.com',
-      phone_number: '0813837162',
-      id_line: 'bibui',
-      nisn: '2222',
-      alamat: 'Jalan Raya No 4',
-    },
-  },
-];
