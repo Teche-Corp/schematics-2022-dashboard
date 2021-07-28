@@ -367,10 +367,29 @@ export default function UpdateUserNLC() {
                           }}
                         />
                       </div>
+
+                      {teamData && (
+                        <div className='col-span-full'>
+                          <label
+                            htmlFor={teamData?.anggota[0]?.url}
+                            className='block text-sm font-normal text-gray-700'
+                          >
+                            Foto Kartu Pelajar/Surat Keterangan Siswa Aktif
+                          </label>
+                          <div className='relative mt-1'>
+                            <img
+                              src={teamData?.anggota[0]?.url}
+                              alt='Foto Kartu Pelajar/Surat Keterangan Siswa Aktif Ketua'
+                              className='max-h-80'
+                              id={teamData?.anggota[0]?.url}
+                            />
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
 
-                  {/* <div className='pt-8'>
+                  <div className='pt-8'>
                     <h3 className='text-lg font-semibold leading-6 text-gray-900'>
                       Data Anggota
                     </h3>
@@ -450,8 +469,27 @@ export default function UpdateUserNLC() {
                           }}
                         />
                       </div>
+
+                      {teamData && (
+                        <div className='col-span-full'>
+                          <label
+                            htmlFor={teamData?.anggota[1]?.url}
+                            className='block text-sm font-normal text-gray-700'
+                          >
+                            Foto Kartu Pelajar/Surat Keterangan Siswa Aktif
+                          </label>
+                          <div className='relative mt-1'>
+                            <img
+                              src={teamData?.anggota[1]?.url}
+                              alt='Foto Kartu Pelajar/Surat Keterangan Siswa Aktif Anggota'
+                              className='max-h-80'
+                              id={teamData?.anggota[1]?.url}
+                            />
+                          </div>
+                        </div>
+                      )}
                     </div>
-                  </div> */}
+                  </div>
 
                   <div className='pt-8'>
                     <h3 className='text-lg font-semibold leading-6 text-gray-900'>
@@ -489,6 +527,25 @@ export default function UpdateUserNLC() {
                           }}
                         />
                       </div> */}
+
+                      {teamData && (
+                        <div className='col-span-full'>
+                          <label
+                            htmlFor={teamData?.bukti_pembayaran?.url}
+                            className='block text-sm font-normal text-gray-700'
+                          >
+                            Bukti Pembayaran
+                          </label>
+                          <div className='relative mt-1'>
+                            <img
+                              src={teamData?.bukti_pembayaran?.url}
+                              alt='Bukti Pembayaran'
+                              className='max-h-80'
+                              id={teamData?.bukti_pembayaran?.url}
+                            />
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
