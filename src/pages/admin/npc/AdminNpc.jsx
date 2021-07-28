@@ -7,15 +7,15 @@ import { Link } from 'react-router-dom';
 
 const actions = [
   {
-    title: 'Schematics NPC Senior',
-    href: '/admin/event/sch-npc/senior/user',
+    title: 'Schematics NPC Junior',
+    href: '/admin/event/sch-npc/junior/user',
     icon: HiDesktopComputer,
     iconForeground: 'text-npc',
     iconBackground: 'bg-npc-100',
   },
   {
-    title: 'Schematics NPC Junior',
-    href: '/admin/event/sch-npc/junior/user',
+    title: 'Schematics NPC Senior',
+    href: '/admin/event/sch-npc/senior/user',
     icon: HiDesktopComputer,
     iconForeground: 'text-npc',
     iconBackground: 'bg-npc-100',
