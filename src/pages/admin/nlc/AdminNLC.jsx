@@ -72,10 +72,11 @@ export default function AdminNLC() {
       {
         Header: 'Verified',
         accessor: (d) => {
-          if (d.bukti_pembayaran?.is_verified) {
-            <span className='text-green-500'>Ya</span>;
-          }
-          return <span className='text-red-500'>Tidak</span>;
+          return d.bukti_pembayaran?.is_verified ? (
+            <span className='text-green-500'>Ya</span>
+          ) : (
+            <span className='text-red-500'>Tidak</span>
+          );
         },
       },
       {
