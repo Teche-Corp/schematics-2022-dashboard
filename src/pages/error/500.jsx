@@ -9,7 +9,7 @@ export default function Error500() {
           <div className='relative w-full sm:w-1/2 h-60'>
             <img
               className='absolute left-0 right-0 block object-contain m-auto sm:left-auto h-52 sm:h-60'
-              src='/images/error-icon.png'
+              src={`${process.env.PUBLIC_URL}/images/error-icon.png`}
               alt='error-icon'
             />
           </div>
