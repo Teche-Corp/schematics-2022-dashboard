@@ -7,10 +7,11 @@ import useSWR from 'swr';
 
 import { useAuthDispatch } from '@/contexts/AuthContext';
 
-import DashboardShell from '@/layout/DashboardShell';
+import DashboardAdminShell from '@/layout/DashboardAdminShell';
 import LightInput from '@/components/LightInput';
 import SelectCity from '@/components/SelectCity';
 import SelectInput from '@/components/SelectInput';
+import CheckboxInput from '@/components/CheckboxInput';
 
 import { bearerToken, classNames } from '@/lib/helper';
 import useLoadingToast from '@/hooks/useLoadingToast';
@@ -41,10 +42,10 @@ export default function UpdateUserNLC() {
 
   let { id } = useParams();
 
-  // const paymentMethod = [
-  //   { text: 'QRIS', value: 0 },
-  //   { text: 'Mandiri', value: 1 },
-  // ];
+  const paymentMethod = [
+    { text: 'QRIS', value: 0 },
+    { text: 'Mandiri', value: 1 },
+  ];
 
   const handleSetTeamData = () => {
     axios
@@ -102,18 +103,18 @@ export default function UpdateUserNLC() {
       setValue('member-address', teamData?.anggota[1]?.alamat, {
         shouldDirty: false,
       });
+      setValue('verified', teamData?.bukti_pembayaran?.verified, {
+        shouldDirty: false,
+      });
+      setValue(
+        'payment-method',
+        teamData?.bukti_pembayaran?.sumber === 'Mandiri' ? '1' : '0',
+        {
+          shouldDirty: false,
+        },
+      );
     }
   }, [teamData, setValue]);
-
-  // useEffect(() => {
-  //   const value = paymentMethod.find(
-  //     (method) => method.text === getDatabyID['payment-method'],
-  //   ).value;
-
-  //   setValue('payment-method', value.toString(), {
-  //     shouldValidate: true,
-  //   });
-  // }, []);
 
   const cityValue = useWatch({
     control,
@@ -175,6 +176,8 @@ export default function UpdateUserNLC() {
       nisn_ketua: data['leader-nisn'],
       alamat_ketua: data['leader-address'],
       line_ketua: data['leader-line'],
+      sumber_bayar: data['payment-method'] === '0' ? 'QRIS' : 'Mandiri',
+      verified_bayar: data['verified'],
       anggota: [
         {
           anggota_id: teamData.anggota[1].anggota_id,
@@ -211,7 +214,7 @@ export default function UpdateUserNLC() {
   }
 
   return (
-    <DashboardShell>
+    <DashboardAdminShell>
       <main
         className='flex-1 overflow-y-auto bg-white border-t focus:outline-none'
         style={{ minHeight: 'calc(100vh - 4rem)' }}
@@ -496,24 +499,20 @@ export default function UpdateUserNLC() {
                       Upload Bukti Pembayaran
                     </h3>
                     <div className='grid grid-cols-1 mt-6 gap-y-6 gap-x-4 sm:grid-cols-6'>
-                      <div className='sm:col-span-4'>
-                        {/* <SelectInput
-                          label='Metode Pembayaran'
-                          id='payment-method'
-                          placeholder='Pilih metode pembayaran'
-                          defaultValue={
-                            paymentMethod?.find(
-                              (method) =>
-                                method.text === getDatabyID['payment-method'],
-                            ).value
-                          }
-                          options={paymentMethod}
-                          disabled={!isEditing}
-                          validation={{
-                            required: 'Metode Pembayaran tidak boleh kosong',
-                          }}
-                        /> */}
-                      </div>
+                      {teamData?.bukti_pembayaran && (
+                        <div className='sm:col-span-4'>
+                          <SelectInput
+                            label='Metode Pembayaran'
+                            id='payment-method'
+                            placeholder='Pilih metode pembayaran'
+                            options={paymentMethod}
+                            disabled={!isEditing}
+                            validation={{
+                              required: 'Metode Pembayaran tidak boleh kosong',
+                            }}
+                          />
+                        </div>
+                      )}
 
                       {/* <div className='sm:col-span-4'
                         <LightInput
@@ -528,7 +527,7 @@ export default function UpdateUserNLC() {
                         />
                       </div> */}
 
-                      {teamData && (
+                      {teamData?.bukti_pembayaran && (
                         <div className='col-span-full'>
                           <label
                             htmlFor={teamData?.bukti_pembayaran?.url}
@@ -544,6 +543,16 @@ export default function UpdateUserNLC() {
                               id={teamData?.bukti_pembayaran?.url}
                             />
                           </div>
+                        </div>
+                      )}
+
+                      {teamData?.bukti_pembayaran && (
+                        <div className='col-auto'>
+                          <CheckboxInput
+                            label='Verifikasi Bayar'
+                            id='verified'
+                            disabled={!isEditing}
+                          />
                         </div>
                       )}
                     </div>
@@ -594,6 +603,6 @@ export default function UpdateUserNLC() {
           </div>
         </div>
       </main>
-    </DashboardShell>
+    </DashboardAdminShell>
   );
 }

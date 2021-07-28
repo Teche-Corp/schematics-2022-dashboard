@@ -1,6 +1,6 @@
 import { useFormContext } from 'react-hook-form';
 
-export default function CheckboxInput({ id, label }) {
+export default function CheckboxInput({ id, label, disabled = false }) {
   const { register } = useFormContext();
 
   return (
@@ -14,6 +14,7 @@ export default function CheckboxInput({ id, label }) {
           type='checkbox'
           id={id}
           name={id}
+          disabled={disabled}
           aria-describedby={id}
           className='w-10 h-10 border-gray-300 rounded-md shadow-sm text-dark-700 focus:ring-dark-400 focus:border-dark-400'
         />
