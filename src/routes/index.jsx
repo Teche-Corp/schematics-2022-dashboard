@@ -130,7 +130,7 @@ const routeItems = [
     key: 'admin-dashboard',
     path: '/admin/dashboard',
     component: Admin,
-    visible: false,
+    visible: true,
   },
   {
     auth: 'admin',
@@ -138,7 +138,7 @@ const routeItems = [
     key: 'admin-sch-nlc-user-edit',
     path: '/admin/event/sch-nlc/user/:id/edit',
     component: UpdateUserNLC,
-    visible: false,
+    visible: true,
   },
   {
     auth: 'admin',
@@ -146,7 +146,7 @@ const routeItems = [
     key: 'admin-nlc',
     path: '/admin/event/sch-nlc/user',
     component: AdminNLC,
-    visible: false,
+    visible: true,
   },
   {
     auth: 'admin',
@@ -154,7 +154,7 @@ const routeItems = [
     key: 'admin-npc-senior',
     path: '/admin/event/sch-npc/senior/user',
     component: AdminNpcSenior,
-    visible: false,
+    visible: true,
   },
   {
     auth: 'admin',
@@ -162,7 +162,7 @@ const routeItems = [
     key: 'admin-npc-junior',
     path: '/admin/event/sch-npc/junior/user',
     component: AdminNpcJunior,
-    visible: false,
+    visible: true,
   },
   {
     auth: 'admin',
@@ -170,7 +170,7 @@ const routeItems = [
     key: 'admin-npc',
     path: '/admin/event/sch-npc',
     component: AdminNpc,
-    visible: false,
+    visible: true,
   },
   {
     auth: 'admin',
