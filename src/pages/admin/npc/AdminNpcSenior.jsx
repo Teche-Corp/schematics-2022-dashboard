@@ -43,7 +43,7 @@ export default function AdminNpcSenior() {
     } else {
       setData([]);
       setLoading(false);
-      toast.error("This didn't work.");
+      toast.error('Gagal mengambil data');
     }
   };
 

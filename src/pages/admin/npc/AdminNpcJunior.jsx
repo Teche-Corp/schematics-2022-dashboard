@@ -45,7 +45,7 @@ export default function AdminNpcJunior() {
       setLoading(false);
     } else {
       setData([]);
-      toast.error("This didn't work.");
+      toast.error('Gagal mengambil data');
       setLoading(false);
     }
   };
