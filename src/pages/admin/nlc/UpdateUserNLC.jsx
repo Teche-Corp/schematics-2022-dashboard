@@ -103,6 +103,9 @@ export default function UpdateUserNLC() {
       setValue('member-address', teamData?.anggota[1]?.alamat, {
         shouldDirty: false,
       });
+      setValue('jumlah-bayar', teamData?.bukti_pembayaran?.jumlah, {
+        shouldDirty: false,
+      });
       setValue('verified', teamData?.bukti_pembayaran?.verified, {
         shouldDirty: false,
       });
@@ -499,6 +502,20 @@ export default function UpdateUserNLC() {
                       Upload Bukti Pembayaran
                     </h3>
                     <div className='grid grid-cols-1 mt-6 gap-y-6 gap-x-4 sm:grid-cols-6'>
+                      {teamData?.bukti_pembayaran && (
+                        <div className='sm:col-span-3'>
+                          <LightInput
+                            label='Jumlah Bayar'
+                            id='jumlah-bayar'
+                            type='text'
+                            readOnly={true}
+                            validation={{
+                              required: 'Jumlah Bayar tidak boleh kosong',
+                            }}
+                          />
+                        </div>
+                      )}
+
                       {teamData?.bukti_pembayaran && (
                         <div className='sm:col-span-4'>
                           <SelectInput
