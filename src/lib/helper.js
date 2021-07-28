@@ -29,8 +29,8 @@ export const defaultToastMessage = {
 };
 
 /**
- * @param {number} percentage in decimal. Ex: 0.05
+ * @param {number} percentage in percentage number. Ex: 5
  */
 export function calculateDiscount(base, percentage) {
-  return base * (1 - percentage);
+  return base * (1 - percentage / 100);
 }
