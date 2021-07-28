@@ -12,7 +12,6 @@ export default function SelectInput({
   options = [],
   validation,
   disabled = false,
-  defaultValue = undefined,
 }) {
   const {
     register,
@@ -38,17 +37,12 @@ export default function SelectInput({
             'block w-full border-gray-300 rounded-md shadow-sm  sm:text-sm`',
           )}
           aria-describedby={id}
-          defaultValue={defaultValue}
         >
           <option value='' disabled hidden>
             {placeholder}
           </option>
           {options.map((option) => (
-            <option
-              key={option.value}
-              value={option.value}
-              selected={defaultValue === option.value}
-            >
+            <option key={option.value} value={option.value}>
               {option.text}
             </option>
           ))}
