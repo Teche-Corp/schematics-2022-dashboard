@@ -71,10 +71,11 @@ export default function Admin() {
       {
         Header: 'Status',
         accessor: (d) => {
-          if (d.is_active) {
-            <span className='text-green-500'>Aktif</span>;
-          }
-          return <span className='text-red-500'>Tidak</span>;
+          return d.is_active ? (
+            <span className='text-green-500'>Aktif</span>
+          ) : (
+            <span className='text-red-500'>Tidak</span>
+          );
         },
       },
       {
