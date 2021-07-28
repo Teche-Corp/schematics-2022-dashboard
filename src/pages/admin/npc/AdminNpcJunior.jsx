@@ -6,14 +6,13 @@ import {
   HiOutlineDocumentReport,
   HiUserGroup,
 } from 'react-icons/hi';
+import { bearerToken } from '@/lib/helper';
+import { ImSpinner } from 'react-icons/im';
+import toast from 'react-hot-toast';
 
 import DashboardAdminShell from '@/layout/DashboardAdminShell';
 import UnstyledLink from '@/components/UnstyledLink';
 import AdminTable from '@/components/AdminTable';
-
-import { bearerToken } from '@/lib/helper';
-import { ImSpinner } from 'react-icons/im';
-import toast from 'react-hot-toast';
 
 export default function AdminNpcJunior() {
   const [data, setData] = useState([]);
@@ -24,23 +23,22 @@ export default function AdminNpcJunior() {
   const getTeamData = async () => {
     setLoading(true);
     const res = await axios
-      .get(`/admin/list/tim/npc?page=${page}`, {
+      .get(`/admin/list/tim/npcj?page=${page}`, {
         headers: { ...bearerToken() },
       })
-      .catch((err) => err);
+      // eslint-disable-next-line no-console
+      .catch((err) => console.error(err));
 
     const {
       data: { data },
     } = res;
-
-    console.log(res.data);
 
     if (res.status === 200) {
       setPages(data?.total_page);
 
       const team = data?.teams;
 
-      setData(team.filter((team) => team.event === 'npc_junior'));
+      setData(team);
 
       setLoading(false);
     } else {
@@ -57,17 +55,20 @@ export default function AdminNpcJunior() {
 
   const cards = [
     {
+      id: 1,
       name: 'Total Pendaftaran',
       href: '#',
       icon: HiUserGroup,
       amount: data?.length || 'Menunggu data..',
     },
     {
+      id: 2,
       name: 'Score Team',
       href: '#',
       icon: HiOutlineDocumentReport,
     },
     {
+      id: 3,
       name: 'Upload Berkas',
       href: '#',
       icon: HiOutlineCloud,
@@ -133,7 +134,7 @@ export default function AdminNpcJunior() {
               className='font-bold text-npc'
               id={d?.team_id}
               to={{
-                pathname: `/admin/event/sch-npc/user/${
+                pathname: `/admin/event/sch-npc/junior/user/${
                   Number(d?.team_id) + 1
                 }/edit`,
               }}
