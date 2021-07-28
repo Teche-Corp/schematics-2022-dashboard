@@ -3,14 +3,13 @@ import DashboardAdminShell from '@/layout/DashboardAdminShell';
 import { classNames } from '@/lib/helper';
 import { HiDesktopComputer } from 'react-icons/hi';
 
-import { BiBrain } from 'react-icons/bi';
 import { Link } from 'react-router-dom';
 
 const actions = [
   {
     title: 'Schematics NPC Senior',
     href: '/admin/event/sch-npc/senior/user',
-    icon: BiBrain,
+    icon: HiDesktopComputer,
     iconForeground: 'text-npc',
     iconBackground: 'bg-npc-100',
   },

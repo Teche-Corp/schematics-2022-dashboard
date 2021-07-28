@@ -12,25 +12,38 @@ import UnstyledLink from '@/components/UnstyledLink';
 import AdminTable from '@/components/AdminTable';
 
 import { bearerToken } from '@/lib/helper';
+import toast from 'react-hot-toast';
+import { ImSpinner } from 'react-icons/im';
 
 export default function AdminNpcSenior() {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState();
+  const [loading, setLoading] = useState(false);
 
   const getTeamData = async () => {
+    setLoading(true);
     const res = await axios
-      .get(`/admin/list/tim/nlc?page=${page}`, {
+      .get(`/admin/list/tim/npc?page=${page}`, {
         headers: { ...bearerToken() },
       })
       .catch((err) => err);
 
-    if (res.status === 200) {
-      setPages(res?.data?.data?.total_page);
+    const {
+      data: { data },
+    } = res;
 
-      setData(res?.data?.data?.teams);
+    if (res.status === 200) {
+      setPages(data?.total_page);
+
+      const team = data?.teams;
+
+      setData(team.filter((team) => team.event === 'npc_senior'));
+      setLoading(false);
     } else {
       setData([]);
+      setLoading(false);
+      toast.error("This didn't work.");
     }
   };
 
@@ -102,24 +115,24 @@ export default function AdminNpcSenior() {
               href={`https://wa.me/${d?.user_ketua?.phone}`}
             >
               ({d?.user_ketua?.phone})
-            </UnstyledLink>
+            </UnstyledLink>{' '}
+            -{' '}
+            {d?.anggota_ketua?.anggota_id_discord ||
+              'Data discord tidak dimasukan'}
           </>
         ),
       },
       {
         Header: 'Edit',
-        Cell: (d) => {
+        accessor: (d) => {
           return (
             <Link
               className='font-bold text-npc'
-              id={d?.row?.id}
+              id={d?.team_id}
               to={{
-                pathname: `/admin/event/sch-nlc/user/${
-                  Number(d?.row?.id) + 1
+                pathname: `/admin/event/sch-npc/user/${
+                  Number(d?.team_id) + 1
                 }/edit`,
-                state: {
-                  page: page,
-                },
               }}
             >
               Edit
@@ -190,13 +203,22 @@ export default function AdminNpcSenior() {
               Tabel Pendaftaran
             </h2>
 
-            <AdminTable
-              columns={columns}
-              data={data}
-              page={page}
-              pages={pages}
-              setPage={setPage}
-            />
+            {loading ? (
+              <div className='flex justify-center py-10 mt-4'>
+                <div>
+                  <ImSpinner className='mx-auto mb-3 w-7 h-7 animate-spin text-npc' />
+                  <p>Sedang menunggu data...</p>
+                </div>
+              </div>
+            ) : (
+              <AdminTable
+                columns={columns}
+                data={data}
+                page={page}
+                pages={pages}
+                setPage={setPage}
+              />
+            )}
           </div>
         </div>
       </main>
