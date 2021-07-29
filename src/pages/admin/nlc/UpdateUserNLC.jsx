@@ -61,6 +61,7 @@ export default function UpdateUserNLC() {
 
   useEffect(() => {
     handleSetTeamData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -160,6 +161,7 @@ export default function UpdateUserNLC() {
         });
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cityValue, cities, setValue]);
 
   const handleEditClick = () => {
