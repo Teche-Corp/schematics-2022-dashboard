@@ -135,9 +135,9 @@ export default function AdminNpcJunior() {
               className='font-bold text-npc'
               id={d?.team_id}
               to={{
-                pathname: `/admin/event/sch-npc/junior/user/${
-                  Number(d?.team_id) + 1
-                }/edit`,
+                pathname: `/admin/event/sch-npc/junior/user/${Number(
+                  d?.team_id,
+                )}/edit`,
               }}
             >
               Edit
