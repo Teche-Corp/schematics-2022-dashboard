@@ -141,8 +141,7 @@ export default function UpdateUserNpcJunior() {
         });
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cityValue, cities, setValue]);
+  }, [cityValue, cities, teamData, setValue]);
 
   const handleEditClick = () => {
     setIsEditing((prevState) => !prevState);
