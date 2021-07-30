@@ -128,7 +128,7 @@ export default function AdminNpcSenior() {
         ),
       },
       {
-        Header: 'Edit',
+        Header: 'Detail',
         accessor: (d) => {
           return (
             <Link
@@ -140,7 +140,7 @@ export default function AdminNpcSenior() {
                 )}/edit`,
               }}
             >
-              Edit
+              Lihat Detail
             </Link>
           );
         },
