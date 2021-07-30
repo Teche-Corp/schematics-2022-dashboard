@@ -39,6 +39,7 @@ import AdminNst from '@/pages/admin/nst/AdminNst';
 import AdminReeva from '@/pages/admin/reeva/AdminReeva';
 import AdminNpc from '@/pages/admin/npc/AdminNpc';
 import AdminNpcJunior from '@/pages/admin/npc/AdminNpcJunior';
+import UpdateUserNpcJunior from '@/pages/admin/npc/UpdateUserNpcJunior';
 
 import PageNotFound from '@/pages/error/404';
 import Error500 from '@/pages/error/500';
@@ -154,6 +155,14 @@ const routeItems = [
     key: 'admin-npc-senior',
     path: '/admin/event/sch-npc/senior/user',
     component: AdminNpcSenior,
+    visible: true,
+  },
+  {
+    auth: 'admin',
+    route: PrivateRoute,
+    key: 'admin-sch-npc-junior-user-edit',
+    path: '/admin/event/sch-npc/junior/user/:id/edit',
+    component: UpdateUserNpcJunior,
     visible: true,
   },
   {
