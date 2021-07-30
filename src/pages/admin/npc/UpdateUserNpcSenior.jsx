@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
+import { IoArrowBackCircleOutline } from 'react-icons/io5';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import useSWR from 'swr';
@@ -12,6 +13,7 @@ import LightInput from '@/components/LightInput';
 import SelectCity from '@/components/SelectCity';
 import SelectInput from '@/components/SelectInput';
 import CheckboxInput from '@/components/CheckboxInput';
+import UnstyledLink from '@/components/UnstyledLink';
 
 import { bearerToken, classNames } from '@/lib/helper';
 import useLoadingToast from '@/hooks/useLoadingToast';
@@ -264,6 +266,12 @@ export default function UpdateUserNpcSenior() {
               >
                 <div className='space-y-8 divide-y divide-gray-200'>
                   <div>
+                    <UnstyledLink
+                      href='/admin/event/sch-npc/senior/user'
+                      className='inline-block text-5xl hover:text-npc-400 focus:text-opacity-50'
+                    >
+                      <IoArrowBackCircleOutline />
+                    </UnstyledLink>
                     <h1 className='mb-6 text-4xl font-extrabold tracking-tight text-gray-900 sm:text-3xl md:text-4xl'>
                       <span className='block xl:inline'>Edit Tim</span>{' '}
                       <span className='block text-npc-400 xl:inline'>
