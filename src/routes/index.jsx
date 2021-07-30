@@ -35,6 +35,7 @@ import AddVoucher from '@/pages/admin/voucher/AddVoucher';
 import UpdateUserNLC from '@/pages/admin/nlc/UpdateUserNLC';
 import AdminNLC from '@/pages/admin/nlc/AdminNLC';
 import AdminNpcSenior from '@/pages/admin/npc/AdminNpcSenior';
+import UpdateUserNpcSenior from '@/pages/admin/npc/UpdateUserNpcSenior';
 import AdminNst from '@/pages/admin/nst/AdminNst';
 import AdminReeva from '@/pages/admin/reeva/AdminReeva';
 import AdminNpc from '@/pages/admin/npc/AdminNpc';
@@ -147,6 +148,14 @@ const routeItems = [
     key: 'admin-nlc',
     path: '/admin/event/sch-nlc/user',
     component: AdminNLC,
+    visible: true,
+  },
+  {
+    auth: 'admin',
+    route: PrivateRoute,
+    key: 'admin-sch-npc-senior-user-edit',
+    path: '/admin/event/sch-npc/senior/user/:id/edit',
+    component: UpdateUserNpcSenior,
     visible: true,
   },
   {
