@@ -11,10 +11,11 @@ import DashboardAdminShell from '@/layout/DashboardAdminShell';
 import VoucherTable from '@/components/VoucherTable';
 
 export default function Admin() {
-  const { data: dataSWR, isValidating, revalidate: revalidateTable } = useSWR(
+  const { data: dataSWR, isValidating, revalidate } = useSWR(
     '/voucher/list',
     emptyPostWithToken,
   );
+  const revalidateTable = isValidating ? null : () => revalidate();
   const data = dataSWR?.data ?? [];
 
   const columns = useMemo(

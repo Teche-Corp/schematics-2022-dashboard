@@ -19,10 +19,11 @@ import AdminTable from '@/components/AdminTable';
 export default function AdminNLC() {
   const [page, setPage] = useState(1);
 
-  const { data: dataSWR, isValidating, revalidate: revalidateTable } = useSWR(
+  const { data: dataSWR, isValidating, revalidate } = useSWR(
     `/admin/list/tim/nlc?page=${page}`,
     getWithToken,
   );
+  const revalidateTable = isValidating ? null : () => revalidate();
   const data = dataSWR?.data?.teams ?? [];
   const pages = dataSWR?.data?.total_page ?? undefined;
 
