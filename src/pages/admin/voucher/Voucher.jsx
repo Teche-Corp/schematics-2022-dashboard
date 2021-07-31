@@ -1,40 +1,21 @@
-import { useEffect, useMemo, useState } from 'react';
+import useSWR from 'swr';
+import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
-
+import { IoMdRefresh } from 'react-icons/io';
 import { ImSpinner } from 'react-icons/im';
 
-import DashboardAdminShell from '@/layout/DashboardAdminShell';
+import { emptyPostWithToken } from '@/lib/swr';
+import { classNames } from '@/lib/helper';
 
-import { bearerToken } from '@/lib/helper';
+import DashboardAdminShell from '@/layout/DashboardAdminShell';
 import VoucherTable from '@/components/VoucherTable';
 
 export default function Admin() {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const getVoucherData = async () => {
-      try {
-        const res = await axios.post(
-          'voucher/list',
-          {},
-          {
-            headers: { ...bearerToken() },
-          },
-        );
-
-        setData(res.data.data);
-      } catch (err) {
-        // eslint-disable-next-line no-console
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    getVoucherData();
-  }, []);
+  const { data: dataSWR, isValidating, revalidate: revalidateTable } = useSWR(
+    '/voucher/list',
+    emptyPostWithToken,
+  );
+  const data = dataSWR?.data ?? [];
 
   const columns = useMemo(
     () => [
@@ -103,10 +84,20 @@ export default function Admin() {
       <main className='relative z-0 flex-1 pb-8 overflow-y-auto border-t'>
         <div className='mt-8 '>
           <div className='max-w-6xl px-4 mx-auto space-y-3 sm:px-6'>
-            <div className='flex items-center'>
-              <h2 className='max-w-6xl text-lg font-medium leading-6 text-gray-900'>
-                Daftar Voucher
-              </h2>
+            <div className='flex items-center justify-between'>
+              <div className='flex space-x-2'>
+                <h2 className='max-w-6xl text-lg font-medium leading-6 text-gray-900'>
+                  Daftar Voucher
+                </h2>
+                <button
+                  onClick={revalidateTable}
+                  className='p-1 text-lg font-bold rounded-full focus:outline-none focus:ring ring-black'
+                >
+                  <IoMdRefresh
+                    className={classNames(isValidating && 'animate-spin')}
+                  />
+                </button>
+              </div>
               <div className=''>
                 <Link
                   to='/admin/voucher/add'
@@ -117,7 +108,7 @@ export default function Admin() {
               </div>
             </div>
 
-            {loading ? (
+            {!dataSWR ? (
               <div className='flex justify-center py-10 mt-4'>
                 <div>
                   <ImSpinner className='mx-auto mb-3 text-gray-700 w-7 h-7 animate-spin' />
