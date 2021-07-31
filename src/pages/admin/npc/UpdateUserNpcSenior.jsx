@@ -772,16 +772,24 @@ export default function UpdateUserNpcSenior() {
                         </button>
                       </>
                     ) : (
-                      <button
-                        type='button'
-                        onClick={handleEditClick}
-                        className={classNames(
-                          'inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-dark-100 hover:bg-dark-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-dark-100',
-                          isLoading && 'filter brightness-90 cursor-wait',
-                        )}
-                      >
-                        Edit
-                      </button>
+                      <>
+                        <Link
+                          to='/admin/event/sch-npc/senior/user'
+                          className='px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-dark-400'
+                        >
+                          Kembali
+                        </Link>
+                        <button
+                          type='button'
+                          onClick={handleEditClick}
+                          className={classNames(
+                            'inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-dark-100 hover:bg-dark-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-dark-100',
+                            isLoading && 'filter brightness-90 cursor-wait',
+                          )}
+                        >
+                          Edit
+                        </button>
+                      </>
                     )}
                   </div>
                 </div>
