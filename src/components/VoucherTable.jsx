@@ -56,11 +56,8 @@ export default function VoucherTable({ columns, data }) {
                   className='min-w-full divide-y divide-gray-200'
                 >
                   <thead className='bg-gray-50'>
-                    {headerGroups.map((headerGroup) => (
-                      <tr
-                        {...headerGroup.getHeaderGroupProps()}
-                        key={headerGroup.id}
-                      >
+                    {headerGroups.map((headerGroup, index) => (
+                      <tr {...headerGroup.getHeaderGroupProps()} key={index}>
                         {headerGroup.headers.map((column) => (
                           <th
                             key={column.id}
@@ -74,7 +71,7 @@ export default function VoucherTable({ columns, data }) {
                     ))}
                   </thead>
                   <tbody {...getTableBodyProps()}>
-                    {page?.map((row) => {
+                    {page?.map((row, index) => {
                       prepareRow(row);
                       return (
                         <tr
@@ -82,14 +79,14 @@ export default function VoucherTable({ columns, data }) {
                           className={
                             row.id % 2 === 0 ? 'bg-white' : 'bg-gray-100'
                           }
-                          key={row.id}
+                          key={index}
                         >
-                          {row?.cells?.map((cell) => {
+                          {row?.cells?.map((cell, index) => {
                             return (
                               <td
                                 {...cell.getCellProps()}
                                 className='px-6 py-4 text-sm font-light text-gray-900 whitespace-nowrap '
-                                key={cell.id}
+                                key={index}
                               >
                                 {cell.render('Cell')}
                               </td>
