@@ -87,6 +87,7 @@ export default function AddVoucher() {
                           label='Limit Jumlah'
                           id='limit-jumlah'
                           type='number'
+                          helperText='Jumlah tim yang dapat menggunakan'
                           min='0'
                           validation={{
                             required: 'Limit jumlah tidak boleh kosong',
@@ -103,6 +104,7 @@ export default function AddVoucher() {
                           label='Potongan Persen'
                           id='potongan-persen'
                           type='number'
+                          helperText='Dalam rentang 1-100'
                           min='0'
                           max='100'
                           validation={{
