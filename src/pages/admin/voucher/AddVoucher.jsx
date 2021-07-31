@@ -8,10 +8,13 @@ import LightInput from '@/components/LightInput';
 import CheckboxInput from '@/components/CheckboxInput';
 import DatePickerInput from '@/components/DatePickerInput';
 
-import { bearerToken } from '@/lib/helper';
+import { bearerToken, classNames } from '@/lib/helper';
+import useLoadingToast from '@/hooks/useLoadingToast';
 
 export default function AddVoucher() {
   const history = useHistory();
+
+  const isLoading = useLoadingToast();
 
   const methods = useForm();
   const { watch, handleSubmit, register } = methods;
@@ -169,7 +172,11 @@ export default function AddVoucher() {
                   <div className='flex justify-end'>
                     <button
                       type='submit'
-                      className='inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-dark-700 hover:bg-dark-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-dark-400'
+                      disabled={isLoading}
+                      className={classNames(
+                        'inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-dark-700 hover:bg-dark-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-dark-400',
+                        isLoading && 'filter brightness-90 cursor-wait',
+                      )}
                     >
                       Buat Voucher
                     </button>
