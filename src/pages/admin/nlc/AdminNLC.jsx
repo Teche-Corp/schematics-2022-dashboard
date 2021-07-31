@@ -1,6 +1,7 @@
-import axios from 'axios';
-import { useEffect, useMemo, useState } from 'react';
+import useSWR from 'swr';
+import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { IoMdRefresh } from 'react-icons/io';
 import {
   HiOutlineCloud,
   HiOutlineDocumentReport,
@@ -8,35 +9,22 @@ import {
 } from 'react-icons/hi';
 
 import DashboardAdminShell from '@/layout/DashboardAdminShell';
-import { bearerToken } from '@/lib/helper';
+
+import { getWithToken } from '@/lib/swr';
+import { classNames } from '@/lib/helper';
+
 import UnstyledLink from '@/components/UnstyledLink';
 import AdminTable from '@/components/AdminTable';
 
 export default function AdminNLC() {
-  const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
-  const [pages, setPages] = useState();
 
-  const getTeamData = async () => {
-    const res = await axios
-      .get(`/admin/list/tim/nlc?page=${page}`, {
-        headers: { ...bearerToken() },
-      })
-      .catch((err) => err);
-
-    if (res.status === 200) {
-      setPages(res?.data?.data?.total_page);
-
-      setData(res?.data?.data?.teams);
-    } else {
-      setData([]);
-    }
-  };
-
-  useEffect(() => {
-    getTeamData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page]);
+  const { data: dataSWR, isValidating, revalidate: revalidateTable } = useSWR(
+    `/admin/list/tim/nlc?page=${page}`,
+    getWithToken,
+  );
+  const data = dataSWR?.data?.teams ?? [];
+  const pages = dataSWR?.data?.total_page ?? undefined;
 
   const cards = [
     {
@@ -186,9 +174,19 @@ export default function AdminNLC() {
           </div>
 
           <div className='max-w-6xl px-4 mx-auto space-y-3 sm:px-6 lg:px-8'>
-            <h2 className='mx-auto text-lg font-medium leading-6 text-gray-900 max-w-7xl mt-7 '>
-              Tabel Pendaftaran
-            </h2>
+            <div className='flex items-center gap-2 mt-7'>
+              <h2 className='text-lg font-medium leading-6 text-gray-900'>
+                Tabel Pendaftaran{' '}
+              </h2>
+              <button
+                onClick={revalidateTable}
+                className='p-1 text-lg font-bold rounded-full focus:outline-none focus:ring ring-black'
+              >
+                <IoMdRefresh
+                  className={classNames(isValidating && 'animate-spin')}
+                />
+              </button>
+            </div>
 
             <AdminTable
               columns={columns}

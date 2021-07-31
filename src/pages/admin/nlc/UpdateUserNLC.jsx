@@ -1,11 +1,14 @@
-import { useState, useEffect } from 'react';
-import { FormProvider, useForm, useWatch } from 'react-hook-form';
-import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import useSWR from 'swr';
+import { useState, useEffect } from 'react';
+import { FormProvider, useForm, useWatch } from 'react-hook-form';
+import { useLocation, useParams } from 'react-router-dom';
 
 import { useAuthDispatch } from '@/contexts/AuthContext';
+import useLoadingToast from '@/hooks/useLoadingToast';
+import { bearerToken, classNames } from '@/lib/helper';
+import { getWithToken, postDetailTim } from '@/lib/swr';
 
 import DashboardAdminShell from '@/layout/DashboardAdminShell';
 import LightInput from '@/components/LightInput';
@@ -13,16 +16,30 @@ import SelectCity from '@/components/SelectCity';
 import SelectInput from '@/components/SelectInput';
 import CheckboxInput from '@/components/CheckboxInput';
 
-import { bearerToken, classNames } from '@/lib/helper';
-import useLoadingToast from '@/hooks/useLoadingToast';
-
 export default function UpdateUserNLC() {
   const [isEditing, setIsEditing] = useState(false);
   const isLoading = useLoadingToast();
-  const [teamData, setTeamData] = useState(undefined);
+  let { id } = useParams();
+  const {
+    state: { page },
+  } = useLocation();
+
+  // Data Fetching
+  const { revalidate: revalidateTable } = useSWR(
+    `/admin/list/tim/nlc?page=${page}`,
+    getWithToken,
+    {
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+    },
+  );
+  const { data: detailTim, revalidate: revalidateDetail } = useSWR(
+    ['/admin/detail_tim', id],
+    postDetailTim,
+  );
+  const teamData = detailTim?.data;
 
   const methods = useForm();
-
   const {
     control,
     handleSubmit,
@@ -30,7 +47,6 @@ export default function UpdateUserNLC() {
     reset,
     formState: { isDirty },
   } = methods;
-
   useEffect(() => {
     reset(teamData);
   }, [reset, teamData]);
@@ -40,29 +56,10 @@ export default function UpdateUserNLC() {
   const { data, error: fetchError } = useSWR('/region/list');
   const cities = data?.data;
 
-  let { id } = useParams();
-
   const paymentMethod = [
     { text: 'QRIS', value: 0 },
     { text: 'Mandiri', value: 1 },
   ];
-
-  const handleSetTeamData = () => {
-    axios
-      .post(
-        '/admin/detail_tim',
-        { team_id: id },
-        { headers: { ...bearerToken() } },
-      )
-      .then((res) => {
-        setTeamData(res.data.data);
-      });
-  };
-
-  useEffect(() => {
-    handleSetTeamData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   useEffect(() => {
     if (teamData !== undefined) {
@@ -204,12 +201,16 @@ export default function UpdateUserNLC() {
         .then((res) => {
           dispatch('ASSIGN_NLC', res.data.data);
         })
-        .then(() => handleSetTeamData())
+        .then(() => {
+          revalidateDetail();
+          revalidateTable();
+        })
         .finally(() => setIsEditing(false)),
       {
         loading: 'Loading...',
         success: 'Tim berhasil diperbarui',
-        error: (err) => err.response.data.msg,
+        error: (err) =>
+          err?.response?.data?.msg ?? 'Terjadi kesalahan, mohon coba lagi',
       },
     );
   };
