@@ -1,7 +1,7 @@
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { FormProvider, useForm } from 'react-hook-form';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 
 import useLoadingToast from '@/hooks/useLoadingToast';
 
@@ -12,6 +12,8 @@ import SubmitButton from '@/components/SubmitButton';
 
 export default function SignUp() {
   const history = useHistory();
+  const { state } = useLocation();
+
   const methods = useForm();
   const { handleSubmit } = methods;
 
@@ -19,7 +21,9 @@ export default function SignUp() {
 
   const handleSignup = (data) => {
     toast.promise(
-      axios.post('/user/register', data).then((_) => history.push('/signin')),
+      axios
+        .post('/user/register', data)
+        .then((_) => history.push('/signin', state)),
       {
         loading: 'Loading...',
         success: 'Berhasil! Anda bisa masuk ke akun anda',
@@ -104,7 +108,7 @@ export default function SignUp() {
                 <div className='mt-6'>
                   <Link
                     className='flex justify-center w-full px-4 py-2 text-sm font-medium border-2 rounded-md shadow-sm text-light-100 border-light-100 hover:text-dark hover:bg-light-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-light-100'
-                    to='/signin'
+                    to={{ pathname: '/signin', state }}
                   >
                     Masuk
                   </Link>

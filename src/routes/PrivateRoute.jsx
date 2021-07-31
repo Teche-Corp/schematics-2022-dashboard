@@ -1,11 +1,12 @@
 import React from 'react';
 
-import { Redirect, Route } from 'react-router-dom';
+import { Redirect, Route, useLocation } from 'react-router-dom';
 import { ImSpinner8 } from 'react-icons/im';
 import { useAuthState } from '@/contexts/AuthContext';
 
 const PrivateRoute = ({ component: Component, auth, ...rest }) => {
   const { authenticated, loading, user } = useAuthState();
+  const { pathname } = useLocation();
 
   return (
     <Route
@@ -31,7 +32,11 @@ const PrivateRoute = ({ component: Component, auth, ...rest }) => {
               return <Component {...props} />;
             }
           } else {
-            return <Redirect to={'/signin'} />;
+            return (
+              <Redirect
+                to={{ pathname: '/signin', state: { redirect: pathname } }}
+              />
+            );
           }
         }
       }}
