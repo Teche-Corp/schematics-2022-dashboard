@@ -84,11 +84,8 @@ export default function Admin() {
           return (
             <Link
               className='font-bold text-nlc'
-              id={d?.kode_voucher}
               to={{
-                pathname: `/admin/event/sch-nlc/user/${Number(
-                  d?.kode_voucher,
-                )}/edit`,
+                pathname: `/admin/event/sch-nlc/user/${d?.kode_voucher}/edit`,
               }}
             >
               Edit
