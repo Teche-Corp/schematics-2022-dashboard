@@ -118,6 +118,7 @@ export default function AddVoucher() {
                       <div className='sm:col-span-3'>
                         <DatePickerInput
                           id='waktu-mulai'
+                          autoComplete='off'
                           label='Waktu Mulai'
                           todayButton='Hari Ini'
                           validation={{
@@ -132,6 +133,7 @@ export default function AddVoucher() {
                       <div className='sm:col-span-3'>
                         <DatePickerInput
                           id='waktu-berakhir'
+                          autoComplete='off'
                           label='Waktu Berakhir'
                           todayButton='Hari Ini'
                           validation={{
