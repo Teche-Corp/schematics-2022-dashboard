@@ -86,26 +86,31 @@ export default function AddVoucher() {
 
                     <div className='grid grid-cols-1 mt-6 gap-y-6 gap-x-4 sm:grid-cols-6'>
                       <div className='sm:col-span-3'>
-                        <LightInput
-                          label='Waktu Mulai'
+                        <DatePickerInput
                           id='waktu-mulai'
-                          type='date'
-                          min={new Date().toISOString().slice(0, 10)}
+                          label='Waktu Mulai'
+                          todayButton='Hari Ini'
                           validation={{
                             required: 'Waktu mulai tidak boleh kosong',
                           }}
+                          selectsStart
+                          startDate={watch('waktu-mulai')}
+                          endDate={watch('waktu-berakhir')}
                         />
                       </div>
 
                       <div className='sm:col-span-3'>
-                        <LightInput
-                          label='Waktu Berakhir'
+                        <DatePickerInput
                           id='waktu-berakhir'
-                          type='date'
-                          min={new Date().toISOString().slice(0, 10)}
+                          label='Waktu Berakhir'
+                          todayButton='Hari Ini'
                           validation={{
                             required: 'Waktu berakhir tidak boleh kosong',
                           }}
+                          selectsEnd
+                          startDate={watch('waktu-mulai')}
+                          endDate={watch('waktu-berakhir')}
+                          minDate={watch('waktu-mulai')}
                         />
                       </div>
                     </div>
