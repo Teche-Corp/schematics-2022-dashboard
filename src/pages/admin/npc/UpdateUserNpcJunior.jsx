@@ -207,7 +207,9 @@ export default function UpdateUserNpcJunior() {
                         <HiOutlineArrowCircleLeft className='w-6 h-6' />
                       </Link>
                       <h1 className='ml-3 text-4xl font-extrabold tracking-tight text-gray-900 sm:text-3xl md:text-4xl'>
-                        <span className='block xl:inline'>Edit Tim</span>{' '}
+                        <span className='block xl:inline'>
+                          {isEditing ? 'Edit Tim' : 'Detail Tim'}
+                        </span>{' '}
                         <span className='block text-npc-400 xl:inline'>
                           Schematics NPC Junior
                         </span>
