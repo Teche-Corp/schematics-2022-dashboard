@@ -1,16 +1,46 @@
+import { useHistory } from 'react-router';
 import { FormProvider, useForm } from 'react-hook-form';
+import axios from 'axios';
+import toast from 'react-hot-toast';
 
 import DashboardAdminShell from '@/layout/DashboardAdminShell';
 import LightInput from '@/components/LightInput';
 import CheckboxInput from '@/components/CheckboxInput';
+import DatePickerInput from '@/components/DatePickerInput';
+
+import { bearerToken } from '@/lib/helper';
 
 export default function AddVoucher() {
-  const methods = useForm();
-  const { handleSubmit, register } = methods;
+  const history = useHistory();
 
-  const handleCreateVoucher = (data) => {
-    // eslint-disable-next-line no-console
-    console.log(data);
+  const methods = useForm();
+  const { watch, handleSubmit, register } = methods;
+
+  const handleCreateVoucher = async (data) => {
+    const newBody = {
+      kode_voucher: data['kode-voucher'],
+      keterangan: data['keterangan'],
+      potongan_persen: data['potongan-persen'],
+      limit_jumlah: data['limit-jumlah'],
+      tanggal_mulai: data['waktu-mulai'],
+      tanggal_berakhir: data['waktu-berakhir'],
+      is_active: data['status-voucher'],
+    };
+
+    toast.promise(
+      axios
+        .post('/voucher/create', newBody, {
+          headers: { ...bearerToken() },
+        })
+        .then((res) => {
+          history.push('/admin/voucher');
+        }),
+      {
+        loading: 'Loading...',
+        success: 'Berhasil membuat voucher!',
+        error: (err) => err.response.data.msg,
+      },
+    );
   };
 
   return (
