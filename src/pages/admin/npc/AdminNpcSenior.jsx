@@ -88,6 +88,24 @@ export default function AdminNpcSenior() {
         accessor: 'team_name',
       },
       {
+        Header: 'Detail',
+        accessor: (d) => {
+          return (
+            <Link
+              className='font-bold text-npc'
+              id={d?.team_id}
+              to={{
+                pathname: `/admin/event/sch-npc/senior/user/${Number(
+                  d?.team_id,
+                )}/edit`,
+              }}
+            >
+              Lihat Detail
+            </Link>
+          );
+        },
+      },
+      {
         Header: 'Verified',
         accessor: (d) => {
           return d.bukti_pembayaran?.is_verified ? (
@@ -126,24 +144,6 @@ export default function AdminNpcSenior() {
               'Data discord tidak dimasukan'}
           </>
         ),
-      },
-      {
-        Header: 'Detail',
-        accessor: (d) => {
-          return (
-            <Link
-              className='font-bold text-npc'
-              id={d?.team_id}
-              to={{
-                pathname: `/admin/event/sch-npc/senior/user/${Number(
-                  d?.team_id,
-                )}/edit`,
-              }}
-            >
-              Lihat Detail
-            </Link>
-          );
-        },
       },
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps

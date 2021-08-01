@@ -88,6 +88,24 @@ export default function AdminNpcJunior() {
         accessor: 'team_name',
       },
       {
+        Header: 'Detail',
+        accessor: (d) => {
+          return (
+            <Link
+              className='font-bold text-npc'
+              id={d?.team_id}
+              to={{
+                pathname: `/admin/event/sch-npc/junior/user/${Number(
+                  d?.team_id,
+                )}/edit`,
+              }}
+            >
+              Lihat Detail
+            </Link>
+          );
+        },
+      },
+      {
         Header: 'Verified',
         accessor: (d) => {
           return d.bukti_pembayaran?.is_verified ? (
@@ -126,24 +144,6 @@ export default function AdminNpcJunior() {
               'Data discord tidak dimasukan'}
           </>
         ),
-      },
-      {
-        Header: 'Detail',
-        accessor: (d) => {
-          return (
-            <Link
-              className='font-bold text-npc'
-              id={d?.team_id}
-              to={{
-                pathname: `/admin/event/sch-npc/junior/user/${Number(
-                  d?.team_id,
-                )}/edit`,
-              }}
-            >
-              Lihat Detail
-            </Link>
-          );
-        },
       },
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -59,6 +59,27 @@ export default function AdminNLC() {
         accessor: 'team_name',
       },
       {
+        Header: 'Edit',
+        accessor: (d) => {
+          return (
+            <Link
+              className='font-bold text-nlc'
+              id={d?.team_id}
+              to={{
+                pathname: `/admin/event/sch-nlc/user/${Number(
+                  d?.team_id,
+                )}/edit`,
+                state: {
+                  page: page,
+                },
+              }}
+            >
+              Edit
+            </Link>
+          );
+        },
+      },
+      {
         Header: 'Verified',
         accessor: (d) => {
           return d.bukti_pembayaran?.is_verified ? (
@@ -94,27 +115,6 @@ export default function AdminNLC() {
             </UnstyledLink>
           </>
         ),
-      },
-      {
-        Header: 'Edit',
-        accessor: (d) => {
-          return (
-            <Link
-              className='font-bold text-nlc'
-              id={d?.team_id}
-              to={{
-                pathname: `/admin/event/sch-nlc/user/${Number(
-                  d?.team_id,
-                )}/edit`,
-                state: {
-                  page: page,
-                },
-              }}
-            >
-              Edit
-            </Link>
-          );
-        },
       },
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps

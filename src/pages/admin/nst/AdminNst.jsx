@@ -63,6 +63,27 @@ export default function AdminNst() {
         accessor: 'team_name',
       },
       {
+        Header: 'Edit',
+        Cell: (d) => {
+          return (
+            <Link
+              className='font-bold text-nst'
+              id={d?.row?.id}
+              to={{
+                pathname: `/admin/event/sch-nlc/user/${
+                  Number(d?.row?.id) + 1
+                }/edit`,
+                state: {
+                  page: page,
+                },
+              }}
+            >
+              Edit
+            </Link>
+          );
+        },
+      },
+      {
         Header: 'Verified',
         accessor: (d) => {
           if (d.bukti_pembayaran?.is_verified) {
@@ -97,27 +118,6 @@ export default function AdminNst() {
             </UnstyledLink>
           </>
         ),
-      },
-      {
-        Header: 'Edit',
-        Cell: (d) => {
-          return (
-            <Link
-              className='font-bold text-nst'
-              id={d?.row?.id}
-              to={{
-                pathname: `/admin/event/sch-nlc/user/${
-                  Number(d?.row?.id) + 1
-                }/edit`,
-                state: {
-                  page: page,
-                },
-              }}
-            >
-              Edit
-            </Link>
-          );
-        },
       },
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
