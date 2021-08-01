@@ -59,7 +59,7 @@ export default function AdminNLC() {
         accessor: 'team_name',
       },
       {
-        Header: 'Edit',
+        Header: 'Detail',
         accessor: (d) => {
           return (
             <Link
@@ -72,7 +72,7 @@ export default function AdminNLC() {
                 },
               }}
             >
-              Edit
+              Lihat Detail
             </Link>
           );
         },
