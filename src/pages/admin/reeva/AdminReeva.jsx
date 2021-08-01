@@ -70,9 +70,7 @@ export default function AdminReeva() {
               className='font-bold text-reeva'
               id={d?.row?.id}
               to={{
-                pathname: `/admin/event/sch-nlc/user/${
-                  Number(d?.row?.id) + 1
-                }/edit`,
+                pathname: `/admin/sch-nlc/user/${Number(d?.row?.id) + 1}/edit`,
                 state: {
                   page: page,
                 },

@@ -67,7 +67,7 @@ export default function Admin() {
             <Link
               className='font-bold text-nlc'
               to={{
-                pathname: `/admin/event/sch-nlc/user/${d?.kode_voucher}/edit`,
+                pathname: `/admin/sch-nlc/user/${d?.kode_voucher}/edit`,
               }}
             >
               Edit

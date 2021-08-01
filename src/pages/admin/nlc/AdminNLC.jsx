@@ -66,9 +66,7 @@ export default function AdminNLC() {
               className='font-bold text-nlc'
               id={d?.team_id}
               to={{
-                pathname: `/admin/event/sch-nlc/user/${Number(
-                  d?.team_id,
-                )}/edit`,
+                pathname: `/admin/sch-nlc/user/${Number(d?.team_id)}/edit`,
                 state: {
                   page: page,
                 },

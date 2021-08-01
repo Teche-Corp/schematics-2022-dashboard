@@ -267,7 +267,7 @@ export default function UpdateUserNpcSenior() {
                 <div className='space-y-8 divide-y divide-gray-200'>
                   <div>
                     <div className='flex items-center mb-6'>
-                      <Link to='/admin/event/sch-npc/senior/user'>
+                      <Link to='/admin/sch-npc/senior/user'>
                         <HiOutlineArrowCircleLeft className='w-6 h-6' />
                       </Link>
                       <h1 className='ml-3 text-4xl font-extrabold tracking-tight text-gray-900 sm:text-3xl md:text-4xl'>
@@ -774,7 +774,7 @@ export default function UpdateUserNpcSenior() {
                     ) : (
                       <>
                         <Link
-                          to='/admin/event/sch-npc/senior/user'
+                          to='/admin/sch-npc/senior/user'
                           className='px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-dark-400'
                         >
                           Kembali
