@@ -3,7 +3,9 @@ import toast from 'react-hot-toast';
 import useSWR from 'swr';
 import { useState, useEffect } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useParams, Link } from 'react-router-dom';
+
+import { HiOutlineArrowCircleLeft } from 'react-icons/hi';
 
 import { useAuthDispatch } from '@/contexts/AuthContext';
 import useLoadingToast from '@/hooks/useLoadingToast';
@@ -234,12 +236,17 @@ export default function UpdateUserNLC() {
               >
                 <div className='space-y-8 divide-y divide-gray-200'>
                   <div>
-                    <h1 className='mb-6 text-4xl font-extrabold tracking-tight text-gray-900 sm:text-3xl md:text-4xl'>
-                      <span className='block xl:inline'>Edit Tim</span>{' '}
-                      <span className='block text-nlc xl:inline'>
-                        Schematics NLC
-                      </span>
-                    </h1>
+                    <div className='flex items-center mb-6 '>
+                      <Link to='/admin/sch-nlc/user'>
+                        <HiOutlineArrowCircleLeft className='w-6 h-6' />
+                      </Link>
+                      <h1 className='ml-3 text-4xl font-extrabold tracking-tight text-gray-900 sm:text-3xl md:text-4xl'>
+                        <span className='block xl:inline'>Edit Tim</span>{' '}
+                        <span className='block text-nlc xl:inline'>
+                          Schematics NLC
+                        </span>
+                      </h1>
+                    </div>
                     <div className='grid grid-cols-1 mt-6 gap-y-6 gap-x-4 sm:grid-cols-6'>
                       <div className='sm:col-span-4'>
                         <LightInput
@@ -605,16 +612,24 @@ export default function UpdateUserNLC() {
                         </button>
                       </>
                     ) : (
-                      <button
-                        type='button'
-                        onClick={handleEditClick}
-                        className={classNames(
-                          'inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-dark-100 hover:bg-dark-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-dark-100',
-                          isLoading && 'filter brightness-90 cursor-wait',
-                        )}
-                      >
-                        Edit
-                      </button>
+                      <>
+                        <Link
+                          to='/admin/sch-nlc/user'
+                          className='px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-dark-400'
+                        >
+                          Kembali
+                        </Link>
+                        <button
+                          type='button'
+                          onClick={handleEditClick}
+                          className={classNames(
+                            'inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-dark-100 hover:bg-dark-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-dark-100',
+                            isLoading && 'filter brightness-90 cursor-wait',
+                          )}
+                        >
+                          Edit
+                        </button>
+                      </>
                     )}
                   </div>
                 </div>
