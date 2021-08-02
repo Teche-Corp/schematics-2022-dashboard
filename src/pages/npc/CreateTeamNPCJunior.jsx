@@ -208,11 +208,12 @@ export default function CreateTeam() {
 
                       <div className='sm:col-span-3'>
                         <LightInput
-                          label='ID Discord'
+                          label='Username Discord'
                           id='leader-discord'
                           type='text'
+                          helperText='Username dapat dilihat di bagian profil akun. Contoh: Schematics#2021'
                           validation={{
-                            required: 'ID Discord tidak boleh kosong',
+                            required: 'Username Discord tidak boleh kosong',
                           }}
                         />
                       </div>
