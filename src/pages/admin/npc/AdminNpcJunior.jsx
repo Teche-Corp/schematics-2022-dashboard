@@ -140,7 +140,7 @@ export default function AdminNpcJunior() {
               ({d?.user_ketua?.phone})
             </UnstyledLink>{' '}
             -{' '}
-            {d?.anggota_ketua?.anggota_id_discord ||
+            {d?.anggota_ketua?.anggota_id_facebook ||
               'Data discord tidak dimasukan'}
           </>
         ),
