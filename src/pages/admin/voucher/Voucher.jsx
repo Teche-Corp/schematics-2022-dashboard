@@ -1,6 +1,7 @@
 import useSWR from 'swr';
 import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
+import ReactTooltip from 'react-tooltip';
 import { IoMdRefresh } from 'react-icons/io';
 import { ImSpinner } from 'react-icons/im';
 
@@ -91,6 +92,8 @@ export default function Admin() {
                   Daftar Voucher
                 </h2>
                 <button
+                  data-for='refresh'
+                  data-tip='Refresh data tabel'
                   onClick={revalidateTable}
                   className='p-1 text-lg font-bold rounded-full focus:outline-none focus:ring ring-black'
                 >
@@ -98,6 +101,13 @@ export default function Admin() {
                     className={classNames(isValidating && 'animate-spin')}
                   />
                 </button>
+                <ReactTooltip
+                  id='refresh'
+                  delayHide={100}
+                  place='right'
+                  type='dark'
+                  effect='solid'
+                />
               </div>
               <div className=''>
                 <Link
