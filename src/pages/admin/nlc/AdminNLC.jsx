@@ -67,9 +67,7 @@ export default function AdminNLC() {
               id={d?.team_id}
               to={{
                 pathname: `/admin/sch-nlc/user/${Number(d?.team_id)}/edit`,
-                state: {
-                  page: page,
-                },
+                search: `?page=${page}`,
               }}
             >
               Lihat Detail

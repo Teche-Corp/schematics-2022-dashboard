@@ -3,12 +3,12 @@ import toast from 'react-hot-toast';
 import useSWR from 'swr';
 import { useState, useEffect } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
-import { useLocation, useParams, Link } from 'react-router-dom';
-
 import { HiOutlineArrowCircleLeft } from 'react-icons/hi';
+import { useHistory, useParams, Link } from 'react-router-dom';
 
 import { useAuthDispatch } from '@/contexts/AuthContext';
 import useLoadingToast from '@/hooks/useLoadingToast';
+import useQuery from '@/hooks/useQuery';
 import { bearerToken, classNames } from '@/lib/helper';
 import { getWithToken, postDetailTim } from '@/lib/swr';
 
@@ -19,12 +19,17 @@ import SelectInput from '@/components/SelectInput';
 import CheckboxInput from '@/components/CheckboxInput';
 
 export default function UpdateUserNLC() {
+  const history = useHistory();
+  const query = useQuery();
+  let { id } = useParams();
+
   const [isEditing, setIsEditing] = useState(false);
   const isLoading = useLoadingToast();
-  let { id } = useParams();
-  const {
-    state: { page },
-  } = useLocation();
+
+  const page = query.get('page');
+  if (!page) {
+    history.replace('/admin/sch-nlc/user');
+  }
 
   // Data Fetching
   const { revalidate: revalidateTable } = useSWR(
