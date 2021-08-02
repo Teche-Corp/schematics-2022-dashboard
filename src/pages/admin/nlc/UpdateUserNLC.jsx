@@ -8,6 +8,7 @@ import { useHistory, useParams, Link } from 'react-router-dom';
 
 import { useAuthDispatch } from '@/contexts/AuthContext';
 import useLoadingToast from '@/hooks/useLoadingToast';
+import useSWRLoadingToast from '@/hooks/useSWRLoadingToast';
 import useQuery from '@/hooks/useQuery';
 import { bearerToken, classNames } from '@/lib/helper';
 import { getWithToken, postDetailTim } from '@/lib/swr';
@@ -40,10 +41,15 @@ export default function UpdateUserNLC() {
       revalidateOnReconnect: false,
     },
   );
-  const { data: detailTim, revalidate: revalidateDetail } = useSWR(
-    ['/admin/detail_tim', id],
-    postDetailTim,
-  );
+  const {
+    data: detailTim,
+    error: errorDetailTim,
+    revalidate: revalidateDetail,
+  } = useSWR(['/admin/detail_tim', id], postDetailTim);
+  useSWRLoadingToast(detailTim, errorDetailTim, {
+    loading: 'Mengambil data tim...',
+    success: 'Data tim berhasil diambil',
+  });
   const teamData = detailTim?.data;
 
   const methods = useForm();
