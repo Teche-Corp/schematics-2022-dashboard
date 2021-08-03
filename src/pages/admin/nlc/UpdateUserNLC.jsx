@@ -18,6 +18,7 @@ import LightInput from '@/components/LightInput';
 import SelectCity from '@/components/SelectCity';
 import SelectInput from '@/components/SelectInput';
 import CheckboxInput from '@/components/CheckboxInput';
+import ImageLightbox from '@/components/ImageLightbox';
 
 export default function UpdateUserNLC() {
   const history = useHistory();
@@ -406,7 +407,7 @@ export default function UpdateUserNLC() {
                             Foto Kartu Pelajar/Surat Keterangan Siswa Aktif
                           </label>
                           <div className='relative mt-1'>
-                            <img
+                            <ImageLightbox
                               src={teamData?.anggota[0]?.url}
                               alt='Foto Kartu Pelajar/Surat Keterangan Siswa Aktif Ketua'
                               className='max-h-80'
@@ -508,7 +509,7 @@ export default function UpdateUserNLC() {
                             Foto Kartu Pelajar/Surat Keterangan Siswa Aktif
                           </label>
                           <div className='relative mt-1'>
-                            <img
+                            <ImageLightbox
                               src={teamData?.anggota[1]?.url}
                               alt='Foto Kartu Pelajar/Surat Keterangan Siswa Aktif Anggota'
                               className='max-h-80'
@@ -576,7 +577,7 @@ export default function UpdateUserNLC() {
                             Bukti Pembayaran
                           </label>
                           <div className='relative mt-1'>
-                            <img
+                            <ImageLightbox
                               src={teamData?.bukti_pembayaran?.url}
                               alt='Bukti Pembayaran'
                               className='max-h-80'

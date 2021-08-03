@@ -14,6 +14,7 @@ import LightInput from '@/components/LightInput';
 import SelectCity from '@/components/SelectCity';
 import SelectInput from '@/components/SelectInput';
 import CheckboxInput from '@/components/CheckboxInput';
+import ImageLightbox from '@/components/ImageLightbox';
 
 import { bearerToken, classNames } from '@/lib/helper';
 import useLoadingToast from '@/hooks/useLoadingToast';
@@ -428,7 +429,7 @@ export default function UpdateUserNpcSenior() {
                             Foto Kartu Pelajar/Surat Keterangan Siswa Aktif
                           </label>
                           <div className='relative mt-1'>
-                            <img
+                            <ImageLightbox
                               src={teamData?.anggota[0]?.url}
                               alt='Foto Kartu Pelajar/Surat Keterangan Siswa Aktif Ketua'
                               className='max-h-80'
@@ -543,7 +544,7 @@ export default function UpdateUserNpcSenior() {
                             Foto Kartu Pelajar/Surat Keterangan Siswa Aktif
                           </label>
                           <div className='relative mt-1'>
-                            <img
+                            <ImageLightbox
                               src={teamData?.anggota[1]?.url}
                               alt='Foto Kartu Pelajar/Surat Keterangan Siswa Aktif Anggota 1'
                               className='max-h-80'
@@ -658,7 +659,7 @@ export default function UpdateUserNpcSenior() {
                             Foto Kartu Pelajar/Surat Keterangan Siswa Aktif
                           </label>
                           <div className='relative mt-1'>
-                            <img
+                            <ImageLightbox
                               src={teamData?.anggota[2]?.url}
                               alt='Foto Kartu Pelajar/Surat Keterangan Siswa Aktif Anggota 2'
                               className='max-h-80'
@@ -726,7 +727,7 @@ export default function UpdateUserNpcSenior() {
                             Bukti Pembayaran
                           </label>
                           <div className='relative mt-1'>
-                            <img
+                            <ImageLightbox
                               src={teamData?.bukti_pembayaran?.url}
                               alt='Bukti Pembayaran'
                               className='max-h-80'
