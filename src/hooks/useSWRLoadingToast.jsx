@@ -26,6 +26,10 @@ export default function useSWRLoadingToast(data, error, customMessages = {}) {
       setToastId(toast.loading(toastMessage.loading));
     }
 
+    return () => {
+      toast.dismiss();
+    };
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, error]);
 }
