@@ -87,6 +87,16 @@ export default function AdminNLC() {
         },
       },
       {
+        Header: 'Status Bayar',
+        accessor: (d) => {
+          return d?.bukti_pembayaran ? (
+            <span className='text-green-500'>Sudah</span>
+          ) : (
+            <span className='text-red-500'>Belum</span>
+          );
+        },
+      },
+      {
         Header: 'Region',
         accessor: 'kota.region_name',
       },
