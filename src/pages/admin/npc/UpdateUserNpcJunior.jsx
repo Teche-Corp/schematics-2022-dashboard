@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useHistory } from 'react-router-dom';
 import { HiOutlineArrowCircleLeft } from 'react-icons/hi';
 import axios from 'axios';
 import toast from 'react-hot-toast';
@@ -17,11 +17,42 @@ import ImageLightbox from '@/components/ImageLightbox';
 
 import { bearerToken, classNames } from '@/lib/helper';
 import useLoadingToast from '@/hooks/useLoadingToast';
+import useSWRLoadingToast from '@/hooks/useSWRLoadingToast';
+import useQuery from '@/hooks/useQuery';
+import { getWithToken, postDetailTim } from '@/lib/swr';
 
 export default function UpdateUserNpcJunior() {
+  const history = useHistory();
+  const query = useQuery();
+  let { id } = useParams();
+
   const [isEditing, setIsEditing] = useState(false);
   const isLoading = useLoadingToast();
-  const [teamData, setTeamData] = useState(undefined);
+
+  const page = query.get('page');
+  if (!page) {
+    history.replace('/admin/sch-npc/junior/user');
+  }
+
+  const { revalidate: revalidateTable } = useSWR(
+    [`/admin/list/tim/npcj?page=${page}`],
+    getWithToken,
+    {
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+    },
+  );
+  const {
+    data: detailTim,
+    error: errorDetailTim,
+    revalidate: revalidateDetail,
+  } = useSWR(['/admin/detail_tim', id], postDetailTim);
+
+  useSWRLoadingToast(detailTim, errorDetailTim, {
+    loading: 'Mengambil data tim...',
+    success: 'Data tim berhasil diambil',
+  });
+  const teamData = detailTim?.data;
 
   const methods = useForm();
 
@@ -42,29 +73,10 @@ export default function UpdateUserNpcJunior() {
   const { data, error: fetchError } = useSWR('/region/list');
   const cities = data?.data;
 
-  let { id } = useParams();
-
   const paymentMethod = [
     { text: 'QRIS', value: 0 },
     { text: 'Mandiri', value: 1 },
   ];
-
-  const handleSetTeamData = () => {
-    axios
-      .post(
-        '/admin/detail_tim',
-        { team_id: id },
-        { headers: { ...bearerToken() } },
-      )
-      .then((res) => {
-        setTeamData(res.data.data);
-      });
-  };
-
-  useEffect(() => {
-    handleSetTeamData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   useEffect(() => {
     if (teamData !== undefined) {
@@ -174,7 +186,10 @@ export default function UpdateUserNpcJunior() {
         .then((res) => {
           dispatch('ASSIGN_NPC_JUNIOR', res.data.data.team_id);
         })
-        .then(() => handleSetTeamData())
+        .then(() => {
+          revalidateDetail();
+          revalidateTable();
+        })
         .finally(() => setIsEditing(false)),
       {
         loading: 'Loading...',

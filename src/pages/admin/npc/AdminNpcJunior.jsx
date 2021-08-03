@@ -1,57 +1,28 @@
-import axios from 'axios';
-import { useEffect, useMemo, useState } from 'react';
+import useSWR from 'swr';
+import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   HiOutlineCloud,
   HiOutlineDocumentReport,
   HiUserGroup,
 } from 'react-icons/hi';
-import { bearerToken } from '@/lib/helper';
-import { ImSpinner } from 'react-icons/im';
-import toast from 'react-hot-toast';
+import { getWithToken } from '@/lib/swr';
 
 import DashboardAdminShell from '@/layout/DashboardAdminShell';
 import UnstyledLink from '@/components/UnstyledLink';
 import AdminTable from '@/components/AdminTable';
 
 export default function AdminNpcJunior() {
-  const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
-  const [pages, setPages] = useState();
-  const [loading, setLoading] = useState(false);
 
-  const getTeamData = async () => {
-    setLoading(true);
-    const res = await axios
-      .get(`/admin/list/tim/npcj?page=${page}`, {
-        headers: { ...bearerToken() },
-      })
-      // eslint-disable-next-line no-console
-      .catch((err) => console.error(err));
+  const { data: dataSWR, isValidating, revalidate } = useSWR(
+    `/admin/list/tim/npcj?page=${page}`,
+    getWithToken,
+  );
 
-    const {
-      data: { data },
-    } = res;
-
-    if (res.status === 200) {
-      setPages(data?.total_page);
-
-      const team = data?.teams;
-
-      setData(team);
-
-      setLoading(false);
-    } else {
-      setData([]);
-      toast.error('Gagal mengambil data');
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    getTeamData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page]);
+  const revalidateTable = isValidating ? null : () => revalidate();
+  const data = dataSWR?.data?.teams ?? [];
+  const pages = dataSWR?.data?.total_page ?? undefined;
 
   const cards = [
     {
@@ -98,6 +69,7 @@ export default function AdminNpcJunior() {
                 pathname: `/admin/sch-npc/junior/user/${Number(
                   d?.team_id,
                 )}/edit`,
+                search: `?page=${page}`,
               }}
             >
               Lihat Detail
@@ -218,22 +190,13 @@ export default function AdminNpcJunior() {
               Tabel Pendaftaran
             </h2>
 
-            {loading ? (
-              <div className='flex justify-center py-10 mt-4'>
-                <div>
-                  <ImSpinner className='mx-auto mb-3 w-7 h-7 animate-spin text-npc' />
-                  <p>Sedang menunggu data...</p>
-                </div>
-              </div>
-            ) : (
-              <AdminTable
-                columns={columns}
-                data={data}
-                page={page}
-                pages={pages}
-                setPage={setPage}
-              />
-            )}
+            <AdminTable
+              columns={columns}
+              data={data}
+              page={page}
+              pages={pages}
+              setPage={setPage}
+            />
           </div>
         </div>
       </main>
