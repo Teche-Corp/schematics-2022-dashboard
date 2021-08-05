@@ -17,6 +17,7 @@ import { classNames } from '@/lib/helper';
 
 import UnstyledLink from '@/components/UnstyledLink';
 import AdminTable from '@/components/AdminTable';
+import ExportButton from '@/components/Button/ExportButton';
 
 export default function AdminNLC() {
   const [page, setPage] = useState(1);
@@ -31,17 +32,20 @@ export default function AdminNLC() {
 
   const cards = [
     {
+      id: 1,
       name: 'Total Pendaftaran',
       href: '#',
       icon: HiUserGroup,
       amount: data?.length || 'Menunggu data..',
     },
     {
+      id: 2,
       name: 'Score Team',
       href: '#',
       icon: HiOutlineDocumentReport,
     },
     {
+      id: 3,
       name: 'Upload Berkas',
       href: '#',
       icon: HiOutlineCloud,
@@ -184,9 +188,11 @@ export default function AdminNLC() {
 
           <div className='max-w-6xl px-4 mx-auto space-y-3 sm:px-6 lg:px-8'>
             <div className='flex items-center gap-2 mt-7'>
-              <h2 className='text-lg font-medium leading-6 text-gray-900'>
-                Tabel Pendaftaran{' '}
-              </h2>
+              <h1 className='text-2xl font-bold leading-6 text-gray-900'>
+                Tabel Pendaftar{' '}
+                <span className='block text-nlc xl:inline'>Schematics NLC</span>
+              </h1>
+
               <button
                 data-for='refresh'
                 data-tip='Refresh data tabel'
@@ -217,6 +223,9 @@ export default function AdminNLC() {
               <AdminTable
                 columns={columns}
                 data={data}
+                header={
+                  <ExportButton name='NLC.xlsx' url='/admin/export/nlc/tim' />
+                }
                 page={page}
                 pages={pages}
                 setPage={setPage}

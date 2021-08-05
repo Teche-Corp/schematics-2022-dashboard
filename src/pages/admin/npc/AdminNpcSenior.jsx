@@ -17,6 +17,7 @@ import { classNames } from '@/lib/helper';
 import DashboardAdminShell from '@/layout/DashboardAdminShell';
 import UnstyledLink from '@/components/UnstyledLink';
 import AdminTable from '@/components/AdminTable';
+import ExportButton from '@/components/Button/ExportButton';
 
 export default function AdminNpcSenior() {
   const [page, setPage] = useState(1);
@@ -193,9 +194,12 @@ export default function AdminNpcSenior() {
 
           <div className='max-w-6xl px-4 mx-auto space-y-3 sm:px-6 lg:px-8'>
             <div className='flex items-center gap-2 mt-7'>
-              <h2 className='text-lg font-medium leading-6 text-gray-900'>
-                Tabel Pendaftaran
-              </h2>
+              <h1 className='text-2xl font-bold leading-6 text-gray-900'>
+                Tabel Pendaftar{' '}
+                <span className='block text-npc xl:inline'>
+                  Schematics NPC Senior
+                </span>
+              </h1>
               <button
                 data-for='refresh'
                 data-tip='Refresh data tabel'
@@ -226,6 +230,12 @@ export default function AdminNpcSenior() {
               <AdminTable
                 columns={columns}
                 data={data}
+                header={
+                  <ExportButton
+                    name='NPC-Senior.xlsx'
+                    url='/admin/export/npc/tim/senior'
+                  />
+                }
                 page={page}
                 pages={pages}
                 setPage={setPage}
