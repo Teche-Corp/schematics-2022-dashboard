@@ -276,7 +276,7 @@ export default function UpdateUserNpcSenior() {
         .then(() => {
           revalidateTable();
           setIsOpenAlert(false);
-          history.replace('/admin/sch-nlc/user');
+          history.replace('/admin/sch-npc/senior/user');
         }),
       {
         ...defaultToastMessage,
