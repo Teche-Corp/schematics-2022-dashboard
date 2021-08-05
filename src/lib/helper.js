@@ -20,3 +20,10 @@ export function numberToRupiah(number) {
     maximumFractionDigits: 0,
   }).format(number);
 }
+
+export const defaultToastMessage = {
+  loading: 'Loading...',
+  success: 'Berhasil',
+  error: (err) =>
+    err?.response?.data?.msg ?? 'Terjadi kesalahan, mohon coba lagi',
+};

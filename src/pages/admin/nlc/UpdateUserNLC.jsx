@@ -10,7 +10,7 @@ import { useAuthDispatch } from '@/contexts/AuthContext';
 import useLoadingToast from '@/hooks/useLoadingToast';
 import useSWRLoadingToast from '@/hooks/useSWRLoadingToast';
 import useQuery from '@/hooks/useQuery';
-import { bearerToken, classNames } from '@/lib/helper';
+import { bearerToken, classNames, defaultToastMessage } from '@/lib/helper';
 import { getWithToken, postDetailTim } from '@/lib/swr';
 
 import DashboardAdminShell from '@/layout/DashboardAdminShell';
@@ -19,6 +19,7 @@ import SelectCity from '@/components/SelectCity';
 import SelectInput from '@/components/SelectInput';
 import CheckboxInput from '@/components/CheckboxInput';
 import ImageLightbox from '@/components/ImageLightbox';
+import DeleteTeamAlert from '@/components/Alert/DeleteTeamAlert';
 
 export default function UpdateUserNLC() {
   const history = useHistory();
@@ -26,6 +27,7 @@ export default function UpdateUserNLC() {
   let { id } = useParams();
 
   const [isEditing, setIsEditing] = useState(false);
+  const [isOpenAlert, setIsOpenAlert] = useState(false);
   const isLoading = useLoadingToast();
 
   const page = query.get('page');
@@ -221,10 +223,30 @@ export default function UpdateUserNLC() {
         })
         .finally(() => setIsEditing(false)),
       {
-        loading: 'Loading...',
+        ...defaultToastMessage,
         success: 'Tim berhasil diperbarui',
-        error: (err) =>
-          err?.response?.data?.msg ?? 'Terjadi kesalahan, mohon coba lagi',
+      },
+    );
+  };
+
+  const handleRemoveTeam = () => {
+    toast.promise(
+      axios
+        .post(
+          '/admin/delete_tim',
+          { team_id: id },
+          {
+            headers: { ...bearerToken() },
+          },
+        )
+        .then(() => {
+          revalidateTable();
+          setIsOpenAlert(false);
+          history.replace('/admin/sch-nlc/user');
+        }),
+      {
+        ...defaultToastMessage,
+        success: 'Tim berhasil dihapus',
       },
     );
   };
@@ -239,6 +261,11 @@ export default function UpdateUserNLC() {
         className='flex-1 overflow-y-auto bg-white border-t focus:outline-none'
         style={{ minHeight: 'calc(100vh - 4rem)' }}
       >
+        <DeleteTeamAlert
+          open={isOpenAlert}
+          setOpen={setIsOpenAlert}
+          action={handleRemoveTeam}
+        />
         <div className='relative max-w-4xl mx-auto md:px-8 xl:px-0'>
           <div className='px-4 pt-10 pb-16 sm:px-6 md:px-0'>
             <FormProvider {...methods}>
@@ -601,50 +628,59 @@ export default function UpdateUserNLC() {
                 </div>
 
                 <div className='pt-5'>
-                  <div className='flex justify-end'>
-                    {isEditing ? (
-                      <>
-                        <button
-                          type='button'
-                          onClick={handleEditClick}
-                          className='px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-dark-400'
-                        >
-                          Batal
-                        </button>
-                        <button
-                          type='submit'
-                          disabled={isLoading || !isDirty}
-                          className={classNames(
-                            'inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white border border-transparent rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-nlc-400',
-                            isLoading && 'filter brightness-90 cursor-wait',
-                            !isDirty
-                              ? 'cursor-not-allowed bg-gray-400'
-                              : 'bg-nlc hover:bg-nlc-400',
-                          )}
-                        >
-                          Simpan
-                        </button>
-                      </>
-                    ) : (
-                      <>
-                        <Link
-                          to='/admin/sch-nlc/user'
-                          className='px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-dark-400'
-                        >
-                          Kembali
-                        </Link>
-                        <button
-                          type='button'
-                          onClick={handleEditClick}
-                          className={classNames(
-                            'inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-dark-100 hover:bg-dark-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-dark-100',
-                            isLoading && 'filter brightness-90 cursor-wait',
-                          )}
-                        >
-                          Edit
-                        </button>
-                      </>
-                    )}
+                  <div className='flex justify-between'>
+                    <button
+                      type='button'
+                      onClick={() => setIsOpenAlert(true)}
+                      className='px-4 py-2 text-sm font-bold text-white bg-red-500 rounded-md shadow-sm hover:bg-red-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500'
+                    >
+                      Hapus Tim
+                    </button>
+                    <div>
+                      {isEditing ? (
+                        <>
+                          <button
+                            type='button'
+                            onClick={handleEditClick}
+                            className='px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-dark-400'
+                          >
+                            Batal
+                          </button>
+                          <button
+                            type='submit'
+                            disabled={isLoading || !isDirty}
+                            className={classNames(
+                              'inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white border border-transparent rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-nlc-400',
+                              isLoading && 'filter brightness-90 cursor-wait',
+                              !isDirty
+                                ? 'cursor-not-allowed bg-gray-400'
+                                : 'bg-nlc hover:bg-nlc-400',
+                            )}
+                          >
+                            Simpan
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          <Link
+                            to='/admin/sch-nlc/user'
+                            className='px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-dark-400'
+                          >
+                            Kembali
+                          </Link>
+                          <button
+                            type='button'
+                            onClick={handleEditClick}
+                            className={classNames(
+                              'inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-dark-100 hover:bg-dark-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-dark-100',
+                              isLoading && 'filter brightness-90 cursor-wait',
+                            )}
+                          >
+                            Edit
+                          </button>
+                        </>
+                      )}
+                    </div>
                   </div>
                 </div>
               </form>
