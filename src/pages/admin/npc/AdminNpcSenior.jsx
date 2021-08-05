@@ -1,57 +1,31 @@
-import axios from 'axios';
-import { useEffect, useMemo, useState } from 'react';
+import useSWR from 'swr';
+import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
+
+import { ImSpinner } from 'react-icons/im';
 import {
   HiOutlineCloud,
   HiOutlineDocumentReport,
   HiUserGroup,
 } from 'react-icons/hi';
-import { bearerToken } from '@/lib/helper';
-import toast from 'react-hot-toast';
-import { ImSpinner } from 'react-icons/im';
+
+import { getWithToken } from '@/lib/swr';
 
 import DashboardAdminShell from '@/layout/DashboardAdminShell';
 import UnstyledLink from '@/components/UnstyledLink';
 import AdminTable from '@/components/AdminTable';
 
 export default function AdminNpcSenior() {
-  const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
-  const [pages, setPages] = useState();
-  const [loading, setLoading] = useState(false);
 
-  const getTeamData = async () => {
-    setLoading(true);
-    const res = await axios
-      .get(`/admin/list/tim/npcs?page=${page}`, {
-        headers: { ...bearerToken() },
-      })
-      // eslint-disable-next-line no-console
-      .catch((err) => console.error(err));
+  const { data: dataSWR, isValidating, revalidate } = useSWR(
+    `/admin/list/tim/npcs?page=${page}`,
+    getWithToken,
+  );
 
-    const {
-      data: { data },
-    } = res;
-
-    if (res.status === 200) {
-      setPages(data?.total_page);
-
-      const team = data?.teams;
-
-      setData(team);
-
-      setLoading(false);
-    } else {
-      setData([]);
-      setLoading(false);
-      toast.error('Gagal mengambil data');
-    }
-  };
-
-  useEffect(() => {
-    getTeamData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page]);
+  const revalidateTable = isValidating ? null : () => revalidate();
+  const data = dataSWR?.data?.teams ?? [];
+  const pages = dataSWR?.data?.total_page ?? undefined;
 
   const cards = [
     {
@@ -98,6 +72,7 @@ export default function AdminNpcSenior() {
                 pathname: `/admin/sch-npc/senior/user/${Number(
                   d?.team_id,
                 )}/edit`,
+                search: `?page=${page}`,
               }}
             >
               Lihat Detail
@@ -218,7 +193,7 @@ export default function AdminNpcSenior() {
               Tabel Pendaftaran
             </h2>
 
-            {loading ? (
+            {isValidating ? (
               <div className='flex justify-center py-10 mt-4'>
                 <div>
                   <ImSpinner className='mx-auto mb-3 w-7 h-7 animate-spin text-npc' />

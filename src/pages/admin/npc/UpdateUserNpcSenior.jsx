@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import useSWR from 'swr';
@@ -17,12 +17,43 @@ import CheckboxInput from '@/components/CheckboxInput';
 import ImageLightbox from '@/components/ImageLightbox';
 
 import { bearerToken, classNames } from '@/lib/helper';
+import { getWithToken, postDetailTim } from '@/lib/swr';
 import useLoadingToast from '@/hooks/useLoadingToast';
+import useQuery from '@/hooks/useQuery';
+import useSWRLoadingToast from '@/hooks/useSWRLoadingToast';
 
 export default function UpdateUserNpcSenior() {
+  const history = useHistory();
+  const query = useQuery();
+  let { id } = useParams();
+
   const [isEditing, setIsEditing] = useState(false);
   const isLoading = useLoadingToast();
-  const [teamData, setTeamData] = useState(undefined);
+
+  const page = query.get('page');
+  if (!page) {
+    history.replace('/admin/sch-npc/senior/user');
+  }
+
+  const { revalidate: revalidateTable } = useSWR(
+    `/admin/list/tim/npcs?page=${page}`,
+    getWithToken,
+    {
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+    },
+  );
+
+  const {
+    data: detailTim,
+    error: errorDetailTim,
+    revalidate: revalidateDetail,
+  } = useSWR(['/admin/detail_tim', id], postDetailTim);
+  useSWRLoadingToast(detailTim, errorDetailTim, {
+    loading: 'Mengambil data tim...',
+    success: 'Data tim berhasil diambil',
+  });
+  const teamData = detailTim?.data;
 
   const methods = useForm();
 
@@ -43,29 +74,10 @@ export default function UpdateUserNpcSenior() {
   const { data, error: fetchError } = useSWR('/region/list');
   const cities = data?.data;
 
-  let { id } = useParams();
-
   const paymentMethod = [
     { text: 'QRIS', value: 0 },
     { text: 'Mandiri', value: 1 },
   ];
-
-  const handleSetTeamData = () => {
-    axios
-      .post(
-        '/admin/detail_tim',
-        { team_id: id },
-        { headers: { ...bearerToken() } },
-      )
-      .then((res) => {
-        setTeamData(res.data.data);
-      });
-  };
-
-  useEffect(() => {
-    handleSetTeamData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   useEffect(() => {
     if (teamData !== undefined) {
@@ -238,7 +250,10 @@ export default function UpdateUserNpcSenior() {
         .then((res) => {
           dispatch('ASSIGN_NPC_SENIOR', res.data.data.team_id);
         })
-        .then(() => handleSetTeamData())
+        .then(() => {
+          revalidateDetail();
+          revalidateTable();
+        })
         .finally(() => setIsEditing(false)),
       {
         loading: 'Loading...',
