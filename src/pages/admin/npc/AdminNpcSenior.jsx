@@ -1,7 +1,9 @@
 import useSWR from 'swr';
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
+import ReactTooltip from 'react-tooltip';
 
+import { IoMdRefresh } from 'react-icons/io';
 import { ImSpinner } from 'react-icons/im';
 import {
   HiOutlineCloud,
@@ -10,6 +12,7 @@ import {
 } from 'react-icons/hi';
 
 import { getWithToken } from '@/lib/swr';
+import { classNames } from '@/lib/helper';
 
 import DashboardAdminShell from '@/layout/DashboardAdminShell';
 import UnstyledLink from '@/components/UnstyledLink';
@@ -189,9 +192,28 @@ export default function AdminNpcSenior() {
           </div>
 
           <div className='max-w-6xl px-4 mx-auto space-y-3 sm:px-6 lg:px-8'>
-            <h2 className='mx-auto text-lg font-medium leading-6 text-gray-900 max-w-7xl mt-7 '>
-              Tabel Pendaftaran
-            </h2>
+            <div className='flex items-center gap-2 mt-7'>
+              <h2 className='text-lg font-medium leading-6 text-gray-900'>
+                Tabel Pendaftaran
+              </h2>
+              <button
+                data-for='refresh'
+                data-tip='Refresh data tabel'
+                onClick={revalidateTable}
+                className='p-1 text-lg font-bold rounded-full focus:outline-none focus:ring ring-black'
+              >
+                <IoMdRefresh
+                  className={classNames(isValidating && 'animate-spin')}
+                />
+              </button>
+              <ReactTooltip
+                id='refresh'
+                delayHide={100}
+                place='right'
+                type='dark'
+                effect='solid'
+              />
+            </div>
 
             {isValidating ? (
               <div className='flex justify-center py-10 mt-4'>
