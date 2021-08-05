@@ -3,7 +3,14 @@ import { HiChevronLeft, HiChevronRight } from 'react-icons/hi';
 
 import GlobalFilter from '@/components/GlobalFilter';
 
-export default function AdminTable({ columns, data, page, pages, setPage }) {
+export default function AdminTable({
+  columns,
+  data,
+  header,
+  page,
+  pages,
+  setPage,
+}) {
   const {
     getTableProps,
     getTableBodyProps,
@@ -24,13 +31,18 @@ export default function AdminTable({ columns, data, page, pages, setPage }) {
 
   return (
     <div className='flex flex-col'>
-      <div className='-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8'>
-        <div className='inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8'>
+      <div className='pt-2 pb-6 '>
+        <div className='flex flex-col justify-between space-y-4 sm:space-y-0 sm:items-center sm:flex-row'>
           <GlobalFilter
             preGlobalFilteredRows={preGlobalFilteredRows}
             globalFilter={state.globalFilter}
             setGlobalFilter={setGlobalFilter}
           />
+          <div>{header}</div>
+        </div>
+      </div>
+      <div className='-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8'>
+        <div className='inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8'>
           <div className='overflow-hidden border-b border-gray-200 shadow sm:rounded-lg'>
             {data === undefined ? (
               <div className='text-center'>
@@ -46,7 +58,7 @@ export default function AdminTable({ columns, data, page, pages, setPage }) {
                   {...getTableProps()}
                   className='min-w-full divide-y divide-gray-200'
                 >
-                  <thead className='bg-gray-50'>
+                  <thead className='bg-gray-200'>
                     {headerGroups.map((headerGroup, index) => (
                       <tr {...headerGroup.getHeaderGroupProps()} key={index}>
                         {headerGroup.headers.map((column) => (

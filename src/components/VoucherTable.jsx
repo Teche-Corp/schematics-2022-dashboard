@@ -1,11 +1,12 @@
 import { useGlobalFilter, usePagination, useTable } from 'react-table';
+import { Link } from 'react-router-dom';
 import { HiChevronLeft, HiChevronRight } from 'react-icons/hi';
 
 import GlobalFilter from '@/components/GlobalFilter';
 
 import { classNames } from '@/lib/helper';
 
-export default function VoucherTable({ columns, data }) {
+export default function VoucherTable({ columns, data, header }) {
   const {
     getTableProps,
     getTableBodyProps,
@@ -33,13 +34,30 @@ export default function VoucherTable({ columns, data }) {
 
   return (
     <div className='flex flex-col'>
-      <div className='-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8'>
-        <div className='inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8'>
+      <div className='pt-2 pb-6 '>
+        <div className='flex flex-col justify-between space-y-4 sm:space-y-0 sm:items-center sm:flex-row'>
           <GlobalFilter
             preGlobalFilteredRows={preGlobalFilteredRows}
             globalFilter={globalFilter}
             setGlobalFilter={setGlobalFilter}
           />
+          {/* <button
+            type='button'
+            onClick={handleClick}
+            className='inline-flex items-center justify-center px-3 py-1 text-sm font-medium bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none'
+          >
+            Export Excel
+          </button> */}
+          <Link
+            to='/admin/voucher/add'
+            className='inline-flex items-center justify-center px-4 py-1 ml-3 text-sm font-medium text-white border border-transparent border-gray-300 rounded-md shadow-sm focus:outline-none bg-dark-700 hover:bg-dark-400 focus:ring-2 focus:ring-offset-2 focus:ring-dark-400'
+          >
+            Tambah Voucher
+          </Link>
+        </div>
+      </div>
+      <div className='-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8'>
+        <div className='inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8'>
           <div className='overflow-hidden border-b border-gray-200 shadow sm:rounded-lg'>
             {data === [] ? (
               <div className='text-center'>
@@ -134,7 +152,18 @@ export default function VoucherTable({ columns, data }) {
                     halaman
                   </p>
                 </div>
-                <div>
+                <div className='flex space-x-2'>
+                  <select
+                    value={pageSize}
+                    className='block w-full border-gray-300 rounded-md shadow-sm sm:text-sm focus:ring-dark-400 focus:border-dark-400'
+                    onChange={(e) => setPageSize(Number(e.target.value))}
+                  >
+                    {[10, 25, 50].map((pageSize) => (
+                      <option key={pageSize} value={pageSize}>
+                        Tampilkan {pageSize}
+                      </option>
+                    ))}
+                  </select>
                   <nav
                     className='relative z-0 inline-flex -space-x-px rounded-md shadow-sm'
                     aria-label='Pagination'
@@ -168,19 +197,6 @@ export default function VoucherTable({ columns, data }) {
                     </button>
                   </nav>
                 </div>
-              </div>
-              <br />
-              <div>
-                <select
-                  value={pageSize}
-                  onChange={(e) => setPageSize(Number(e.target.value))}
-                >
-                  {[1, 10, 50].map((pageSize) => (
-                    <option key={pageSize} value={pageSize}>
-                      Show {pageSize}
-                    </option>
-                  ))}
-                </select>
               </div>
             </div>
           </div>
