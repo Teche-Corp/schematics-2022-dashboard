@@ -258,7 +258,8 @@ export default function UpdateUserNpcSenior() {
       {
         loading: 'Loading...',
         success: 'Tim berhasil diperbarui',
-        error: (err) => err.response.data.msg,
+        error: (err) =>
+          err.response.data.msg ?? 'Terjadi kesalahan, mohon coba lagi',
       },
     );
   };
