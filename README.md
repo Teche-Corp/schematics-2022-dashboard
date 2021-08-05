@@ -1,3 +1,14 @@
+## Release and Generate Changelog Guide
+
+Should be done every time changes are shipped to production
+
+1. Bump version up on package.json
+2. Run `yarn release` to generate changelog.md
+3. Commit the changelog with message: `chore: release v0.1.1` (change it to the appropriate version)
+4. Push to origin
+5. Run `git tag v0.1.1` (change it to the appropriate version)
+6. Run `git push origin --tag`
+
 ## Commit Message Convention
 
 This website follows [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)
