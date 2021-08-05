@@ -214,7 +214,7 @@ export default function AdminNpcJunior() {
               />
             </div>
 
-            {!data ? (
+            {!dataSWR ? (
               <div className='flex justify-center py-10 mt-4'>
                 <div>
                   <ImSpinner className='mx-auto mb-3 w-7 h-7 animate-spin text-npc' />

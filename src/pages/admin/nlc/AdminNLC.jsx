@@ -3,6 +3,7 @@ import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import ReactTooltip from 'react-tooltip';
 import { IoMdRefresh } from 'react-icons/io';
+import { ImSpinner } from 'react-icons/im';
 import {
   HiOutlineCloud,
   HiOutlineDocumentReport,
@@ -205,13 +206,22 @@ export default function AdminNLC() {
               />
             </div>
 
-            <AdminTable
-              columns={columns}
-              data={data}
-              page={page}
-              pages={pages}
-              setPage={setPage}
-            />
+            {!dataSWR ? (
+              <div className='flex justify-center py-10 mt-4'>
+                <div>
+                  <ImSpinner className='mx-auto mb-3 w-7 h-7 animate-spin text-nlc' />
+                  <p>Sedang menunggu data...</p>
+                </div>
+              </div>
+            ) : (
+              <AdminTable
+                columns={columns}
+                data={data}
+                page={page}
+                pages={pages}
+                setPage={setPage}
+              />
+            )}
           </div>
         </div>
       </main>
