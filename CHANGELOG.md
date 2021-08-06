@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.2](https://github.com/rizqitsani/fe-dashboard-schematics-2021/compare/v0.1.1...v0.1.2) (2021-08-06)
+
+
+### Features
+
+* add `ExportButton` component ([95e005e](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/95e005e970c7649f4c3360a3baf2d257a70d3c05))
+* **admin:** add export action ([6cccdba](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/6cccdbab73166009297bd0a7031b08723cf77487))
+* **admin:** restyle admin tables ([52cc16f](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/52cc16f94318091f8382774ff472d09ec2108994))
+
 ### 0.1.1 (2021-08-05)
 
 
