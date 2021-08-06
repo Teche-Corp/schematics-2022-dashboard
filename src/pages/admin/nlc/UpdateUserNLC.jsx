@@ -670,7 +670,10 @@ export default function UpdateUserNLC() {
                           </Link>
                           <button
                             type='button'
-                            onClick={handleEditClick}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              handleEditClick();
+                            }}
                             className={classNames(
                               'inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-dark-100 hover:bg-dark-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-dark-100',
                               isLoading && 'filter brightness-90 cursor-wait',
