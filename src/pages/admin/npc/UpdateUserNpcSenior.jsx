@@ -80,93 +80,81 @@ export default function UpdateUserNpcSenior() {
     { text: 'Mandiri', value: 1 },
   ];
 
-  useEffect(() => {
-    if (teamData !== undefined) {
-      setValue('team-name', teamData?.team_name, { shouldDirty: false });
-      setValue('university-name', teamData?.institusi, { shouldDirty: false });
-      setValue('leader-name', teamData?.anggota[0]?.nama, {
-        shouldDirty: false,
-      });
-      setValue('leader-email', teamData?.anggota[0]?.email, {
-        shouldDirty: false,
-      });
-      setValue('leader-nim', teamData?.anggota[0]?.nisn, {
-        shouldDirty: false,
-      });
-      setValue('leader-discord', teamData?.anggota[0]?.id_facebook, {
-        shouldDirty: false,
-      });
-      setValue('leader-phone', teamData?.anggota[0]?.nomor_telepon, {
-        shouldDirty: false,
-      });
-      setValue('leader-line', teamData?.anggota[0]?.id_line, {
-        shouldDirty: false,
-      });
-      setValue('leader-address', teamData?.anggota[0]?.alamat, {
-        shouldDirty: false,
-      });
-      setValue('member1-name', teamData?.anggota[1]?.nama, {
-        shouldDirty: false,
-      });
-      setValue('member1-email', teamData?.anggota[1]?.email, {
-        shouldDirty: false,
-      });
-      setValue('member1-nim', teamData?.anggota[1]?.nisn, {
-        shouldDirty: false,
-      });
-      setValue('member1-discord', teamData?.anggota[1]?.id_facebook, {
-        shouldDirty: false,
-      });
-      setValue('member1-phone', teamData?.anggota[1]?.nomor_telepon, {
-        shouldDirty: false,
-      });
-      setValue('member1-line', teamData?.anggota[1]?.id_line, {
-        shouldDirty: false,
-      });
-      setValue('member1-address', teamData?.anggota[1]?.alamat, {
-        shouldDirty: false,
-      });
-      setValue('member2-name', teamData?.anggota[2]?.nama, {
-        shouldDirty: false,
-      });
-      setValue('member2-email', teamData?.anggota[2]?.email, {
-        shouldDirty: false,
-      });
-      setValue('member2-nim', teamData?.anggota[2]?.nisn, {
-        shouldDirty: false,
-      });
-      setValue('member2-discord', teamData?.anggota[2]?.id_facebook, {
-        shouldDirty: false,
-      });
-      setValue('member2-phone', teamData?.anggota[2]?.nomor_telepon, {
-        shouldDirty: false,
-      });
-      setValue('member2-line', teamData?.anggota[2]?.id_line, {
-        shouldDirty: false,
-      });
-      setValue('member2-address', teamData?.anggota[2]?.alamat, {
-        shouldDirty: false,
-      });
-      setValue('jumlah-bayar', teamData?.bukti_pembayaran?.jumlah, {
-        shouldDirty: false,
-      });
-      setValue('verified', teamData?.bukti_pembayaran?.verified, {
-        shouldDirty: false,
-      });
-      setValue(
-        'payment-method',
-        teamData?.bukti_pembayaran?.sumber === 'Mandiri' ? '1' : '0',
-        {
-          shouldDirty: false,
-        },
-      );
-    }
-  }, [teamData, setValue]);
-
   const cityValue = useWatch({
     control,
     name: 'city',
   });
+
+  const defaultValue = () => {
+    if (!cities) {
+      return [];
+    }
+
+    const city = cities.find(
+      (city) => city?.regency_name === teamData?.kota?.regency_name,
+    );
+    return [
+      { name: 'team_name', value: teamData?.team_name },
+      { name: 'university_name', value: teamData?.institusi },
+      { name: 'leader_name', value: teamData?.anggota[0]?.nama },
+      { name: 'leader_email', value: teamData?.anggota[0]?.email },
+      { name: 'leader_nim', value: teamData?.anggota[0]?.nisn },
+      { name: 'leader_phone', value: teamData?.anggota[0]?.nomor_telepon },
+      { name: 'leader_line', value: teamData?.anggota[0]?.id_line },
+      { name: 'leader_discord', value: teamData?.anggota[0]?.id_facebook },
+      { name: 'leader_address', value: teamData?.anggota[0]?.alamat },
+      { name: 'member1_name', value: teamData?.anggota[1]?.nama },
+      { name: 'member1_email', value: teamData?.anggota[1]?.email },
+      { name: 'member1_nim', value: teamData?.anggota[1]?.nisn },
+      { name: 'member1_phone', value: teamData?.anggota[1]?.nomor_telepon },
+      { name: 'member1_line', value: teamData?.anggota[1]?.id_line },
+      { name: 'member1_discord', value: teamData?.anggota[1]?.id_facebook },
+      { name: 'member1_address', value: teamData?.anggota[1]?.alamat },
+      { name: 'member2_name', value: teamData?.anggota[2]?.nama },
+      { name: 'member2_email', value: teamData?.anggota[2]?.email },
+      { name: 'member2_nim', value: teamData?.anggota[2]?.nisn },
+      { name: 'member2_phone', value: teamData?.anggota[2]?.nomor_telepon },
+      { name: 'member2_line', value: teamData?.anggota[2]?.id_line },
+      { name: 'member2_discord', value: teamData?.anggota[2]?.id_facebook },
+      { name: 'member2_address', value: teamData?.anggota[2]?.alamat },
+      { name: 'jumlah_bayar', value: teamData?.bukti_pembayaran?.jumlah },
+      {
+        name: 'payment_method',
+        value: teamData?.bukti_pembayaran?.sumber === 'Mandiri' ? '1' : '0',
+      },
+      { name: 'verified', value: teamData?.bukti_pembayaran?.verified },
+      { name: 'city', value: { value: city?.id, label: city?.regency_name } },
+      { name: 'province', value: city?.province_name },
+      { name: 'region', value: city?.region_name },
+    ];
+  };
+
+  useEffect(() => {
+    if (teamData !== undefined) {
+      defaultValue().forEach(({ name, value }) =>
+        setValue(name, value, { shouldDirty: false }),
+      );
+    }
+    if (cities && teamData !== undefined) {
+      const city = cities.find(
+        (city) => city.regency_name === teamData.kota.regency_name,
+      );
+      setValue(
+        'city',
+        { value: city?.id, label: city?.regency_name },
+        {
+          shouldValidate: true,
+        },
+      );
+      setValue('province', city?.province_name, {
+        shouldValidate: true,
+      });
+      setValue('region', city?.region_name, {
+        shouldValidate: true,
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [teamData, cities, setValue]);
 
   useEffect(() => {
     if (cities !== undefined && teamData !== undefined) {
@@ -203,42 +191,48 @@ export default function UpdateUserNpcSenior() {
     setIsEditing((prevState) => !prevState);
   };
 
+  const resetValue = () => {
+    const newObj = {};
+    defaultValue().forEach(({ name, value }) => (newObj[name] = value));
+    reset(newObj);
+  };
+
   const handleEditUserNpcSenior = (data) => {
     const newBody = {
       team_id: Number(id),
       kota_id: data.city.value,
-      nama_team: data['team-name'],
-      institusi: data['university-name'],
+      nama_team: data['team_name'],
+      institusi: data['university_name'],
       ketua_anggota_id: teamData.anggota[0].anggota_id,
-      nama_ketua: data['leader-name'],
-      email_ketua: data['leader-email'],
-      telp_ketua: data['leader-phone'],
-      nisn_ketua: data['leader-nim'],
-      alamat_ketua: data['leader-address'],
-      line_ketua: data['leader-line'],
-      facebook_ketua: data['leader-discord'],
-      sumber_bayar: data['payment-method'] === '0' ? 'QRIS' : 'Mandiri',
+      nama_ketua: data['leader_name'],
+      email_ketua: data['leader_email'],
+      telp_ketua: data['leader_phone'],
+      nisn_ketua: data['leader_nim'],
+      alamat_ketua: data['leader_address'],
+      line_ketua: data['leader_line'],
+      facebook_ketua: data['leader_discord'],
+      sumber_bayar: data['payment_method'] === '0' ? 'QRIS' : 'Mandiri',
       verified_bayar: data['verified'],
       anggota: [
         {
           anggota_id: teamData.anggota[1].anggota_id,
-          nama: data['member1-name'],
-          email: data['member1-email'],
-          telp: data['member1-phone'],
-          nisn: data['member1-nim'],
-          alamat: data['member1-address'],
-          line: data['member1-line'],
-          facebook: data['member1-discord'],
+          nama: data['member1_name'],
+          email: data['member1_email'],
+          telp: data['member1_phone'],
+          nisn: data['member1_nim'],
+          alamat: data['member1_address'],
+          line: data['member1_line'],
+          facebook: data['member1_discord'],
         },
         {
           anggota_id: teamData.anggota[2].anggota_id,
-          nama: data['member2-name'],
-          email: data['member2-email'],
-          telp: data['member2-phone'],
-          nisn: data['member2-nim'],
-          alamat: data['member2-address'],
-          line: data['member2-line'],
-          facebook: data['member2-discord'],
+          nama: data['member2_name'],
+          email: data['member2_email'],
+          telp: data['member2_phone'],
+          nisn: data['member2_nim'],
+          alamat: data['member2_address'],
+          line: data['member2_line'],
+          facebook: data['member2_discord'],
         },
       ],
     };
@@ -326,9 +320,9 @@ export default function UpdateUserNpcSenior() {
                       <div className='sm:col-span-4'>
                         <LightInput
                           label='Nama Tim'
-                          id='team-name'
+                          id='team_name'
                           type='text'
-                          readOnly={!isEditing}
+                          disabled={!isEditing}
                           validation={{
                             required: 'Nama Tim tidak boleh kosong',
                           }}
@@ -338,9 +332,9 @@ export default function UpdateUserNpcSenior() {
                       <div className='sm:col-span-4'>
                         <LightInput
                           label='Asal Universitas'
-                          id='university-name'
+                          id='university_name'
                           type='text'
-                          readOnly={!isEditing}
+                          disabled={!isEditing}
                           validation={{
                             required: 'Asal Universitas tidak boleh kosong',
                           }}
@@ -363,7 +357,7 @@ export default function UpdateUserNpcSenior() {
                           validation={{
                             required: 'Provinsi tidak boleh kosong',
                           }}
-                          readOnly
+                          disabled
                         />
                       </div>
                     </div>
@@ -377,9 +371,9 @@ export default function UpdateUserNpcSenior() {
                       <div className='sm:col-span-4'>
                         <LightInput
                           label='Nama'
-                          id='leader-name'
+                          id='leader_name'
                           type='text'
-                          readOnly={!isEditing}
+                          disabled={!isEditing}
                           validation={{ required: 'Nama tidak boleh kosong' }}
                         />
                       </div>
@@ -387,9 +381,9 @@ export default function UpdateUserNpcSenior() {
                       <div className='sm:col-span-4'>
                         <LightInput
                           label='Email'
-                          id='leader-email'
+                          id='leader_email'
                           type='email'
-                          readOnly={!isEditing}
+                          disabled={!isEditing}
                           validation={{
                             required: 'Email tidak boleh kosong',
                             pattern: {
@@ -403,9 +397,9 @@ export default function UpdateUserNpcSenior() {
                       <div className='sm:col-span-3'>
                         <LightInput
                           label='NIM'
-                          id='leader-nim'
+                          id='leader_nim'
                           type='text'
-                          readOnly={!isEditing}
+                          disabled={!isEditing}
                           validation={{ required: 'NIM tidak boleh kosong' }}
                         />
                       </div>
@@ -413,10 +407,10 @@ export default function UpdateUserNpcSenior() {
                       <div className='sm:col-span-3'>
                         <LightInput
                           label='Username Discord'
-                          id='leader-discord'
+                          id='leader_discord'
                           type='text'
                           helperText='Username dapat dilihat di bagian profil akun. Contoh: Schematics#2021'
-                          readOnly={!isEditing}
+                          disabled={!isEditing}
                           validation={{
                             required: 'Username Discord tidak boleh kosong',
                           }}
@@ -426,10 +420,10 @@ export default function UpdateUserNpcSenior() {
                       <div className='sm:col-span-3'>
                         <LightInput
                           label='Nomor Telepon'
-                          id='leader-phone'
+                          id='leader_phone'
                           type='text'
                           helperText='Nomor Telepon diawali +62'
-                          readOnly={!isEditing}
+                          disabled={!isEditing}
                           validation={{
                             required: 'Nomor Telepon tidak boleh kosong',
                             pattern: {
@@ -444,18 +438,18 @@ export default function UpdateUserNpcSenior() {
                       <div className='sm:col-span-3'>
                         <LightInput
                           label='ID Line (Opsional)'
-                          id='leader-line'
+                          id='leader_line'
                           type='text'
-                          readOnly={!isEditing}
+                          disabled={!isEditing}
                         />
                       </div>
 
                       <div className='sm:col-span-6'>
                         <LightInput
                           label='Alamat'
-                          id='leader-address'
+                          id='leader_address'
                           type='text'
-                          readOnly={!isEditing}
+                          disabled={!isEditing}
                           validation={{
                             required: 'Alamat tidak boleh kosong',
                           }}
@@ -491,9 +485,9 @@ export default function UpdateUserNpcSenior() {
                       <div className='sm:col-span-4'>
                         <LightInput
                           label='Nama'
-                          id='member1-name'
+                          id='member1_name'
                           type='text'
-                          readOnly={!isEditing}
+                          disabled={!isEditing}
                           validation={{ required: 'Nama tidak boleh kosong' }}
                         />
                       </div>
@@ -501,9 +495,9 @@ export default function UpdateUserNpcSenior() {
                       <div className='sm:col-span-4'>
                         <LightInput
                           label='Email'
-                          id='member1-email'
+                          id='member1_email'
                           type='email'
-                          readOnly={!isEditing}
+                          disabled={!isEditing}
                           validation={{
                             required: 'Email tidak boleh kosong',
                             pattern: {
@@ -517,9 +511,9 @@ export default function UpdateUserNpcSenior() {
                       <div className='sm:col-span-3'>
                         <LightInput
                           label='NIM'
-                          id='member1-nim'
+                          id='member1_nim'
                           type='text'
-                          readOnly={!isEditing}
+                          disabled={!isEditing}
                           validation={{ required: 'NIM tidak boleh kosong' }}
                         />
                       </div>
@@ -527,10 +521,10 @@ export default function UpdateUserNpcSenior() {
                       <div className='sm:col-span-3'>
                         <LightInput
                           label='Username Discord'
-                          id='member1-discord'
+                          id='member1_discord'
                           type='text'
                           helperText='Username dapat dilihat di bagian profil akun. Contoh: Schematics#2021'
-                          readOnly={!isEditing}
+                          disabled={!isEditing}
                           validation={{
                             required: 'Username Discord tidak boleh kosong',
                           }}
@@ -540,9 +534,9 @@ export default function UpdateUserNpcSenior() {
                       <div className='sm:col-span-3'>
                         <LightInput
                           label='Nomor Telepon'
-                          id='member1-phone'
+                          id='member1_phone'
                           type='text'
-                          readOnly={!isEditing}
+                          disabled={!isEditing}
                           placeholder='+6281234567890'
                           helperText='Nomor Telepon diawali +62'
                           validation={{
@@ -559,18 +553,18 @@ export default function UpdateUserNpcSenior() {
                       <div className='sm:col-span-3'>
                         <LightInput
                           label='ID Line (Opsional)'
-                          id='member1-line'
+                          id='member1_line'
                           type='text'
-                          readOnly={!isEditing}
+                          disabled={!isEditing}
                         />
                       </div>
 
                       <div className='sm:col-span-6'>
                         <LightInput
                           label='Alamat'
-                          id='member1-address'
+                          id='member1_address'
                           type='text'
-                          readOnly={!isEditing}
+                          disabled={!isEditing}
                           validation={{
                             required: 'Alamat tidak boleh kosong',
                           }}
@@ -606,9 +600,9 @@ export default function UpdateUserNpcSenior() {
                       <div className='sm:col-span-4'>
                         <LightInput
                           label='Nama'
-                          id='member2-name'
+                          id='member2_name'
                           type='text'
-                          readOnly={!isEditing}
+                          disabled={!isEditing}
                           validation={{ required: 'Nama tidak boleh kosong' }}
                         />
                       </div>
@@ -616,9 +610,9 @@ export default function UpdateUserNpcSenior() {
                       <div className='sm:col-span-4'>
                         <LightInput
                           label='Email'
-                          id='member2-email'
+                          id='member2_email'
                           type='email'
-                          readOnly={!isEditing}
+                          disabled={!isEditing}
                           validation={{
                             required: 'Email tidak boleh kosong',
                             pattern: {
@@ -632,9 +626,9 @@ export default function UpdateUserNpcSenior() {
                       <div className='sm:col-span-3'>
                         <LightInput
                           label='NIM'
-                          id='member2-nim'
+                          id='member2_nim'
                           type='text'
-                          readOnly={!isEditing}
+                          disabled={!isEditing}
                           validation={{ required: 'NIM tidak boleh kosong' }}
                         />
                       </div>
@@ -642,10 +636,10 @@ export default function UpdateUserNpcSenior() {
                       <div className='sm:col-span-3'>
                         <LightInput
                           label='Username Discord'
-                          id='member2-discord'
+                          id='member2_discord'
                           type='text'
                           helperText='Username dapat dilihat di bagian profil akun. Contoh: Schematics#2021'
-                          readOnly={!isEditing}
+                          disabled={!isEditing}
                           validation={{
                             required: 'Username Discord tidak boleh kosong',
                           }}
@@ -655,9 +649,9 @@ export default function UpdateUserNpcSenior() {
                       <div className='sm:col-span-3'>
                         <LightInput
                           label='Nomor Telepon'
-                          id='member2-phone'
+                          id='member2_phone'
                           type='text'
-                          readOnly={!isEditing}
+                          disabled={!isEditing}
                           placeholder='+6281234567890'
                           helperText='Nomor Telepon diawali +62'
                           validation={{
@@ -674,18 +668,18 @@ export default function UpdateUserNpcSenior() {
                       <div className='sm:col-span-3'>
                         <LightInput
                           label='ID Line (Opsional)'
-                          id='member2-line'
+                          id='member2_line'
                           type='text'
-                          readOnly={!isEditing}
+                          disabled={!isEditing}
                         />
                       </div>
 
                       <div className='sm:col-span-6'>
                         <LightInput
                           label='Alamat'
-                          id='member2-address'
+                          id='member2_address'
                           type='text'
-                          readOnly={!isEditing}
+                          disabled={!isEditing}
                           validation={{
                             required: 'Alamat tidak boleh kosong',
                           }}
@@ -722,9 +716,9 @@ export default function UpdateUserNpcSenior() {
                         <div className='sm:col-span-3'>
                           <LightInput
                             label='Jumlah Bayar'
-                            id='jumlah-bayar'
+                            id='jumlah_bayar'
                             type='text'
-                            readOnly={true}
+                            disabled={true}
                             validation={{
                               required: 'Jumlah Bayar tidak boleh kosong',
                             }}
@@ -736,7 +730,7 @@ export default function UpdateUserNpcSenior() {
                         <div className='sm:col-span-4'>
                           <SelectInput
                             label='Metode Pembayaran'
-                            id='payment-method'
+                            id='payment_method'
                             placeholder='Pilih metode pembayaran'
                             options={paymentMethod}
                             disabled={!isEditing}
@@ -753,7 +747,7 @@ export default function UpdateUserNpcSenior() {
                           id='account-id'
                           type='text'
                           defaultValue={getDatabyID['account-id']}
-                          readOnly={!isEditing}
+                          disabled={!isEditing}
                           validation={{
                             required: 'Nomor Rekening tidak boleh kosong',
                           }}
@@ -806,7 +800,10 @@ export default function UpdateUserNpcSenior() {
                         <>
                           <button
                             type='button'
-                            onClick={handleEditClick}
+                            onClick={() => {
+                              resetValue();
+                              handleEditClick();
+                            }}
                             className='px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-dark-400'
                           >
                             Batal

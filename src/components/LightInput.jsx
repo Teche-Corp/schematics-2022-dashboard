@@ -10,6 +10,7 @@ export default function LightInput({
   id,
   type = 'text',
   readOnly = false,
+  disabled = false,
   validation,
   min = '',
   max = '',
@@ -33,8 +34,9 @@ export default function LightInput({
           name={id}
           id={id}
           readOnly={readOnly}
+          disabled={disabled}
           className={classNames(
-            readOnly === true ? 'bg-gray-100' : '',
+            readOnly || disabled === true ? 'bg-gray-100' : '',
             errors[id]
               ? 'focus:ring-red-500 border-red-500 focus:border-red-500'
               : 'focus:ring-dark-400 focus:border-dark-400',

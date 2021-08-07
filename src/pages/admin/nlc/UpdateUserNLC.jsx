@@ -77,69 +77,54 @@ export default function UpdateUserNLC() {
     { text: 'Mandiri', value: 1 },
   ];
 
-  useEffect(() => {
-    if (teamData !== undefined) {
-      setValue('team-name', teamData?.team_name, { shouldDirty: false });
-      setValue('school-name', teamData?.institusi, { shouldDirty: false });
-      setValue('leader-name', teamData?.anggota[0]?.nama, {
-        shouldDirty: false,
-      });
-      setValue('leader-email', teamData?.anggota[0]?.email, {
-        shouldDirty: false,
-      });
-      setValue('leader-nisn', teamData?.anggota[0]?.nisn, {
-        shouldDirty: false,
-      });
-      setValue('leader-phone', teamData?.anggota[0]?.nomor_telepon, {
-        shouldDirty: false,
-      });
-      setValue('leader-line', teamData?.anggota[0]?.id_line, {
-        shouldDirty: false,
-      });
-      setValue('leader-address', teamData?.anggota[0]?.alamat, {
-        shouldDirty: false,
-      });
-      setValue('member-name', teamData?.anggota[1]?.nama, {
-        shouldDirty: false,
-      });
-      setValue('member-email', teamData?.anggota[1]?.email, {
-        shouldDirty: false,
-      });
-      setValue('member-nisn', teamData?.anggota[1]?.nisn, {
-        shouldDirty: false,
-      });
-      setValue('member-phone', teamData?.anggota[1]?.nomor_telepon, {
-        shouldDirty: false,
-      });
-      setValue('member-line', teamData?.anggota[1]?.id_line, {
-        shouldDirty: false,
-      });
-      setValue('member-address', teamData?.anggota[1]?.alamat, {
-        shouldDirty: false,
-      });
-      setValue('jumlah-bayar', teamData?.bukti_pembayaran?.jumlah, {
-        shouldDirty: false,
-      });
-      setValue('verified', teamData?.bukti_pembayaran?.verified, {
-        shouldDirty: false,
-      });
-      setValue(
-        'payment-method',
-        teamData?.bukti_pembayaran?.sumber === 'Mandiri' ? '1' : '0',
-        {
-          shouldDirty: false,
-        },
-      );
-    }
-  }, [teamData, setValue]);
-
   const cityValue = useWatch({
     control,
     name: 'city',
   });
 
+  const defaultValue = () => {
+    if (!cities) {
+      return [];
+    }
+
+    const city = cities.find(
+      (city) => city?.regency_name === teamData?.kota?.regency_name,
+    );
+    return [
+      { name: 'team_name', value: teamData?.team_name },
+      { name: 'school_name', value: teamData?.institusi },
+      { name: 'leader_name', value: teamData?.anggota[0]?.nama },
+      { name: 'leader_email', value: teamData?.anggota[0]?.email },
+      { name: 'leader_nisn', value: teamData?.anggota[0]?.nisn },
+      { name: 'leader_phone', value: teamData?.anggota[0]?.nomor_telepon },
+      { name: 'leader_line', value: teamData?.anggota[0]?.id_line },
+      { name: 'leader_address', value: teamData?.anggota[0]?.alamat },
+      { name: 'member_name', value: teamData?.anggota[1]?.nama },
+      { name: 'member_email', value: teamData?.anggota[1]?.email },
+      { name: 'member_nisn', value: teamData?.anggota[1]?.nisn },
+      { name: 'member_phone', value: teamData?.anggota[1]?.nomor_telepon },
+      { name: 'member_line', value: teamData?.anggota[1]?.id_line },
+      { name: 'member_address', value: teamData?.anggota[1]?.alamat },
+      { name: 'jumlah_bayar', value: teamData?.bukti_pembayaran?.jumlah },
+      {
+        name: 'payment_method',
+        value: teamData?.bukti_pembayaran?.sumber === 'Mandiri' ? '1' : '0',
+      },
+      { name: 'verified', value: teamData?.bukti_pembayaran?.verified },
+      { name: 'city', value: { value: city?.id, label: city?.regency_name } },
+      { name: 'province', value: city?.province_name },
+      { name: 'region', value: city?.region_name },
+    ];
+  };
+
+  // Set default value to input
   useEffect(() => {
-    if (cities !== undefined && teamData !== undefined) {
+    if (teamData !== undefined) {
+      defaultValue().forEach(({ name, value }) =>
+        setValue(name, value, { shouldDirty: false }),
+      );
+    }
+    if (cities && teamData !== undefined) {
       const city = cities.find(
         (city) => city.regency_name === teamData.kota.regency_name,
       );
@@ -157,13 +142,14 @@ export default function UpdateUserNLC() {
         shouldValidate: true,
       });
     }
-  }, [cities, teamData, setValue]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [teamData, cities, setValue]);
 
   useEffect(() => {
     if (cityValue !== undefined && teamData !== undefined) {
       const id = cityValue?.value;
       const city = cities.find((city) => city.id === id);
-      if (teamData.kota.regency_name !== city?.regency_name) {
+      if (teamData?.kota?.regency_name !== city?.regency_name) {
         setValue('province', city?.province_name, {
           shouldValidate: true,
           shouldDirty: true,
@@ -181,30 +167,36 @@ export default function UpdateUserNLC() {
     setIsEditing((prevState) => !prevState);
   };
 
+  const resetValue = () => {
+    const valToReset = {};
+    defaultValue().forEach(({ name, value }) => (valToReset[name] = value));
+    reset(valToReset);
+  };
+
   const handleEditProfile = (data) => {
     const newBody = {
       team_id: Number(id),
       kota_id: data.city.value,
-      nama_team: data['team-name'],
-      institusi: data['school-name'],
+      nama_team: data['team_name'],
+      institusi: data['school_name'],
       ketua_anggota_id: teamData.anggota[0].anggota_id,
-      nama_ketua: data['leader-name'],
-      email_ketua: data['leader-email'],
-      telp_ketua: data['leader-phone'],
-      nisn_ketua: data['leader-nisn'],
-      alamat_ketua: data['leader-address'],
-      line_ketua: data['leader-line'],
-      sumber_bayar: data['payment-method'] === '0' ? 'QRIS' : 'Mandiri',
+      nama_ketua: data['leader_name'],
+      email_ketua: data['leader_email'],
+      telp_ketua: data['leader_phone'],
+      nisn_ketua: data['leader_nisn'],
+      alamat_ketua: data['leader_address'],
+      line_ketua: data['leader_line'],
+      sumber_bayar: data['payment_method'] === '0' ? 'QRIS' : 'Mandiri',
       verified_bayar: data['verified'],
       anggota: [
         {
           anggota_id: teamData.anggota[1].anggota_id,
-          nama: data['member-name'],
-          email: data['member-email'],
-          telp: data['member-phone'],
-          nisn: data['member-nisn'],
-          alamat: data['member-address'],
-          line: data['member-line'],
+          nama: data['member_name'],
+          email: data['member_email'],
+          telp: data['member_phone'],
+          nisn: data['member_nisn'],
+          alamat: data['member_address'],
+          line: data['member_line'],
         },
       ],
     };
@@ -292,9 +284,9 @@ export default function UpdateUserNLC() {
                       <div className='sm:col-span-4'>
                         <LightInput
                           label='Nama Tim'
-                          id='team-name'
+                          id='team_name'
                           type='text'
-                          readOnly={!isEditing}
+                          disabled={!isEditing}
                           validation={{
                             required: 'Nama Tim tidak boleh kosong',
                           }}
@@ -304,9 +296,9 @@ export default function UpdateUserNLC() {
                       <div className='sm:col-span-4'>
                         <LightInput
                           label='Asal Sekolah'
-                          id='school-name'
+                          id='school_name'
                           type='text'
-                          readOnly={!isEditing}
+                          disabled={!isEditing}
                           validation={{
                             required: 'Asal Sekolah tidak boleh kosong',
                           }}
@@ -329,7 +321,7 @@ export default function UpdateUserNLC() {
                           validation={{
                             required: 'Provinsi tidak boleh kosong',
                           }}
-                          readOnly
+                          disabled
                         />
                       </div>
 
@@ -339,7 +331,7 @@ export default function UpdateUserNLC() {
                           id='region'
                           type='text'
                           validation={{ required: 'Region tidak boleh kosong' }}
-                          readOnly
+                          disabled
                         />
                       </div>
                     </div>
@@ -353,9 +345,9 @@ export default function UpdateUserNLC() {
                       <div className='sm:col-span-4'>
                         <LightInput
                           label='Nama'
-                          id='leader-name'
+                          id='leader_name'
                           type='text'
-                          readOnly={!isEditing}
+                          disabled={!isEditing}
                           validation={{ required: 'Nama tidak boleh kosong' }}
                         />
                       </div>
@@ -363,9 +355,9 @@ export default function UpdateUserNLC() {
                       <div className='sm:col-span-4'>
                         <LightInput
                           label='Email'
-                          id='leader-email'
+                          id='leader_email'
                           type='email'
-                          readOnly={!isEditing}
+                          disabled={!isEditing}
                           validation={{
                             required: 'Email tidak boleh kosong',
                             pattern: {
@@ -379,9 +371,9 @@ export default function UpdateUserNLC() {
                       <div className='sm:col-span-3'>
                         <LightInput
                           label='NISN'
-                          id='leader-nisn'
+                          id='leader_nisn'
                           type='text'
-                          readOnly={!isEditing}
+                          disabled={!isEditing}
                           validation={{ required: 'NISN tidak boleh kosong' }}
                         />
                       </div>
@@ -389,10 +381,10 @@ export default function UpdateUserNLC() {
                       <div className='sm:col-span-4'>
                         <LightInput
                           label='Nomor Telepon'
-                          id='leader-phone'
+                          id='leader_phone'
                           type='text'
                           helperText='Nomor Telepon diawali +62'
-                          readOnly={!isEditing}
+                          disabled={!isEditing}
                           validation={{
                             required: 'Nomor Telepon tidak boleh kosong',
                             pattern: {
@@ -407,18 +399,18 @@ export default function UpdateUserNLC() {
                       <div className='sm:col-span-2'>
                         <LightInput
                           label='ID Line (Opsional)'
-                          id='leader-line'
+                          id='leader_line'
                           type='text'
-                          readOnly={!isEditing}
+                          disabled={!isEditing}
                         />
                       </div>
 
                       <div className='sm:col-span-6'>
                         <LightInput
                           label='Alamat'
-                          id='leader-address'
+                          id='leader_address'
                           type='text'
-                          readOnly={!isEditing}
+                          disabled={!isEditing}
                           validation={{
                             required: 'Alamat tidak boleh kosong',
                           }}
@@ -454,9 +446,9 @@ export default function UpdateUserNLC() {
                       <div className='sm:col-span-4'>
                         <LightInput
                           label='Nama'
-                          id='member-name'
+                          id='member_name'
                           type='text'
-                          readOnly={!isEditing}
+                          disabled={!isEditing}
                           validation={{ required: 'Nama tidak boleh kosong' }}
                         />
                       </div>
@@ -464,9 +456,9 @@ export default function UpdateUserNLC() {
                       <div className='sm:col-span-4'>
                         <LightInput
                           label='Email'
-                          id='member-email'
+                          id='member_email'
                           type='email'
-                          readOnly={!isEditing}
+                          disabled={!isEditing}
                           validation={{
                             required: 'Email tidak boleh kosong',
                             pattern: {
@@ -480,9 +472,9 @@ export default function UpdateUserNLC() {
                       <div className='sm:col-span-3'>
                         <LightInput
                           label='NISN'
-                          id='member-nisn'
+                          id='member_nisn'
                           type='text'
-                          readOnly={!isEditing}
+                          disabled={!isEditing}
                           validation={{ required: 'NISN tidak boleh kosong' }}
                         />
                       </div>
@@ -490,9 +482,9 @@ export default function UpdateUserNLC() {
                       <div className='sm:col-span-4'>
                         <LightInput
                           label='Nomor Telepon'
-                          id='member-phone'
+                          id='member_phone'
                           type='text'
-                          readOnly={!isEditing}
+                          disabled={!isEditing}
                           placeholder='+6281234567890'
                           helperText='Nomor Telepon diawali +62'
                           validation={{
@@ -509,18 +501,18 @@ export default function UpdateUserNLC() {
                       <div className='sm:col-span-2'>
                         <LightInput
                           label='ID Line (Opsional)'
-                          id='member-line'
+                          id='member_line'
                           type='text'
-                          readOnly={!isEditing}
+                          disabled={!isEditing}
                         />
                       </div>
 
                       <div className='sm:col-span-6'>
                         <LightInput
                           label='Alamat'
-                          id='member-address'
+                          id='member_address'
                           type='text'
-                          readOnly={!isEditing}
+                          disabled={!isEditing}
                           validation={{
                             required: 'Alamat tidak boleh kosong',
                           }}
@@ -557,9 +549,9 @@ export default function UpdateUserNLC() {
                         <div className='sm:col-span-3'>
                           <LightInput
                             label='Jumlah Bayar'
-                            id='jumlah-bayar'
+                            id='jumlah_bayar'
                             type='text'
-                            readOnly={true}
+                            disabled={true}
                             validation={{
                               required: 'Jumlah Bayar tidak boleh kosong',
                             }}
@@ -571,7 +563,7 @@ export default function UpdateUserNLC() {
                         <div className='sm:col-span-4'>
                           <SelectInput
                             label='Metode Pembayaran'
-                            id='payment-method'
+                            id='payment_method'
                             placeholder='Pilih metode pembayaran'
                             options={paymentMethod}
                             disabled={!isEditing}
@@ -588,7 +580,7 @@ export default function UpdateUserNLC() {
                           id='account-id'
                           type='text'
                           defaultValue={getDatabyID['account-id']}
-                          readOnly={!isEditing}
+                          disabled={!isEditing}
                           validation={{
                             required: 'Nomor Rekening tidak boleh kosong',
                           }}
@@ -641,7 +633,10 @@ export default function UpdateUserNLC() {
                         <>
                           <button
                             type='button'
-                            onClick={handleEditClick}
+                            onClick={() => {
+                              resetValue();
+                              handleEditClick();
+                            }}
                             className='px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-dark-400'
                           >
                             Batal
