@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.3](https://github.com/rizqitsani/fe-dashboard-schematics-2021/compare/v0.1.2...v0.1.3) (2021-08-07)
+
+
+### Bug Fixes
+
+* edit button trigger form submit ([55d1228](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/55d1228d32ee52f39a97a445b1297aa2c1756678))
+
 ### [0.1.2](https://github.com/rizqitsani/fe-dashboard-schematics-2021/compare/v0.1.1...v0.1.2) (2021-08-06)
 
 
