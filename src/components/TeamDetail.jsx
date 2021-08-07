@@ -1,13 +1,14 @@
 import { HiInformationCircle } from 'react-icons/hi';
 
 import { classNames } from '@/lib/helper';
+import UnstyledLink from '@/components/UnstyledLink';
 
 const paymentStatuses = {
   not_paid: {
     text: 'Belum Melakukan Pembayaran',
     color: 'text-red-600',
   },
-  wait: {
+  waiting: {
     text: 'Sedang Diverifikasi',
     color: 'text-yellow-600',
   },
@@ -124,6 +125,30 @@ export default function TeamDetail({ data = {} }) {
             </div>
           </div>
         </div>
+        {data.payment === 'paid' ? (
+          <div className='p-4 mt-2 rounded-md bg-green-50'>
+            <div className='flex'>
+              <div className='flex-shrink-0'>
+                <HiInformationCircle
+                  className='w-5 h-5 text-green-400'
+                  aria-hidden='true'
+                />
+              </div>
+              <div className='ml-2'>
+                <p className='text-sm text-green-700'>
+                  Anda dapat bergabung ke server Discord Schematics NPC 2021
+                  melalui{' '}
+                  <UnstyledLink
+                    href='https://discord.gg/Cf3frP8tWy'
+                    className='font-bold underline'
+                  >
+                    link berikut
+                  </UnstyledLink>
+                </p>
+              </div>
+            </div>
+          </div>
+        ) : null}
       </div>
     </div>
   );
