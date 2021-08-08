@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.4](https://github.com/rizqitsani/fe-dashboard-schematics-2021/compare/v0.1.3...v0.1.4) (2021-08-08)
+
+
+### Features
+
+* emphasize status pembayaran ([d64e73a](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/d64e73a2554125083eb09ec9333a4563fba609ff))
+* **npc:** add discord invitation link ([ab98581](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/ab9858104976ebea5ee15fc3c20b1feaf7110d49))
+* use different color for each payment status ([424f6c8](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/424f6c8a1ca1bf8e5cd57d298887704c59f1e750))
+
 ### [0.1.3](https://github.com/rizqitsani/fe-dashboard-schematics-2021/compare/v0.1.2...v0.1.3) (2021-08-07)
 
 
