@@ -1,17 +1,27 @@
+import { Fragment, useMemo, useState } from 'react';
 import useSWR from 'swr';
-import { useMemo } from 'react';
-import { Link } from 'react-router-dom';
 import ReactTooltip from 'react-tooltip';
-import { IoMdRefresh } from 'react-icons/io';
+import { Menu, Transition } from '@headlessui/react';
+import { IoMdMore, IoMdRefresh } from 'react-icons/io';
 import { ImSpinner } from 'react-icons/im';
+import toast from 'react-hot-toast';
+import axios from 'axios';
 
+import useLoadingToast from '@/hooks/useLoadingToast';
 import { emptyPostWithToken } from '@/lib/swr';
-import { classNames } from '@/lib/helper';
+import { bearerToken, classNames, defaultToastMessage } from '@/lib/helper';
 
 import DashboardAdminShell from '@/layout/DashboardAdminShell';
 import VoucherTable from '@/components/VoucherTable';
+import VoucherAlert from '@/components/Alert/VoucherAlert';
 
-export default function Admin() {
+export default function Voucher() {
+  const [isOpenActiveAlert, setIsOpenActiveAlert] = useState(false);
+  const [isOpenDeactiveAlert, setIsOpenDeactiveAlert] = useState(false);
+  const [activeId, setActiveId] = useState('');
+
+  const isLoading = useLoadingToast();
+
   const { data: dataSWR, isValidating, revalidate } = useSWR(
     '/voucher/list',
     emptyPostWithToken,
@@ -45,11 +55,23 @@ export default function Admin() {
       },
       {
         Header: 'Tanggal Mulai',
-        accessor: 'tanggal_mulai',
+        accessor: (d) => {
+          return new Date(d.tanggal_mulai).toLocaleDateString('id-ID', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+          });
+        },
       },
       {
         Header: 'Tanggal Berakhir',
-        accessor: 'tanggal_berakhir',
+        accessor: (d) => {
+          return new Date(d.tanggal_berakhir).toLocaleDateString('id-ID', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+          });
+        },
       },
       {
         Header: 'Status',
@@ -65,14 +87,56 @@ export default function Admin() {
         Header: 'Edit',
         accessor: (d) => {
           return (
-            <Link
-              className='font-bold text-nlc'
-              to={{
-                pathname: `/admin/sch-nlc/user/${d?.kode_voucher}/edit`,
-              }}
-            >
-              Edit
-            </Link>
+            <Menu as='div' className='relative inline-block text-left'>
+              <div>
+                <Menu.Button className='focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-dark-400'>
+                  <IoMdMore
+                    className='w-5 h-5 text-dark-100 hover:text-dark-400'
+                    aria-hidden='true'
+                  />
+                </Menu.Button>
+              </div>
+              <Transition
+                as={Fragment}
+                enter='transition ease-out duration-100'
+                enterFrom='transform opacity-0 scale-95'
+                enterTo='transform opacity-100 scale-100'
+                leave='transition ease-in duration-75'
+                leaveFrom='transform opacity-100 scale-100'
+                leaveTo='transform opacity-0 scale-95'
+              >
+                <Menu.Items className='absolute right-0 z-10 w-56 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
+                  <div className='px-1 py-1 '>
+                    <Menu.Item>
+                      {({ active }) => (
+                        <button
+                          type='button'
+                          disabled={isLoading}
+                          onClick={
+                            d.is_active
+                              ? () => {
+                                  setActiveId(d.kode_voucher);
+                                  setIsOpenDeactiveAlert(true);
+                                }
+                              : () => {
+                                  setActiveId(d.kode_voucher);
+                                  setIsOpenActiveAlert(true);
+                                }
+                          }
+                          className={classNames(
+                            active && 'bg-gray-100',
+                            isLoading && 'cursor-wait',
+                            'group flex rounded-md items-center w-full px-2 py-2 text-sm text-gray-900',
+                          )}
+                        >
+                          {d.is_active ? 'Nonaktifkan' : 'Aktifkan'}
+                        </button>
+                      )}
+                    </Menu.Item>
+                  </div>
+                </Menu.Items>
+              </Transition>
+            </Menu>
           );
         },
       },
@@ -81,9 +145,67 @@ export default function Admin() {
     [],
   );
 
+  const handleActivate = (id) => {
+    toast.promise(
+      axios
+        .post(
+          '/voucher/activate',
+          { kode_voucher: id },
+          {
+            headers: { ...bearerToken() },
+          },
+        )
+        .then(() => {
+          revalidateTable();
+          setIsOpenActiveAlert(false);
+        }),
+      {
+        ...defaultToastMessage,
+        success: 'Voucher berhasil diaktifkan',
+      },
+    );
+  };
+
+  const handleDeactivate = (id) => {
+    toast.promise(
+      axios
+        .post(
+          '/voucher/deactivate',
+          { kode_voucher: id },
+          {
+            headers: { ...bearerToken() },
+          },
+        )
+        .then(() => {
+          revalidateTable();
+          setIsOpenDeactiveAlert(false);
+        }),
+      {
+        ...defaultToastMessage,
+        success: 'Voucher berhasil dinonaktifkan',
+      },
+    );
+  };
+
   return (
     <DashboardAdminShell>
       <main className='relative z-0 flex-1 pb-8 overflow-y-auto border-t'>
+        <VoucherAlert
+          action={() => {
+            handleActivate(activeId);
+          }}
+          open={isOpenActiveAlert}
+          setOpen={setIsOpenActiveAlert}
+          type='activate'
+        />
+        <VoucherAlert
+          action={() => {
+            handleDeactivate(activeId);
+          }}
+          open={isOpenDeactiveAlert}
+          setOpen={setIsOpenDeactiveAlert}
+          type='deactivate'
+        />
         <div className='mt-8 '>
           <div className='max-w-6xl px-4 mx-auto space-y-3 sm:px-6'>
             <div className='flex items-center justify-between'>
@@ -94,6 +216,7 @@ export default function Admin() {
                 <button
                   data-for='refresh'
                   data-tip='Refresh data tabel'
+                  disabled={isLoading}
                   onClick={revalidateTable}
                   className='p-1 text-lg font-bold rounded-full focus:outline-none focus:ring ring-black'
                 >
