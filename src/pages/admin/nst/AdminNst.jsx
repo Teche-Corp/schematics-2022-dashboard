@@ -1,49 +1,40 @@
-import axios from 'axios';
-import { useEffect, useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
+import useSWR from 'swr';
+import { useMemo, useState } from 'react';
+import ReactTooltip from 'react-tooltip';
+import { IoMdRefresh } from 'react-icons/io';
+import { ImSpinner } from 'react-icons/im';
 import { HiOutlineCloud, HiUserGroup } from 'react-icons/hi';
 
 import DashboardAdminShell from '@/layout/DashboardAdminShell';
+
+import { getWithToken } from '@/lib/swr';
+import { classNames } from '@/lib/helper';
+
 import UnstyledLink from '@/components/UnstyledLink';
 import AdminTable from '@/components/AdminTable';
-
-import { bearerToken } from '@/lib/helper';
+import ExportButton from '@/components/Button/ExportButton';
 
 export default function AdminNst() {
-  const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
-  const [pages, setPages] = useState();
 
-  const getTeamData = async () => {
-    const res = await axios
-      .get(`/admin/list/tim/nlc?page=${page}`, {
-        headers: { ...bearerToken() },
-      })
-      .catch((err) => err);
-
-    if (res.status === 200) {
-      setPages(res?.data?.data?.total_page);
-
-      setData(res?.data?.data?.teams);
-    } else {
-      setData([]);
-    }
-  };
-
-  useEffect(() => {
-    getTeamData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page]);
+  const { data: dataSWR, isValidating, revalidate } = useSWR(
+    `/admin/list/tim/nst?page=${page}`,
+    getWithToken,
+  );
+  const revalidateTable = isValidating ? null : () => revalidate();
+  const data = dataSWR?.data?.teams ?? [];
+  const pages = dataSWR?.data?.total_page ?? undefined;
 
   const cards = [
     {
+      id: 1,
       name: 'Total Pendaftaran',
       href: '#',
       icon: HiUserGroup,
-      amount: data?.length || 'Menunggu data..',
+      amount: !dataSWR ? 'Menunggu data...' : data.length,
     },
-
     {
+      id: 3,
       name: 'Upload Berkas',
       href: '#',
       icon: HiOutlineCloud,
@@ -59,63 +50,29 @@ export default function AdminNst() {
         },
       },
       {
-        Header: 'Nama Tim',
-        accessor: 'team_name',
+        Header: 'Nama',
+        accessor: 'name',
       },
       {
-        Header: 'Edit',
-        Cell: (d) => {
-          return (
-            <Link
-              className='font-bold text-nst'
-              id={d?.row?.id}
-              to={{
-                pathname: `/admin/sch-nlc/user/${Number(d?.row?.id) + 1}/edit`,
-                state: {
-                  page: page,
-                },
-              }}
-            >
-              Edit
-            </Link>
-          );
-        },
+        Header: 'Email',
+        accessor: 'email',
       },
       {
-        Header: 'Verified',
-        accessor: (d) => {
-          if (d.bukti_pembayaran?.is_verified) {
-            <span className='text-green-500'>Ya</span>;
-          }
-          return <span className='text-red-500'>Tidak</span>;
-        },
-      },
-      {
-        Header: 'Region',
-        accessor: 'kota.region_name',
-      },
-      {
-        Header: 'Provinsi',
-        accessor: 'kota.province_name',
-      },
-      {
-        Header: 'Kota',
-        accessor: 'kota.regency_name',
-      },
-      {
-        Header: 'Ketua',
+        Header: 'Nomor Telepon',
         accessor: (d) => (
           <>
-            {d?.user_ketua?.name} - {d?.user_ketua?.email} -{' '}
-            {d?.anggota_ketua?.anggota_id_line || 'Data line tidak dimasukan'} -{' '}
             <UnstyledLink
               className='text-blue-400 underline'
-              href={`https://wa.me/${d?.user_ketua?.phone}`}
+              href={`https://wa.me/${d?.phone}`}
             >
-              ({d?.user_ketua?.phone})
+              ({d?.phone})
             </UnstyledLink>
           </>
         ),
+      },
+      {
+        Header: 'Tanggal Pembuatan',
+        accessor: 'created_at',
       },
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -176,17 +133,50 @@ export default function AdminNst() {
           </div>
 
           <div className='max-w-6xl px-4 mx-auto space-y-3 sm:px-6 lg:px-8'>
-            <h2 className='mx-auto text-lg font-medium leading-6 text-gray-900 max-w-7xl mt-7 '>
-              Tabel Pendaftaran
-            </h2>
+            <div className='flex items-center gap-2 mt-7'>
+              <h1 className='text-2xl font-bold leading-6 text-gray-900'>
+                Tabel Pendaftar{' '}
+                <span className='block text-nst xl:inline'>Schematics NST</span>
+              </h1>
 
-            <AdminTable
-              columns={columns}
-              data={data}
-              page={page}
-              pages={pages}
-              setPage={setPage}
-            />
+              <button
+                data-for='refresh'
+                data-tip='Refresh data tabel'
+                onClick={revalidateTable}
+                className='p-1 text-lg font-bold rounded-full focus:outline-none focus:ring ring-black'
+              >
+                <IoMdRefresh
+                  className={classNames(isValidating && 'animate-spin')}
+                />
+              </button>
+              <ReactTooltip
+                id='refresh'
+                delayHide={100}
+                place='right'
+                type='dark'
+                effect='solid'
+              />
+            </div>
+
+            {!dataSWR ? (
+              <div className='flex justify-center py-10 mt-4'>
+                <div>
+                  <ImSpinner className='mx-auto mb-3 w-7 h-7 animate-spin text-nst' />
+                  <p>Sedang menunggu data...</p>
+                </div>
+              </div>
+            ) : (
+              <AdminTable
+                columns={columns}
+                data={data}
+                header={
+                  <ExportButton name='NST.xlsx' url='/admin/export/nst/tim' />
+                }
+                page={page}
+                pages={pages}
+                setPage={setPage}
+              />
+            )}
           </div>
         </div>
       </main>
