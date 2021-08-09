@@ -170,7 +170,7 @@ export default function AdminNst() {
                 columns={columns}
                 data={data}
                 header={
-                  <ExportButton name='NST.xlsx' url='/admin/export/nst/tim' />
+                  <ExportButton name='NST.xlsx' url='/admin/export/nst' />
                 }
                 page={page}
                 pages={pages}
