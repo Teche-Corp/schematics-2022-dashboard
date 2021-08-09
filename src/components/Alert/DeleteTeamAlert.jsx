@@ -45,7 +45,7 @@ export default function DeleteTeamAlert({ open, setOpen, action }) {
               <div className='absolute top-0 right-0 hidden pt-4 pr-4 sm:block'>
                 <button
                   type='button'
-                  className='text-gray-400 bg-white rounded-md hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+                  className='text-gray-400 bg-white rounded-md hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-dark-400'
                   onClick={() => setOpen(false)}
                 >
                   <span className='sr-only'>Close</span>
@@ -84,7 +84,7 @@ export default function DeleteTeamAlert({ open, setOpen, action }) {
                 </button>
                 <button
                   type='button'
-                  className='inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm'
+                  className='inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-dark-400 sm:mt-0 sm:w-auto sm:text-sm'
                   onClick={() => setOpen(false)}
                 >
                   Cancel
