@@ -78,7 +78,7 @@ export default function UpdateUserNLC() {
   const cities = data?.data;
   const cityValue = watch('city');
 
-  const city = cities?.find(
+  const city = (cities ?? []).find(
     (city) => city?.regency_name === teamData?.kota?.regency_name,
   );
   const defaultValues = {
@@ -113,11 +113,11 @@ export default function UpdateUserNLC() {
 
   //? Set default value to input after fetching
   useEffect(() => {
-    if (teamData) {
+    if (teamData && city) {
       setValuesToDefault();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [teamData]);
+  }, [teamData, city]);
 
   //? Change province and region according to the city
   useEffect(() => {
