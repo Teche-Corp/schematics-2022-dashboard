@@ -170,7 +170,7 @@ export default function Admin() {
                               </dd>
                               <p className='text-xs text-gray-900'>
                                 {card.paid !== undefined
-                                  ? `${card.paid} sudah membayar`
+                                  ? `${card.paid} sudah diverifikasi`
                                   : ''}
                               </p>
                             </>
