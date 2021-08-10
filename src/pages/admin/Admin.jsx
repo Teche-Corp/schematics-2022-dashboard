@@ -16,15 +16,18 @@ import DashboardAdminShell from '@/layout/DashboardAdminShell';
 import UnstyledLink from '@/components/UnstyledLink';
 
 import { numberToRupiah } from '@/lib/helper';
+import { getWithToken } from '@/lib/swr';
+import useSWRLoadingToast from '@/hooks/useSWRLoadingToast';
 
 export default function Admin() {
-  const { data, error } = useSWR(
+  const { data, error: errorStatistics } = useSWR(
     '/statistics?total_daftar=1&total_pendapatan=1&nlc_sudah_bayar=1&npcj_sudah_bayar=1&npcs_sudah_bayar=1&total_tim_nlc=1&total_tim_npcj=1&total_tim_npcs=1&total_tiket_nst_sudah_bayar=1&total_tiket_nst=1&total_tiket_reeva_sudah_bayar=1&total_tiket_reeva=1',
+    getWithToken,
   );
-
-  if (error) {
-    return toast.error('Gagal mengambil data kota.');
-  }
+  useSWRLoadingToast(data, errorStatistics, {
+    loading: 'Mengambil data statistik',
+    success: 'Data statistik berhasil diambil',
+  });
 
   const cards = [
     {
@@ -159,7 +162,7 @@ export default function Admin() {
                           >
                             {card.name}
                           </UnstyledLink>
-                          {data ? (
+                          {!errorStatistics && data ? (
                             <>
                               <dd>
                                 <div className='text-lg font-medium text-gray-900'>
