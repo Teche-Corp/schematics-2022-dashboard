@@ -1,5 +1,8 @@
 import { useTable, useGlobalFilter, useSortBy } from 'react-table';
 import { HiChevronLeft, HiChevronRight } from 'react-icons/hi';
+import { GoTriangleUp, GoTriangleDown } from 'react-icons/go';
+
+import { classNames } from '@/lib/helper';
 
 import GlobalFilter from '@/components/GlobalFilter';
 
@@ -68,16 +71,41 @@ export default function AdminTable({
                             {...column.getHeaderProps(
                               column.getSortByToggleProps(),
                             )}
-                            className='px-6 py-3 text-xs font-bold tracking-wider text-left text-black uppercase'
+                            className='px-6 py-3 text-xs font-bold tracking-wider text-left text-black uppercase group'
                           >
-                            {column.render('Header')}
-                            <span>
-                              {column.isSorted
-                                ? column.isSortedDesc
-                                  ? ' 🔽'
-                                  : ' 🔼'
-                                : ''}
-                            </span>
+                            <div className='flex items-center gap-2'>
+                              <p className='flex-grow'>
+                                {column.render('Header')}
+                              </p>
+                              <span className='flex flex-col items-center justify-center'>
+                                <GoTriangleUp
+                                  className={classNames(
+                                    'transition-colors',
+                                    column.isSorted
+                                      ? column.isSortedDesc
+                                        ? // sorted desc
+                                          'text-transparent'
+                                        : // sorted asc
+                                          'text-gray-700'
+                                      : // not sorted
+                                        'group-hover:text-gray-400 text-transparent',
+                                  )}
+                                />
+                                <GoTriangleDown
+                                  className={classNames(
+                                    '-mt-1 transition-colors',
+                                    column.isSorted
+                                      ? column.isSortedDesc
+                                        ? // sorted desc
+                                          'text-gray-700'
+                                        : // sorted asc
+                                          'text-transparent'
+                                      : // not sorted
+                                        'group-hover:text-gray-400 text-transparent',
+                                  )}
+                                />
+                              </span>
+                            </div>
                           </th>
                         ))}
                       </tr>
