@@ -54,9 +54,7 @@ export default function AdminReeva() {
     () => [
       {
         Header: 'No',
-        Cell: (d) => {
-          return d.row.index + 1;
-        },
+        accessor: (_row, i) => i + 1,
       },
       {
         Header: 'Nama Tim',
