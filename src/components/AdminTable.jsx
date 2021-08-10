@@ -1,4 +1,4 @@
-import { useTable, useGlobalFilter } from 'react-table';
+import { useTable, useGlobalFilter, useSortBy } from 'react-table';
 import { HiChevronLeft, HiChevronRight } from 'react-icons/hi';
 
 import GlobalFilter from '@/components/GlobalFilter';
@@ -27,6 +27,7 @@ export default function AdminTable({
       initialState: { pageIndex: 1 },
     },
     useGlobalFilter,
+    useSortBy,
   );
 
   return (
@@ -64,10 +65,19 @@ export default function AdminTable({
                         {headerGroup.headers.map((column) => (
                           <th
                             key={column.id}
-                            {...column.getHeaderProps()}
+                            {...column.getHeaderProps(
+                              column.getSortByToggleProps(),
+                            )}
                             className='px-6 py-3 text-xs font-bold tracking-wider text-left text-black uppercase'
                           >
                             {column.render('Header')}
+                            <span>
+                              {column.isSorted
+                                ? column.isSortedDesc
+                                  ? ' 🔽'
+                                  : ' 🔼'
+                                : ''}
+                            </span>
                           </th>
                         ))}
                       </tr>
