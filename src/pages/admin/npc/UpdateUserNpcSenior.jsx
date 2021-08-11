@@ -3,7 +3,7 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useState, useEffect } from 'react';
 import { useParams, Link, useHistory } from 'react-router-dom';
-import { FormProvider, useForm, useWatch } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { HiOutlineArrowCircleLeft } from 'react-icons/hi';
 
 import { useAuthDispatch } from '@/contexts/AuthContext';
@@ -21,6 +21,11 @@ import SelectInput from '@/components/SelectInput';
 import CheckboxInput from '@/components/CheckboxInput';
 import ImageLightbox from '@/components/ImageLightbox';
 import DeleteTeamAlert from '@/components/Alert/DeleteTeamAlert';
+
+const paymentMethod = [
+  { text: 'QRIS', value: 0 },
+  { text: 'Mandiri', value: 1 },
+];
 
 export default function UpdateUserNpcSenior() {
   const history = useHistory();
@@ -59,10 +64,10 @@ export default function UpdateUserNpcSenior() {
   const methods = useForm();
 
   const {
-    control,
     handleSubmit,
     setValue,
     reset,
+    watch,
     formState: { isDirty },
   } = methods;
 
@@ -74,106 +79,60 @@ export default function UpdateUserNpcSenior() {
 
   const { data, error: fetchError } = useSWR('/region/list');
   const cities = data?.data;
+  const cityValue = watch('city');
 
-  const paymentMethod = [
-    { text: 'QRIS', value: 0 },
-    { text: 'Mandiri', value: 1 },
-  ];
-
-  const cityValue = useWatch({
-    control,
-    name: 'city',
-  });
-
-  const defaultValue = () => {
-    if (!cities) {
-      return [];
-    }
-
-    const city = cities.find(
-      (city) => city?.regency_name === teamData?.kota?.regency_name,
-    );
-    return [
-      { name: 'team_name', value: teamData?.team_name },
-      { name: 'university_name', value: teamData?.institusi },
-      { name: 'leader_name', value: teamData?.anggota[0]?.nama },
-      { name: 'leader_email', value: teamData?.anggota[0]?.email },
-      { name: 'leader_nim', value: teamData?.anggota[0]?.nisn },
-      { name: 'leader_phone', value: teamData?.anggota[0]?.nomor_telepon },
-      { name: 'leader_line', value: teamData?.anggota[0]?.id_line },
-      { name: 'leader_discord', value: teamData?.anggota[0]?.id_facebook },
-      { name: 'leader_address', value: teamData?.anggota[0]?.alamat },
-      { name: 'member1_name', value: teamData?.anggota[1]?.nama },
-      { name: 'member1_email', value: teamData?.anggota[1]?.email },
-      { name: 'member1_nim', value: teamData?.anggota[1]?.nisn },
-      { name: 'member1_phone', value: teamData?.anggota[1]?.nomor_telepon },
-      { name: 'member1_line', value: teamData?.anggota[1]?.id_line },
-      { name: 'member1_discord', value: teamData?.anggota[1]?.id_facebook },
-      { name: 'member1_address', value: teamData?.anggota[1]?.alamat },
-      { name: 'member2_name', value: teamData?.anggota[2]?.nama },
-      { name: 'member2_email', value: teamData?.anggota[2]?.email },
-      { name: 'member2_nim', value: teamData?.anggota[2]?.nisn },
-      { name: 'member2_phone', value: teamData?.anggota[2]?.nomor_telepon },
-      { name: 'member2_line', value: teamData?.anggota[2]?.id_line },
-      { name: 'member2_discord', value: teamData?.anggota[2]?.id_facebook },
-      { name: 'member2_address', value: teamData?.anggota[2]?.alamat },
-      { name: 'jumlah_bayar', value: teamData?.bukti_pembayaran?.jumlah },
-      {
-        name: 'payment_method',
-        value: teamData?.bukti_pembayaran?.sumber === 'Mandiri' ? '1' : '0',
-      },
-      { name: 'verified', value: teamData?.bukti_pembayaran?.verified },
-      { name: 'city', value: { value: city?.id, label: city?.regency_name } },
-      { name: 'province', value: city?.province_name },
-      { name: 'region', value: city?.region_name },
-    ];
+  const city = (cities ?? []).find(
+    (city) => city?.regency_name === teamData?.kota?.regency_name,
+  );
+  const defaultValues = {
+    team_name: teamData?.team_name,
+    university_name: teamData?.institusi,
+    leader_name: teamData?.anggota[0]?.nama,
+    leader_email: teamData?.anggota[0]?.email,
+    leader_nim: teamData?.anggota[0]?.nisn,
+    leader_phone: teamData?.anggota[0]?.nomor_telepon,
+    leader_line: teamData?.anggota[0]?.id_line,
+    leader_discord: teamData?.anggota[0]?.id_facebook,
+    leader_address: teamData?.anggota[0]?.alamat,
+    member1_name: teamData?.anggota[1]?.nama,
+    member1_email: teamData?.anggota[1]?.email,
+    member1_nim: teamData?.anggota[1]?.nisn,
+    member1_phone: teamData?.anggota[1]?.nomor_telepon,
+    member1_line: teamData?.anggota[1]?.id_line,
+    member1_discord: teamData?.anggota[1]?.id_facebook,
+    member1_address: teamData?.anggota[1]?.alamat,
+    member2_name: teamData?.anggota[2]?.nama,
+    member2_email: teamData?.anggota[2]?.email,
+    member2_nim: teamData?.anggota[2]?.nisn,
+    member2_phone: teamData?.anggota[2]?.nomor_telepon,
+    member2_line: teamData?.anggota[2]?.id_line,
+    member2_discord: teamData?.anggota[2]?.id_facebook,
+    member2_address: teamData?.anggota[2]?.alamat,
+    jumlah_bayar: teamData?.bukti_pembayaran?.jumlah,
+    payment_method:
+      teamData?.bukti_pembayaran?.sumber === 'Mandiri' ? '1' : '0',
+    verified: teamData?.bukti_pembayaran?.verified,
+    city: { value: city?.id, label: city?.regency_name },
+    province: city?.province_name,
+    region: city?.region_name,
   };
 
+  const setValuesToDefault = () => {
+    Object.entries(defaultValues).forEach(([name, value]) =>
+      setValue(name, value, { shouldDirty: false }),
+    );
+  };
+
+  //? Set default value to input after fetching
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
-    if (teamData !== undefined) {
-      defaultValue().forEach(({ name, value }) =>
-        setValue(name, value, { shouldDirty: false }),
-      );
-    }
-    if (cities && teamData !== undefined) {
-      const city = cities.find(
-        (city) => city.regency_name === teamData.kota.regency_name,
-      );
-      setValue(
-        'city',
-        { value: city?.id, label: city?.regency_name },
-        {
-          shouldValidate: true,
-        },
-      );
-      setValue('province', city?.province_name, {
-        shouldValidate: true,
-      });
-      setValue('region', city?.region_name, {
-        shouldValidate: true,
-      });
+    if (teamData && city) {
+      setValuesToDefault();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [teamData, cities, setValue]);
+  }, [teamData, city]);
 
-  useEffect(() => {
-    if (cities !== undefined && teamData !== undefined) {
-      const city = cities.find(
-        (city) => city.regency_name === teamData.kota.regency_name,
-      );
-      setValue(
-        'city',
-        { value: city?.id, label: city?.regency_name },
-        {
-          shouldValidate: true,
-        },
-      );
-      setValue('province', city?.province_name, {
-        shouldValidate: true,
-      });
-    }
-  }, [cities, teamData, setValue]);
-
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     if (cityValue !== undefined && teamData !== undefined) {
       const id = cityValue?.value;
@@ -192,9 +151,8 @@ export default function UpdateUserNpcSenior() {
   };
 
   const resetValue = () => {
-    const newObj = {};
-    defaultValue().forEach(({ name, value }) => (newObj[name] = value));
-    reset(newObj);
+    setValuesToDefault();
+    reset(defaultValues);
   };
 
   const handleEditUserNpcSenior = (data) => {
