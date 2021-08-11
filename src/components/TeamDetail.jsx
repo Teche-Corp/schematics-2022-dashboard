@@ -18,7 +18,7 @@ const paymentStatuses = {
   },
 };
 
-export default function TeamDetail({ data = {} }) {
+export default function TeamDetail({ data = {}, event = '' }) {
   return (
     <div>
       <div className='overflow-hidden sm:rounded-lg'>
@@ -125,7 +125,7 @@ export default function TeamDetail({ data = {} }) {
             </div>
           </div>
         </div>
-        {data.payment === 'paid' ? (
+        {event === 'npc' && data.payment === 'paid' ? (
           <div className='p-4 mt-2 rounded-md bg-green-50'>
             <div className='flex'>
               <div className='flex-shrink-0'>

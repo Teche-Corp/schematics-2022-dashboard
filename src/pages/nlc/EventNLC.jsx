@@ -202,7 +202,10 @@ export default function EventNLC() {
                   </h2>
                   <div className='py-4 overflow-hidden bg-white sm:border sm:shadow sm:py-8 sm:px-6 lg:px-8 sm:rounded-lg'>
                     {/* if not loaded yet, then pass undefined */}
-                    <TeamDetail data={teamLoaded ? dataTeam : undefined} />
+                    <TeamDetail
+                      data={teamLoaded ? dataTeam : undefined}
+                      event='nlc'
+                    />
                     <CenteredAccordion
                       loading={!teamLoaded}
                       dataAccordion={dataTeamMember}
