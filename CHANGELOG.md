@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.5](https://github.com/rizqitsani/fe-dashboard-schematics-2021/compare/v0.1.4...v0.1.5) (2021-08-11)
+
+
+### Features
+
+* add voucher activation ([cddcbbc](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/cddcbbcff522c58d98b814bb67dcefd5df21aa81))
+* **admin:** add sort toggle style ([f175dcc](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/f175dcc11e62cb7b3e64ccd9744c186060c9d97d))
+* **admin:** add sorting feature for `admin-table` ([e910608](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/e9106086c00abaa76c1e46971afa3edcef7da497))
+* **admin:** change admin copywriting ([5e8cbb9](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/5e8cbb9673da0d24515134225f6dd588398300ff))
+* **admin:** change nst export button url ([d5233a9](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/d5233a9723d2348eaaba381e31f20818b4e3aba4))
+* **admin:** connect list of nst registered user to backend ([6dd8827](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/6dd882701c9a5e703003ff77f34e1cb0a17488b1))
+* change color scheme on DeleteTeamAlert ([1ce6e2d](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/1ce6e2d13a78a4f0d36f15a6f037b1e793c72131))
+* only show discord link on npc ([686c164](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/686c1648e0bf8093db2829fe4d42a55c7c685808))
+* open admin nst route ([a37ae78](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/a37ae787057baef87ad3721aa29d02aadd8a4e1d))
+
+
+### Bug Fixes
+
+* **admin:** add headers & toast for statistics ([7eef7e2](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/7eef7e2447d5c7a615ffa69d59cb656de04d60ee))
+* city is undefined in defaultValues ([b77a278](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/b77a27815b0fc3ac156dcfb3d30e4aed6180d1c1))
+* edit button trigger form submit and values do not reset ([a941ef6](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/a941ef6eda4780ab0c28910b1855f26310e0e1bb))
+* index `AdminTable` not sortable ([07233d4](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/07233d4d70f4d02b5ea1e29e623aee43bebfc460))
+
 ### [0.1.4](https://github.com/rizqitsani/fe-dashboard-schematics-2021/compare/v0.1.3...v0.1.4) (2021-08-08)
 
 
