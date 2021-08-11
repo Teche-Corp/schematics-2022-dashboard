@@ -196,7 +196,7 @@ const routeItems = [
     key: 'admin-nst',
     path: '/admin/sch-nst/user',
     component: AdminNst,
-    visible: false,
+    visible: true,
   },
   {
     auth: 'admin',
