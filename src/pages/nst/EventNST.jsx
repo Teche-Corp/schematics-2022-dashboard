@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { useHistory } from 'react-router';
 
 import { HiClipboardCheck, HiOutlineClock } from 'react-icons/hi';
 
@@ -38,29 +39,27 @@ export default function EventNST() {
 
   const { user } = useAuthState();
 
+  const history = useHistory();
+
   const teamLoaded = Boolean(nst);
 
   useEffect(() => {
     const loadTeam = async () => {
-      toast.promise(
-        axios
-          .post(
-            '/nst/detail-ticket',
-            {},
-            {
-              headers: {
-                ...bearerToken(),
-              },
+      try {
+        const res = await axios.post(
+          '/nst/detail-ticket',
+          {},
+          {
+            headers: {
+              ...bearerToken(),
             },
-          )
-          .then((res) => {
-            dispatch('STORE_NST', res.data.data);
-          }),
-        {
-          ...defaultToastMessage,
-          success: 'Tiket berhasil dimuat!',
-        },
-      );
+          },
+        );
+
+        dispatch('STORE_NST', res.data.data);
+      } catch (err) {
+        toast.error('Gagal memuat tiket!');
+      }
     };
 
     if (user?.nst_ticket) {
@@ -91,6 +90,7 @@ export default function EventNST() {
         )
         .then((res) => {
           dispatch('STORE_NST', res.data.data);
+          history.go(0);
         }),
       {
         ...defaultToastMessage,
