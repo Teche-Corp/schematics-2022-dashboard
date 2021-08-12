@@ -3,6 +3,7 @@ import { createContext, useContext, useReducer } from 'react';
 const StateContext = createContext({
   nlc: null,
   npc: null,
+  nst: null,
 });
 StateContext.displayName = 'TeamState';
 
@@ -20,6 +21,11 @@ const reducer = (state, { type, payload }) => {
       return {
         ...state,
         npc: payload,
+      };
+    case 'STORE_NST':
+      return {
+        ...state,
+        nst: payload,
       };
     case 'CLEAR':
       return {
