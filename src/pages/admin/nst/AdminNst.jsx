@@ -4,6 +4,8 @@ import ReactTooltip from 'react-tooltip';
 import { IoMdRefresh } from 'react-icons/io';
 import { ImSpinner } from 'react-icons/im';
 import { HiOutlineCloud, HiUserGroup } from 'react-icons/hi';
+import { format } from 'date-fns';
+import localeID from 'date-fns/locale/id';
 
 import DashboardAdminShell from '@/layout/DashboardAdminShell';
 
@@ -49,11 +51,11 @@ export default function AdminNst() {
       },
       {
         Header: 'Nama',
-        accessor: 'name',
+        accessor: 'user.name',
       },
       {
         Header: 'Email',
-        accessor: 'email',
+        accessor: 'user.email',
       },
       {
         Header: 'Nomor Telepon',
@@ -61,16 +63,26 @@ export default function AdminNst() {
           <>
             <UnstyledLink
               className='text-blue-400 underline'
-              href={`https://wa.me/${d?.phone}`}
+              href={`https://wa.me/${d?.user?.phone}`}
             >
-              ({d?.phone})
+              {d?.user?.phone}
             </UnstyledLink>
           </>
         ),
       },
       {
         Header: 'Tanggal Pembuatan',
-        accessor: 'created_at',
+        accessor: (d) => {
+          let formattedTime = new Date(d?.created_at);
+
+          return (
+            <p>
+              {format(formattedTime, 'dd MMMM yyyy HH:mm:ss', {
+                locale: localeID,
+              })}
+            </p>
+          );
+        },
       },
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
