@@ -113,36 +113,46 @@ export default function EventNPC() {
         },
       ],
     },
-    {
-      title: 'Anggota 1',
-      name: anggota?.[0]?.nama,
-      email: anggota?.[0]?.email,
-      nisn: anggota?.[0]?.nisn,
-      phone: anggota?.[0]?.nomor_telepon,
-      line: anggota?.[0]?.id_line,
-      address: anggota?.[0]?.alamat,
-      attachment: [
-        {
-          name: 'Surat Keterangan Aktif',
-          link: anggota?.[0]?.link_bukti_sah,
-        },
-      ],
-    },
-    {
-      title: 'Anggota 2',
-      name: anggota?.[1]?.nama,
-      email: anggota?.[1]?.email,
-      nisn: anggota?.[1]?.nisn,
-      phone: anggota?.[1]?.nomor_telepon,
-      line: anggota?.[1]?.id_line,
-      address: anggota?.[1]?.alamat,
-      attachment: [
-        {
-          name: 'Surat Keterangan Aktif',
-          link: anggota?.[1]?.link_bukti_sah,
-        },
-      ],
-    },
+    // conditionally add object
+    ...(anggota?.[0]
+      ? [
+          {
+            title: 'Anggota 1',
+            name: anggota?.[0]?.nama,
+            email: anggota?.[0]?.email,
+            nisn: anggota?.[0]?.nisn,
+            phone: anggota?.[0]?.nomor_telepon,
+            line: anggota?.[0]?.id_line,
+            address: anggota?.[0]?.alamat,
+            attachment: [
+              {
+                name: 'Surat Keterangan Aktif',
+                link: anggota?.[0]?.link_bukti_sah,
+              },
+            ],
+          },
+        ]
+      : []),
+    // conditionally add object
+    ...(anggota?.[1]
+      ? [
+          {
+            title: 'Anggota 2',
+            name: anggota?.[1]?.nama,
+            email: anggota?.[1]?.email,
+            nisn: anggota?.[1]?.nisn,
+            phone: anggota?.[1]?.nomor_telepon,
+            line: anggota?.[1]?.id_line,
+            address: anggota?.[1]?.alamat,
+            attachment: [
+              {
+                name: 'Surat Keterangan Aktif',
+                link: anggota?.[1]?.link_bukti_sah,
+              },
+            ],
+          },
+        ]
+      : []),
   ];
 
   return (

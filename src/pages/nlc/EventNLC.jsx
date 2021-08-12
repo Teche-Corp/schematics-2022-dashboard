@@ -134,21 +134,25 @@ export default function EventNLC() {
         },
       ],
     },
-    {
-      title: 'Anggota 1',
-      name: anggota?.nama,
-      email: anggota?.email,
-      nisn: anggota?.nisn,
-      phone: anggota?.nomor_telepon,
-      line: anggota?.id_line,
-      address: anggota?.alamat,
-      attachment: [
-        {
-          name: 'Surat Keterangan Aktif',
-          link: anggota?.link_bukti_sah,
-        },
-      ],
-    },
+    ...(anggota?.nama
+      ? [
+          {
+            title: 'Anggota 1',
+            name: anggota?.nama,
+            email: anggota?.email,
+            nisn: anggota?.nisn,
+            phone: anggota?.nomor_telepon,
+            line: anggota?.id_line,
+            address: anggota?.alamat,
+            attachment: [
+              {
+                name: 'Surat Keterangan Aktif',
+                link: anggota?.link_bukti_sah,
+              },
+            ],
+          },
+        ]
+      : []),
   ];
 
   return (
