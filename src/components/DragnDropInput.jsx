@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useFormContext } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 import { useDropzone } from 'react-dropzone';
 
 import { HiOutlineEye, HiOutlinePaperClip, HiX } from 'react-icons/hi';
@@ -43,35 +43,7 @@ const FilePreview = ({ file, deleteFile }) => {
         </div>
       </li>
     </>
-    // <div key={file.name} className='aspect-w-3 aspect-h-2'>
-    //   <img
-    //     src={URL.createObjectURL(file)}
-    //     alt={file.name}
-    //     className='object-cover rounded-lg shadow-lg'
-    //   />
-    //   <button
-    //     onClick={(e) => deleteFile(e, file)}
-    //     className='absolute top-0 right-0 flex p-2 leading-none'
-    //   >
-    //     <HiX size={24} className='text-red-500 cursor-pointer' />
-    //   </button>
-    // </div>
   );
-
-  // file.type === 'application/pdf' ? (
-  //   <div key={file.name} className='shadow-lg aspect-w-3 aspect-h-2'>
-  //     <div className='flex flex-col items-center justify-center'>
-  //       <FaFilePdf className='text-red-600' size={32} />
-  //       <p className='mt-1'>{file.name}</p>
-  //     </div>
-  //     <button
-  //       onClick={(e) => deleteFile(e, file)}
-  //       className='absolute top-0 right-0 flex p-2 leading-none'
-  //     >
-  //       <HiX size={24} className='text-red-500 cursor-pointer' />
-  //     </button>
-  //   </div>
-  // ) :
 };
 
 export default function DragnDropInput({
@@ -83,7 +55,7 @@ export default function DragnDropInput({
   validation,
 }) {
   const {
-    register,
+    control,
     setValue,
     setError,
     clearErrors,
@@ -141,40 +113,51 @@ export default function DragnDropInput({
           ))}
         </ul>
       ) : (
-        <>
-          <div className='mt-1' {...getRootProps()}>
-            <input {...register(id, validation)} id={id} {...getInputProps()} />
-            <div
-              className={classNames(
-                'w-full p-2 bg-gray-100 border border-gray-300 border-dashed rounded cursor-pointer',
-                errors[id]
-                  ? 'focus:ring-red-500 border-red-500 focus:border-red-500'
-                  : 'focus:ring-dark-400 focus:border-dark-400',
-              )}
-            >
-              <p className='my-20 text-center text-gray-500'>
-                Tarik dan letakkan file ke kotak ini atau klik untuk memilih
-                file
-              </p>
-            </div>
-          </div>
+        <Controller
+          control={control}
+          name={id}
+          rules={validation}
+          render={(controllerProps) => (
+            <>
+              <div className='mt-1' {...getRootProps()}>
+                <input {...getInputProps()} />
+                <div
+                  className={classNames(
+                    'w-full p-2 bg-gray-100 border border-gray-300 border-dashed rounded cursor-pointer',
+                    errors[id]
+                      ? 'focus:ring-red-500 border-red-500 focus:border-red-500'
+                      : 'focus:ring-dark-400 focus:border-dark-400',
+                  )}
+                >
+                  <p className='my-20 text-center text-gray-500'>
+                    Tarik dan letakkan file ke kotak ini atau klik untuk memilih
+                    file
+                  </p>
+                </div>
+              </div>
 
-          <div className='mt-1'>
-            {helperText !== '' && (
-              <p className='text-xs text-gray-500'>{helperText}</p>
-            )}
-            {errors[id] && (
-              <p className='text-sm text-red-500'>{errors[id].message}</p>
-            )}
-          </div>
-          {!!files?.length && (
-            <ul className='border border-gray-200 divide-y divide-gray-200 rounded-md'>
-              {files.map((file) => (
-                <FilePreview key={file} file={file} deleteFile={deleteFile} />
-              ))}
-            </ul>
+              <div className='mt-1'>
+                {helperText !== '' && (
+                  <p className='text-xs text-gray-500'>{helperText}</p>
+                )}
+                {errors[id] && (
+                  <p className='text-sm text-red-500'>{errors[id].message}</p>
+                )}
+              </div>
+              {!!files?.length && (
+                <ul className='border border-gray-200 divide-y divide-gray-200 rounded-md'>
+                  {files.map((file) => (
+                    <FilePreview
+                      key={file}
+                      file={file}
+                      deleteFile={deleteFile}
+                    />
+                  ))}
+                </ul>
+              )}
+            </>
           )}
-        </>
+        ></Controller>
       )}
     </>
   );
