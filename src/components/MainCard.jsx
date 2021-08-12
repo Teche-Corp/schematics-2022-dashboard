@@ -29,7 +29,7 @@ const actions = [
   },
   {
     title: 'Schematics NST',
-    href: '#',
+    href: '/my/sch-nst/ticket',
     icon: HiSpeakerphone,
     iconForeground: 'text-green-700',
     iconBackground: 'bg-nst-100',

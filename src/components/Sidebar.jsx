@@ -31,7 +31,7 @@ const navigation = [
   },
   {
     name: 'Schematics NST',
-    href: '#',
+    href: '/my/sch-nst/ticket',
     color: 'text-nst-100',
     icon: HiSpeakerphone,
     current: false,

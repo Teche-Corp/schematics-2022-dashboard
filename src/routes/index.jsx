@@ -29,6 +29,8 @@ import CreateTeamNPCJunior from '@/pages/npc/CreateTeamNPCJunior';
 import CreateTeamNPCSenior from '@/pages/npc/CreateTeamNPCSenior';
 import PaymentNPC from '@/pages/npc/PaymentNPC';
 
+import EventNST from '@/pages/nst/EventNST';
+
 import Admin from '@/pages/admin/Admin';
 import Voucher from '@/pages/admin/voucher/Voucher';
 import AddVoucher from '@/pages/admin/voucher/AddVoucher';
@@ -117,6 +119,14 @@ const routeItems = [
     path: '/my/sch-npc/team',
     component: EventNPC,
     visible: true,
+  },
+  {
+    auth: 'user',
+    route: PrivateRoute,
+    key: 'nst-event',
+    path: '/my/sch-nst/ticket',
+    component: EventNST,
+    visible: false,
   },
   {
     auth: 'user',
