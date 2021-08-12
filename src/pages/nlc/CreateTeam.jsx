@@ -11,6 +11,7 @@ import DashboardShell from '@/layout/DashboardShell';
 import LightInput from '@/components/LightInput';
 import SelectCity from '@/components/SelectCity';
 import DragnDropInput from '@/components/DragnDropInput';
+import NormalCheckboxInput from '@/components/NormalCheckboxInput';
 
 import { bearerToken, classNames } from '@/lib/helper';
 import useLoadingToast from '@/hooks/useLoadingToast';
@@ -21,7 +22,7 @@ export default function CreateTeam() {
   const isLoading = useLoadingToast();
 
   const methods = useForm();
-  const { control, getValues, handleSubmit, setValue } = methods;
+  const { control, getValues, handleSubmit, setValue, watch } = methods;
 
   const { data, error: fetchError } = useSWR('/region/list');
   const cities = data?.data;
@@ -30,6 +31,7 @@ export default function CreateTeam() {
     control,
     name: 'city',
   });
+  const no_anggota_1 = watch('no_anggota_1');
 
   const { user } = useAuthState();
   const dispatch = useAuthDispatch();
@@ -58,6 +60,16 @@ export default function CreateTeam() {
   const handleCreateTeam = async (data) => {
     const formData = new FormData();
 
+    const anggota = {
+      'anggota[0][name]': data?.['member-name'] || undefined,
+      'anggota[0][email]': data?.['member-email'] || undefined,
+      'anggota[0][nisn]': data?.['member-nisn'] || undefined,
+      'anggota[0][phone]': data?.['member-phone'] || undefined,
+      'anggota[0][alamat]': data?.['member-address'] || undefined,
+      'anggota[0][id_line]': data?.['member-line'] || undefined,
+      'anggota[0][kp_anggota]': data?.['member-id']?.[0] || undefined,
+    };
+
     const newBody = {
       kota_id: data.city.value,
       ketua_nisn: data['leader-nisn'],
@@ -68,13 +80,7 @@ export default function CreateTeam() {
       team_password: `schnlc${user.name}`,
       team_institusi: data['school-name'],
       kp_ketua: data['leader-id'][0],
-      'anggota[0][name]': data['member-name'],
-      'anggota[0][email]': data['member-email'],
-      'anggota[0][nisn]': data['member-nisn'],
-      'anggota[0][phone]': data['member-phone'],
-      'anggota[0][alamat]': data['member-address'],
-      'anggota[0][id_line]': data['member-line'],
-      'anggota[0][kp_anggota]': data['member-id'][0],
+      ...(!no_anggota_1 && anggota),
     };
 
     for (let key in newBody) {
@@ -277,92 +283,103 @@ export default function CreateTeam() {
                     <h3 className='text-lg font-semibold leading-6 text-gray-900'>
                       Data Anggota
                     </h3>
+
                     <div className='grid grid-cols-1 mt-6 gap-y-6 gap-x-4 sm:grid-cols-6'>
-                      <div className='sm:col-span-4'>
-                        <LightInput
-                          label='Nama'
-                          id='member-name'
-                          type='text'
-                          validation={{ required: 'Nama tidak boleh kosong' }}
-                        />
-                      </div>
-
-                      <div className='sm:col-span-4'>
-                        <LightInput
-                          label='Email'
-                          id='member-email'
-                          type='email'
-                          validation={{
-                            required: 'Email tidak boleh kosong',
-                            pattern: {
-                              value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                              message: 'Email tidak valid',
-                            },
-                            validate: (value) =>
-                              value !== getValues('leader-email') ||
-                              'Email tidak boleh sama dengan email ketua tim',
-                          }}
-                        />
-                      </div>
-
-                      <div className='sm:col-span-3'>
-                        <LightInput
-                          label='NISN'
-                          id='member-nisn'
-                          type='text'
-                          validation={{ required: 'NISN tidak boleh kosong' }}
-                        />
-                      </div>
-
-                      <div className='sm:col-span-4'>
-                        <LightInput
-                          label='Nomor Telepon'
-                          id='member-phone'
-                          type='text'
-                          placeholder='+6281234567890'
-                          helperText='Nomor Telepon diawali +62'
-                          validation={{
-                            required: 'Nomor Telepon tidak boleh kosong',
-                            pattern: {
-                              value: /^\+628[1-9][0-9]{7,11}$/,
-                              message:
-                                'Nomor Telepon harus diawali +62 dan memiliki panjang 13-15 karakter',
-                            },
-                          }}
-                        />
-                      </div>
-
-                      <div className='sm:col-span-2'>
-                        <LightInput
-                          label='ID Line (Opsional)'
-                          id='member-line'
-                          type='text'
-                        />
-                      </div>
-
                       <div className='sm:col-span-6'>
-                        <LightInput
-                          label='Alamat'
-                          id='member-address'
-                          type='text'
-                          validation={{
-                            required: 'Alamat tidak boleh kosong',
-                          }}
+                        <NormalCheckboxInput
+                          id='no_anggota_1'
+                          label='Tidak memiliki anggota'
                         />
                       </div>
 
-                      <div className='sm:col-span-6'>
-                        <DragnDropInput
-                          label='Foto Kartu Pelajar/Surat Keterangan Siswa Aktif'
-                          id='member-id'
-                          accept='image/png, image/jpg, image/jpeg'
-                          helperText='File dalam format jpg, png, atau jpeg'
-                          maxFiles={1}
-                          validation={{
-                            required: 'Foto Kartu Pelajar tidak boleh kosong',
-                          }}
-                        />
-                      </div>
+                      {!no_anggota_1 && (
+                        <>
+                          <div className='sm:col-span-4'>
+                            <LightInput
+                              label='Nama'
+                              id='member-name'
+                              type='text'
+                              validation={{
+                                required: 'Nama tidak boleh kosong',
+                              }}
+                            />
+                          </div>
+                          <div className='sm:col-span-4'>
+                            <LightInput
+                              label='Email'
+                              id='member-email'
+                              type='email'
+                              validation={{
+                                required: 'Email tidak boleh kosong',
+                                pattern: {
+                                  value: /^(([^<>()[\]\.,;:\s@"]+(\.[^<>()[\]\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                                  message: 'Email tidak valid',
+                                },
+                                validate: (value) =>
+                                  value !== getValues('leader-email') ||
+                                  'Email tidak boleh sama dengan email ketua tim',
+                              }}
+                            />
+                          </div>
+                          <div className='sm:col-span-3'>
+                            <LightInput
+                              label='NISN'
+                              id='member-nisn'
+                              type='text'
+                              validation={{
+                                required: 'NISN tidak boleh kosong',
+                              }}
+                            />
+                          </div>
+                          <div className='sm:col-span-4'>
+                            <LightInput
+                              label='Nomor Telepon'
+                              id='member-phone'
+                              type='text'
+                              placeholder='+6281234567890'
+                              helperText='Nomor Telepon diawali +62'
+                              validation={{
+                                required: 'Nomor Telepon tidak boleh kosong',
+                                pattern: {
+                                  value: /^\+628[1-9][0-9]{7,11}$/,
+                                  message:
+                                    'Nomor Telepon harus diawali +62 dan memiliki panjang 13-15 karakter',
+                                },
+                              }}
+                            />
+                          </div>
+                          <div className='sm:col-span-2'>
+                            <LightInput
+                              label='ID Line (Opsional)'
+                              id='member-line'
+                              type='text'
+                            />
+                          </div>
+                          <div className='sm:col-span-6'>
+                            <LightInput
+                              label='Alamat'
+                              id='member-address'
+                              type='text'
+                              validation={{
+                                required: 'Alamat tidak boleh kosong',
+                              }}
+                            />
+                          </div>
+                          <div className='sm:col-span-6'>
+                            <DragnDropInput
+                              label='Foto Kartu Pelajar/Surat Keterangan Siswa Aktif'
+                              id='member-id'
+                              accept='image/png, image/jpg, image/jpeg'
+                              helperText='File dalam format jpg, png, atau jpeg'
+                              maxFiles={1}
+                              validation={{
+                                required:
+                                  'Foto Kartu Pelajar tidak boleh kosong',
+                              }}
+                            />
+                          </div>
+                        </>
+                      )}
                     </div>
                   </div>
                 </div>

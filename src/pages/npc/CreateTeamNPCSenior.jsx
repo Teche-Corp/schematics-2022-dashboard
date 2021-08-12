@@ -16,13 +16,14 @@ import DragnDropInput from '@/components/DragnDropInput';
 import { bearerToken, classNames } from '@/lib/helper';
 import useLoadingToast from '@/hooks/useLoadingToast';
 import useTeamId from '@/hooks/useTeamId';
+import NormalCheckboxInput from '@/components/NormalCheckboxInput';
 
 export default function CreateTeamNPCSenior() {
   const history = useHistory();
   const isLoading = useLoadingToast();
 
   const methods = useForm();
-  const { control, handleSubmit, setValue } = methods;
+  const { control, handleSubmit, setValue, watch } = methods;
 
   const { data, error: fetchError } = useSWR('/region/list');
   const cities = data?.data;
@@ -31,6 +32,8 @@ export default function CreateTeamNPCSenior() {
     control,
     name: 'city',
   });
+  const no_anggota_1 = watch('no_anggota_1');
+  const no_anggota_2 = watch('no_anggota_2');
 
   const { user } = useAuthState();
   const dispatch = useAuthDispatch();
@@ -59,6 +62,28 @@ export default function CreateTeamNPCSenior() {
   const handleCreateTeam = (data) => {
     const formData = new FormData();
 
+    const anggota_1 = {
+      'anggota[0][name]': data?.['member1-name'],
+      'anggota[0][email]': data?.['member1-email'],
+      'anggota[0][nisn]': data?.['member1-nim'],
+      'anggota[0][phone]': data?.['member1-phone'],
+      'anggota[0][alamat]': data?.['member1-address'],
+      'anggota[0][id_line]': data?.['member1-line'],
+      'anggota[0][id_facebook]': data?.['member1-discord'],
+      'anggota[0][kp_anggota]': data?.['member1-student-id']?.[0],
+    };
+
+    const anggota_2 = {
+      'anggota[1][name]': data?.['member2-name'],
+      'anggota[1][email]': data?.['member2-email'],
+      'anggota[1][nisn]': data?.['member2-nim'],
+      'anggota[1][phone]': data?.['member2-phone'],
+      'anggota[1][alamat]': data?.['member2-address'],
+      'anggota[1][id_line]': data?.['member2-line'],
+      'anggota[1][id_facebook]': data?.['member2-discord'],
+      'anggota[1][kp_anggota]': data?.['member2-student-id']?.[0],
+    };
+
     const newBody = {
       kota_id: data.city.value,
       ketua_nisn: data['leader-nim'],
@@ -71,22 +96,8 @@ export default function CreateTeamNPCSenior() {
       kp_ketua: data['leader-student-id'][0],
       event: 'npc_senior',
       status_id: 0,
-      'anggota[0][name]': data['member1-name'],
-      'anggota[0][email]': data['member1-email'],
-      'anggota[0][nisn]': data['member1-nim'],
-      'anggota[0][phone]': data['member1-phone'],
-      'anggota[0][alamat]': data['member1-address'],
-      'anggota[0][id_line]': data['member1-line'],
-      'anggota[0][id_facebook]': data['member1-discord'],
-      'anggota[0][kp_anggota]': data['member1-student-id'][0],
-      'anggota[1][name]': data['member2-name'],
-      'anggota[1][email]': data['member2-email'],
-      'anggota[1][nisn]': data['member2-nim'],
-      'anggota[1][phone]': data['member2-phone'],
-      'anggota[1][alamat]': data['member2-address'],
-      'anggota[1][id_line]': data['member2-line'],
-      'anggota[1][id_facebook]': data['member2-discord'],
-      'anggota[1][kp_anggota]': data['member2-student-id'][0],
+      ...(!no_anggota_1 && anggota_1),
+      ...(!no_anggota_1 && !no_anggota_2 && anggota_2),
     };
 
     for (let key in newBody) {
@@ -291,198 +302,222 @@ export default function CreateTeamNPCSenior() {
                       Data Anggota 1
                     </h3>
                     <div className='grid grid-cols-1 mt-6 gap-y-6 gap-x-4 sm:grid-cols-6'>
-                      <div className='sm:col-span-4'>
-                        <LightInput
-                          label='Nama'
-                          id='member1-name'
-                          type='text'
-                          validation={{ required: 'Nama tidak boleh kosong' }}
-                        />
-                      </div>
-
-                      <div className='sm:col-span-4'>
-                        <LightInput
-                          label='Email'
-                          id='member1-email'
-                          type='email'
-                          validation={{
-                            required: 'Email tidak boleh kosong',
-                            pattern: {
-                              value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                              message: 'Email tidak valid',
-                            },
-                          }}
-                        />
-                      </div>
-
-                      <div className='sm:col-span-3'>
-                        <LightInput
-                          label='NIM'
-                          id='member1-nim'
-                          type='text'
-                          validation={{ required: 'NIM tidak boleh kosong' }}
-                        />
-                      </div>
-
-                      <div className='sm:col-span-3'>
-                        <LightInput
-                          label='Username Discord'
-                          id='member1-discord'
-                          type='text'
-                          helperText='Username dapat dilihat di bagian profil akun. Contoh: Schematics#2021'
-                          validation={{
-                            required: 'Username Discord tidak boleh kosong',
-                          }}
-                        />
-                      </div>
-
-                      <div className='sm:col-span-3'>
-                        <LightInput
-                          label='Nomor Telepon'
-                          id='member1-phone'
-                          type='text'
-                          validation={{
-                            required: 'Nomor Telepon tidak boleh kosong',
-                            pattern: {
-                              value: /^\+628[1-9][0-9]{7,11}$/,
-                              message:
-                                'Nomor Telepon harus diawali +62 dan memiliki panjang 13-15 karakter',
-                            },
-                          }}
-                        />
-                      </div>
-
-                      <div className='sm:col-span-3'>
-                        <LightInput
-                          label='ID Line (Opsional)'
-                          id='member1-line'
-                          type='text'
-                        />
-                      </div>
-
                       <div className='sm:col-span-6'>
-                        <LightInput
-                          label='Alamat'
-                          id='member1-address'
-                          type='text'
-                          validation={{ required: 'Alamat tidak boleh kosong' }}
+                        <NormalCheckboxInput
+                          id='no_anggota_1'
+                          label='Tidak memiliki anggota 1 & 2'
                         />
                       </div>
 
-                      <div className='sm:col-span-6'>
-                        <DragnDropInput
-                          label='Foto Kartu Tanda Mahasiswa/Surat Keterangan Mahasiswa Aktif'
-                          id='member1-student-id'
-                          accept='image/png, image/jpg, image/jpeg'
-                          helperText='File dalam format jpg, png, atau jpeg'
-                          maxFiles={1}
-                          validation={{
-                            required:
-                              'Foto Kartu Tanda Mahasiswa tidak boleh kosong',
-                          }}
-                        />
-                      </div>
+                      {!no_anggota_1 && (
+                        <>
+                          <div className='sm:col-span-4'>
+                            <LightInput
+                              label='Nama'
+                              id='member1-name'
+                              type='text'
+                              validation={{
+                                required: 'Nama tidak boleh kosong',
+                              }}
+                            />
+                          </div>
+                          <div className='sm:col-span-4'>
+                            <LightInput
+                              label='Email'
+                              id='member1-email'
+                              type='email'
+                              validation={{
+                                required: 'Email tidak boleh kosong',
+                                pattern: {
+                                  value: /^(([^<>()[\]\.,;:\s@"]+(\.[^<>()[\]\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                                  message: 'Email tidak valid',
+                                },
+                              }}
+                            />
+                          </div>
+                          <div className='sm:col-span-3'>
+                            <LightInput
+                              label='NIM'
+                              id='member1-nim'
+                              type='text'
+                              validation={{
+                                required: 'NIM tidak boleh kosong',
+                              }}
+                            />
+                          </div>
+                          <div className='sm:col-span-3'>
+                            <LightInput
+                              label='Username Discord'
+                              id='member1-discord'
+                              type='text'
+                              helperText='Username dapat dilihat di bagian profil akun. Contoh: Schematics#2021'
+                              validation={{
+                                required: 'Username Discord tidak boleh kosong',
+                              }}
+                            />
+                          </div>
+                          <div className='sm:col-span-3'>
+                            <LightInput
+                              label='Nomor Telepon'
+                              id='member1-phone'
+                              type='text'
+                              validation={{
+                                required: 'Nomor Telepon tidak boleh kosong',
+                                pattern: {
+                                  value: /^\+628[1-9][0-9]{7,11}$/,
+                                  message:
+                                    'Nomor Telepon harus diawali +62 dan memiliki panjang 13-15 karakter',
+                                },
+                              }}
+                            />
+                          </div>
+                          <div className='sm:col-span-3'>
+                            <LightInput
+                              label='ID Line (Opsional)'
+                              id='member1-line'
+                              type='text'
+                            />
+                          </div>
+                          <div className='sm:col-span-6'>
+                            <LightInput
+                              label='Alamat'
+                              id='member1-address'
+                              type='text'
+                              validation={{
+                                required: 'Alamat tidak boleh kosong',
+                              }}
+                            />
+                          </div>
+                          <div className='sm:col-span-6'>
+                            <DragnDropInput
+                              label='Foto Kartus Tanda Mahasiswa/Surat Keterangan Mahasiswa Aktif'
+                              id='member1-student-id'
+                              accept='image/png, image/jpg, image/jpeg'
+                              helperText='File dalam format jpg, png, atau jpeg'
+                              maxFiles={1}
+                              validation={{
+                                required:
+                                  'Foto Kartu Tanda Mahasiswa tidak boleh kosong',
+                              }}
+                            />
+                          </div>
+                        </>
+                      )}
                     </div>
                   </div>
 
-                  <div className='pt-8'>
-                    <h3 className='text-lg font-semibold leading-6 text-gray-900'>
-                      Data Anggota 2
-                    </h3>
-                    <div className='grid grid-cols-1 mt-6 gap-y-6 gap-x-4 sm:grid-cols-6'>
-                      <div className='sm:col-span-4'>
-                        <LightInput
-                          label='Nama'
-                          id='member2-name'
-                          type='text'
-                          validation={{ required: 'Nama tidak boleh kosong' }}
-                        />
-                      </div>
+                  {!no_anggota_1 && (
+                    <>
+                      <div className='pt-8'>
+                        <h3 className='text-lg font-semibold leading-6 text-gray-900'>
+                          Data Anggota 2
+                        </h3>
+                        <div className='grid grid-cols-1 mt-6 gap-y-6 gap-x-4 sm:grid-cols-6'>
+                          <div className='sm:col-span-6'>
+                            <NormalCheckboxInput
+                              id='no_anggota_2'
+                              label='Tidak memiliki anggota 2'
+                            />
+                          </div>
 
-                      <div className='sm:col-span-4'>
-                        <LightInput
-                          label='Email'
-                          id='member2-email'
-                          type='email'
-                          validation={{
-                            required: 'Email tidak boleh kosong',
-                            pattern: {
-                              value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                              message: 'Email tidak valid',
-                            },
-                          }}
-                        />
+                          {!no_anggota_2 && (
+                            <>
+                              <div className='sm:col-span-4'>
+                                <LightInput
+                                  label='Nama'
+                                  id='member2-name'
+                                  type='text'
+                                  validation={{
+                                    required: 'Nama tidak boleh kosong',
+                                  }}
+                                />
+                              </div>
+                              <div className='sm:col-span-4'>
+                                <LightInput
+                                  label='Email'
+                                  id='member2-email'
+                                  type='email'
+                                  validation={{
+                                    required: 'Email tidak boleh kosong',
+                                    pattern: {
+                                      value: /^(([^<>()[\]\.,;:\s@"]+(\.[^<>()[\]\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                                      message: 'Email tidak valid',
+                                    },
+                                  }}
+                                />
+                              </div>
+                              <div className='sm:col-span-3'>
+                                <LightInput
+                                  label='NIM'
+                                  id='member2-nim'
+                                  type='text'
+                                  validation={{ required: 'NIM is required' }}
+                                />
+                              </div>
+                              <div className='sm:col-span-3'>
+                                <LightInput
+                                  label='Username Discord'
+                                  id='member2-discord'
+                                  type='text'
+                                  helperText='Username dapat dilihat di bagian profil akun. Contoh: Schematics#2021'
+                                  validation={{
+                                    required:
+                                      'Username Discord tidak boleh kosong',
+                                  }}
+                                />
+                              </div>
+                              <div className='sm:col-span-3'>
+                                <LightInput
+                                  label='Nomor Telepon'
+                                  id='member2-phone'
+                                  type='text'
+                                  validation={{
+                                    required:
+                                      'Nomor Telepon tidak boleh kosong',
+                                    pattern: {
+                                      value: /^\+628[1-9][0-9]{7,11}$/,
+                                      message:
+                                        'Nomor Telepon harus diawali +62 dan memiliki panjang 13-15 karakter',
+                                    },
+                                  }}
+                                />
+                              </div>
+                              <div className='sm:col-span-3'>
+                                <LightInput
+                                  label='ID Line (Opsional)'
+                                  id='member2-line'
+                                  type='text'
+                                />
+                              </div>
+                              <div className='sm:col-span-6'>
+                                <LightInput
+                                  label='Alamat'
+                                  id='member2-address'
+                                  type='text'
+                                  validation={{
+                                    required: 'Alamat tidak boleh kosong',
+                                  }}
+                                />
+                              </div>
+                              <div className='sm:col-span-6'>
+                                <DragnDropInput
+                                  label='Foto Kartu Tanda Mahasiswa/Surat Keterangan Mahasiswa Aktif'
+                                  id='member2-student-id'
+                                  accept='image/png, image/jpg, image/jpeg'
+                                  helperText='File dalam format jpg, png, atau jpeg'
+                                  maxFiles={1}
+                                  validation={{
+                                    required:
+                                      'Foto Kartu Tanda Mahasiswa tidak boleh kosong',
+                                  }}
+                                />
+                              </div>
+                            </>
+                          )}
+                        </div>
                       </div>
-
-                      <div className='sm:col-span-3'>
-                        <LightInput
-                          label='NIM'
-                          id='member2-nim'
-                          type='text'
-                          validation={{ required: 'NIM is required' }}
-                        />
-                      </div>
-
-                      <div className='sm:col-span-3'>
-                        <LightInput
-                          label='Username Discord'
-                          id='member2-discord'
-                          type='text'
-                          helperText='Username dapat dilihat di bagian profil akun. Contoh: Schematics#2021'
-                          validation={{
-                            required: 'Username Discord tidak boleh kosong',
-                          }}
-                        />
-                      </div>
-
-                      <div className='sm:col-span-3'>
-                        <LightInput
-                          label='Nomor Telepon'
-                          id='member2-phone'
-                          type='text'
-                          validation={{
-                            required: 'Nomor Telepon tidak boleh kosong',
-                            pattern: {
-                              value: /^\+628[1-9][0-9]{7,11}$/,
-                              message:
-                                'Nomor Telepon harus diawali +62 dan memiliki panjang 13-15 karakter',
-                            },
-                          }}
-                        />
-                      </div>
-
-                      <div className='sm:col-span-3'>
-                        <LightInput
-                          label='ID Line (Opsional)'
-                          id='member2-line'
-                          type='text'
-                        />
-                      </div>
-
-                      <div className='sm:col-span-6'>
-                        <LightInput
-                          label='Alamat'
-                          id='member2-address'
-                          type='text'
-                          validation={{ required: 'Alamat tidak boleh kosong' }}
-                        />
-                      </div>
-
-                      <div className='sm:col-span-6'>
-                        <DragnDropInput
-                          label='Foto Kartu Tanda Mahasiswa/Surat Keterangan Mahasiswa Aktif'
-                          id='member2-student-id'
-                          accept='image/png, image/jpg, image/jpeg'
-                          helperText='File dalam format jpg, png, atau jpeg'
-                          maxFiles={1}
-                          validation={{
-                            required:
-                              'Foto Kartu Tanda Mahasiswa tidak boleh kosong',
-                          }}
-                        />
-                      </div>
-                    </div>
-                  </div>
+                    </>
+                  )}
                 </div>
 
                 <div className='pt-5'>
