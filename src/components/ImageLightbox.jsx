@@ -5,6 +5,10 @@ export default function ImageLightbox({ src, alt, ...rest }) {
   const [index, setIndex] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
 
+  if (!src) {
+    return null;
+  }
+
   const images = typeof src === 'string' ? [src] : [...src];
 
   return (
