@@ -229,7 +229,13 @@ export default function CreateTeamNPCSenior() {
                           label='NIM'
                           id='leader-nim'
                           type='text'
-                          validation={{ required: 'NIM tidak boleh kosong' }}
+                          validation={{
+                            required: 'NIM tidak boleh kosong',
+                            pattern: {
+                              value: /^[0-9]*$/,
+                              message: 'Harus berupa angka',
+                            },
+                          }}
                         />
                       </div>
 
@@ -329,7 +335,7 @@ export default function CreateTeamNPCSenior() {
                               validation={{
                                 required: 'Email tidak boleh kosong',
                                 pattern: {
-                                  value: /^(([^<>()[\]\.,;:\s@"]+(\.[^<>()[\]\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                                  value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
                                   message: 'Email tidak valid',
                                 },
                               }}
@@ -342,6 +348,10 @@ export default function CreateTeamNPCSenior() {
                               type='text'
                               validation={{
                                 required: 'NIM tidak boleh kosong',
+                                pattern: {
+                                  value: /^[0-9]*$/,
+                                  message: 'Harus berupa angka',
+                                },
                               }}
                             />
                           </div>
@@ -440,7 +450,7 @@ export default function CreateTeamNPCSenior() {
                                   validation={{
                                     required: 'Email tidak boleh kosong',
                                     pattern: {
-                                      value: /^(([^<>()[\]\.,;:\s@"]+(\.[^<>()[\]\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                                      value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
                                       message: 'Email tidak valid',
                                     },
                                   }}
@@ -451,7 +461,13 @@ export default function CreateTeamNPCSenior() {
                                   label='NIM'
                                   id='member2-nim'
                                   type='text'
-                                  validation={{ required: 'NIM is required' }}
+                                  validation={{
+                                    required: 'NIM is required',
+                                    pattern: {
+                                      value: /^[0-9]*$/,
+                                      message: 'Harus berupa angka',
+                                    },
+                                  }}
                                 />
                               </div>
                               <div className='sm:col-span-3'>

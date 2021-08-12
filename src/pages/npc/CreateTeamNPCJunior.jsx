@@ -202,7 +202,13 @@ export default function CreateTeam() {
                           label='NISN'
                           id='leader-nisn'
                           type='text'
-                          validation={{ required: 'NISN tidak boleh kosong' }}
+                          validation={{
+                            required: 'NISN tidak boleh kosong',
+                            pattern: {
+                              value: /^[0-9]*$/,
+                              message: 'Harus berupa angka',
+                            },
+                          }}
                         />
                       </div>
 
