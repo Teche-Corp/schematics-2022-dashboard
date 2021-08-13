@@ -93,7 +93,7 @@ export default function CreateTeamAlert({
                   )}
                   onClick={() => action(data)}
                 >
-                  Ya
+                  Yakin
                 </button>
                 <button
                   type='button'
