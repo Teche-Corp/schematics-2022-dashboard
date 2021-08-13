@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { Link, useHistory } from 'react-router-dom';
 import toast from 'react-hot-toast';
@@ -12,12 +12,16 @@ import LightInput from '@/components/LightInput';
 import SelectCity from '@/components/SelectCity';
 import DragnDropInput from '@/components/DragnDropInput';
 import NormalCheckboxInput from '@/components/NormalCheckboxInput';
+import CreateTeamAlert from '@/components/Alert/CreateTeamAlert';
 
 import { bearerToken, classNames } from '@/lib/helper';
 import useLoadingToast from '@/hooks/useLoadingToast';
 import useTeamId from '@/hooks/useTeamId';
 
 export default function CreateTeam() {
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
+  const [formData, setFormData] = useState(null);
+
   const history = useHistory();
   const isLoading = useLoadingToast();
 
@@ -104,6 +108,11 @@ export default function CreateTeam() {
     );
   };
 
+  const onSubmit = (data) => {
+    setIsAlertOpen(true);
+    setFormData(data);
+  };
+
   if (fetchError) {
     return toast.error('Gagal mengambil data kota.');
   }
@@ -114,12 +123,18 @@ export default function CreateTeam() {
         className='flex-1 overflow-y-auto bg-white border-t focus:outline-none'
         style={{ minHeight: 'calc(100vh - 4rem)' }}
       >
+        <CreateTeamAlert
+          action={handleCreateTeam}
+          data={formData}
+          open={isAlertOpen}
+          setOpen={setIsAlertOpen}
+        />
         <div className='relative max-w-4xl mx-auto md:px-8 xl:px-0'>
           <div className='px-4 pt-10 pb-16 sm:px-6 md:px-0'>
             <FormProvider {...methods}>
               <form
                 className='space-y-8 divide-y divide-gray-200'
-                onSubmit={handleSubmit(handleCreateTeam)}
+                onSubmit={handleSubmit(onSubmit)}
               >
                 <div className='space-y-8 divide-y divide-gray-200'>
                   <div>
@@ -193,6 +208,7 @@ export default function CreateTeam() {
                         <LightInput
                           label='Nama'
                           id='leader-name'
+                          helperText='Isi dengan nama lengkap'
                           type='text'
                           defaultValue={user.name}
                           readOnly
@@ -275,7 +291,7 @@ export default function CreateTeam() {
                           label='Foto Kartu Pelajar/Surat Keterangan Siswa Aktif'
                           id='leader-id'
                           accept='image/png, image/jpg, image/jpeg'
-                          helperText='File dalam format jpg, png, atau jpeg'
+                          helperText='Pastikan nama lengkap di KTP/surat keterangan sesuai dengan nama lengkap yang anda masukkan. File dalam format jpg, png, atau jpeg.'
                           maxFiles={1}
                           validation={{
                             required: 'Foto Kartu Pelajar tidak boleh kosong',
@@ -304,6 +320,7 @@ export default function CreateTeam() {
                             <LightInput
                               label='Nama'
                               id='member-name'
+                              helperText='Isi dengan nama lengkap'
                               type='text'
                               validation={{
                                 required: 'Nama tidak boleh kosong',
@@ -380,7 +397,7 @@ export default function CreateTeam() {
                               label='Foto Kartu Pelajar/Surat Keterangan Siswa Aktif'
                               id='member-id'
                               accept='image/png, image/jpg, image/jpeg'
-                              helperText='File dalam format jpg, png, atau jpeg'
+                              helperText='Pastikan nama lengkap di KTP/surat keterangan sesuai dengan nama lengkap yang anda masukkan. File dalam format jpg, png, atau jpeg.'
                               maxFiles={1}
                               validation={{
                                 required:
