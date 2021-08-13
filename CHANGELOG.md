@@ -2,6 +2,38 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.6](https://github.com/rizqitsani/fe-dashboard-schematics-2021/compare/v0.1.5...v0.1.6) (2021-08-13)
+
+
+### Features
+
+* add conditional form rendering ([a6bd0b7](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/a6bd0b79896276ffdc9dd44ec83436daf3ebe18a))
+* add CreateTeamAlert component ([d7fc6bc](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/d7fc6bc7de086f6c571a976f99cb73505deef5cf))
+* add loading state and change color scheme ([aba3210](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/aba3210b4c0747835dd19ec647e067e6b55af7d9))
+* add NIM/NISN validation ([1d11082](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/1d11082e16024e2f7f4bb1ebb92dcec79f94b298))
+* add nst page ([4400c2a](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/4400c2a3b0cebb6085a5b86432c22696819767b5))
+* add nst routes ([9a558e3](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/9a558e3c5040378d939a87718fbbccfee6afbf7c))
+* add src check on ImageLightbox ([077e2fc](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/077e2fcfa53d2c718ef4607b9f1ce1159b7b5da6))
+* change alert copywriting ([4094dcb](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/4094dcb9dc97f29963766d65fde264b7d4ffef19))
+* change apply voucher toast message ([fd78cad](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/fd78cadc5922c065811e6019832b675ee8e7198e))
+* change create ticket flow ([82a0ac0](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/82a0ac0cc5a5a6efd8ca946da03b053139c73f38))
+* conditionally render team detail ([45d706a](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/45d706adabafa27a75ffa1374b937a0343afa776))
+* **nlc:** add voucher conditionals ([a10379a](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/a10379a80a0237f572fa069ed8d8d2b43cd19951))
+* **nlc:** change create team flow ([d1e2d58](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/d1e2d582eece4d1f17699a52ca2285f26bdb5829))
+* **nlc:** connect voucher to backend ([9ab3484](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/9ab3484282d018863f0e633da78df8eb2cffcad7))
+* **npc:** change create team flow ([cbc0b2f](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/cbc0b2f9df02e67a0608529a27026facfad9db00))
+* **npc:** connect voucher to backend ([49707d0](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/49707d03c9968e80eb7e3ac3208c19aa69c13ae2))
+* remove toast and reload after create ticket ([47f3d8a](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/47f3d8af74a1d01608225dfd07b7921a01bf2aee))
+* use Controller on `DragnDropInput` ([09531a0](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/09531a0038138a5d1ec805b94fa93c5e7fef89ef))
+* use percentage number for calculateDiscount ([f4a9d16](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/f4a9d1672160e9aac9b564fa59735a6c64f67893))
+
+
+### Bug Fixes
+
+* **nlc:** change base price to 100.000 ([77fa557](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/77fa557171f6b057c87eb58fc11feea8d6dd7d61))
+* **nlc:** remove kode_voucher from body upload ([a40382f](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/a40382fd3f714f5e53a3163a8169a4197e7ba233))
+* wrong accessor on admin nst ([316b135](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/316b135015cb60f5c0a09bcc577caf90c37591ea))
+
 ### [0.1.5](https://github.com/rizqitsani/fe-dashboard-schematics-2021/compare/v0.1.4...v0.1.5) (2021-08-11)
 
 
