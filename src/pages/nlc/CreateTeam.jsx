@@ -126,6 +126,7 @@ export default function CreateTeam() {
         <CreateTeamAlert
           action={handleCreateTeam}
           data={formData}
+          isLoading={isLoading}
           open={isAlertOpen}
           setOpen={setIsAlertOpen}
         />

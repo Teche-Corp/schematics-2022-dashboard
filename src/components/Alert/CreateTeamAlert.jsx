@@ -2,7 +2,15 @@ import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { HiOutlineExclamation, HiOutlineX } from 'react-icons/hi';
 
-export default function CreateTeamAlert({ action, data, open, setOpen }) {
+import { classNames } from '@/lib/helper';
+
+export default function CreateTeamAlert({
+  action,
+  data,
+  isLoading,
+  open,
+  setOpen,
+}) {
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog
@@ -53,9 +61,9 @@ export default function CreateTeamAlert({ action, data, open, setOpen }) {
                 </button>
               </div>
               <div className='sm:flex sm:items-start'>
-                <div className='flex items-center justify-center flex-shrink-0 w-12 h-12 mx-auto bg-red-100 rounded-full sm:mx-0 sm:h-10 sm:w-10'>
+                <div className='flex items-center justify-center flex-shrink-0 w-12 h-12 mx-auto bg-yellow-100 rounded-full sm:mx-0 sm:h-10 sm:w-10'>
                   <HiOutlineExclamation
-                    className='w-6 h-6 text-red-600'
+                    className='w-6 h-6 text-yellow-600'
                     aria-hidden='true'
                   />
                 </div>
@@ -78,7 +86,11 @@ export default function CreateTeamAlert({ action, data, open, setOpen }) {
               <div className='mt-5 sm:mt-4 sm:flex sm:flex-row-reverse'>
                 <button
                   type='button'
-                  className='inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm'
+                  disabled={isLoading}
+                  className={classNames(
+                    'inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-yellow-600 border border-transparent rounded-md shadow-sm hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 sm:ml-3 sm:w-auto sm:text-sm',
+                    isLoading && 'filter brightness-90 cursor-wait',
+                  )}
                   onClick={() => action(data)}
                 >
                   Ya
