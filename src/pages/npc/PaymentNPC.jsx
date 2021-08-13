@@ -21,6 +21,7 @@ import {
   bearerToken,
   numberToRupiah,
   calculateDiscount,
+  defaultToastMessage,
 } from '@/lib/helper';
 
 const paymentMethod = [
@@ -93,9 +94,8 @@ export default function PaymentNPC() {
           });
         }),
       {
-        loading: 'Loading...',
-        success: 'Bukti pembayaran berhasil diupload!',
-        error: (err) => err.response.data.msg,
+        ...defaultToastMessage,
+        success: 'Voucher berhasil digunakan!',
       },
     );
   };
@@ -126,9 +126,8 @@ export default function PaymentNPC() {
           history.push('/my/sch-npc/team');
         }),
       {
-        loading: 'Loading...',
+        ...defaultToastMessage,
         success: 'Bukti pembayaran berhasil diupload!',
-        error: (err) => err.response.data.msg,
       },
     );
   };

@@ -22,6 +22,7 @@ import {
   bearerToken,
   numberToRupiah,
   calculateDiscount,
+  defaultToastMessage,
 } from '@/lib/helper';
 
 const paymentMethod = [
@@ -92,9 +93,8 @@ export default function PaymentNLC() {
           });
         }),
       {
-        loading: 'Loading...',
-        success: 'Bukti pembayaran berhasil diupload!',
-        error: (err) => err.response.data.msg,
+        ...defaultToastMessage,
+        success: 'Voucher berhasil digunakan!',
       },
     );
   };
@@ -125,9 +125,8 @@ export default function PaymentNLC() {
           history.push('/my/sch-nlc/team');
         }),
       {
-        loading: 'Loading...',
+        ...defaultToastMessage,
         success: 'Bukti pembayaran berhasil diupload!',
-        error: (err) => err.response.data.msg,
       },
     );
   };
