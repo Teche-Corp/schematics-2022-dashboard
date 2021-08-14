@@ -148,6 +148,23 @@ export default function UpdateUserNLC() {
   };
 
   const handleEditProfile = (data) => {
+    const anggota_1_id = teamData?.anggota[1]?.anggota_id;
+    const anggota = [];
+
+    if (anggota_1_id) {
+      const anggota_1 = {
+        anggota_id: anggota_1_id,
+        nama: data.member_name,
+        email: data.member_email,
+        telp: data.member_phone,
+        nisn: data.member_nisn,
+        alamat: data.member_address,
+        line: data.member_line,
+      };
+
+      anggota.push(anggota_1);
+    }
+
     const newBody = {
       team_id: Number(id),
       kota_id: data.city.value,
@@ -162,17 +179,7 @@ export default function UpdateUserNLC() {
       line_ketua: data.leader_line,
       sumber_bayar: data.payment_method === '0' ? 'QRIS' : 'Mandiri',
       verified_bayar: data.verified,
-      anggota: [
-        {
-          anggota_id: teamData.anggota[1].anggota_id,
-          nama: data.member_name,
-          email: data.member_email,
-          telp: data.member_phone,
-          nisn: data.member_nisn,
-          alamat: data.member_address,
-          line: data.member_line,
-        },
-      ],
+      anggota,
     };
 
     toast.promise(
@@ -412,107 +419,109 @@ export default function UpdateUserNLC() {
                     </div>
                   </div>
 
-                  <div className='pt-8'>
-                    <h3 className='text-lg font-semibold leading-6 text-gray-900'>
-                      Data Anggota
-                    </h3>
-                    <div className='grid grid-cols-1 mt-6 gap-y-6 gap-x-4 sm:grid-cols-6'>
-                      <div className='sm:col-span-4'>
-                        <LightInput
-                          label='Nama'
-                          id='member_name'
-                          type='text'
-                          disabled={!isEditing}
-                          validation={{ required: 'Nama tidak boleh kosong' }}
-                        />
-                      </div>
-
-                      <div className='sm:col-span-4'>
-                        <LightInput
-                          label='Email'
-                          id='member_email'
-                          type='email'
-                          disabled={!isEditing}
-                          validation={{
-                            required: 'Email tidak boleh kosong',
-                            pattern: {
-                              value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                              message: 'Email tidak valid',
-                            },
-                          }}
-                        />
-                      </div>
-
-                      <div className='sm:col-span-3'>
-                        <LightInput
-                          label='NISN'
-                          id='member_nisn'
-                          type='text'
-                          disabled={!isEditing}
-                          validation={{ required: 'NISN tidak boleh kosong' }}
-                        />
-                      </div>
-
-                      <div className='sm:col-span-4'>
-                        <LightInput
-                          label='Nomor Telepon'
-                          id='member_phone'
-                          type='text'
-                          disabled={!isEditing}
-                          placeholder='+6281234567890'
-                          helperText='Nomor Telepon diawali +62'
-                          validation={{
-                            required: 'Nomor Telepon tidak boleh kosong',
-                            pattern: {
-                              value: /^\+628[1-9][0-9]{7,11}$/,
-                              message:
-                                'Nomor Telepon harus diawali +62 dan memiliki panjang 13-15 karakter',
-                            },
-                          }}
-                        />
-                      </div>
-
-                      <div className='sm:col-span-2'>
-                        <LightInput
-                          label='ID Line (Opsional)'
-                          id='member_line'
-                          type='text'
-                          disabled={!isEditing}
-                        />
-                      </div>
-
-                      <div className='sm:col-span-6'>
-                        <LightInput
-                          label='Alamat'
-                          id='member_address'
-                          type='text'
-                          disabled={!isEditing}
-                          validation={{
-                            required: 'Alamat tidak boleh kosong',
-                          }}
-                        />
-                      </div>
-
-                      {teamData && (
-                        <div className='col-span-full'>
-                          <label
-                            htmlFor={teamData?.anggota[1]?.url}
-                            className='block text-sm font-normal text-gray-700'
-                          >
-                            Foto Kartu Pelajar/Surat Keterangan Siswa Aktif
-                          </label>
-                          <div className='relative mt-1'>
-                            <ImageLightbox
-                              src={teamData?.anggota[1]?.url}
-                              alt='Foto Kartu Pelajar/Surat Keterangan Siswa Aktif Anggota'
-                              className='max-h-80'
-                              id={teamData?.anggota[1]?.url}
-                            />
-                          </div>
+                  {teamData?.anggota[1] && (
+                    <div className='pt-8'>
+                      <h3 className='text-lg font-semibold leading-6 text-gray-900'>
+                        Data Anggota
+                      </h3>
+                      <div className='grid grid-cols-1 mt-6 gap-y-6 gap-x-4 sm:grid-cols-6'>
+                        <div className='sm:col-span-4'>
+                          <LightInput
+                            label='Nama'
+                            id='member_name'
+                            type='text'
+                            disabled={!isEditing}
+                            validation={{ required: 'Nama tidak boleh kosong' }}
+                          />
                         </div>
-                      )}
+
+                        <div className='sm:col-span-4'>
+                          <LightInput
+                            label='Email'
+                            id='member_email'
+                            type='email'
+                            disabled={!isEditing}
+                            validation={{
+                              required: 'Email tidak boleh kosong',
+                              pattern: {
+                                value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                                message: 'Email tidak valid',
+                              },
+                            }}
+                          />
+                        </div>
+
+                        <div className='sm:col-span-3'>
+                          <LightInput
+                            label='NISN'
+                            id='member_nisn'
+                            type='text'
+                            disabled={!isEditing}
+                            validation={{ required: 'NISN tidak boleh kosong' }}
+                          />
+                        </div>
+
+                        <div className='sm:col-span-4'>
+                          <LightInput
+                            label='Nomor Telepon'
+                            id='member_phone'
+                            type='text'
+                            disabled={!isEditing}
+                            placeholder='+6281234567890'
+                            helperText='Nomor Telepon diawali +62'
+                            validation={{
+                              required: 'Nomor Telepon tidak boleh kosong',
+                              pattern: {
+                                value: /^\+628[1-9][0-9]{7,11}$/,
+                                message:
+                                  'Nomor Telepon harus diawali +62 dan memiliki panjang 13-15 karakter',
+                              },
+                            }}
+                          />
+                        </div>
+
+                        <div className='sm:col-span-2'>
+                          <LightInput
+                            label='ID Line (Opsional)'
+                            id='member_line'
+                            type='text'
+                            disabled={!isEditing}
+                          />
+                        </div>
+
+                        <div className='sm:col-span-6'>
+                          <LightInput
+                            label='Alamat'
+                            id='member_address'
+                            type='text'
+                            disabled={!isEditing}
+                            validation={{
+                              required: 'Alamat tidak boleh kosong',
+                            }}
+                          />
+                        </div>
+
+                        {teamData && (
+                          <div className='col-span-full'>
+                            <label
+                              htmlFor={teamData?.anggota[1]?.url}
+                              className='block text-sm font-normal text-gray-700'
+                            >
+                              Foto Kartu Pelajar/Surat Keterangan Siswa Aktif
+                            </label>
+                            <div className='relative mt-1'>
+                              <ImageLightbox
+                                src={teamData?.anggota[1]?.url}
+                                alt='Foto Kartu Pelajar/Surat Keterangan Siswa Aktif Anggota'
+                                className='max-h-80'
+                                id={teamData?.anggota[1]?.url}
+                              />
+                            </div>
+                          </div>
+                        )}
+                      </div>
                     </div>
-                  </div>
+                  )}
 
                   <div className='pt-8'>
                     <h3 className='text-lg font-semibold leading-6 text-gray-900'>
