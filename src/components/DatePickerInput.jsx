@@ -4,7 +4,7 @@ import localeID from 'date-fns/locale/id';
 import { Controller, useFormContext } from 'react-hook-form';
 import { HiOutlineCalendar } from 'react-icons/hi';
 
-import { classNames } from '@/lib/helper';
+import { classNames, formatUTC } from '@/lib/helper';
 
 export default function DatePickerInput({
   validation,
@@ -45,8 +45,8 @@ export default function DatePickerInput({
                 name={id}
                 locale={localeID}
                 onBlur={onBlur}
-                onChange={onChange}
-                selected={value}
+                onChange={(date) => onChange(formatUTC(date))}
+                selected={formatUTC(value, true)}
                 className={classNames(
                   readOnly
                     ? 'bg-gray-100 focus:ring-0 cursor-not-allowed border-gray-300 focus:border-gray-300'

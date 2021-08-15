@@ -6,6 +6,8 @@ import { IoMdMore, IoMdRefresh } from 'react-icons/io';
 import { ImSpinner } from 'react-icons/im';
 import toast from 'react-hot-toast';
 import axios from 'axios';
+import { format } from 'date-fns';
+import localeID from 'date-fns/locale/id';
 
 import useLoadingToast from '@/hooks/useLoadingToast';
 import { emptyPostWithToken } from '@/lib/swr';
@@ -54,21 +56,31 @@ export default function Voucher() {
       {
         Header: 'Tanggal Mulai',
         accessor: (d) => {
-          return new Date(d.tanggal_mulai).toLocaleDateString('id-ID', {
-            day: 'numeric',
-            month: 'long',
-            year: 'numeric',
-          });
+          let formattedTime = new Date(d.tanggal_mulai);
+          formattedTime.setHours(formattedTime.getHours() + 7);
+
+          return (
+            <p>
+              {format(formattedTime, 'dd MMMM yyyy HH:mm:ss', {
+                locale: localeID,
+              })}
+            </p>
+          );
         },
       },
       {
         Header: 'Tanggal Berakhir',
         accessor: (d) => {
-          return new Date(d.tanggal_berakhir).toLocaleDateString('id-ID', {
-            day: 'numeric',
-            month: 'long',
-            year: 'numeric',
-          });
+          let formattedTime = new Date(d.tanggal_berakhir);
+          formattedTime.setHours(formattedTime.getHours() + 7);
+
+          return (
+            <p>
+              {format(formattedTime, 'dd MMMM yyyy HH:mm:ss', {
+                locale: localeID,
+              })}
+            </p>
+          );
         },
       },
       {
