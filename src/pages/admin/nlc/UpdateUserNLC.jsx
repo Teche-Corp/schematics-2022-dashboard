@@ -33,6 +33,7 @@ export default function UpdateUserNLC() {
 
   const [isEditing, setIsEditing] = useState(false);
   const [isOpenAlert, setIsOpenAlert] = useState(false);
+  const [teamData, setTeamData] = useState(undefined);
   const isLoading = useLoadingToast();
 
   const page = query.get('page');
@@ -58,7 +59,18 @@ export default function UpdateUserNLC() {
     loading: 'Mengambil data tim...',
     success: 'Data tim berhasil diambil',
   });
-  const teamData = detailTim?.data;
+  const team = detailTim?.data;
+
+  useEffect(() => {
+    if (team) {
+      team?.anggota?.forEach((item, index, team) => {
+        if (item.role === 'KETUA') {
+          team.unshift(team.splice(index, 1)[0]);
+        }
+      });
+      setTeamData(team);
+    }
+  }, [team]);
 
   const methods = useForm();
   const {
