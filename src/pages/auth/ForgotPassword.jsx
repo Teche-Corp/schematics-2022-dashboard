@@ -1,33 +1,25 @@
 import axios from 'axios';
 import toast from 'react-hot-toast';
-import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { Link } from 'react-router-dom';
 
 import Input from '@/components/Input';
 import AuthHeader from '@/components/AuthHeader';
 import SubmitButton from '@/components/SubmitButton';
 
+import { defaultToastMessage } from '@/lib/helper';
+import useLoadingToast from '@/hooks/useLoadingToast';
+
 export default function ForgotPassword() {
   const methods = useForm();
-  const [loading, setLoading] = useState(false);
   const { handleSubmit } = methods;
+  const isLoading = useLoadingToast();
 
   const handleForgot = async (data) => {
-    try {
-      setLoading(true);
-      const res = await axios.post('/user/forgot-password', data);
-      const { jwt: token } = res.data.data;
-      localStorage.setItem('token', token);
-
-      setLoading(false);
-      toast.success(`Mohon mengecek email ${data.email} untuk melakukan reset`);
-    } catch (err) {
-      // eslint-disable-next-line no-console
-      console.error(err);
-      toast.error(err.response.data.msg);
-    } finally {
-      setLoading(false);
-    }
+    toast.promise(axios.post('/user/forgot-password', data), {
+      ...defaultToastMessage,
+      success: `Silahkan cek email ${data.email} untuk melakukan reset password`,
+    });
   };
 
   return (
@@ -56,9 +48,18 @@ export default function ForgotPassword() {
                   />
 
                   <div>
-                    <SubmitButton loading={loading}>
+                    <SubmitButton loading={isLoading}>
                       Reset Password
                     </SubmitButton>
+                  </div>
+
+                  <div>
+                    <Link
+                      className='flex justify-center w-full px-4 py-2 text-sm font-medium border-2 rounded-md shadow-sm text-light-100 border-light-100 hover:text-dark hover:bg-light-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-light-100'
+                      to='/signin'
+                    >
+                      Kembali
+                    </Link>
                   </div>
                 </form>
               </FormProvider>
