@@ -126,7 +126,7 @@ const routeItems = [
     key: 'nst-event',
     path: '/my/sch-nst/ticket',
     component: EventNST,
-    visible: false,
+    visible: true,
   },
   {
     auth: 'user',
