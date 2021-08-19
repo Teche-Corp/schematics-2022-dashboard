@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.7](https://github.com/rizqitsani/fe-dashboard-schematics-2021/compare/v0.1.6...v0.1.7) (2021-08-19)
+
+
+### Features
+
+* add conditional update based on number of members ([169f54d](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/169f54d4d5d95bfb2483d5d14bd65e8e5f49fb17))
+* add link from sidebar to landing page ([8f51fdc](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/8f51fdca6670ab129eb3998c08583bcc7818f329))
+* add link information to TicketDetail ([cbf8e5c](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/cbf8e5c45c7b692140e6cbfd84ff22f7e9e54264))
+* clean up npc and add reset value ([65d5316](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/65d53168972b392c3965f0074afbc220aa056a58))
+* open user nst route ([ec39557](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/ec39557d55f53dcf5c518ded8a92600643222dcb))
+
+
+### Bug Fixes
+
+* datepicker wrong timezone ([c481b6c](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/c481b6c8faf06ce44b90daa8bb08c1f45d4fec3d))
+* forgot password flow ([79a1680](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/79a1680a0faa8e8d50bb9f8d9b8017924bbe29f4))
+* wrong team member order ([bce098c](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/bce098c61b04cd06e398abb300e1027ec0b8fbc9))
+
 ### [0.1.6](https://github.com/rizqitsani/fe-dashboard-schematics-2021/compare/v0.1.5...v0.1.6) (2021-08-13)
 
 
