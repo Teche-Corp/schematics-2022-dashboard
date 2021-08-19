@@ -13,6 +13,8 @@ import { classNames } from '@/lib/helper';
 import { BiBrain } from 'react-icons/bi';
 import { Link, useLocation } from 'react-router-dom';
 
+import UnstyledLink from '@/components/UnstyledLink';
+
 const navigation = [
   { name: 'Home', href: '/my', icon: HiHome, current: false },
   {
@@ -108,11 +110,16 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
                 </div>
               </Transition.Child>
               <div className='flex items-center flex-shrink-0 px-4'>
-                <img
-                  className='h-20 mx-auto'
-                  src={`${process.env.PUBLIC_URL}/images/logo/colored-title.png`}
-                  alt='colored-title'
-                />
+                <UnstyledLink
+                  openNewTab={false}
+                  href='https://schematics.its.ac.id/'
+                >
+                  <img
+                    className='h-20 mx-auto'
+                    src={`${process.env.PUBLIC_URL}/images/logo/colored-title.png`}
+                    alt='colored-title'
+                  />
+                </UnstyledLink>
               </div>
               <nav
                 className='flex-shrink-0 h-full mt-5 overflow-y-auto divide-y divide-dark-700'
@@ -174,11 +181,16 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
           {/* Sidebar component, swap this element with another sidebar if you like */}
           <div className='flex flex-col flex-grow pt-5 pb-4 overflow-y-auto bg-dark'>
             <div className='flex items-center flex-shrink-0 px-4'>
-              <img
-                className='h-20'
-                src={`${process.env.PUBLIC_URL}/images/logo/colored-title.png`}
-                alt='colored-title'
-              />
+              <UnstyledLink
+                openNewTab={false}
+                href='https://schematics.its.ac.id/'
+              >
+                <img
+                  className='h-20'
+                  src={`${process.env.PUBLIC_URL}/images/logo/colored-title.png`}
+                  alt='colored-title'
+                />
+              </UnstyledLink>
             </div>
             <nav
               className='flex flex-col flex-1 mt-5 overflow-y-auto divide-y divide-gray-600'
