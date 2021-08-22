@@ -29,7 +29,13 @@ const paymentMethod = [
   { text: 'QRIS', value: 0 },
   { text: 'Mandiri', value: 1 },
 ];
-const BASE_PRICE = 100000;
+const priceVariants = {
+  1: 100000,
+  3: 285000,
+  4: 380000,
+  5: 450000,
+  6: 540000,
+};
 
 export default function PaymentNLC() {
   const { nlc } = useTeamState();
@@ -42,7 +48,14 @@ export default function PaymentNLC() {
 
   const methods = useForm({ defaultValues: { 'payment-method': '0' } });
   const { handleSubmit, watch } = methods;
-  const { handleSubmit: handleSubmitVoucher, register } = useForm();
+  const voucherMethods = useForm({
+    defaultValues: { mode: 'gunakan', jumlahTim: '3' },
+  });
+  const {
+    handleSubmit: handleSubmitVoucher,
+    register,
+    watch: watchVoucher,
+  } = voucherMethods;
 
   const teamId = useTeamId('nlc');
   if (!teamId || nlc?.status_pembayaran !== null) {
@@ -53,6 +66,13 @@ export default function PaymentNLC() {
     () => nlc?.voucher?.kode_voucher && nlc?.voucher?.potongan_persen,
     [nlc],
   );
+
+  // KOMUNAL LOGIC
+  const mode = watchVoucher('mode');
+  const jumlahTim = watchVoucher('jumlahTim');
+  const timConditional = mode === 'komunal' ? jumlahTim : '1';
+
+  const BASE_PRICE = priceVariants[timConditional];
 
   // PRICING LOGIC
   const usedMethod = watch('payment-method');
@@ -160,35 +180,85 @@ export default function PaymentNLC() {
                   {numberToRupiah(finalPrice)}
                 </h4>
                 {!voucherIsApplied && (
-                  <form
-                    className='mt-5 sm:flex sm:items-center'
-                    onSubmit={handleSubmitVoucher(handleAddVoucher)}
-                  >
-                    <div className='w-full sm:max-w-xs'>
-                      <label htmlFor='voucher-code' className='sr-only'>
-                        Kode Voucher
-                      </label>
-                      <input
-                        {...register('voucher-code')}
-                        type='text'
-                        name='voucher-code'
-                        id='voucher-code'
-                        className='block w-full border-gray-300 rounded-md shadow-sm focus:ring-dark-400 focus:border-dark-400 sm:text-sm'
-                        placeholder='Masukkan kode voucher'
-                        aria-describedby='voucher-code'
-                      />
-                    </div>
-                    <button
-                      type='submit'
-                      disabled={isLoading}
-                      className={classNames(
-                        'inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-nlc hover:bg-nlc-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-nlc-400',
-                        isLoading && 'filter brightness-90 cursor-wait',
-                      )}
+                  <FormProvider {...voucherMethods}>
+                    <form
+                      className='mt-5'
+                      onSubmit={handleSubmitVoucher(handleAddVoucher)}
                     >
-                      Gunakan
-                    </button>
-                  </form>
+                      <div className='w-full mt-1 space-y-1 sm:max-w-xs'>
+                        <label>Pilihan Jenis Voucher</label>
+                        <div className='flex items-center gap-2 text-sm text-gray-700'>
+                          <input
+                            {...register('mode', { required: true })}
+                            id='radio1'
+                            type='radio'
+                            className='text-nlc'
+                            value='gunakan'
+                          />
+                          <label for='radio1'>Gunakan Voucher</label>
+                        </div>
+                        <div className='flex items-center gap-2 text-sm text-gray-700'>
+                          <input
+                            {...register('mode', { required: true })}
+                            id='radio2'
+                            type='radio'
+                            className='text-nlc'
+                            value='komunal'
+                          />
+                          <label for='radio2'>Buat Voucher Komunal</label>
+                        </div>
+                      </div>
+                      {mode === 'gunakan' ? (
+                        <div className='gap-3 mt-8 sm:flex sm:items-center'>
+                          <div className='w-full sm:max-w-xs'>
+                            <label htmlFor='voucher-code' className='sr-only'>
+                              Kode Voucher
+                            </label>
+                            <input
+                              {...register('voucher-code')}
+                              type='text'
+                              name='voucher-code'
+                              id='voucher-code'
+                              className='block w-full border-gray-300 rounded-md shadow-sm focus:ring-dark-400 focus:border-dark-400 sm:text-sm'
+                              placeholder='Masukkan kode voucher'
+                              aria-describedby='voucher-code'
+                            />
+                          </div>
+                          <button
+                            type='submit'
+                            disabled={isLoading}
+                            className={classNames(
+                              'inline-flex justify-center mt-2 sm:mt-0 px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-nlc hover:bg-nlc-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-nlc-400',
+                              isLoading && 'filter brightness-90 cursor-wait',
+                            )}
+                          >
+                            Gunakan
+                          </button>
+                        </div>
+                      ) : (
+                        <div className='mt-8'>
+                          <SelectInput
+                            label='Jumlah Tim Komunal'
+                            id='jumlahTim'
+                            options={jumlahTimOptions}
+                            validation={{
+                              required: 'Jumlah Tim tidak boleh kosong',
+                            }}
+                          />
+                          <button
+                            type='submit'
+                            disabled={isLoading}
+                            className={classNames(
+                              'inline-flex justify-center mt-4 sm:mt-0 px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-nlc hover:bg-nlc-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-nlc-400',
+                              isLoading && 'filter brightness-90 cursor-wait',
+                            )}
+                          >
+                            Buat
+                          </button>
+                        </div>
+                      )}
+                    </form>
+                  </FormProvider>
                 )}
                 {voucherIsApplied && (
                   <div className='px-4 py-2 mt-2 text-gray-700 bg-yellow-100 rounded shadow-sm'>
@@ -398,3 +468,10 @@ export default function PaymentNLC() {
     </DashboardShell>
   );
 }
+
+const jumlahTimOptions = [
+  { value: '3', text: '3' },
+  { value: '4', text: '4' },
+  { value: '5', text: '5' },
+  { value: '6', text: '6' },
+];
