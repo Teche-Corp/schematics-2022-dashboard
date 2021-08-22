@@ -58,6 +58,7 @@ export const useTeamState = () => useContext(StateContext);
 export const useTeamDispatch = () => useContext(DispatchContext);
 
 // Example NLC
+// eslint-disable-next-line no-unused-vars
 const ExampleNLC = {
   id: 5,
   nama_tim: 'asedfasdf',
