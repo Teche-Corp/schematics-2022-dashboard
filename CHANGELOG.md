@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.8](https://github.com/rizqitsani/fe-dashboard-schematics-2021/compare/v0.1.7...v0.1.8) (2021-08-28)
+
+
+### Bug Fixes
+
+* swr still fetch when page is null ([eb164de](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/eb164dead8697b1b8a79583e2b3ff4bb5407267a))
+* wrong http code on refresh token flow ([06e5640](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/06e56409726777266abd091135a9507ff5dda296))
+
 ### [0.1.7](https://github.com/rizqitsani/fe-dashboard-schematics-2021/compare/v0.1.6...v0.1.7) (2021-08-19)
 
 
