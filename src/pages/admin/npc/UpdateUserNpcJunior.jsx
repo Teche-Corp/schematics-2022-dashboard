@@ -42,7 +42,7 @@ export default function UpdateUserNpcJunior() {
   }
 
   const { revalidate: revalidateTable } = useSWR(
-    [`/admin/list/tim/npcj?page=${page}`],
+    page ? `/admin/list/tim/npcj?page=${page}` : '/admin/list/tim/npcj',
     getWithToken,
     {
       revalidateOnFocus: false,

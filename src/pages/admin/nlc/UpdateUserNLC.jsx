@@ -43,7 +43,7 @@ export default function UpdateUserNLC() {
 
   // Data Fetching
   const { revalidate: revalidateTable } = useSWR(
-    `/admin/list/tim/nlc?page=${page}`,
+    page ? `/admin/list/tim/nlc?page=${page}` : '/admin/list/tim/nlc',
     getWithToken,
     {
       revalidateOnFocus: false,

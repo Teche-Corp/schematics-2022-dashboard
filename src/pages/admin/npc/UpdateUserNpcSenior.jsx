@@ -43,7 +43,7 @@ export default function UpdateUserNpcSenior() {
   }
 
   const { revalidate: revalidateTable } = useSWR(
-    `/admin/list/tim/npcs?page=${page}`,
+    page ? `/admin/list/tim/npcs?page=${page}` : '/admin/list/tim/npcs',
     getWithToken,
     {
       revalidateOnFocus: false,
