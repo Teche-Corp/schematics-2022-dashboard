@@ -35,6 +35,7 @@
   },
   "scripts": {
     "start": "craco start",
+    "dev": "BROWSER=none yarn start",
     "build": "craco build",
     "build-prod": "PUBLIC_URL=/dashboard craco build",
     "test": "craco test",
