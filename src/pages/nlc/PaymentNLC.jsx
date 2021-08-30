@@ -53,14 +53,11 @@ export default function PaymentNLC() {
     getWithToken,
   );
 
-  useSWRLoadingToast(
-    hasCommunal ? communalVoucherData : 'omit',
-    errorCommunalVoucher,
-    {
-      loading: 'Mengambil data voucher komunal',
-      success: 'Data voucher berhasil diambil',
-    },
-  );
+  useSWRLoadingToast(communalVoucherData, errorCommunalVoucher, {
+    condition: hasCommunal,
+    loading: 'Mengambil data voucher komunal',
+    success: 'Data voucher berhasil diambil',
+  });
 
   const history = useHistory();
 
