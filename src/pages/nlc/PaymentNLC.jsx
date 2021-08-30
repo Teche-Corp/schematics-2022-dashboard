@@ -27,6 +27,7 @@ import {
   defaultToastMessage,
 } from '@/lib/helper';
 import { getWithToken } from '@/lib/swr';
+import InformationBlock from '@/components/InformationBlock';
 
 const paymentMethod = [
   { text: 'QRIS', value: 0 },
@@ -333,13 +334,25 @@ export default function PaymentNLC() {
                 </FormProvider>
 
                 {voucherIsApplied && (
-                  <div className='px-4 py-2 mt-2 text-gray-700 bg-yellow-100 rounded shadow-sm'>
-                    Voucher{' '}
-                    <span className='font-bold text-gray-900'>
-                      {nlc?.voucher?.kode_voucher}
-                    </span>{' '}
-                    digunakan
-                  </div>
+                  <>
+                    <div className='px-4 py-2 mt-2 text-gray-700 bg-yellow-100 rounded shadow-sm'>
+                      Voucher{' '}
+                      <span className='font-bold text-gray-900'>
+                        {nlc?.voucher?.kode_voucher}
+                      </span>{' '}
+                      digunakan
+                    </div>
+                    {nlc?.voucher?.kode_voucher?.includes('SCH-TEAM-NLC') && (
+                      <InformationBlock containerClassNames='mt-4'>
+                        <p>
+                          Anda tetap
+                          <strong>WAJIB</strong> mengisi bukti pembayaran
+                          menggunakan data yang <strong>sama</strong> dengan{' '}
+                          <strong>pembuat</strong> komunal.
+                        </p>
+                      </InformationBlock>
+                    )}
+                  </>
                 )}
 
                 {communalVoucherData && (
@@ -348,6 +361,10 @@ export default function PaymentNLC() {
                     <div className='px-4 py-2 mt-2 text-sm font-bold text-gray-800 bg-yellow-100 rounded shadow-sm'>
                       {communalVoucherData.data.kode_voucher}
                     </div>
+                    <p className='mt-2 text-sm text-gray-700'>
+                      Voucher berlaku sampai{' '}
+                      {communalVoucherData?.data?.tanggal_berakhir}.
+                    </p>
                     <p className='mt-2 text-sm text-red-500'>
                       Voucher akan dapat digunakan setelah pembayaran
                       dikonfirmasi admin.
