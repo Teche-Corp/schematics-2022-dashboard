@@ -1,8 +1,9 @@
-import { useEffect, useMemo, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import { FormProvider, useForm } from 'react-hook-form';
+import useSWR from 'swr';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { Link, useHistory } from 'react-router-dom';
+import { useEffect, useMemo, useState } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
 
 import { HiOutlineArrowCircleLeft } from 'react-icons/hi';
 
@@ -10,6 +11,7 @@ import { useTeamDispatch, useTeamState } from '@/contexts/TeamContext';
 
 import useLoadingToast from '@/hooks/useLoadingToast';
 import useTeamId from '@/hooks/useTeamId';
+import useSWRLoadingToast from '@/hooks/useSWRLoadingToast';
 
 import DashboardShell from '@/layout/DashboardShell';
 import DragnDropInput from '@/components/DragnDropInput';
@@ -24,6 +26,7 @@ import {
   calculateDiscount,
   defaultToastMessage,
 } from '@/lib/helper';
+import { getWithToken } from '@/lib/swr';
 
 const paymentMethod = [
   { text: 'QRIS', value: 0 },
@@ -43,6 +46,21 @@ export default function PaymentNLC() {
   const isLoading = useLoadingToast();
 
   const [currentTab, setCurrentTab] = useState(0);
+  const hasCommunal = Boolean(nlc?.communal_voucher_created);
+
+  const { data: communalVoucherData, error: errorCommunalVoucher } = useSWR(
+    hasCommunal ? '/nlc/communal_voucher/using' : null,
+    getWithToken,
+  );
+
+  useSWRLoadingToast(
+    hasCommunal ? communalVoucherData : 'omit',
+    errorCommunalVoucher,
+    {
+      loading: 'Mengambil data voucher komunal',
+      success: 'Data voucher berhasil diambil',
+    },
+  );
 
   const history = useHistory();
 
@@ -55,7 +73,16 @@ export default function PaymentNLC() {
     handleSubmit: handleSubmitVoucher,
     register,
     watch: watchVoucher,
+    setValue: setVoucherFormValue,
   } = voucherMethods;
+
+  // Set jumlah tim to communal limit_jumlah
+  useEffect(() => {
+    if (communalVoucherData) {
+      setVoucherFormValue('mode', 'komunal');
+      setVoucherFormValue('jumlahTim', communalVoucherData?.data?.limit_jumlah);
+    }
+  }, [communalVoucherData, setVoucherFormValue]);
 
   const teamId = useTeamId('nlc');
   if (!teamId || nlc?.status_pembayaran !== null) {
@@ -70,7 +97,7 @@ export default function PaymentNLC() {
   // KOMUNAL LOGIC
   const mode = watchVoucher('mode');
   const jumlahTim = watchVoucher('jumlahTim');
-  const timConditional = mode === 'komunal' ? jumlahTim : '1';
+  const timConditional = mode === 'komunal' ? jumlahTim + '' : '1';
 
   const BASE_PRICE = priceVariants[timConditional];
 
@@ -93,30 +120,58 @@ export default function PaymentNLC() {
   };
 
   const handleAddVoucher = (data) => {
-    const body = {
-      kode_voucher: data['voucher-code'],
-      team_id: teamId,
-    };
+    if (mode === 'gunakan') {
+      const body = {
+        kode_voucher: data['voucher-code'],
+        team_id: teamId,
+      };
 
-    toast.promise(
-      axios
-        .post('/pembayaran/apply_voucher', body, {
-          headers: {
-            ...bearerToken(),
-            'Content-Type': 'application/json',
-          },
-        })
-        .then((res) => {
-          teamDispatch('STORE_NLC', {
-            ...nlc,
-            voucher: { ...res?.data?.data },
-          });
-        }),
-      {
-        ...defaultToastMessage,
-        success: 'Voucher berhasil digunakan!',
-      },
-    );
+      toast.promise(
+        axios
+          .post('/pembayaran/apply_voucher', body, {
+            headers: {
+              ...bearerToken(),
+              'Content-Type': 'application/json',
+            },
+          })
+          .then((res) => {
+            teamDispatch('STORE_NLC', {
+              ...nlc,
+              voucher: { ...res?.data?.data },
+            });
+          }),
+        {
+          ...defaultToastMessage,
+          success: 'Voucher berhasil digunakan!',
+        },
+      );
+    } else if (mode === 'komunal') {
+      const body = {
+        jumlah_tim: parseInt(data.jumlahTim),
+      };
+
+      toast.promise(
+        axios
+          .post('/nlc/communal_voucher/create', body, {
+            headers: {
+              ...bearerToken(),
+              'Content-Type': 'application/json',
+            },
+          })
+          .then((_) => {
+            // if success, mutate to true
+            // so SWR can fetch communal data
+            teamDispatch('STORE_NLC', {
+              ...nlc,
+              communal_voucher_created: true,
+            });
+          }),
+        {
+          ...defaultToastMessage,
+          success: 'Voucher komunal berhasil dibuat!',
+        },
+      );
+    }
   };
 
   const handleUpload = async (data) => {
@@ -179,87 +234,107 @@ export default function PaymentNLC() {
                 <h4 className='text-4xl font-bold'>
                   {numberToRupiah(finalPrice)}
                 </h4>
-                {!voucherIsApplied && (
-                  <FormProvider {...voucherMethods}>
-                    <form
-                      className='mt-5'
-                      onSubmit={handleSubmitVoucher(handleAddVoucher)}
-                    >
-                      <div className='w-full mt-1 space-y-1 sm:max-w-xs'>
-                        <label>Pilihan Jenis Voucher</label>
-                        <div className='flex items-center gap-2 text-sm text-gray-700'>
-                          <input
-                            {...register('mode', { required: true })}
-                            id='radio1'
-                            type='radio'
-                            className='text-nlc'
-                            value='gunakan'
-                          />
-                          <label for='radio1'>Gunakan Voucher</label>
-                        </div>
-                        <div className='flex items-center gap-2 text-sm text-gray-700'>
-                          <input
-                            {...register('mode', { required: true })}
-                            id='radio2'
-                            type='radio'
-                            className='text-nlc'
-                            value='komunal'
-                          />
-                          <label for='radio2'>Buat Voucher Komunal</label>
-                        </div>
+
+                {/*  */}
+                <FormProvider {...voucherMethods}>
+                  <form
+                    className={classNames(
+                      'mt-5',
+                      (voucherIsApplied || hasCommunal) && 'hidden',
+                    )}
+                    onSubmit={handleSubmitVoucher(handleAddVoucher)}
+                  >
+                    <div className='w-full mt-1 space-y-1 sm:max-w-xs'>
+                      <label>Pilihan Jenis Voucher</label>
+                      <div className='space-x-2 text-sm text-gray-700'>
+                        <input
+                          {...register('mode', { required: true })}
+                          id='radio1'
+                          type='radio'
+                          className='text-nlc'
+                          value='gunakan'
+                        />
+                        <label
+                          htmlFor='radio1'
+                          className='inline-block align-middle'
+                        >
+                          Gunakan Voucher
+                        </label>
                       </div>
-                      {mode === 'gunakan' ? (
-                        <div className='gap-3 mt-8 sm:flex sm:items-center'>
-                          <div className='w-full sm:max-w-xs'>
-                            <label htmlFor='voucher-code' className='sr-only'>
-                              Kode Voucher
-                            </label>
-                            <input
-                              {...register('voucher-code')}
-                              type='text'
-                              name='voucher-code'
-                              id='voucher-code'
-                              className='block w-full border-gray-300 rounded-md shadow-sm focus:ring-dark-400 focus:border-dark-400 sm:text-sm'
-                              placeholder='Masukkan kode voucher'
-                              aria-describedby='voucher-code'
-                            />
-                          </div>
-                          <button
-                            type='submit'
-                            disabled={isLoading}
-                            className={classNames(
-                              'inline-flex justify-center mt-2 sm:mt-0 px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-nlc hover:bg-nlc-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-nlc-400',
-                              isLoading && 'filter brightness-90 cursor-wait',
-                            )}
-                          >
-                            Gunakan
-                          </button>
-                        </div>
-                      ) : (
-                        <div className='mt-8'>
-                          <SelectInput
-                            label='Jumlah Tim Komunal'
-                            id='jumlahTim'
-                            options={jumlahTimOptions}
-                            validation={{
-                              required: 'Jumlah Tim tidak boleh kosong',
-                            }}
+                      <div className='space-x-2 text-sm text-gray-700'>
+                        <input
+                          {...register('mode', { required: true })}
+                          id='radio2'
+                          type='radio'
+                          className='text-nlc'
+                          value='komunal'
+                        />
+                        <label
+                          htmlFor='radio2'
+                          className='inline-block align-middle'
+                        >
+                          Buat Voucher Komunal
+                        </label>
+                      </div>
+                    </div>
+                    {mode === 'gunakan' ? (
+                      <div className='gap-3 mt-8 sm:flex sm:items-center'>
+                        <div className='w-full sm:max-w-xs'>
+                          <label htmlFor='voucher-code' className='sr-only'>
+                            Kode Voucher
+                          </label>
+                          <input
+                            {...register('voucher-code')}
+                            type='text'
+                            name='voucher-code'
+                            id='voucher-code'
+                            className='block w-full border-gray-300 rounded-md shadow-sm focus:ring-dark-400 focus:border-dark-400 sm:text-sm'
+                            placeholder='Masukkan kode voucher'
+                            aria-describedby='voucher-code'
                           />
-                          <button
-                            type='submit'
-                            disabled={isLoading}
-                            className={classNames(
-                              'inline-flex justify-center mt-4 sm:mt-0 px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-nlc hover:bg-nlc-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-nlc-400',
-                              isLoading && 'filter brightness-90 cursor-wait',
-                            )}
-                          >
-                            Buat
-                          </button>
                         </div>
-                      )}
-                    </form>
-                  </FormProvider>
-                )}
+                        <button
+                          type='submit'
+                          disabled={isLoading}
+                          className={classNames(
+                            'inline-flex justify-center mt-2 sm:mt-0 px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-nlc hover:bg-nlc-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-nlc-400',
+                            isLoading && 'filter brightness-90 cursor-wait',
+                          )}
+                        >
+                          Gunakan
+                        </button>
+                      </div>
+                    ) : (
+                      <>
+                        {hasCommunal ? (
+                          <p>hasCommunal</p>
+                        ) : (
+                          <div className='mt-8'>
+                            <SelectInput
+                              label='Jumlah Tim Komunal'
+                              id='jumlahTim'
+                              options={jumlahTimOptions}
+                              validation={{
+                                required: 'Jumlah Tim tidak boleh kosong',
+                              }}
+                            />
+                            <button
+                              type='submit'
+                              disabled={isLoading}
+                              className={classNames(
+                                'inline-flex justify-center mt-2 px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-nlc hover:bg-nlc-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-nlc-400',
+                                isLoading && 'filter brightness-90 cursor-wait',
+                              )}
+                            >
+                              Buat
+                            </button>
+                          </div>
+                        )}
+                      </>
+                    )}
+                  </form>
+                </FormProvider>
+
                 {voucherIsApplied && (
                   <div className='px-4 py-2 mt-2 text-gray-700 bg-yellow-100 rounded shadow-sm'>
                     Voucher{' '}
@@ -267,6 +342,19 @@ export default function PaymentNLC() {
                       {nlc?.voucher?.kode_voucher}
                     </span>{' '}
                     digunakan
+                  </div>
+                )}
+
+                {communalVoucherData && (
+                  <div className='mt-4'>
+                    <h3 className='font-semibold'>Kode Voucher Komunal:</h3>
+                    <div className='px-4 py-2 mt-2 text-sm font-bold text-gray-800 bg-yellow-100 rounded shadow-sm'>
+                      {communalVoucherData.data.kode_voucher}
+                    </div>
+                    <p className='mt-2 text-sm text-red-500'>
+                      Voucher akan dapat digunakan setelah pembayaran
+                      dikonfirmasi admin.
+                    </p>
                   </div>
                 )}
               </div>
