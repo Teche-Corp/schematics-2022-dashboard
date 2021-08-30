@@ -1,3 +1,4 @@
+import useSWR from 'swr';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
@@ -13,6 +14,9 @@ import {
 
 import { useTeamDispatch, useTeamState } from '@/contexts/TeamContext';
 
+import useTeamId from '@/hooks/useTeamId';
+import useSWRLoadingToast from '@/hooks/useSWRLoadingToast';
+
 import DashboardShell from '@/layout/DashboardShell';
 import CenteredAccordion from '@/components/CenteredAccordion';
 import HorizontalTimeline from '@/components/HorizontalTimeline';
@@ -20,7 +24,8 @@ import TeamDetail from '@/components/TeamDetail';
 import TeamMemberDetail from '@/components/TeamMemberDetail';
 
 import { bearerToken, classNames } from '@/lib/helper';
-import useTeamId from '@/hooks/useTeamId';
+import { getWithToken } from '@/lib/swr';
+import InformationBlock from '@/components/InformationBlock';
 
 const dataTimeline = [
   {
@@ -76,6 +81,18 @@ export default function EventNLC() {
   );
 
   const teamLoaded = Boolean(nlc);
+
+  const hasCommunal = Boolean(nlc?.communal_voucher_created);
+  const { data: communalVoucherData, error: errorCommunalVoucher } = useSWR(
+    hasCommunal ? '/nlc/communal_voucher/using' : null,
+    getWithToken,
+  );
+
+  useSWRLoadingToast(communalVoucherData, errorCommunalVoucher, {
+    runCondition: hasCommunal,
+    loading: 'Mengambil data voucher komunal',
+    success: 'Data voucher berhasil diambil',
+  });
 
   useEffect(() => {
     const loadTeam = async () => {
@@ -220,7 +237,7 @@ export default function EventNLC() {
                         <div className='rounded-md shadow'>
                           {/* passing undefined so link won't be clickable */}
                           <Link
-                            to={teamLoaded ? '/my/sch-nlc/payment' : undefined}
+                            to={teamLoaded ? '/my/sch-nlc/payment' : '#'}
                             className={classNames(
                               'flex items-center justify-center px-4 py-2 font-medium text-white border border-transparent rounded-md shadow-sm bg-nlc hover:bg-nlc-400',
                               !teamLoaded && 'filter brightness-75 cursor-wait',
@@ -233,6 +250,62 @@ export default function EventNLC() {
                     )}
                   </div>
                 </section>
+
+                {/* DETAIL VOUCHER KOMUNAL */}
+                {hasCommunal && (
+                  <section className='px-4 mt-10 space-y-10 sm:px-6 md:px-0'>
+                    <h2 className='text-3xl font-extrabold tracking-tight text-center text-gray-900 sm:text-4xl md:text-5xl'>
+                      <span className='block xl:inline'>Detail</span>{' '}
+                      <span className='block text-nlc xl:inline'>
+                        Voucher Komunal
+                      </span>
+                    </h2>
+                    {communalVoucherData && (
+                      <div className='py-4 overflow-hidden bg-white sm:border sm:shadow sm:py-8 sm:px-6 lg:px-8 sm:rounded-lg'>
+                        <div className='mt-4'>
+                          <h3 className='font-semibold'>
+                            Kode Voucher Komunal:
+                          </h3>
+                          <div className='inline-block px-4 py-2 mt-2 text-sm font-bold text-gray-800 bg-yellow-100 rounded shadow-sm'>
+                            {communalVoucherData?.data?.kode_voucher}
+                          </div>
+                          <p className='mt-2 text-sm text-gray-700'>
+                            Voucher berlaku sampai{' '}
+                            {communalVoucherData?.data?.tanggal_berakhir}.
+                          </p>
+                          {dataTeam?.payment !== 'paid' && (
+                            <p className='mt-2 text-sm text-red-500'>
+                              Voucher akan dapat digunakan setelah pembayaran
+                              dikonfirmasi admin.
+                            </p>
+                          )}
+                        </div>
+                        <p className='mt-6 font-semibold'>
+                          <span className='p-1 bg-yellow-100 rounded'>
+                            {communalVoucherData?.data?.team_using?.length ?? 0}{' '}
+                            / {communalVoucherData?.data?.limit_jumlah ?? 0}
+                          </span>{' '}
+                          Tim menggunakan:
+                        </p>
+                        <ol className='mt-2 space-y-2 list-decimal list-inside'>
+                          {communalVoucherData?.data?.team_using?.map(
+                            ({ team_id, team_name }) => (
+                              <li key={team_id}>{team_name}</li>
+                            ),
+                          )}
+                        </ol>
+                        <InformationBlock containerClassNames='mt-4'>
+                          <p>
+                            Tim komunal lain yang menggunakan voucher,{' '}
+                            <strong>WAJIB</strong> mengisi bukti pembayaran
+                            menggunakan data yang sama dengan pembuat voucher.
+                          </p>
+                        </InformationBlock>
+                      </div>
+                    )}
+                  </section>
+                )}
+                {/* DETAIL VOUCHER KOMUNAL END */}
               </>
             )}
           </div>
