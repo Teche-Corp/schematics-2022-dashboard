@@ -54,7 +54,7 @@ export default function PaymentNLC() {
   );
 
   useSWRLoadingToast(communalVoucherData, errorCommunalVoucher, {
-    condition: hasCommunal,
+    runCondition: hasCommunal,
     loading: 'Mengambil data voucher komunal',
     success: 'Data voucher berhasil diambil',
   });

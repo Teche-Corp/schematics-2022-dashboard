@@ -4,7 +4,7 @@ import toast from 'react-hot-toast';
 export default function useSWRLoadingToast(
   data,
   error,
-  { condition = false, ...customMessages } = {},
+  { runCondition = false, ...customMessages } = {},
 ) {
   const [toastId, setToastId] = useState(data ? 'done' : 'idle');
 
@@ -18,7 +18,7 @@ export default function useSWRLoadingToast(
   useEffect(() => {
     // if toastId is done,
     // then it is not the first render or the data is already cached
-    if (condition) return;
+    if (!runCondition) return;
     if (toastId === 'done') return;
 
     if (error) {
@@ -36,5 +36,5 @@ export default function useSWRLoadingToast(
     };
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, error, condition]);
+  }, [data, error, runCondition]);
 }
