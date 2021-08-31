@@ -107,7 +107,9 @@ export default function PaymentNLC() {
     ? calculateDiscount(BASE_PRICE, nlc?.voucher?.potongan_persen)
     : BASE_PRICE;
   const finalPrice =
-    usedMethod === '0' ? calculatedPrice + 1000 : calculatedPrice;
+    usedMethod === '0' && !nlc?.voucher?.kode_voucher?.includes('SCH-TEAM-NLC')
+      ? calculatedPrice + 1000
+      : calculatedPrice;
   const finalBasePrice = usedMethod === '0' ? BASE_PRICE + 1000 : BASE_PRICE;
 
   let voucherExpireTime;
@@ -490,10 +492,8 @@ export default function PaymentNLC() {
                         <ol className='pt-3 pl-4 space-y-3 list-decimal list-outside'>
                           <li>
                             Peserta melakukan pembayaran sebesar{' '}
-                            <strong>
-                              {numberToRupiah(calculatedPrice + 1000)}
-                            </strong>{' '}
-                            ke QR Code QRIS di bawah ini dengan atas nama{' '}
+                            <strong>{numberToRupiah(finalPrice)}</strong> ke QR
+                            Code QRIS di bawah ini dengan atas nama{' '}
                             <strong>Schematics ITS</strong>
                             <img
                               className='h-48'
@@ -536,8 +536,8 @@ export default function PaymentNLC() {
                         <ol className='pt-3 pl-4 space-y-3 list-decimal list-outside'>
                           <li>
                             Peserta melakukan pembayaran sebesar{' '}
-                            <strong>{numberToRupiah(calculatedPrice)}</strong>{' '}
-                            ke rekening{' '}
+                            <strong>{numberToRupiah(finalPrice)}</strong> ke
+                            rekening{' '}
                             <strong>
                               Bank Mandiri 1020009828846 a.n RAFIQI RACHMAT
                             </strong>

@@ -297,7 +297,8 @@ export default function EventNLC() {
                         </div>
                         <p className='mt-6 font-semibold'>
                           <span className='p-1 bg-yellow-100 rounded'>
-                            {communalVoucherData?.data?.team_using?.length ?? 0}{' '}
+                            {communalVoucherData?.data?.teams_using?.length ??
+                              0}{' '}
                             / {communalVoucherData?.data?.limit_jumlah ?? 0}
                           </span>{' '}
                           Tim menggunakan:
