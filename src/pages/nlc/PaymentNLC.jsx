@@ -107,6 +107,7 @@ export default function PaymentNLC() {
     ? calculateDiscount(BASE_PRICE, nlc?.voucher?.potongan_persen)
     : BASE_PRICE;
   const finalPrice =
+    // dont add qris admin fee if using communal voucher
     usedMethod === '0' && !nlc?.voucher?.kode_voucher?.includes('SCH-TEAM-NLC')
       ? calculatedPrice + 1000
       : calculatedPrice;
@@ -492,8 +493,16 @@ export default function PaymentNLC() {
                         <ol className='pt-3 pl-4 space-y-3 list-decimal list-outside'>
                           <li>
                             Peserta melakukan pembayaran sebesar{' '}
-                            <strong>{numberToRupiah(finalPrice)}</strong> ke QR
-                            Code QRIS di bawah ini dengan atas nama{' '}
+                            <strong>
+                              {/* dont add qris admin fee if using communal voucher */}
+                              {voucherIsApplied &&
+                              nlc?.voucher?.kode_voucher?.includes(
+                                'SCH-TEAM-NLC',
+                              )
+                                ? numberToRupiah(calculatedPrice)
+                                : numberToRupiah(calculatedPrice + 1000)}
+                            </strong>{' '}
+                            ke QR Code QRIS di bawah ini dengan atas nama{' '}
                             <strong>Schematics ITS</strong>
                             <img
                               className='h-48'
@@ -536,8 +545,8 @@ export default function PaymentNLC() {
                         <ol className='pt-3 pl-4 space-y-3 list-decimal list-outside'>
                           <li>
                             Peserta melakukan pembayaran sebesar{' '}
-                            <strong>{numberToRupiah(finalPrice)}</strong> ke
-                            rekening{' '}
+                            <strong>{numberToRupiah(calculatedPrice)}</strong>{' '}
+                            ke rekening{' '}
                             <strong>
                               Bank Mandiri 1020009828846 a.n RAFIQI RACHMAT
                             </strong>
