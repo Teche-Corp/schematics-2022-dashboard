@@ -4,6 +4,8 @@ import toast from 'react-hot-toast';
 import { Link, useHistory } from 'react-router-dom';
 import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { format } from 'date-fns';
+import localeID from 'date-fns/locale/id';
 
 import { HiOutlineArrowCircleLeft } from 'react-icons/hi';
 
@@ -107,6 +109,13 @@ export default function PaymentNLC() {
   const finalPrice =
     usedMethod === '0' ? calculatedPrice + 1000 : calculatedPrice;
   const finalBasePrice = usedMethod === '0' ? BASE_PRICE + 1000 : BASE_PRICE;
+
+  let voucherExpireTime;
+
+  if (communalVoucherData) {
+    voucherExpireTime = new Date(communalVoucherData?.data?.tanggal_berakhir);
+    voucherExpireTime.setHours(voucherExpireTime.getHours() + 7);
+  }
 
   useEffect(() => {
     // set Tab according to method
@@ -362,7 +371,10 @@ export default function PaymentNLC() {
                     </div>
                     <p className='mt-2 text-sm text-gray-700'>
                       Voucher berlaku sampai{' '}
-                      {communalVoucherData?.data?.tanggal_berakhir}.
+                      {format(voucherExpireTime, 'dd MMMM yyyy HH:mm:ss', {
+                        locale: localeID,
+                      })}
+                      .
                     </p>
                     <p className='mt-2 text-sm text-red-500'>
                       Voucher akan dapat digunakan setelah pembayaran

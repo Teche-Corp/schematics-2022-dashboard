@@ -3,6 +3,8 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { format } from 'date-fns';
+import localeID from 'date-fns/locale/id';
 
 import {
   HiClipboardCheck,
@@ -87,6 +89,12 @@ export default function EventNLC() {
     hasCommunal ? '/nlc/communal_voucher/using' : null,
     getWithToken,
   );
+
+  let voucherExpireTime;
+  if (hasCommunal) {
+    voucherExpireTime = new Date(communalVoucherData?.data?.tanggal_berakhir);
+    voucherExpireTime.setHours(voucherExpireTime.getHours() + 7);
+  }
 
   useSWRLoadingToast(communalVoucherData, errorCommunalVoucher, {
     runCondition: hasCommunal,
@@ -271,7 +279,14 @@ export default function EventNLC() {
                           </div>
                           <p className='mt-2 text-sm text-gray-700'>
                             Voucher berlaku sampai{' '}
-                            {communalVoucherData?.data?.tanggal_berakhir}.
+                            {format(
+                              voucherExpireTime,
+                              'dd MMMM yyyy HH:mm:ss',
+                              {
+                                locale: localeID,
+                              },
+                            )}
+                            .
                           </p>
                           {dataTeam?.payment !== 'paid' && (
                             <p className='mt-2 text-sm text-red-500'>
