@@ -288,7 +288,7 @@ export default function EventNLC() {
                           Tim menggunakan:
                         </p>
                         <ol className='mt-2 space-y-2 list-decimal list-inside'>
-                          {communalVoucherData?.data?.team_using?.map(
+                          {communalVoucherData?.data?.teams_using?.map(
                             ({ team_id, team_name }) => (
                               <li key={team_id}>{team_name}</li>
                             ),

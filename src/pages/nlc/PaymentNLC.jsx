@@ -345,10 +345,9 @@ export default function PaymentNLC() {
                     {nlc?.voucher?.kode_voucher?.includes('SCH-TEAM-NLC') && (
                       <InformationBlock containerClassNames='mt-4'>
                         <p>
-                          Anda tetap
-                          <strong>WAJIB</strong> mengisi bukti pembayaran
-                          menggunakan data yang <strong>sama</strong> dengan{' '}
-                          <strong>pembuat</strong> komunal.
+                          Anda tetap <strong>WAJIB</strong> mengisi bukti
+                          pembayaran menggunakan data yang <strong>sama</strong>{' '}
+                          dengan <strong>pembuat</strong> komunal.
                         </p>
                       </InformationBlock>
                     )}
