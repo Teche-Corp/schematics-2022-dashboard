@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.9](https://github.com/rizqitsani/fe-dashboard-schematics-2021/compare/v0.1.8...v0.1.9) (2021-09-01)
+
+
+### Features
+
+* add condition for swr toast ([5692088](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/569208876de5fce60c6fd776fd60c3d627be08a4))
+* add InformationBlock ([a4d821b](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/a4d821bebe959750ece0b4524622031dc9faed66))
+* **nlc:** add communal to payment ([5832506](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/583250683a0c8d4df56601c87906c7ad88d4d1a4))
+* **nlc:** add detail voucher komunal ([e369be7](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/e369be783032b73be5ac70e5e8fc007928194068))
+* **nlc:** add information is using communal ([6a8c821](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/6a8c82168d092866deed7c71e9ef5879005b299d))
+* **nlc:** add komunal UI ([32b60a0](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/32b60a08470d1d2d249995d2145d62adaaf39050))
+* **nlc:** format communal voucher expire date ([bf7735a](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/bf7735acff9ddc53b55f6489949dc79219e68763))
+
+
+### Bug Fixes
+
+* flipped logic for swr toast ([51a695b](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/51a695b9a27ea8ea8ad910fd42bb9668f773ac58))
+* **nlc:** wrong total shown on payment guide ([7e41a3a](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/7e41a3a9c13f34cb9b4db82c9aff3b87fae97f2f))
+* **nlc:** wrong variable for mapping teams & typo ([528a7d8](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/528a7d807384b2a84522014d5ba60c84e1e000c7))
+* total when using qris and typo ([06bd5e3](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/06bd5e388b6fc6d15b37886efe5986276403baee))
+
 ### [0.1.8](https://github.com/rizqitsani/fe-dashboard-schematics-2021/compare/v0.1.7...v0.1.8) (2021-08-28)
 
 
