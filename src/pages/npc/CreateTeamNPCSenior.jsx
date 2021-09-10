@@ -248,10 +248,10 @@ export default function CreateTeamNPCSenior() {
                           type='text'
                           validation={{
                             required: 'NIM tidak boleh kosong',
-                            pattern: {
-                              value: /^[0-9]*$/,
-                              message: 'Harus berupa angka',
-                            },
+                            // pattern: {
+                            //   value: /^[0-9]*$/,
+                            //   message: 'Harus berupa angka',
+                            // },
                           }}
                         />
                       </div>
@@ -366,10 +366,10 @@ export default function CreateTeamNPCSenior() {
                               type='text'
                               validation={{
                                 required: 'NIM tidak boleh kosong',
-                                pattern: {
-                                  value: /^[0-9]*$/,
-                                  message: 'Harus berupa angka',
-                                },
+                                // pattern: {
+                                //   value: /^[0-9]*$/,
+                                //   message: 'Harus berupa angka',
+                                // },
                               }}
                             />
                           </div>
@@ -482,10 +482,10 @@ export default function CreateTeamNPCSenior() {
                                   type='text'
                                   validation={{
                                     required: 'NIM is required',
-                                    pattern: {
-                                      value: /^[0-9]*$/,
-                                      message: 'Harus berupa angka',
-                                    },
+                                    // pattern: {
+                                    //   value: /^[0-9]*$/,
+                                    //   message: 'Harus berupa angka',
+                                    // },
                                   }}
                                 />
                               </div>
