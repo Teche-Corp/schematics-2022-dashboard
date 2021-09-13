@@ -13,10 +13,12 @@ import UnstyledLink from '@/components/UnstyledLink';
 
 import { bearerToken } from '@/lib/helper';
 import useLoadingToast from '@/hooks/useLoadingToast';
+import useQuery from '@/hooks/useQuery';
 
 const SignIn = () => {
   const dispatch = useAuthDispatch();
   const { state } = useLocation();
+  const query = useQuery();
 
   const history = useHistory();
   const isLoading = useLoadingToast();
@@ -24,11 +26,20 @@ const SignIn = () => {
   const methods = useForm();
   const { handleSubmit } = methods;
 
+  const redirectTo = query.get('redirect_to');
+  const apiUrl =
+    process.env.NODE_ENV === 'production' &&
+    process.env.PUBLIC_URL === '/dashboard'
+      ? 'https://schematics.its.ac.id/api'
+      : 'https://schematics-webkes-backend-dev.herokuapp.com/api';
+
   const handleLogin = (data) => {
     let tempToken;
+    let newBody = redirectTo ? { ...data, redirect_to: redirectTo } : data;
+
     toast.promise(
       axios
-        .post('/user/login', data, {
+        .post('/user/login', newBody, {
           withCredentials:
             process.env.NODE_ENV === 'production' &&
             process.env.PUBLIC_URL === '/dashboard'
@@ -47,15 +58,21 @@ const SignIn = () => {
           );
         })
         .then((user) => {
-          const role = user.data.data.user_role;
-          dispatch('LOGIN', { ...user.data.data, token: tempToken });
+          if (redirectTo) {
+            window.location.replace(
+              `${apiUrl}/auth/login?redirect_to=${encodeURI(redirectTo)}`,
+            );
+          } else {
+            const role = user.data.data.user_role;
+            dispatch('LOGIN', { ...user.data.data, token: tempToken });
 
-          if (state?.redirect) {
-            history.replace(state.redirect);
-          } else if (role === 'user') {
-            history.replace('/my');
-          } else if (role === 'admin') {
-            history.replace('/admin/dashboard');
+            if (state?.redirect) {
+              history.replace(state.redirect);
+            } else if (role === 'user') {
+              history.replace('/my');
+            } else if (role === 'admin') {
+              history.replace('/admin/dashboard');
+            }
           }
         }),
       {
