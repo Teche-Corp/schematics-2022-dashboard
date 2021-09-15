@@ -60,7 +60,9 @@ const SignIn = () => {
         .then((user) => {
           if (redirectTo) {
             window.location.replace(
-              `${apiUrl}/auth/login?redirect_to=${encodeURI(redirectTo)}`,
+              `${apiUrl}/auth/login/redirect?redirect_to=${encodeURI(
+                redirectTo,
+              )}`,
             );
           } else {
             const role = user.data.data.user_role;
