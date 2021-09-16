@@ -211,6 +211,7 @@ export default function EventNPC() {
                     <TeamDetail
                       data={teamLoaded ? dataTeam : undefined}
                       event='npc'
+                      npc={npc?.event}
                     />
                     <CenteredAccordion
                       loading={!teamLoaded}

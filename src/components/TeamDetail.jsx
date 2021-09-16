@@ -18,7 +18,7 @@ const paymentStatuses = {
   },
 };
 
-export default function TeamDetail({ data = {}, event = '' }) {
+export default function TeamDetail({ data = {}, event = '', npc = '' }) {
   return (
     <div>
       <div className='overflow-hidden sm:rounded-lg'>
@@ -134,12 +134,25 @@ export default function TeamDetail({ data = {}, event = '' }) {
                   aria-hidden='true'
                 />
               </div>
-              <div className='ml-2'>
+              <div className='ml-2 space-y-2'>
                 <p className='text-sm text-green-700'>
                   Anda dapat bergabung ke server Discord Schematics NPC 2021
                   melalui{' '}
                   <UnstyledLink
                     href='https://discord.gg/Cf3frP8tWy'
+                    className='font-bold underline'
+                  >
+                    link berikut
+                  </UnstyledLink>
+                </p>
+                <p className='text-sm text-green-700'>
+                  Akses portal Schematics NPC melalui{' '}
+                  <UnstyledLink
+                    href={
+                      npc === 'npc_junior'
+                        ? 'https://schematics.its.ac.id/sch-npc/portal/junior/'
+                        : 'https://schematics.its.ac.id/sch-npc/portal/senior/'
+                    }
                     className='font-bold underline'
                   >
                     link berikut
