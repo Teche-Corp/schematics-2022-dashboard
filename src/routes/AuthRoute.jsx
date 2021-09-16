@@ -17,7 +17,7 @@ const AuthRoute = ({ component: Component, ...rest }) => {
   const query = useQuery();
   const redirectTo = query.get('redirect_to');
 
-  if (redirectTo && rest.path === '/signin') {
+  if (redirectTo && rest.path === '/signin' && authenticated) {
     window.location.replace(
       `${apiUrl}/auth/login/redirect?redirect_to=${encodeURI(redirectTo)}`,
     );
