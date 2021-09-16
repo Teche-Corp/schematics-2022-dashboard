@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.10](https://github.com/rizqitsani/fe-dashboard-schematics-2021/compare/v0.1.9...v0.1.10) (2021-09-16)
+
+
+### Features
+
+* add redirect to other domain on sign in ([304a9b8](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/304a9b86e3b1afa240a7ba7472b8a9dbd84af21b))
+* change redirect link ([239ac34](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/239ac344271be2e9dfe97de597579ef1f7d93b58))
+* **npc:** add portal link ([8905836](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/8905836c4af4f6c26a9e4bbc54bc5df20ad1cc15))
+* **npc:** disable character check on nim input ([cd06dd9](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/cd06dd91e0ac3bf9c5cd102265b4dfa194cc7f8b))
+
 ### [0.1.9](https://github.com/rizqitsani/fe-dashboard-schematics-2021/compare/v0.1.8...v0.1.9) (2021-09-01)
 
 
