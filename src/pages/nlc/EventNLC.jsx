@@ -85,8 +85,6 @@ export default function EventNLC() {
 
   const teamLoaded = Boolean(nlc);
 
-  const deadline = new Date(DEADLINE_NLC);
-
   const hasCommunal = Boolean(nlc?.communal_voucher_created);
   const { data: communalVoucherData, error: errorCommunalVoucher } = useSWR(
     hasCommunal ? '/nlc/communal_voucher/using' : null,
@@ -150,7 +148,7 @@ export default function EventNLC() {
   let showPaymentButton;
   if (process.env.PUBLIC_URL === '/dashboard') {
     if (
-      new Date() < deadline.setHours(deadline.getHours + 3) &&
+      new Date() < DEADLINE_NLC.setDate(DEADLINE_NLC.getDate() + 3) &&
       nlc?.status_pembayaran === null
     )
       showPaymentButton = true;
@@ -218,7 +216,7 @@ export default function EventNLC() {
                   tahunnya
                 </p>
                 {process.env.PUBLIC_URL === '/dashboard' &&
-                  new Date() < deadline && (
+                  new Date() < DEADLINE_NLC && (
                     <div className='max-w-md mx-auto mt-5 sm:flex sm:justify-center md:mt-8'>
                       <div className='rounded-md shadow'>
                         <Link

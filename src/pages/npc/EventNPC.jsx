@@ -38,7 +38,6 @@ export default function EventNPC() {
   );
 
   const teamLoaded = Boolean(npc);
-  const deadline = new Date(DEADLINE_NPC);
 
   useEffect(() => {
     const loadTeam = async () => {
@@ -67,7 +66,7 @@ export default function EventNPC() {
   let showPaymentButton;
   if (process.env.PUBLIC_URL === '/dashboard') {
     if (
-      new Date() < deadline.setHours(deadline.getHours + 3) &&
+      new Date() < DEADLINE_NPC.setDate(DEADLINE_NPC.getDate() + 3) &&
       npc?.status_pembayaran === null
     )
       showPaymentButton = true;
@@ -192,7 +191,7 @@ export default function EventNPC() {
                 memecahkan masalah yang diberikan
               </p>
               {process.env.PUBLIC_URL === '/dashboard' &&
-                new Date() > deadline && (
+                new Date() < DEADLINE_NPC && (
                   <div className='max-w-md mx-auto mt-5 sm:flex sm:justify-center md:mt-8'>
                     <div className='rounded-md shadow'>
                       <button

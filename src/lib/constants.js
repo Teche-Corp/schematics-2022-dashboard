@@ -1,2 +1,2 @@
-export const DEADLINE_NPC = '2021-09-21 00:00:00';
-export const DEADLINE_NLC = '2021-09-25 00:00:00';
+export const DEADLINE_NPC = new Date(2021, 9, 21, 0, 0, 0);
+export const DEADLINE_NLC = new Date(2021, 9, 25, 0, 0, 0);

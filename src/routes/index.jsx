@@ -49,9 +49,6 @@ import Error500 from '@/pages/error/500';
 
 import { DEADLINE_NLC, DEADLINE_NPC } from '@/lib/constants';
 
-const deadlineNlc = new Date(DEADLINE_NLC);
-const deadlineNpc = new Date(DEADLINE_NPC);
-
 const routeItems = [
   {
     auth: 'all',
@@ -75,7 +72,7 @@ const routeItems = [
     key: 'nlc-create-team',
     path: '/my/sch-nlc/team/create',
     component: CreateTeam,
-    visible: new Date() < deadlineNlc,
+    visible: new Date() < DEADLINE_NLC,
   },
   {
     auth: 'user',
@@ -83,7 +80,7 @@ const routeItems = [
     key: 'nlc-create-team',
     path: '/my/sch-nlc/payment',
     component: PaymentNLC,
-    visible: new Date() < deadlineNlc.setHours(deadlineNlc.getHours + 3),
+    visible: new Date() < DEADLINE_NLC.setDate(DEADLINE_NLC.getDate() + 3),
   },
   {
     auth: 'user',
@@ -99,7 +96,7 @@ const routeItems = [
     key: 'nlc-create-team',
     path: '/my/sch-npc/payment',
     component: PaymentNPC,
-    visible: new Date() < deadlineNpc.setHours(deadlineNpc.getHours + 3),
+    visible: new Date() < DEADLINE_NPC.setDate(DEADLINE_NPC.getDate() + 3),
   },
   {
     auth: 'user',
@@ -107,7 +104,7 @@ const routeItems = [
     key: 'npc-event',
     path: '/my/sch-npc/team/create/senior',
     component: CreateTeamNPCSenior,
-    visible: new Date() < deadlineNpc,
+    visible: new Date() < DEADLINE_NPC,
   },
   {
     auth: 'user',
@@ -115,7 +112,7 @@ const routeItems = [
     key: 'npc-create-team-junior',
     path: '/my/sch-npc/team/create/junior',
     component: CreateTeamNPCJunior,
-    visible: new Date() < deadlineNpc,
+    visible: new Date() < DEADLINE_NPC,
   },
   {
     auth: 'user',
