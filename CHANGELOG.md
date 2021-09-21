@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.11](https://github.com/rizqitsani/fe-dashboard-schematics-2021/compare/v0.1.10...v0.1.11) (2021-09-21)
+
+
+### Features
+
+* add close registration ([4d1dcec](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/4d1dcec21c43f8a545e8d5490e7c6dc9301ec8c7))
+* add redirect if authenticated ([e1d3916](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/e1d39167d581cd0d32b0adc90d61cf5787cc3cbb))
+
+
+### Bug Fixes
+
+* redirect not working ([97cc92f](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/97cc92f0ab0cf3d0af60694672d1c863cab4d042))
+
 ### [0.1.10](https://github.com/rizqitsani/fe-dashboard-schematics-2021/compare/v0.1.9...v0.1.10) (2021-09-16)
 
 
