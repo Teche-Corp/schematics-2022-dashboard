@@ -146,6 +146,20 @@ export default function EventNLC() {
     phase: nlc?.tahapan ?? '-',
   };
 
+  // Cek belum bayar, jika di production, cek deadline juga
+  let showPaymentButton;
+  if (process.env.PUBLIC_URL === '/dashboard') {
+    if (
+      new Date() < deadline.setHours(deadline.getHours + 3) &&
+      nlc?.status_pembayaran === null
+    )
+      showPaymentButton = true;
+  } else if (nlc?.status_pembayaran === null) {
+    showPaymentButton = true;
+  } else {
+    showPaymentButton = false;
+  }
+
   const dataTeamMember = [
     {
       title: 'Ketua Tim',
@@ -246,25 +260,22 @@ export default function EventNLC() {
                       dataAccordion={dataTeamMember}
                       component={TeamMemberDetail}
                     />
-                    {process.env.PUBLIC_URL === '/dashboard' &&
-                      nlc?.status_pembayaran &&
-                      new Date() < deadline.setHours(deadline.getHours + 3) && (
-                        <div className='mx-auto mt-5 sm:flex sm:justify-center md:mt-8'>
-                          <div className='rounded-md shadow'>
-                            {/* passing undefined so link won't be clickable */}
-                            <Link
-                              to={teamLoaded ? '/my/sch-nlc/payment' : '#'}
-                              className={classNames(
-                                'flex items-center justify-center px-4 py-2 font-medium text-white border border-transparent rounded-md shadow-sm bg-nlc hover:bg-nlc-400',
-                                !teamLoaded &&
-                                  'filter brightness-75 cursor-wait',
-                              )}
-                            >
-                              Lakukan Pembayaran
-                            </Link>
-                          </div>
+                    {showPaymentButton && (
+                      <div className='mx-auto mt-5 sm:flex sm:justify-center md:mt-8'>
+                        <div className='rounded-md shadow'>
+                          {/* passing undefined so link won't be clickable */}
+                          <Link
+                            to={teamLoaded ? '/my/sch-nlc/payment' : '#'}
+                            className={classNames(
+                              'flex items-center justify-center px-4 py-2 font-medium text-white border border-transparent rounded-md shadow-sm bg-nlc hover:bg-nlc-400',
+                              !teamLoaded && 'filter brightness-75 cursor-wait',
+                            )}
+                          >
+                            Lakukan Pembayaran
+                          </Link>
                         </div>
-                      )}
+                      </div>
+                    )}
                   </div>
                 </section>
 

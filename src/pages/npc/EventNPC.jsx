@@ -63,6 +63,20 @@ export default function EventNPC() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Cek belum bayar, jika di production, cek deadline juga
+  let showPaymentButton;
+  if (process.env.PUBLIC_URL === '/dashboard') {
+    if (
+      new Date() < deadline.setHours(deadline.getHours + 3) &&
+      npc?.status_pembayaran === null
+    )
+      showPaymentButton = true;
+  } else if (npc?.status_pembayaran === null) {
+    showPaymentButton = true;
+  } else {
+    showPaymentButton = false;
+  }
+
   const dataTeam = {
     name: npc?.nama_tim,
     school: npc?.asal_sekolah,
@@ -227,23 +241,19 @@ export default function EventNPC() {
                       }
                       component={TeamMemberDetail}
                     />
-                    {process.env.PUBLIC_URL === '/dashboard' &&
-                      npc?.status_pembayaran &&
-                      new Date() < deadline.setHours(deadline.getHours + 3) && (
-                        <div className='mx-auto mt-5 sm:flex sm:justify-center md:mt-8'>
-                          <div className='rounded-md shadow'>
-                            {/* passing undefined so link won't be clickable */}
-                            <Link
-                              to={
-                                teamLoaded ? '/my/sch-npc/payment' : undefined
-                              }
-                              className='flex items-center justify-center px-4 py-2 font-medium text-white border border-transparent rounded-md shadow-sm bg-npc-400 hover:bg-npc-700'
-                            >
-                              Lakukan Pembayaran
-                            </Link>
-                          </div>
+                    {showPaymentButton && (
+                      <div className='mx-auto mt-5 sm:flex sm:justify-center md:mt-8'>
+                        <div className='rounded-md shadow'>
+                          {/* passing undefined so link won't be clickable */}
+                          <Link
+                            to={teamLoaded ? '/my/sch-npc/payment' : undefined}
+                            className='flex items-center justify-center px-4 py-2 font-medium text-white border border-transparent rounded-md shadow-sm bg-npc-400 hover:bg-npc-700'
+                          >
+                            Lakukan Pembayaran
+                          </Link>
                         </div>
-                      )}
+                      </div>
+                    )}
                   </div>
                 </section>
               </>
