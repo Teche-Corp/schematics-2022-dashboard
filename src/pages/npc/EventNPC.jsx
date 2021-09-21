@@ -22,6 +22,7 @@ import TeamMemberDetail from '@/components/TeamMemberDetail';
 
 import { bearerToken } from '@/lib/helper';
 import useTeamId from '@/hooks/useTeamId';
+import { DEADLINE_NPC } from '@/lib/constants';
 
 export default function EventNPC() {
   const [open, setOpen] = useState(false);
@@ -37,6 +38,7 @@ export default function EventNPC() {
   );
 
   const teamLoaded = Boolean(npc);
+  const deadline = new Date(DEADLINE_NPC);
 
   useEffect(() => {
     const loadTeam = async () => {
@@ -175,17 +177,19 @@ export default function EventNPC() {
                 nasional yang menguji kemampuan algoritma dan pemrograman dalam
                 memecahkan masalah yang diberikan
               </p>
-              <div className='max-w-md mx-auto mt-5 sm:flex sm:justify-center md:mt-8'>
-                <div className='rounded-md shadow'>
-                  <button
-                    onClick={() => setOpen(true)}
-                    className='flex items-center justify-center w-full px-8 py-3 text-base font-medium text-white border border-transparent rounded-md bg-npc-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-npc-400 hover:bg-npc-700 md:py-4 md:text-lg md:px-10'
-                  >
-                    Buat Tim
-                  </button>
-                  <Modal open={open} setOpen={setOpen} />
+              {new Date() > deadline && (
+                <div className='max-w-md mx-auto mt-5 sm:flex sm:justify-center md:mt-8'>
+                  <div className='rounded-md shadow'>
+                    <button
+                      onClick={() => setOpen(true)}
+                      className='flex items-center justify-center w-full px-8 py-3 text-base font-medium text-white border border-transparent rounded-md bg-npc-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-npc-400 hover:bg-npc-700 md:py-4 md:text-lg md:px-10'
+                    >
+                      Buat Tim
+                    </button>
+                    <Modal open={open} setOpen={setOpen} />
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           ) : (
             <>
@@ -222,19 +226,22 @@ export default function EventNPC() {
                       }
                       component={TeamMemberDetail}
                     />
-                    {npc?.status_pembayaran ?? (
-                      <div className='mx-auto mt-5 sm:flex sm:justify-center md:mt-8'>
-                        <div className='rounded-md shadow'>
-                          {/* passing undefined so link won't be clickable */}
-                          <Link
-                            to={teamLoaded ? '/my/sch-npc/payment' : undefined}
-                            className='flex items-center justify-center px-4 py-2 font-medium text-white border border-transparent rounded-md shadow-sm bg-npc-400 hover:bg-npc-700'
-                          >
-                            Lakukan Pembayaran
-                          </Link>
+                    {npc?.status_pembayaran &&
+                      new Date() < deadline.setHours(deadline.getHours + 3) && (
+                        <div className='mx-auto mt-5 sm:flex sm:justify-center md:mt-8'>
+                          <div className='rounded-md shadow'>
+                            {/* passing undefined so link won't be clickable */}
+                            <Link
+                              to={
+                                teamLoaded ? '/my/sch-npc/payment' : undefined
+                              }
+                              className='flex items-center justify-center px-4 py-2 font-medium text-white border border-transparent rounded-md shadow-sm bg-npc-400 hover:bg-npc-700'
+                            >
+                              Lakukan Pembayaran
+                            </Link>
+                          </div>
                         </div>
-                      </div>
-                    )}
+                      )}
                   </div>
                 </section>
               </>

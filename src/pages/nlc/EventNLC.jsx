@@ -24,10 +24,11 @@ import CenteredAccordion from '@/components/CenteredAccordion';
 import HorizontalTimeline from '@/components/HorizontalTimeline';
 import TeamDetail from '@/components/TeamDetail';
 import TeamMemberDetail from '@/components/TeamMemberDetail';
+import InformationBlock from '@/components/InformationBlock';
 
 import { bearerToken, classNames } from '@/lib/helper';
 import { getWithToken } from '@/lib/swr';
-import InformationBlock from '@/components/InformationBlock';
+import { DEADLINE_NLC } from '@/lib/constants';
 
 const dataTimeline = [
   {
@@ -83,6 +84,8 @@ export default function EventNLC() {
   );
 
   const teamLoaded = Boolean(nlc);
+
+  const deadline = new Date(DEADLINE_NLC);
 
   const hasCommunal = Boolean(nlc?.communal_voucher_created);
   const { data: communalVoucherData, error: errorCommunalVoucher } = useSWR(
@@ -200,16 +203,18 @@ export default function EventNLC() {
                   Indonesia, dengan jumlah peserta yang kerap meningkat tiap
                   tahunnya
                 </p>
-                <div className='max-w-md mx-auto mt-5 sm:flex sm:justify-center md:mt-8'>
-                  <div className='rounded-md shadow'>
-                    <Link
-                      to='/my/sch-nlc/team/create'
-                      className='flex items-center justify-center w-full px-8 py-3 text-base font-medium text-white border border-transparent rounded-md shadow-sm bg-nlc hover:bg-nlc-400 md:py-4 md:text-lg md:px-10'
-                    >
-                      Buat Tim
-                    </Link>
+                {new Date() < deadline && (
+                  <div className='max-w-md mx-auto mt-5 sm:flex sm:justify-center md:mt-8'>
+                    <div className='rounded-md shadow'>
+                      <Link
+                        to='/my/sch-nlc/team/create'
+                        className='flex items-center justify-center w-full px-8 py-3 text-base font-medium text-white border border-transparent rounded-md shadow-sm bg-nlc hover:bg-nlc-400 md:py-4 md:text-lg md:px-10'
+                      >
+                        Buat Tim
+                      </Link>
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
             ) : (
               <>
@@ -240,22 +245,24 @@ export default function EventNLC() {
                       dataAccordion={dataTeamMember}
                       component={TeamMemberDetail}
                     />
-                    {nlc?.status_pembayaran ?? (
-                      <div className='mx-auto mt-5 sm:flex sm:justify-center md:mt-8'>
-                        <div className='rounded-md shadow'>
-                          {/* passing undefined so link won't be clickable */}
-                          <Link
-                            to={teamLoaded ? '/my/sch-nlc/payment' : '#'}
-                            className={classNames(
-                              'flex items-center justify-center px-4 py-2 font-medium text-white border border-transparent rounded-md shadow-sm bg-nlc hover:bg-nlc-400',
-                              !teamLoaded && 'filter brightness-75 cursor-wait',
-                            )}
-                          >
-                            Lakukan Pembayaran
-                          </Link>
+                    {nlc?.status_pembayaran &&
+                      new Date() < deadline.setHours(deadline.getHours + 3) && (
+                        <div className='mx-auto mt-5 sm:flex sm:justify-center md:mt-8'>
+                          <div className='rounded-md shadow'>
+                            {/* passing undefined so link won't be clickable */}
+                            <Link
+                              to={teamLoaded ? '/my/sch-nlc/payment' : '#'}
+                              className={classNames(
+                                'flex items-center justify-center px-4 py-2 font-medium text-white border border-transparent rounded-md shadow-sm bg-nlc hover:bg-nlc-400',
+                                !teamLoaded &&
+                                  'filter brightness-75 cursor-wait',
+                              )}
+                            >
+                              Lakukan Pembayaran
+                            </Link>
+                          </div>
                         </div>
-                      </div>
-                    )}
+                      )}
                   </div>
                 </section>
 
