@@ -177,19 +177,20 @@ export default function EventNPC() {
                 nasional yang menguji kemampuan algoritma dan pemrograman dalam
                 memecahkan masalah yang diberikan
               </p>
-              {new Date() > deadline && (
-                <div className='max-w-md mx-auto mt-5 sm:flex sm:justify-center md:mt-8'>
-                  <div className='rounded-md shadow'>
-                    <button
-                      onClick={() => setOpen(true)}
-                      className='flex items-center justify-center w-full px-8 py-3 text-base font-medium text-white border border-transparent rounded-md bg-npc-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-npc-400 hover:bg-npc-700 md:py-4 md:text-lg md:px-10'
-                    >
-                      Buat Tim
-                    </button>
-                    <Modal open={open} setOpen={setOpen} />
+              {process.env.PUBLIC_URL === '/dashboard' &&
+                new Date() > deadline && (
+                  <div className='max-w-md mx-auto mt-5 sm:flex sm:justify-center md:mt-8'>
+                    <div className='rounded-md shadow'>
+                      <button
+                        onClick={() => setOpen(true)}
+                        className='flex items-center justify-center w-full px-8 py-3 text-base font-medium text-white border border-transparent rounded-md bg-npc-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-npc-400 hover:bg-npc-700 md:py-4 md:text-lg md:px-10'
+                      >
+                        Buat Tim
+                      </button>
+                      <Modal open={open} setOpen={setOpen} />
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
             </div>
           ) : (
             <>
@@ -226,7 +227,8 @@ export default function EventNPC() {
                       }
                       component={TeamMemberDetail}
                     />
-                    {npc?.status_pembayaran &&
+                    {process.env.PUBLIC_URL === '/dashboard' &&
+                      npc?.status_pembayaran &&
                       new Date() < deadline.setHours(deadline.getHours + 3) && (
                         <div className='mx-auto mt-5 sm:flex sm:justify-center md:mt-8'>
                           <div className='rounded-md shadow'>

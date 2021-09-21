@@ -203,18 +203,19 @@ export default function EventNLC() {
                   Indonesia, dengan jumlah peserta yang kerap meningkat tiap
                   tahunnya
                 </p>
-                {new Date() < deadline && (
-                  <div className='max-w-md mx-auto mt-5 sm:flex sm:justify-center md:mt-8'>
-                    <div className='rounded-md shadow'>
-                      <Link
-                        to='/my/sch-nlc/team/create'
-                        className='flex items-center justify-center w-full px-8 py-3 text-base font-medium text-white border border-transparent rounded-md shadow-sm bg-nlc hover:bg-nlc-400 md:py-4 md:text-lg md:px-10'
-                      >
-                        Buat Tim
-                      </Link>
+                {process.env.PUBLIC_URL === '/dashboard' &&
+                  new Date() < deadline && (
+                    <div className='max-w-md mx-auto mt-5 sm:flex sm:justify-center md:mt-8'>
+                      <div className='rounded-md shadow'>
+                        <Link
+                          to='/my/sch-nlc/team/create'
+                          className='flex items-center justify-center w-full px-8 py-3 text-base font-medium text-white border border-transparent rounded-md shadow-sm bg-nlc hover:bg-nlc-400 md:py-4 md:text-lg md:px-10'
+                        >
+                          Buat Tim
+                        </Link>
+                      </div>
                     </div>
-                  </div>
-                )}
+                  )}
               </div>
             ) : (
               <>
@@ -245,7 +246,8 @@ export default function EventNLC() {
                       dataAccordion={dataTeamMember}
                       component={TeamMemberDetail}
                     />
-                    {nlc?.status_pembayaran &&
+                    {process.env.PUBLIC_URL === '/dashboard' &&
+                      nlc?.status_pembayaran &&
                       new Date() < deadline.setHours(deadline.getHours + 3) && (
                         <div className='mx-auto mt-5 sm:flex sm:justify-center md:mt-8'>
                           <div className='rounded-md shadow'>
