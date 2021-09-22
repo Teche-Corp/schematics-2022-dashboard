@@ -222,7 +222,7 @@ export default function PaymentNLC() {
         className='flex-1 overflow-y-auto bg-white border-t focus:outline-none'
         style={{ minHeight: 'calc(100vh - 4rem)' }}
       >
-        <div className='relative max-w-5xl mx-auto md:px-8 xl:px-0'>
+        <div className='relative max-w-5xl mx-auto md:px-8'>
           <div className='px-4 pt-10 pb-16 sm:px-6 md:px-0'>
             <div className='flex items-center mb-6'>
               <Link to='/my/sch-nlc/team'>
@@ -233,8 +233,146 @@ export default function PaymentNLC() {
                 <span className='block text-nlc xl:inline'>Schematics NLC</span>
               </h1>
             </div>
-            <div className='grid grid-cols-1 gap-8 mt-6 sm:grid-cols-6'>
-              <div className='sm:col-span-2'>
+            <div className='flex flex-col gap-8'>
+              {/* PETUNJUK */}
+              <div>
+                <h2 className='mt-6 text-lg font-semibold sm:mt-2'>
+                  Petunjuk Pembayaran
+                </h2>
+                <div className='mt-6 sm:mt-2'>
+                  <div className='sm:hidden'>
+                    <label htmlFor='tabs' className='sr-only'>
+                      Pilih metode
+                    </label>
+                    <select
+                      id='tabs'
+                      name='tabs'
+                      className='block w-full py-2 pl-3 pr-10 text-base border-gray-300 rounded-md focus:outline-none focus:ring-dark-400 focus:border-dark-400 sm:text-sm'
+                      onChange={handleTabChange}
+                      selected={currentTab}
+                    >
+                      {paymentMethod.map((tab) => (
+                        <option key={tab.value} value={tab.value}>
+                          {tab.text}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className='hidden sm:block'>
+                    <div className='border-b border-gray-200'>
+                      <nav className='flex -mb-px space-x-8' aria-label='Tabs'>
+                        {paymentMethod.map((tab) => (
+                          <button
+                            key={tab.text}
+                            onClick={() => setCurrentTab(tab.value)}
+                            className={classNames(
+                              tab.value === currentTab
+                                ? 'border-nlc-400 text-nlc'
+                                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-200',
+                              'whitespace-nowrap flex py-4 px-1 border-b-2 font-medium text-sm focus:outline-none',
+                            )}
+                            aria-current={tab.current ? 'page' : undefined}
+                          >
+                            {tab.text}
+                          </button>
+                        ))}
+                      </nav>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  {currentTab === 0 ? (
+                    <div className='space-y-4 divide-y divide-gray-200'>
+                      <ol className='pt-3 pl-4 space-y-3 list-decimal list-outside'>
+                        <li>
+                          Peserta melakukan pembayaran sebesar{' '}
+                          <strong>
+                            {/* dont add qris admin fee if using communal voucher */}
+                            {voucherIsApplied &&
+                            nlc?.voucher?.kode_voucher?.includes('SCH-TEAM-NLC')
+                              ? numberToRupiah(calculatedPrice)
+                              : numberToRupiah(calculatedPrice + 1000)}
+                          </strong>{' '}
+                          ke QR Code QRIS di bawah ini dengan atas nama{' '}
+                          <strong>Schematics ITS</strong>
+                          <img
+                            className='h-48'
+                            src={`${process.env.PUBLIC_URL}/images/qris.jpg`}
+                            alt='qris-code'
+                          />
+                        </li>
+                        <li>Pastikan nominal yang dibayarkan sudah sesuai</li>
+                        <li>
+                          Setelah melakukan pembayaran, peserta dapat mengunggah
+                          bukti pembayaran yang sah pada formulir yang telah
+                          disediakan
+                        </li>
+                        <li>
+                          Verifikasi pembayaran akan dilakukan selama 3 x 24 jam
+                        </li>
+                        <li>
+                          Biaya admin atau biaya tambahan transaksi ditanggung
+                          oleh peserta
+                        </li>
+                      </ol>
+                      <ul className='pt-3 pl-4 italic list-disc list-outside'>
+                        <li>
+                          Biaya tambahan Rp 1.000 sebagai biaya admin QRIS
+                        </li>
+                        <li>
+                          Jika mengalami kendala pembayaran, silakan{' '}
+                          <UnstyledLink
+                            href='https://liff.line.me/1645278921-kWRPP32q?accountId=schematics.its&openerPlatform=webview&openerKey=webview%3AunifiedSearch'
+                            className='underline cursor-pointer text-nlc'
+                          >
+                            klik disini
+                          </UnstyledLink>
+                        </li>
+                      </ul>
+                    </div>
+                  ) : currentTab === 1 ? (
+                    <div className='space-y-4 divide-y divide-gray-200'>
+                      <ol className='pt-3 pl-4 space-y-3 list-decimal list-outside'>
+                        <li>
+                          Peserta melakukan pembayaran sebesar{' '}
+                          <strong>{numberToRupiah(calculatedPrice)}</strong> ke
+                          rekening{' '}
+                          <strong>
+                            Bank Mandiri 1020009828846 a.n RAFIQI RACHMAT
+                          </strong>
+                        </li>
+                        <li>Pastikan nominal yang dibayarkan sudah sesuai</li>
+                        <li>
+                          Setelah melakukan pembayaran, peserta dapat mengunggah
+                          bukti pembayaran yang sah pada formulir yang telah
+                          disediakan
+                        </li>
+                        <li>
+                          Verifikasi pembayaran akan dilakukan selama 3 x 24 jam
+                        </li>
+                        <li>
+                          Biaya admin atau biaya tambahan transaksi ditanggung
+                          oleh peserta
+                        </li>
+                      </ol>
+                      <ul className='pt-3 pl-4 italic list-disc list-outside'>
+                        <li>
+                          Jika mengalami kendala pembayaran, silakan{' '}
+                          <UnstyledLink
+                            href='https://liff.line.me/1645278921-kWRPP32q?accountId=schematics.its&openerPlatform=webview&openerKey=webview%3AunifiedSearch'
+                            className='underline cursor-pointer text-nlc'
+                          >
+                            klik disini
+                          </UnstyledLink>
+                        </li>
+                      </ul>
+                    </div>
+                  ) : null}
+                </div>
+              </div>
+              {/* END OF PETUNJUK */}
+
+              <div>
                 <h2 className='text-lg font-semibold'>Total</h2>
                 {voucherIsApplied && (
                   <p className='text-gray-600 line-through'>
@@ -387,202 +525,56 @@ export default function PaymentNLC() {
                 )}
               </div>
 
-              <div className='sm:col-span-4'>
-                {/* UPLOAD BUKTI */}
-                <FormProvider {...methods}>
-                  <form onSubmit={handleSubmit(handleUpload)}>
-                    <h2 className='text-lg font-semibold'>
-                      Upload Bukti Pembayaran
-                    </h2>
-                    <div className='mt-2 space-y-4 sm:mt-4'>
-                      <SelectInput
-                        label='Metode Pembayaran'
-                        id='payment-method'
-                        placeholder='Pilih metode pembayaran'
-                        options={paymentMethod}
-                        validation={{
-                          required: 'Metode Pembayaran tidak boleh kosong',
-                        }}
-                      />
-                      <LightInput
-                        label='Nomor Rekening'
-                        id='account-id'
-                        type='text'
-                        validation={{
-                          required: 'Nomor Rekening tidak boleh kosong',
-                        }}
-                      />
-                      <DragnDropInput
-                        label='Bukti Pembayaran'
-                        id='payment-receipt'
-                        accept='image/png, image/jpg, image/jpeg'
-                        helperText='File dalam format jpg, png, atau jpeg'
-                        maxFiles={1}
-                        validation={{
-                          required: 'Bukti Pembayaran tidak boleh kosong',
-                        }}
-                      />
-                      <div className='flex justify-end'>
-                        <button
-                          type='submit'
-                          disabled={isLoading}
-                          className={classNames(
-                            'inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-nlc hover:bg-nlc-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-nlc-400',
-                            isLoading && 'filter brightness-90 cursor-wait',
-                          )}
-                        >
-                          Simpan
-                        </button>
-                      </div>
-                    </div>
-                  </form>
-                </FormProvider>
-                {/* END OF UPLOAD BUKTI */}
-                {/* PETUNJUK */}
-                <div>
-                  <h2 className='mt-6 text-lg font-semibold sm:mt-2'>
-                    Petunjuk Pembayaran
+              {/* UPLOAD BUKTI */}
+              <FormProvider {...methods}>
+                <form onSubmit={handleSubmit(handleUpload)}>
+                  <h2 className='text-lg font-semibold'>
+                    Upload Bukti Pembayaran
                   </h2>
-                  <div className='mt-6 sm:mt-2'>
-                    <div className='sm:hidden'>
-                      <label htmlFor='tabs' className='sr-only'>
-                        Pilih metode
-                      </label>
-                      <select
-                        id='tabs'
-                        name='tabs'
-                        className='block w-full py-2 pl-3 pr-10 text-base border-gray-300 rounded-md focus:outline-none focus:ring-dark-400 focus:border-dark-400 sm:text-sm'
-                        onChange={handleTabChange}
-                        selected={currentTab}
+                  <div className='mt-2 space-y-4 sm:mt-4'>
+                    <SelectInput
+                      label='Metode Pembayaran'
+                      id='payment-method'
+                      placeholder='Pilih metode pembayaran'
+                      options={paymentMethod}
+                      validation={{
+                        required: 'Metode Pembayaran tidak boleh kosong',
+                      }}
+                    />
+                    <LightInput
+                      label='Nomor Rekening'
+                      id='account-id'
+                      type='text'
+                      validation={{
+                        required: 'Nomor Rekening tidak boleh kosong',
+                      }}
+                    />
+                    <DragnDropInput
+                      label='Bukti Pembayaran'
+                      id='payment-receipt'
+                      accept='image/png, image/jpg, image/jpeg'
+                      helperText='File dalam format jpg, png, atau jpeg'
+                      maxFiles={1}
+                      validation={{
+                        required: 'Bukti Pembayaran tidak boleh kosong',
+                      }}
+                    />
+                    <div className='flex justify-end'>
+                      <button
+                        type='submit'
+                        disabled={isLoading}
+                        className={classNames(
+                          'inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-nlc hover:bg-nlc-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-nlc-400',
+                          isLoading && 'filter brightness-90 cursor-wait',
+                        )}
                       >
-                        {paymentMethod.map((tab) => (
-                          <option key={tab.value} value={tab.value}>
-                            {tab.text}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                    <div className='hidden sm:block'>
-                      <div className='border-b border-gray-200'>
-                        <nav
-                          className='flex -mb-px space-x-8'
-                          aria-label='Tabs'
-                        >
-                          {paymentMethod.map((tab) => (
-                            <button
-                              key={tab.text}
-                              onClick={() => setCurrentTab(tab.value)}
-                              className={classNames(
-                                tab.value === currentTab
-                                  ? 'border-nlc-400 text-nlc'
-                                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-200',
-                                'whitespace-nowrap flex py-4 px-1 border-b-2 font-medium text-sm focus:outline-none',
-                              )}
-                              aria-current={tab.current ? 'page' : undefined}
-                            >
-                              {tab.text}
-                            </button>
-                          ))}
-                        </nav>
-                      </div>
+                        Simpan
+                      </button>
                     </div>
                   </div>
-                  <div>
-                    {currentTab === 0 ? (
-                      <div className='space-y-4 divide-y divide-gray-200'>
-                        <ol className='pt-3 pl-4 space-y-3 list-decimal list-outside'>
-                          <li>
-                            Peserta melakukan pembayaran sebesar{' '}
-                            <strong>
-                              {/* dont add qris admin fee if using communal voucher */}
-                              {voucherIsApplied &&
-                              nlc?.voucher?.kode_voucher?.includes(
-                                'SCH-TEAM-NLC',
-                              )
-                                ? numberToRupiah(calculatedPrice)
-                                : numberToRupiah(calculatedPrice + 1000)}
-                            </strong>{' '}
-                            ke QR Code QRIS di bawah ini dengan atas nama{' '}
-                            <strong>Schematics ITS</strong>
-                            <img
-                              className='h-48'
-                              src={`${process.env.PUBLIC_URL}/images/qris.jpg`}
-                              alt='qris-code'
-                            />
-                          </li>
-                          <li>Pastikan nominal yang dibayarkan sudah sesuai</li>
-                          <li>
-                            Setelah melakukan pembayaran, peserta dapat
-                            mengunggah bukti pembayaran yang sah pada formulir
-                            yang telah disediakan
-                          </li>
-                          <li>
-                            Verifikasi pembayaran akan dilakukan selama 3 x 24
-                            jam
-                          </li>
-                          <li>
-                            Biaya admin atau biaya tambahan transaksi ditanggung
-                            oleh peserta
-                          </li>
-                        </ol>
-                        <ul className='pt-3 pl-4 italic list-disc list-outside'>
-                          <li>
-                            Biaya tambahan Rp 1.000 sebagai biaya admin QRIS
-                          </li>
-                          <li>
-                            Jika mengalami kendala pembayaran, silakan{' '}
-                            <UnstyledLink
-                              href='https://liff.line.me/1645278921-kWRPP32q?accountId=schematics.its&openerPlatform=webview&openerKey=webview%3AunifiedSearch'
-                              className='underline cursor-pointer text-nlc'
-                            >
-                              klik disini
-                            </UnstyledLink>
-                          </li>
-                        </ul>
-                      </div>
-                    ) : currentTab === 1 ? (
-                      <div className='space-y-4 divide-y divide-gray-200'>
-                        <ol className='pt-3 pl-4 space-y-3 list-decimal list-outside'>
-                          <li>
-                            Peserta melakukan pembayaran sebesar{' '}
-                            <strong>{numberToRupiah(calculatedPrice)}</strong>{' '}
-                            ke rekening{' '}
-                            <strong>
-                              Bank Mandiri 1020009828846 a.n RAFIQI RACHMAT
-                            </strong>
-                          </li>
-                          <li>Pastikan nominal yang dibayarkan sudah sesuai</li>
-                          <li>
-                            Setelah melakukan pembayaran, peserta dapat
-                            mengunggah bukti pembayaran yang sah pada formulir
-                            yang telah disediakan
-                          </li>
-                          <li>
-                            Verifikasi pembayaran akan dilakukan selama 3 x 24
-                            jam
-                          </li>
-                          <li>
-                            Biaya admin atau biaya tambahan transaksi ditanggung
-                            oleh peserta
-                          </li>
-                        </ol>
-                        <ul className='pt-3 pl-4 italic list-disc list-outside'>
-                          <li>
-                            Jika mengalami kendala pembayaran, silakan{' '}
-                            <UnstyledLink
-                              href='https://liff.line.me/1645278921-kWRPP32q?accountId=schematics.its&openerPlatform=webview&openerKey=webview%3AunifiedSearch'
-                              className='underline cursor-pointer text-nlc'
-                            >
-                              klik disini
-                            </UnstyledLink>
-                          </li>
-                        </ul>
-                      </div>
-                    ) : null}
-                  </div>
-                </div>
-                {/* END OF PETUNJUK */}
-              </div>
+                </form>
+              </FormProvider>
+              {/* END OF UPLOAD BUKTI */}
             </div>
           </div>
         </div>
