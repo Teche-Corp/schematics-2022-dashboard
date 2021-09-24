@@ -35,6 +35,12 @@ const paymentMethod = [
   { text: 'QRIS', value: 0 },
   { text: 'Mandiri', value: 1 },
 ];
+
+const voucherKomunal = {
+  text: 'Voucher Komunal',
+  value: 2,
+};
+
 const priceVariants = {
   1: 100000,
   3: 285000,
@@ -251,7 +257,7 @@ export default function PaymentNLC() {
                       onChange={handleTabChange}
                       selected={currentTab}
                     >
-                      {paymentMethod.map((tab) => (
+                      {[...paymentMethod, voucherKomunal].map((tab) => (
                         <option key={tab.value} value={tab.value}>
                           {tab.text}
                         </option>
@@ -261,7 +267,7 @@ export default function PaymentNLC() {
                   <div className='hidden sm:block'>
                     <div className='border-b border-gray-200'>
                       <nav className='flex -mb-px space-x-8' aria-label='Tabs'>
-                        {paymentMethod.map((tab) => (
+                        {[...paymentMethod, voucherKomunal].map((tab) => (
                           <button
                             key={tab.text}
                             onClick={() => setCurrentTab(tab.value)}
@@ -353,6 +359,64 @@ export default function PaymentNLC() {
                         <li>
                           Biaya admin atau biaya tambahan transaksi ditanggung
                           oleh peserta
+                        </li>
+                      </ol>
+                      <ul className='pt-3 pl-4 italic list-disc list-outside'>
+                        <li>
+                          Jika mengalami kendala pembayaran, silakan{' '}
+                          <UnstyledLink
+                            href='https://liff.line.me/1645278921-kWRPP32q?accountId=schematics.its&openerPlatform=webview&openerKey=webview%3AunifiedSearch'
+                            className='underline cursor-pointer text-nlc'
+                          >
+                            klik disini
+                          </UnstyledLink>
+                        </li>
+                      </ul>
+                    </div>
+                  ) : currentTab === 2 ? (
+                    <div className='space-y-4 divide-y divide-gray-200'>
+                      <ol className='pt-3 pl-4 space-y-3 list-decimal list-outside'>
+                        <li>
+                          Pada pilihan Jenis Voucher, pilih Buat Voucher Komunal
+                        </li>
+                        <li>
+                          Kemudian, tentukan jumlah tim yang akan membayar
+                          secara komunal (termasuk tim kamu juga dihitung)
+                        </li>
+                        <li>
+                          Adapun untuk sistem diskonnya adalah untuk 3 – 4 tim
+                          akan mendapat diskon pembayaran sebesar Rp 5.000 / tim
+                          dan untuk 5 – 6 tim akan mendapatkan diskon sebesar Rp
+                          10.000 / tim
+                        </li>
+                        <li>
+                          Setelah menentukan jumlah tim, maka klik tombol Buat
+                        </li>
+                        <li>
+                          Setelah itu, akan mendapatkan voucher komunal yang
+                          dapat digunakan sebanyak (jumlah tim – 1). Contoh,
+                          apabila memilih voucher komunal untuk 3 tim, maka yang
+                          dapat menggunakan voucher tersebut sebanyak 2 tim.
+                        </li>
+                        <li>
+                          Voucher komunal akan aktif atau dapat digunakan oleh
+                          tim lain, ketika tim kamu sudah diverifikasi oleh
+                          panitia.
+                        </li>
+                        <li>
+                          Adapun untuk tim yang menggunakan voucher komunal
+                          milikmu cukup memasukkan voucher tersebut pada pilihan
+                          Gunakan Voucher di form pembayaran
+                        </li>
+                        <li>
+                          Tim yang menggunakan voucher komunal milikmu tetap
+                          berkewajiban untuk upload bukti pembayaran sama
+                          seperti dengan bukti pembayaran yang kamu upload
+                        </li>
+                        <li>
+                          Kamu dapat memeriksa tim apa saja yang sudah
+                          menggunakan voucher komunal milikmu pada halaman
+                          Detail Tim
                         </li>
                       </ol>
                       <ul className='pt-3 pl-4 italic list-disc list-outside'>
