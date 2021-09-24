@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.12](https://github.com/rizqitsani/fe-dashboard-schematics-2021/compare/v0.1.11...v0.1.12) (2021-09-24)
+
+
+### Features
+
+* add env check on close registration ([315642e](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/315642e3d34e055a2fb7f3c119494abac230c424))
+* add voucher komunal payment instruction ([8094187](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/8094187e2ace00963fc93d810ec08e1ac0f56d9a))
+* change nlc payment display to flex ([6bfa986](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/6bfa986d581ec1cfeb717cccd86024b55e00c8da))
+
+
+### Bug Fixes
+
+* payment button not showing ([f33352c](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/f33352c72c4c03baf6d1df175533da846354d439))
+* wrong method for payment deadline ([ddbd922](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/ddbd922bd7c06ae9c22e2c30b23bc6ef09400c63))
+
 ### [0.1.11](https://github.com/rizqitsani/fe-dashboard-schematics-2021/compare/v0.1.10...v0.1.11) (2021-09-21)
 
 
