@@ -317,7 +317,7 @@ export default function EventNLC() {
                           <span className='p-1 bg-yellow-100 rounded'>
                             {communalVoucherData?.data?.teams_using?.length ??
                               0}{' '}
-                            / {communalVoucherData?.data?.limit_jumlah ?? 0}
+                            / {communalVoucherData?.data?.limit_jumlah - 1 ?? 0}
                           </span>{' '}
                           Tim menggunakan:
                         </p>
