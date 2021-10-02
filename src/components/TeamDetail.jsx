@@ -101,7 +101,9 @@ export default function TeamDetail({ data = {}, event = '', npc = '' }) {
             <div className='sm:col-span-1'>
               <dt className='text-sm font-medium text-gray-500'>Tahap</dt>
               {data.phase ? (
-                <dd className='mt-1 text-sm text-gray-900'>{data.phase}</dd>
+                <dd className='mt-1 text-sm text-gray-900'>
+                  {data.phase === '-' ? data.phase : data?.phase?.status}
+                </dd>
               ) : (
                 <TextSkeleton />
               )}

@@ -141,7 +141,7 @@ export default function EventNLC() {
         : nlc?.status_pembayaran === false
         ? 'waiting'
         : 'paid',
-    phase: nlc?.tahapan?.status ?? '-',
+    phase: nlc?.tahapan ?? '-',
   };
 
   // Cek belum bayar, jika di production, cek deadline juga
