@@ -209,7 +209,9 @@ export default function TeamDetail({ data = {}, event = '', npc = '' }) {
                   <p className='text-sm text-green-700'>
                     Akses portal Schematics NLC melalui{' '}
                     <UnstyledLink
-                      href={'https://schematics.its.ac.id/sch-nlc/portal'}
+                      href={
+                        'https://schematics.its.ac.id/sch-nlc/portal/index.php'
+                      }
                       className='font-bold underline'
                     >
                       link berikut
