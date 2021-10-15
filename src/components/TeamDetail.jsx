@@ -197,40 +197,42 @@ export default function TeamDetail({ data = {}, event = '', npc = '' }) {
                 </div>
               </div>
             </div>
-            <div className='p-4 mt-2 rounded-md bg-green-50'>
-              <div className='flex'>
-                <div className='flex-shrink-0'>
-                  <HiInformationCircle
-                    className='w-5 h-5 text-green-400'
-                    aria-hidden='true'
-                  />
-                </div>
-                <div className='ml-2 space-y-2'>
-                  <p className='text-sm text-green-700'>
-                    Akses portal Schematics NLC melalui{' '}
-                    <UnstyledLink
-                      href={
-                        'https://schematics.its.ac.id/sch-nlc/portal/index.php'
-                      }
-                      className='font-bold underline'
-                    >
-                      link berikut
-                    </UnstyledLink>
-                  </p>
-                  {/* Kalau tahapan tidak null, tampilkan username dan password moodle */}
-                  {data.phase !== '-' && (
-                    <>
-                      <p className='text-sm text-green-700'>
-                        Username: {data?.phase?.username}
-                      </p>
-                      <p className='text-sm text-green-700'>
-                        Password: {data?.phase?.password}
-                      </p>
-                    </>
-                  )}
+            {data?.phase?.status === 'Perdelapan Final' && (
+              <div className='p-4 mt-2 rounded-md bg-green-50'>
+                <div className='flex'>
+                  <div className='flex-shrink-0'>
+                    <HiInformationCircle
+                      className='w-5 h-5 text-green-400'
+                      aria-hidden='true'
+                    />
+                  </div>
+                  <div className='ml-2 space-y-2'>
+                    <p className='text-sm text-green-700'>
+                      Akses portal Schematics NLC melalui{' '}
+                      <UnstyledLink
+                        href={
+                          'https://schematics.its.ac.id/sch-nlc/portal/index.php'
+                        }
+                        className='font-bold underline'
+                      >
+                        link berikut
+                      </UnstyledLink>
+                    </p>
+                    {/* Kalau tahapan tidak null, tampilkan username dan password moodle */}
+                    {data.phase !== '-' && (
+                      <>
+                        <p className='text-sm text-green-700'>
+                          Username: {data?.phase?.username}
+                        </p>
+                        <p className='text-sm text-green-700'>
+                          Password: {data?.phase?.password}
+                        </p>
+                      </>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </>
         ) : null}
       </div>
