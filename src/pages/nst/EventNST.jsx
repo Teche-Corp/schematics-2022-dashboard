@@ -25,7 +25,7 @@ const dataTimeline = [
   {
     id: 2,
     target: 'Pelaksanaan',
-    date: '23 Okt',
+    date: '23 Okt (9.30-12.30 WIB)',
     datetime: '2021-10-23',
     icon: HiOutlineClock,
     iconBackground: 'bg-nst',
