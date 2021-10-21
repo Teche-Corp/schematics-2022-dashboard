@@ -1,6 +1,8 @@
 import { format } from 'date-fns';
 import localeID from 'date-fns/locale/id';
 
+import UnstyledLink from '@/components/UnstyledLink';
+
 export default function TicketDetail({ data = {} }) {
   let formattedTime = new Date(data?.created_at);
   formattedTime.setHours(formattedTime.getHours() + 7);
@@ -60,8 +62,10 @@ export default function TicketDetail({ data = {} }) {
             <div className='sm:col-span-1'>
               <dt className='text-sm font-medium text-gray-500'>Link Zoom</dt>
               {data.name ? (
-                <dd className='text-yellow-800 bg-yellow-100 inline-flex items-baseline px-2.5 py-0.5 rounded-full text-xs font-medium mt-1'>
-                  To Be Announced
+                <dd className='text-white bg-nst hover:bg-nst-700 inline-flex items-baseline px-2.5 py-0.5 rounded-full text-xs font-medium mt-1'>
+                  <UnstyledLink href='https://us02web.zoom.us/j/81798460344?pwd=R1NaQUZaWkNNQU1PMDdaT0EyZWRXZz09'>
+                    Click here to join
+                  </UnstyledLink>
                 </dd>
               ) : (
                 <TextSkeleton />
