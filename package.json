@@ -1,6 +1,6 @@
 {
   "name": "fe-dashboard-schematics-2021",
-  "version": "0.1.13",
+  "version": "0.1.14",
   "private": true,
   "dependencies": {
     "@craco/craco": "^6.3.0",

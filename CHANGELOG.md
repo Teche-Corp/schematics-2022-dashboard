@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.14](https://github.com/rizqitsani/fe-dashboard-schematics-2021/compare/v0.1.13...v0.1.14) (2021-10-21)
+
+
+### Features
+
+* add moodle details ([4f38a9a](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/4f38a9ac6245516b823a990bdba8385a13e3bec5))
+* add nst event time ([0a9d4c7](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/0a9d4c7b5c2887e5513a6ebda585dc1af61dc3f5))
+* add nst zoom link ([b87689c](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/b87689cbae106fb9c7087ed12ca2e8bd59a5a51c))
+* adjust nlc portal link for eighth finalists ([1aff67a](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/1aff67a0fd1bcfe8e449f269269ff2123ed6af92))
+* change nlc portal link ([6e19862](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/6e19862947d3834183ebaa11f180271b6284cb21))
+
+
+### Bug Fixes
+
+* moodle details not showing ([ffa5819](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/ffa58193b622449995cc4da24876b3e8260565d1))
+
 ### [0.1.13](https://github.com/rizqitsani/fe-dashboard-schematics-2021/compare/v0.1.12...v0.1.13) (2021-10-01)
 
 
