@@ -76,8 +76,10 @@ export default function TicketDetail({ data = {} }) {
                 Link Stream Youtube
               </dt>
               {data.name ? (
-                <dd className='text-yellow-800 bg-yellow-100 inline-flex items-baseline px-2.5 py-0.5 rounded-full text-xs font-medium mt-1'>
-                  To Be Announced
+                <dd className='text-white bg-nst hover:bg-nst-700 inline-flex items-baseline px-2.5 py-0.5 rounded-full text-xs font-medium mt-1'>
+                  <UnstyledLink href='https://youtu.be/MQKC0ze77Pw'>
+                    Click here to watch
+                  </UnstyledLink>
                 </dd>
               ) : (
                 <TextSkeleton />
