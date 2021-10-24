@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.15](https://github.com/rizqitsani/fe-dashboard-schematics-2021/compare/v0.1.14...v0.1.15) (2021-10-24)
+
+
+### Features
+
+* add nst stream youtube link ([f6b8840](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/f6b88400501b20a22289b13d4a6bf16ee7a00c9f))
+* add reeva dashboard ([225e430](https://github.com/rizqitsani/fe-dashboard-schematics-2021/commit/225e430b7f6425b90d4f6250f6a98e9f59964b21))
+
 ### [0.1.14](https://github.com/rizqitsani/fe-dashboard-schematics-2021/compare/v0.1.13...v0.1.14) (2021-10-21)
 
 
