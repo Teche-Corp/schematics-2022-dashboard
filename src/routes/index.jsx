@@ -48,6 +48,7 @@ import PageNotFound from '@/pages/error/404';
 import Error500 from '@/pages/error/500';
 
 import { DEADLINE_NLC, DEADLINE_NPC } from '@/lib/constants';
+import EventReeva from '@/pages/reeva/EventReeva';
 
 const routeItems = [
   {
@@ -128,6 +129,14 @@ const routeItems = [
     key: 'nst-event',
     path: '/my/sch-nst/ticket',
     component: EventNST,
+    visible: true,
+  },
+  {
+    auth: 'user',
+    route: PrivateRoute,
+    key: 'reeva-event',
+    path: '/my/sch-reeva/ticket',
+    component: EventReeva,
     visible: true,
   },
   {

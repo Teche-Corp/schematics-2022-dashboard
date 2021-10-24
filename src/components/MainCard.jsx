@@ -38,7 +38,7 @@ const actions = [
   },
   {
     title: 'Schematics Reeva',
-    href: '#',
+    href: '/my/sch-reeva/ticket',
     icon: HiOutlineSparkles,
     iconForeground: 'text-blue-700',
     iconBackground: 'bg-reeva-100',

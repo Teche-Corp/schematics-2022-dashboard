@@ -40,7 +40,7 @@ const navigation = [
   },
   {
     name: 'Schematics Reeva',
-    href: '#',
+    href: '/my/sch-reeva/ticket',
     color: 'text-reeva-100',
     icon: HiOutlineSparkles,
     current: false,
