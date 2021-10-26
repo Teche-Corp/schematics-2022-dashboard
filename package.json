@@ -3,7 +3,7 @@
   "version": "0.1.15",
   "private": true,
   "dependencies": {
-    "@craco/craco": "^6.3.0",
+    "@craco/craco": "^6.4.0",
     "@headlessui/react": "^1.4.1",
     "@tailwindcss/aspect-ratio": "^0.2.2",
     "@tailwindcss/forms": "^0.3.3",
