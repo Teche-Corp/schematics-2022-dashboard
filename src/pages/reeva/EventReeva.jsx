@@ -1,9 +1,11 @@
 import Countdown from 'react-countdown';
 
 import { HiOutlineClock } from 'react-icons/hi';
+import { AiFillYoutube } from 'react-icons/ai';
 
 import DashboardShell from '@/layout/DashboardShell';
 import VerticalTimeline from '@/components/VerticalTimeline';
+import UnstyledLink from '@/components/UnstyledLink';
 
 const dataTimeline = [
   {
@@ -17,13 +19,11 @@ const dataTimeline = [
 ];
 
 const renderer = ({ days, hours, minutes, seconds, completed }) => {
-  if (completed) {
-    return <div>LINK YOUTUBE COMING SOON</div>;
-  } else {
-    return (
+  return (
+    <div className='flex flex-col items-center'>
       <div class='grid grid-flow-col gap-8 text-center auto-cols-max'>
         <div class='flex flex-col'>
-          <span class='text-7xl font-medium'>
+          <span class='text-4xl md:text-7xl font-medium'>
             {days.toLocaleString('en-US', {
               minimumIntegerDigits: 2,
               useGrouping: false,
@@ -32,7 +32,7 @@ const renderer = ({ days, hours, minutes, seconds, completed }) => {
           days
         </div>
         <div class='flex flex-col'>
-          <span class='text-7xl font-medium'>
+          <span class='text-4xl md:text-7xl font-medium'>
             {hours.toLocaleString('en-US', {
               minimumIntegerDigits: 2,
               useGrouping: false,
@@ -41,7 +41,7 @@ const renderer = ({ days, hours, minutes, seconds, completed }) => {
           hours
         </div>
         <div class='flex flex-col'>
-          <span class='text-7xl font-medium'>
+          <span class='text-4xl md:text-7xl font-medium'>
             {minutes.toLocaleString('en-US', {
               minimumIntegerDigits: 2,
               useGrouping: false,
@@ -50,7 +50,7 @@ const renderer = ({ days, hours, minutes, seconds, completed }) => {
           min
         </div>
         <div class='flex flex-col'>
-          <span class='text-7xl font-medium'>
+          <span class='text-4xl md:text-7xl font-medium'>
             {seconds.toLocaleString('en-US', {
               minimumIntegerDigits: 2,
               useGrouping: false,
@@ -59,8 +59,14 @@ const renderer = ({ days, hours, minutes, seconds, completed }) => {
           sec
         </div>
       </div>
-    );
-  }
+      <div className='text-white bg-reeva hover:bg-reeva-700 inline-flex w-max items-baseline px-2.5 py-0.5 rounded-full text-xs font-medium mt-6'>
+        <UnstyledLink href='https://www.youtube.com/watch?v=Tu_e_frNr8U'>
+          <AiFillYoutube className='inline text-2xl md:text-3xl' /> Click to
+          watch
+        </UnstyledLink>
+      </div>
+    </div>
+  );
 };
 
 export default function EventReeva() {
