@@ -30,7 +30,7 @@
     "web-vitals": "^1.1.2"
   },
   "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+    "src/**/*.{js,jsx}": [
       "prettier --write"
     ]
   },
@@ -41,8 +41,11 @@
     "build-prod": "PUBLIC_URL=/dashboard craco build",
     "test": "craco test",
     "eject": "react-scripts eject",
-    "format": "prettier --write src/**/*.{js,jsx,ts,tsx,json,css,scss,md}",
-    "lint": "eslint src/**/*.{js,jsx,ts,tsx,json,css,scss,md}",
+    "lint": "eslint src/**/*.{js,jsx}",
+    "lint:fix": "eslint --fix src/**/*.{js,jsx} && yarn prettier:format",
+    "lint:strict": "eslint --max-warnings=0 src/**/*.{js,jsx}",
+    "prettier:check": "prettier -c src/**/*.{js,jsx}",
+    "prettier:format": "prettier -w src/**/*.{js,jsx}",
     "prepare": "husky install",
     "release": "standard-version"
   },
