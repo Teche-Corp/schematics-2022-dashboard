@@ -22,10 +22,11 @@ import ExportButton from '@/components/Button/ExportButton';
 export default function AdminNpcSenior() {
   const [page, setPage] = useState(1);
 
-  const { data: dataSWR, isValidating, revalidate } = useSWR(
-    `/admin/list/tim/npcs?page=${page}`,
-    getWithToken,
-  );
+  const {
+    data: dataSWR,
+    isValidating,
+    revalidate,
+  } = useSWR(`/admin/list/tim/npcs?page=${page}`, getWithToken);
 
   const revalidateTable = isValidating ? null : () => revalidate();
   const data = dataSWR?.data?.teams ?? [];

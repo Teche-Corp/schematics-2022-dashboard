@@ -19,10 +19,11 @@ import ExportButton from '@/components/Button/ExportButton';
 export default function AdminNst() {
   const [page, setPage] = useState(1);
 
-  const { data: dataSWR, isValidating, revalidate } = useSWR(
-    `/admin/list/tim/nst?page=${page}`,
-    getWithToken,
-  );
+  const {
+    data: dataSWR,
+    isValidating,
+    revalidate,
+  } = useSWR(`/admin/list/tim/nst?page=${page}`, getWithToken);
   const revalidateTable = isValidating ? null : () => revalidate();
   const data = dataSWR?.data?.teams ?? [];
   const pages = dataSWR?.data?.total_page ?? undefined;

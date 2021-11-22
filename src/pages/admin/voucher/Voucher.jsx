@@ -24,10 +24,11 @@ export default function Voucher() {
 
   const isLoading = useLoadingToast();
 
-  const { data: dataSWR, isValidating, revalidate } = useSWR(
-    '/voucher/list',
-    emptyPostWithToken,
-  );
+  const {
+    data: dataSWR,
+    isValidating,
+    revalidate,
+  } = useSWR('/voucher/list', emptyPostWithToken);
   const revalidateTable = isValidating ? null : () => revalidate();
   const data = dataSWR?.data ?? [];
 
