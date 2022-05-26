@@ -60,3 +60,6 @@ Description harus bisa mendeskripsikan apa yang dikerjakan.
 - Gunakan kata imperative, dan present tense: "change" bukan "changed" atau "changes"
 - Jangan gunakan huruf kapital di awal kalimat description
 - Jangan tambahkan titik di akhir description
+
+### 4. Connect Smart Commit JIRA
+Use SCH2022-XX (Fill XX with issue number)
