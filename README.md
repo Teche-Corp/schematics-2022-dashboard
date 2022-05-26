@@ -62,4 +62,4 @@ Description harus bisa mendeskripsikan apa yang dikerjakan.
 - Jangan tambahkan titik di akhir description
 
 ### 4. Connect Smart Commit JIRA
-Use SCH2022-XX (Fill XX with issue number)
+Use SCH2022-XX (Fill XX with issue number based on Jira Board)
