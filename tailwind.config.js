@@ -20,28 +20,32 @@ module.exports = {
         },
         cyan: colors.cyan,
         npc: {
-          DEFAULT: '#c93d45',
-          100: '#ffbbbc',
-          400: '#fd7d7e',
-          700: '#fd5457',
+          DEFAULT: '#ED5565',
+          100: '#F8C5CA',
+          200: '#FFB7B7',
+          300: '#FF9F97',
+          400: '#EA8686'
         },
         nlc: {
-          DEFAULT: '#fccc00',
-          100: '#fde466',
-          400: '#ffb349',
-          700: '#fe6021',
+          DEFAULT: '#FFCD46',
+          100: '#FFFFCC',
+          200: '#FFF0C8',
+          300: '#FFCD7C',
+          400: '#FFDB7A'
         },
         nst: {
-          DEFAULT: '#18a489',
-          100: '#95dc8e',
-          400: '#53c97f',
-          700: '#138176',
+          DEFAULT: '#85D4BE',
+          100: '#C3DDE0',
+          200: '#DAF1DE',
+          300: '#96DFD8',
+          400: '#AEE6CB'
         },
         reeva: {
-          DEFAULT: '#008bd0',
-          100: '#a3e1fa',
-          400: '#77bede',
-          700: '#3d7196',
+          DEFAULT: '#2E97EE',
+          100: '#ACE6FF',
+          200: '#78C0FC',
+          300: '#70A5D1',
+          400: '#3C8ACA'
         },
       },
     },

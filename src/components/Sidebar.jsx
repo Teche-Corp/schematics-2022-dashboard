@@ -1,54 +1,49 @@
 import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import {
-  HiCog,
-  HiHome,
-  HiQuestionMarkCircle,
-  HiXCircle,
-  HiDesktopComputer,
-  HiSpeakerphone,
-  HiOutlineSparkles,
-} from 'react-icons/hi';
+import { HiHome, HiXCircle } from 'react-icons/hi';
+
+import { BsCircleFill } from 'react-icons/bs';
+
 import { classNames } from '@/lib/helper';
-import { BiBrain } from 'react-icons/bi';
 import { Link, useLocation } from 'react-router-dom';
 
 import UnstyledLink from '@/components/UnstyledLink';
 
 const navigation = [
-  { name: 'Home', href: '/my', icon: HiHome, current: false },
+  {
+    name: 'Home',
+    href: '/my',
+    icon: HiHome,
+    current: false,
+  },
   {
     name: 'Schematics NPC',
     href: '/my/sch-npc/team',
-    color: 'text-npc-100',
-    icon: HiDesktopComputer,
+    color: 'text-npc',
+    icon: BsCircleFill,
     current: false,
   },
   {
     name: 'Schematics NLC',
     href: '/my/sch-nlc/team',
-    color: 'text-nlc-100',
-    icon: BiBrain,
+    color: 'text-nlc',
+    icon: BsCircleFill,
     current: false,
   },
   {
     name: 'Schematics NST',
     href: '/my/sch-nst/ticket',
-    color: 'text-nst-100',
-    icon: HiSpeakerphone,
+    color: 'text-nst',
+    icon: BsCircleFill,
     current: false,
   },
   {
     name: 'Schematics Reeva',
     href: '/my/sch-reeva/ticket',
-    color: 'text-reeva-100',
-    icon: HiOutlineSparkles,
+    color: 'text-reeva',
+    icon: BsCircleFill,
     current: false,
   },
-];
-const secondaryNavigation = [
-  { name: 'Settings', href: '#', icon: HiCog },
-  { name: 'Help', href: '#', icon: HiQuestionMarkCircle },
 ];
 
 export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
@@ -86,7 +81,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
             leaveFrom='translate-x-0'
             leaveTo='-translate-x-full'
           >
-            <div className='relative flex flex-col flex-1 w-full max-w-xs pt-5 pb-4 bg-dark'>
+            <div className='relative flex flex-col flex-1 w-full max-w-xs pt-5 pb-4 bg-white'>
               <Transition.Child
                 as={Fragment}
                 enter='ease-in-out duration-300'
@@ -116,7 +111,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
                 >
                   <img
                     className='h-20 mx-auto'
-                    src={`${process.env.PUBLIC_URL}/images/logo/colored-title.png`}
+                    src={`${process.env.PUBLIC_URL}/images/logo/logo-dashboard-desktop.svg`}
                     alt='colored-title'
                   />
                 </UnstyledLink>
@@ -132,40 +127,23 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
                       to={item.href}
                       className={classNames(
                         item.href === pathname
-                          ? 'bg-dark-100'
-                          : 'hover:bg-dark-400',
-                        item.color ? `${item.color}` : 'text-white',
+                          ? 'bg-white'
+                          : 'hover:bg-gray-100',
+                        item.color ? `${item.color}` : 'text-black',
                         'group flex items-center px-2 py-2 text-base font-medium rounded-md',
                       )}
                       aria-current={item.current ? 'page' : undefined}
                     >
                       <item.icon
                         className={classNames(
-                          item.color ? `${item.color}` : 'text-white',
-                          'w-6 h-6 mr-4 text-white',
+                          item.color ? `${item.color}` : 'text-black',
+                          'w-6 h-6 mr-4 text-black',
                         )}
                         aria-hidden='true'
                       />
                       {item.name}
                     </Link>
                   ))}
-                </div>
-                <div className='pt-6 mt-6'>
-                  <div className='px-2 space-y-1'>
-                    {secondaryNavigation.map((item) => (
-                      <Link
-                        key={item.name}
-                        to={item.href}
-                        className='flex items-center px-2 py-2 text-base font-medium text-white rounded-md group hover:bg-dark-400'
-                      >
-                        <item.icon
-                          className='w-6 h-6 mr-4 text-white'
-                          aria-hidden='true'
-                        />
-                        {item.name}
-                      </Link>
-                    ))}
-                  </div>
                 </div>
               </nav>
             </div>
@@ -179,7 +157,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
       <div className='hidden h-full lg:flex lg:flex-shrink-0'>
         <div className='flex flex-col w-64'>
           {/* Sidebar component, swap this element with another sidebar if you like */}
-          <div className='flex flex-col flex-grow pt-5 pb-4 overflow-y-auto bg-dark'>
+          <div className='flex flex-col flex-grow pt-5 pb-4 overflow-y-auto bg-white'>
             <div className='flex items-center flex-shrink-0 px-4'>
               <UnstyledLink
                 openNewTab={false}
@@ -187,7 +165,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
               >
                 <img
                   className='h-20'
-                  src={`${process.env.PUBLIC_URL}/images/logo/colored-title.png`}
+                  src={`${process.env.PUBLIC_URL}/images/logo/logo-dashboard-desktop.svg`}
                   alt='colored-title'
                 />
               </UnstyledLink>
@@ -203,40 +181,23 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
                     to={item.href}
                     className={classNames(
                       item.href === pathname
-                        ? 'bg-dark-100 text-white'
-                        : 'text-white hover:bg-dark-400',
-                      item.color ? `${item.color}` : 'text-white',
+                        ? 'bg-white text-black'
+                        : 'text-black hover:bg-gray-100',
+                      item.color ? `${item.color}` : 'text-black',
                       'group flex items-center px-2 py-2 text-base font-medium rounded-md',
                     )}
                     aria-current={item.current ? 'page' : undefined}
                   >
                     <item.icon
                       className={classNames(
-                        item.color ? `${item.color}` : 'text-white',
-                        'w-6 h-6 mr-4 text-white',
+                        item.color ? `${item.color}` : 'text-black',
+                        'w-6 h-6 mr-4 text-black',
                       )}
                       aria-hidden='true'
                     />
                     {item.name}
                   </Link>
                 ))}
-              </div>
-              <div className='pt-6 mt-6'>
-                <div className='px-2 space-y-1'>
-                  {secondaryNavigation.map((item) => (
-                    <Link
-                      key={item.name}
-                      to={item.href}
-                      className='flex items-center px-2 py-2 text-base font-medium text-white rounded-md group hover:bg-dark-400'
-                    >
-                      <item.icon
-                        className='w-6 h-6 mr-4 text-white'
-                        aria-hidden='true'
-                      />
-                      {item.name}
-                    </Link>
-                  ))}
-                </div>
               </div>
             </nav>
           </div>
