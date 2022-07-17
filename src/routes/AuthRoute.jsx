@@ -3,7 +3,7 @@ import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import { ImSpinner8 } from 'react-icons/im';
 import { useAuthState } from '@/contexts/AuthContext';
-import useQuery from '@/hooks/useQuery';
+// import useQuery from '@/hooks/useQuery';
 
 // const apiUrl =
 //   process.env.NODE_ENV === 'production' &&

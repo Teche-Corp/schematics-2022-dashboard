@@ -330,7 +330,7 @@ const Routes = () => {
     <Router basename={process.env.PUBLIC_URL}>
       <Switch>
         <Route exact path='/'>
-          <Redirect to='/signin' />
+          <Redirect to='/login' />
         </Route>
 
         {routeItems.map((routeItem) => {

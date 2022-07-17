@@ -11,7 +11,11 @@ import { AuthProvider } from '@/contexts/AuthContext';
 import '@/App.css';
 
 const App = () => {
-  axios.defaults.baseURL = 'https://schematics.its.ac.id:8081/api';
+  console.log(process.env);
+  axios.defaults.baseURL =
+    process.env.APP_ENV === 'production'
+      ? 'https://schematics.its.ac.id:8081/api'
+      : 'http://127.0.0.1:8000/api';
   // process.env.NODE_ENV === 'production' &&
   // process.env.PUBLIC_URL === '/dashboard'
   //   ? 'https://schematics.its.ac.id/api'
