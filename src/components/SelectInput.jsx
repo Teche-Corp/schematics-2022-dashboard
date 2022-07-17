@@ -20,7 +20,10 @@ export default function SelectInput({
 
   return (
     <div>
-      <label htmlFor={id} className='block text-sm font-normal text-gray-700'>
+      <label
+        htmlFor={id}
+        className='block text-sm font-normal text-white font-primary'
+      >
         {label}
       </label>
       <div className='relative mt-1'>

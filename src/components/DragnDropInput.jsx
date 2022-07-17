@@ -24,7 +24,9 @@ const FilePreview = ({ file, deleteFile }) => {
             className='flex-shrink-0 w-5 h-5 text-gray-400'
             aria-hidden='true'
           />
-          <span className='flex-1 w-0 ml-2 truncate'>{file.name}</span>
+          <span className='flex-1 w-0 ml-2 truncate text-white font-primary'>
+            {file.name}
+          </span>
         </div>
         <div className='flex-shrink-0 ml-4'>
           <UnstyledLink
@@ -102,7 +104,10 @@ export default function DragnDropInput({
 
   return (
     <>
-      <label className='block text-sm font-normal text-gray-700' htmlFor={id}>
+      <label
+        className='block text-sm font-normal text-white font-primary'
+        htmlFor={id}
+      >
         {label}
       </label>
 
@@ -129,7 +134,7 @@ export default function DragnDropInput({
                       : 'focus:ring-dark-400 focus:border-dark-400',
                   )}
                 >
-                  <p className='my-20 text-center text-gray-500'>
+                  <p className='my-20 text-center text-gray-500 font-primary'>
                     Tarik dan letakkan file ke kotak ini atau klik untuk memilih
                     file
                   </p>
@@ -138,7 +143,9 @@ export default function DragnDropInput({
 
               <div className='mt-1'>
                 {helperText !== '' && (
-                  <p className='text-xs text-gray-500'>{helperText}</p>
+                  <p className='text-xs text-white font-primary'>
+                    {helperText}
+                  </p>
                 )}
                 {errors[id] && (
                   <p className='text-sm text-red-500'>{errors[id].message}</p>

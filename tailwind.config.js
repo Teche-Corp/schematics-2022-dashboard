@@ -48,6 +48,10 @@ module.exports = {
           400: '#3C8ACA'
         },
       },
+      fontFamily: {
+        primary: "Fredoka One, cursive",
+        secondary: "Poppins, sans-serif",
+      },
     },
   },
   variants: {

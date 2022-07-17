@@ -25,7 +25,7 @@ export default function Input({
           name={id}
           id={id}
           disabled={disabled}
-          className={`block w-full border-gray-600 bg-dark rounded-md shadow-sm   ${
+          className={`block w-full border-gray-600 bg-white rounded-md shadow-sm   ${
             errors[id]
               ? 'focus:ring-red-500 border-red-500 focus:border-red-500'
               : 'focus:ring-light-100 focus:border-light-100'

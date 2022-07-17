@@ -3,20 +3,20 @@ import DashboardShell from '@/layout/DashboardShell';
 import React from 'react';
 
 function Landing() {
-  const notification = [
-    {
-      message: 'Pembayaran anda ditolak, mohon upload lagi',
-      type: 'danger',
-    },
-    {
-      message: 'Pendaftaran anda telah diverifikasi',
-      type: 'success',
-    },
-    {
-      message: 'Segera persiapkan diri anda',
-      type: 'warning',
-    },
-  ];
+  // const notification = [
+  //   {
+  //     message: 'Pembayaran anda ditolak, mohon upload lagi',
+  //     type: 'danger',
+  //   },
+  //   {
+  //     message: 'Pendaftaran anda telah diverifikasi',
+  //     type: 'success',
+  //   },
+  //   {
+  //     message: 'Segera persiapkan diri anda',
+  //     type: 'warning',
+  //   },
+  // ];
 
   const cards = [
     {
@@ -54,14 +54,15 @@ function Landing() {
       <div className='bg-black min-h-screen py-8'>
         <div className='md:px-16 px-6'>
           <div className='flex md:flex-row flex-col w-full justify-between md:space-y-0 space-y-3'>
-            {cards.map((card) => {
+            {cards.map((card, index) => {
               return (
                 <DashboardEventCard
+                  key={index}
                   textpicture={card.textpicture}
                   name={card.name}
                   img1={card.img1}
                   img2={card.img2}
-                  status={card.status}
+                  // status={card.status}
                 />
               );
             })}

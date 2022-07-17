@@ -1,11 +1,11 @@
-import axios from 'axios';
+// import axios from 'axios';
 import { createContext, useContext, useEffect, useReducer } from 'react';
 
-import { bearerToken } from '@/lib/helper';
+// import { bearerToken } from '@/lib/helper';
 
 const StateContext = createContext({
   authenticated: false,
-  user: null,
+  // user: null,
   loading: true,
 });
 StateContext.displayName = 'AuthState';
@@ -19,88 +19,88 @@ const reducer = (state, { type, payload }) => {
       return {
         ...state,
         authenticated: true,
-        user: payload,
+        // user: payload,
       };
     case 'LOGOUT':
       localStorage.removeItem('token');
       return {
         ...state,
         authenticated: false,
-        user: null,
+        // user: null,
       };
-    case 'EDIT_PROFILE':
-      return {
-        ...state,
-        user: payload,
-      };
-    case 'ASSIGN_NLC': {
-      let newTeam = [...state.user.team];
-      const index = newTeam.findIndex(
-        (teamElement) => teamElement.event === 'nlc',
-      );
+    // case 'EDIT_PROFILE':
+    //   return {
+    //     ...state,
+    //     user: payload,
+    //   };
+    // case 'ASSIGN_NLC': {
+    //   let newTeam = [...state.user.team];
+    //   const index = newTeam.findIndex(
+    //     (teamElement) => teamElement.event === 'nlc',
+    //   );
 
-      if (index === -1) {
-        newTeam.push({ event: 'nlc', team_id: payload });
-      } else {
-        newTeam[index] = { event: 'nlc', team_id: payload };
-      }
+    //   if (index === -1) {
+    //     newTeam.push({ event: 'nlc', team_id: payload });
+    //   } else {
+    //     newTeam[index] = { event: 'nlc', team_id: payload };
+    //   }
 
-      return {
-        ...state,
-        user: {
-          ...state.user,
-          team: newTeam,
-        },
-      };
-    }
-    case 'ASSIGN_NPC_JUNIOR': {
-      let newTeam = [...state.user.team];
-      const index = newTeam.findIndex(
-        (teamElement) => teamElement.event === 'npc_junior',
-      );
+    //   return {
+    //     ...state,
+    //     user: {
+    //       ...state.user,
+    //       team: newTeam,
+    //     },
+    //   };
+    // }
+    // case 'ASSIGN_NPC_JUNIOR': {
+    //   let newTeam = [...state.user.team];
+    //   const index = newTeam.findIndex(
+    //     (teamElement) => teamElement.event === 'npc_junior',
+    //   );
 
-      if (index === -1) {
-        newTeam.push({ event: 'npc_junior', team_id: payload });
-      } else {
-        newTeam[index] = { event: 'npc_junior', team_id: payload };
-      }
+    //   if (index === -1) {
+    //     newTeam.push({ event: 'npc_junior', team_id: payload });
+    //   } else {
+    //     newTeam[index] = { event: 'npc_junior', team_id: payload };
+    //   }
 
-      return {
-        ...state,
-        user: {
-          ...state.user,
-          team: newTeam,
-        },
-      };
-    }
-    case 'ASSIGN_NPC_SENIOR': {
-      let newTeam = [...state.user.team];
-      const index = newTeam.findIndex(
-        (teamElement) => teamElement.event === 'npc_senior',
-      );
+    //   return {
+    //     ...state,
+    //     user: {
+    //       ...state.user,
+    //       team: newTeam,
+    //     },
+    //   };
+    // }
+    // case 'ASSIGN_NPC_SENIOR': {
+    //   let newTeam = [...state.user.team];
+    //   const index = newTeam.findIndex(
+    //     (teamElement) => teamElement.event === 'npc_senior',
+    //   );
 
-      if (index === -1) {
-        newTeam.push({ event: 'npc_senior', team_id: payload });
-      } else {
-        newTeam[index] = { event: 'npc_senior', team_id: payload };
-      }
+    //   if (index === -1) {
+    //     newTeam.push({ event: 'npc_senior', team_id: payload });
+    //   } else {
+    //     newTeam[index] = { event: 'npc_senior', team_id: payload };
+    //   }
 
-      return {
-        ...state,
-        user: {
-          ...state.user,
-          team: newTeam,
-        },
-      };
-    }
-    case 'POPULATE':
-      return {
-        ...state,
-        user: {
-          ...state.user,
-          ...payload,
-        },
-      };
+    //   return {
+    //     ...state,
+    //     user: {
+    //       ...state.user,
+    //       team: newTeam,
+    //     },
+    //   };
+    // }
+    // case 'POPULATE':
+    //   return {
+    //     ...state,
+    //     user: {
+    //       ...state.user,
+    //       ...payload,
+    //     },
+    //   };
     case 'STOP_LOADING':
       return {
         ...state,
@@ -113,7 +113,7 @@ const reducer = (state, { type, payload }) => {
 
 export const AuthProvider = ({ children }) => {
   const [state, defaultDispatch] = useReducer(reducer, {
-    user: null,
+    // user: null,
     authenticated: false,
     loading: true,
   });
@@ -128,13 +128,13 @@ export const AuthProvider = ({ children }) => {
           return;
         }
 
-        const res = await axios.post(
-          '/user/get-user-info',
-          {},
-          { headers: { ...bearerToken() } },
-        );
+        // const res = await axios.post(
+        //   '/user/get-user-info',
+        //   {},
+        //   { headers: { ...bearerToken() } },
+        // );
 
-        dispatch('LOGIN', res.data.data);
+        dispatch('LOGIN', {});
       } catch (err) {
         // eslint-disable-next-line no-console
         console.error('error context', err);

@@ -2,7 +2,7 @@ import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { HiHome, HiXCircle } from 'react-icons/hi';
 
-import { BsCircleFill } from 'react-icons/bs';
+// import { BsCircleFill } from 'react-icons/bs';
 
 import { classNames } from '@/lib/helper';
 import { Link, useLocation } from 'react-router-dom';
@@ -12,38 +12,38 @@ import UnstyledLink from '@/components/UnstyledLink';
 const navigation = [
   {
     name: 'Home',
-    href: '/my',
+    href: '/landing',
     icon: HiHome,
     current: false,
   },
-  {
-    name: 'Schematics NPC',
-    href: '/my/sch-npc/team',
-    color: 'text-npc',
-    icon: BsCircleFill,
-    current: false,
-  },
-  {
-    name: 'Schematics NLC',
-    href: '/my/sch-nlc/team',
-    color: 'text-nlc',
-    icon: BsCircleFill,
-    current: false,
-  },
-  {
-    name: 'Schematics NST',
-    href: '/my/sch-nst/ticket',
-    color: 'text-nst',
-    icon: BsCircleFill,
-    current: false,
-  },
-  {
-    name: 'Schematics Reeva',
-    href: '/my/sch-reeva/ticket',
-    color: 'text-reeva',
-    icon: BsCircleFill,
-    current: false,
-  },
+  // {
+  //   name: 'Schematics NPC',
+  //   href: '/my/sch-npc/team',
+  //   color: 'text-npc',
+  //   icon: BsCircleFill,
+  //   current: false,
+  // },
+  // {
+  //   name: 'Schematics NLC',
+  //   href: '/my/sch-nlc/team',
+  //   color: 'text-nlc',
+  //   icon: BsCircleFill,
+  //   current: false,
+  // },
+  // {
+  //   name: 'Schematics NST',
+  //   href: '/my/sch-nst/ticket',
+  //   color: 'text-nst',
+  //   icon: BsCircleFill,
+  //   current: false,
+  // },
+  // {
+  //   name: 'Schematics Reeva',
+  //   href: '/my/sch-reeva/ticket',
+  //   color: 'text-reeva',
+  //   icon: BsCircleFill,
+  //   current: false,
+  // },
 ];
 
 export default function Sidebar({ sidebarOpen, setSidebarOpen }) {

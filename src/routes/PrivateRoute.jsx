@@ -5,7 +5,7 @@ import { ImSpinner8 } from 'react-icons/im';
 import { useAuthState } from '@/contexts/AuthContext';
 
 const PrivateRoute = ({ component: Component, auth, ...rest }) => {
-  const { authenticated, loading, user } = useAuthState();
+  const { authenticated, loading } = useAuthState();
   const { pathname } = useLocation();
 
   return (
@@ -21,20 +21,21 @@ const PrivateRoute = ({ component: Component, auth, ...rest }) => {
           );
         } else {
           if (authenticated) {
+            return <Component {...props} />;
             // If current user role not allowed to access this route
-            if (auth !== 'all' && user?.user_role !== auth) {
-              return user?.user_role === 'user' ? (
-                <Redirect to={'/my'} />
-              ) : (
-                <Redirect to={'/admin/dashboard'} />
-              );
-            } else {
-              return <Component {...props} />;
-            }
+            // if (auth !== 'all' && user?.user_role !== auth) {
+            //   return user?.user_role === 'user' ? (
+            //     <Redirect to={'/my'} />
+            //   ) : (
+            //     <Redirect to={'/admin/dashboard'} />
+            //   );
+            // } else {
+            //   return <Component {...props} />;
+            // }
           } else {
             return (
               <Redirect
-                to={{ pathname: '/signin', state: { redirect: pathname } }}
+                to={{ pathname: '/login', state: { redirect: pathname } }}
               />
             );
           }
