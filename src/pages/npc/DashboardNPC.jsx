@@ -118,7 +118,7 @@ function DashboardNPC() {
                 </ul>
               </div>
               <div className='md:w-5/12 w-full grid grid-rows-6 md:pl-8 pl-0 space-y-3'>
-                <div className='w-full row-span-4 bg-white py-4 px-2 rounded-lg'>
+                <div className='w-full row-span-4 bg-white p-4 rounded-lg'>
                   <div>
                     <p className='text-3xl font-bold text-left text-npc'>
                       Ketua Tim
