@@ -1,51 +1,39 @@
 import DashboardEventCard from '@/components/DashboardEventCard';
+import { useAuthState } from '@/contexts/AuthContext';
 import DashboardShell from '@/layout/DashboardShell';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 function Landing() {
-  // const notification = [
-  //   {
-  //     message: 'Pembayaran anda ditolak, mohon upload lagi',
-  //     type: 'danger',
-  //   },
-  //   {
-  //     message: 'Pendaftaran anda telah diverifikasi',
-  //     type: 'success',
-  //   },
-  //   {
-  //     message: 'Segera persiapkan diri anda',
-  //     type: 'warning',
-  //   },
-  // ];
+  const { user, loading } = useAuthState();
 
   const cards = [
     {
-      textpicture: `${process.env.PUBLIC_URL}/images/nlc/nlc-text.svg`,
+      textpicture: `${process.env.PUBLIC_URL}/images/nlc/nlc-text.png`,
       name: 'NATIONAL LOGIC COMPETITION',
-      img1: `${process.env.PUBLIC_URL}/images/nlc/assetNLC1.svg`,
-      img2: `${process.env.PUBLIC_URL}/images/nlc/assetNLC.svg`,
-      status: 'Mengikuti',
+      img1: `${process.env.PUBLIC_URL}/images/nlc/assetNLC1.png`,
+      img2: `${process.env.PUBLIC_URL}/images/nlc/assetNLC.png`,
+      key: 'nlc',
     },
     {
-      textpicture: `${process.env.PUBLIC_URL}/images/npc/npc-text.svg`,
-      name: 'NATIONAL PROGAMMING COMPETITION',
-      img1: `${process.env.PUBLIC_URL}/images/npc/assetNPC2.svg`,
-      img2: `${process.env.PUBLIC_URL}/images/npc/assetNPC.svg`,
-      status: 'Tidak Mengikuti',
+      textpicture: `${process.env.PUBLIC_URL}/images/npc/npc-text.png`,
+      name: 'NATIONAL PROGAMMING CONTEST',
+      img1: `${process.env.PUBLIC_URL}/images/npc/assetNPC2.png`,
+      img2: `${process.env.PUBLIC_URL}/images/npc/assetNPC.png`,
+      key: 'npc',
     },
     {
-      textpicture: `${process.env.PUBLIC_URL}/images/nst/nst-text.svg`,
+      textpicture: `${process.env.PUBLIC_URL}/images/nst/nst-text.png`,
       name: 'NATIONAL SEMINAR OF TECHNOLOGY',
-      img1: `${process.env.PUBLIC_URL}/images/nst/assetNST2.svg`,
-      img2: `${process.env.PUBLIC_URL}/images/nst/assetNST1.svg`,
-      status: 'Mengikuti',
+      img1: `${process.env.PUBLIC_URL}/images/nst/assetNST2.png`,
+      img2: `${process.env.PUBLIC_URL}/images/nst/assetNST1.png`,
+      key: 'nst',
     },
     {
-      textpicture: `${process.env.PUBLIC_URL}/images/reeva/reeva-text.svg`,
+      textpicture: `${process.env.PUBLIC_URL}/images/reeva/reeva-text.png`,
       name: 'REVOLUTIONARY ENTERTAIMENT AND EXPO WITH VARIOUS ARTS',
-      img1: `${process.env.PUBLIC_URL}/images/reeva/assetreeva1.svg`,
-      img2: `${process.env.PUBLIC_URL}/images/reeva/assetreeva.svg`,
-      status: 'Mengikuti',
+      img1: `${process.env.PUBLIC_URL}/images/reeva/assetreeva1.png`,
+      img2: `${process.env.PUBLIC_URL}/images/reeva/assetreeva.png`,
+      key: 'reeva',
     },
   ];
 
@@ -62,7 +50,9 @@ function Landing() {
                   name={card.name}
                   img1={card.img1}
                   img2={card.img2}
-                  // status={card.status}
+                  status={
+                    user?.events?.[card.key] ? 'Mengikuti' : 'Tidak Mengikuti'
+                  }
                 />
               );
             })}

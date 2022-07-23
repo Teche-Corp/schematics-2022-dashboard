@@ -10,13 +10,13 @@ function DashboardEventCard({ textpicture, name, img1, img2, status }) {
           <img src={img1} alt='assetnlc1' className='absolute left-0' />
           <img src={img2} alt='assetnlc2' className='absolute right-0' />
         </div>
-        {/* <p
+        <p
           className={`px-4 font-bold absolute bottom-6 ${
             status === 'Mengikuti' ? 'text-blue-600' : 'text-red-500'
           }`}
         >
           <span className='text-xl text-black'>Status:</span> {status}
-        </p> */}
+        </p>
       </div>
     </>
   );

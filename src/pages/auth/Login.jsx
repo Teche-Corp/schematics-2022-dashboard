@@ -3,6 +3,7 @@ import PasswordInput from '@/components/PasswordInput';
 import SubmitButton from '@/components/SubmitButton';
 import UnstyledLink from '@/components/UnstyledLink';
 import { useAuthDispatch } from '@/contexts/AuthContext';
+import { bearerToken } from '@/lib/helper';
 import axios from 'axios';
 import { FormProvider, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
@@ -16,17 +17,26 @@ export default function Login() {
   const { handleSubmit } = methods;
 
   const handleLogin = (data) => {
-    toast.promise(axios.post('/login_user', data), {
-      loading: 'Loading...',
-      success: (res) => {
-        const { token } = res.data.data;
-        localStorage.setItem('token', token);
-        dispatch('LOGIN', {});
-        history.push('/landing', state);
-        return 'Berhasil masuk ke akun anda';
+    toast.promise(
+      axios
+        .post('/login_user', data)
+        .then((res) => {
+          const { token } = res.data.data;
+          localStorage.setItem('token', token);
+          return axios.get('/me', { headers: { ...bearerToken() } });
+        })
+        .then((res) => {
+          dispatch('LOGIN', res.data.data);
+        }),
+      {
+        loading: 'Loading...',
+        success: (res) => {
+          history.push('/landing', state);
+          return 'Berhasil masuk ke akun anda';
+        },
+        error: (err) => err.response.data.message,
       },
-      error: (err) => err.response.data.message,
-    });
+    );
   };
 
   return (
@@ -37,7 +47,7 @@ export default function Login() {
         </p>
         <div className='w-9/12'>
           <img
-            src={`${process.env.PUBLIC_URL}/images/auth/login-left.svg`}
+            src={`${process.env.PUBLIC_URL}/images/auth/login-left.png`}
             alt='login'
             className='w-full'
           />
@@ -78,7 +88,7 @@ export default function Login() {
                     },
                   }}
                 />
-                <div className='w-full'>
+                {/* <div className='w-full'>
                   <div className='text-sm'>
                     <UnstyledLink
                       href='/forgot'
@@ -87,8 +97,8 @@ export default function Login() {
                       Lupa password?
                     </UnstyledLink>
                   </div>
-                </div>
-                <div className='mt-16'>
+                </div> */}
+                <div>
                   <SubmitButton loading={false}>Masuk</SubmitButton>
                 </div>
               </form>
@@ -99,7 +109,10 @@ export default function Login() {
             <p className='text-white text-center py-2'>
               Belum memiliki akun?{' '}
               <span style={{ color: '#F15412' }}>
-                <UnstyledLink href='register' className='hover:text-yellow-500'>
+                <UnstyledLink
+                  href='/register'
+                  className='hover:text-yellow-500'
+                >
                   Daftar
                 </UnstyledLink>
               </span>

@@ -35,7 +35,7 @@ export default function Login() {
         </p>
         <div className='w-9/12'>
           <img
-            src={`${process.env.PUBLIC_URL}/images/auth/register-left.svg`}
+            src={`${process.env.PUBLIC_URL}/images/auth/register-left.png`}
             alt='login'
             className='w-full'
           />
@@ -135,7 +135,7 @@ export default function Login() {
             <p className='text-white text-center py-2'>
               Telah memiliki akun?{' '}
               <span style={{ color: '#F15412' }}>
-                <UnstyledLink href='register' className='hover:text-yellow-500'>
+                <UnstyledLink href='/login' className='hover:text-yellow-500'>
                   Login
                 </UnstyledLink>
               </span>

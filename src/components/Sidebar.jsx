@@ -2,7 +2,7 @@ import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { HiHome, HiXCircle } from 'react-icons/hi';
 
-// import { BsCircleFill } from 'react-icons/bs';
+import { BsCircleFill } from 'react-icons/bs';
 
 import { classNames } from '@/lib/helper';
 import { Link, useLocation } from 'react-router-dom';
@@ -16,20 +16,20 @@ const navigation = [
     icon: HiHome,
     current: false,
   },
-  // {
-  //   name: 'Schematics NPC',
-  //   href: '/my/sch-npc/team',
-  //   color: 'text-npc',
-  //   icon: BsCircleFill,
-  //   current: false,
-  // },
-  // {
-  //   name: 'Schematics NLC',
-  //   href: '/my/sch-nlc/team',
-  //   color: 'text-nlc',
-  //   icon: BsCircleFill,
-  //   current: false,
-  // },
+  {
+    name: 'Schematics NPC',
+    href: '/npc',
+    color: 'text-npc',
+    icon: BsCircleFill,
+    current: false,
+  },
+  {
+    name: 'Schematics NLC',
+    href: '/nlc',
+    color: 'text-nlc',
+    icon: BsCircleFill,
+    current: false,
+  },
   // {
   //   name: 'Schematics NST',
   //   href: '/my/sch-nst/ticket',

@@ -57,7 +57,6 @@ import Register from '@/pages/auth/Register';
 import PaymentTeam from '@/pages/nlc/PaymentTeam';
 import CreateTeamKetua from '@/pages/nlc/CreateTeamKetua';
 import JoinTeam from '@/pages/nlc/JoinTeam';
-import CreateTeamNPCSenior from '@/pages/npc/CreateTeamNPCSenior';
 import CreateTeamSeniorKetua from '@/pages/npc/CreateTeamSeniorKetua';
 import PaymentTeamSenior from '@/pages/npc/PaymentTeamSenior';
 import JoinTeamSenior from '@/pages/npc/JoinTeamSenior';
@@ -411,14 +410,6 @@ const routeItems = [
     key: 'npc-junior-payment',
     path: '/npc_junior/payment',
     component: PaymentTeamSenior,
-    visible: true,
-  },
-  {
-    auth: 'user',
-    route: PrivateRoute,
-    key: 'npc-junior-join-team',
-    path: '/npc_junior/join_team',
-    component: JoinTeamSenior,
     visible: true,
   },
 ];
