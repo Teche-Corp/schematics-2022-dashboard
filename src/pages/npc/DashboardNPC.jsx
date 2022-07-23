@@ -1,12 +1,25 @@
 import Loading from '@/components/Loading';
 import DashboardShell from '@/layout/DashboardShell';
-import React from 'react';
-import { Link } from 'react-router-dom';
+import { TEAM_STATUS } from '@/lib/constants';
+import React, { useEffect } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import useSWR from 'swr';
 import Error500 from '../error/500';
 
 function DashboardNPC() {
+  const history = useHistory();
   const { data, error } = useSWR('/my_npc');
+
+  useEffect(() => {
+    if (data) {
+      if (
+        data.data.status === 'awaiting_payment' ||
+        data.data.status === 'need_revision'
+      ) {
+        history.push(`/npc_${data.data.kategori}/payment`);
+      }
+    }
+  }, [data, history]);
 
   if (error && error.response.status !== 404) return <Error500 />;
   if (!data && !error) return <Loading />;
@@ -85,7 +98,7 @@ function DashboardNPC() {
                   Profil Tim
                 </p>
                 <ul className='list-disc list-inside'>
-                  <div className='grid grid-cols-12 grid-rows-6 space-y-3 mt-4 text-lg'>
+                  <div className='grid grid-cols-12 space-y-3 mt-4 text-lg'>
                     <li className='col-span-5'>Nama Tim</li>
                     <p>:</p>
                     <p className='col-span-6 font-bold'>
@@ -114,6 +127,11 @@ function DashboardNPC() {
                     <p className='col-span-6 font-bold'>
                       {data.data.no_telp_guru_pendamping}
                     </p>
+                    <li className='col-span-5'>Status Tim</li>
+                    <p>:</p>
+                    <p className='col-span-6 font-bold'>
+                      {TEAM_STATUS[data.data.status]}
+                    </p>
                   </div>
                 </ul>
               </div>
@@ -134,9 +152,11 @@ function DashboardNPC() {
                     })}
                   </div>
                   <div className='mt-2'>
-                    <p className='text-3xl font-bold text-left text-npc'>
-                      Anggota Tim
-                    </p>
+                    {data.data.kategori === 'senior' && (
+                      <p className='text-3xl font-bold text-left text-npc'>
+                        Anggota Tim
+                      </p>
+                    )}
                     <ul className='space-y-1 mt-1 font-bold'>
                       {data.data.members.map((member, index) => {
                         if (member.member_type === 'anggota') {
@@ -146,11 +166,13 @@ function DashboardNPC() {
                     </ul>
                   </div>
                 </div>
-                <div className='w-full bg-white rounded-lg flex justify-center items-center'>
-                  <p className='text-xl font-bold py-4 px-2'>
-                    {`Kode Afiliasi: ${data.data.referral_code}`}
-                  </p>
-                </div>
+                {data.data.kategori === 'senior' && (
+                  <div className='w-full bg-white rounded-lg flex justify-center items-center'>
+                    <p className='text-xl font-bold py-4 px-2'>
+                      {`Kode Afiliasi: ${data.data.referral_code}`}
+                    </p>
+                  </div>
+                )}
                 <Link to='/landing'>
                   <button className='w-full h-full bg-white hover:bg-npc-200 rounded-lg flex justify-center items-center'>
                     <p className='text-xl font-bold py-4 px-2'>

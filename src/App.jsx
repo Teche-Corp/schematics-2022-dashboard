@@ -12,14 +12,12 @@ import '@/App.css';
 import { bearerToken } from './lib/helper';
 
 const App = () => {
+  console.log(process.env);
   axios.defaults.baseURL =
-    process.env.APP_ENV === 'production'
+    process.env.NODE_ENV === 'production' &&
+    process.env.PUBLIC_URL === '/dashboard'
       ? 'https://schematics.its.ac.id:8081/api'
       : 'http://127.0.0.1:8000/api';
-  // process.env.NODE_ENV === 'production' &&
-  // process.env.PUBLIC_URL === '/dashboard'
-  //   ? 'https://schematics.its.ac.id/api'
-  //   : 'https://schematics-webkes-backend-dev.herokuapp.com/api';
 
   axios.interceptors.response.use(undefined, async function (err) {
     // const originalRequest = err.config;

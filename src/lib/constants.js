@@ -647,3 +647,10 @@ export const VACCINE_TYPE = [
     text: 'Masalah Kesehatan',
   },
 ];
+
+export const TEAM_STATUS = {
+  awaiting_payment: 'Menunggu Pembayaran',
+  awaiting_verification: 'Menunggu Verifikasi',
+  need_revision: 'Bukti Ditolak, Perlu Upload Ulang',
+  active: 'Aktif',
+};

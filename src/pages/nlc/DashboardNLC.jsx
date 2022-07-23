@@ -1,12 +1,13 @@
 import Loading from '@/components/Loading';
 import DashboardShell from '@/layout/DashboardShell';
-import { NLC_REGION } from '@/lib/constants';
-import React from 'react';
-import { Link } from 'react-router-dom';
+import { NLC_REGION, TEAM_STATUS } from '@/lib/constants';
+import React, { useEffect } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import useSWR from 'swr';
 import Error500 from '../error/500';
 
 function DashboardNLC() {
+  const history = useHistory();
   const getNlcRegion = (region_id) => {
     const region = NLC_REGION.filter((region) => {
       return region.value.toString() === region_id;
@@ -15,6 +16,17 @@ function DashboardNLC() {
   };
 
   const { data, error } = useSWR('/my_nlc');
+
+  useEffect(() => {
+    if (data) {
+      if (
+        data.data.status === 'awaiting_payment' ||
+        data.data.status === 'need_revision'
+      ) {
+        history.push('/nlc/payment');
+      }
+    }
+  }, [data, history]);
 
   if (error && error.response.status !== 404) return <Error500 />;
   if (!data && !error) return <Loading />;
@@ -69,7 +81,7 @@ function DashboardNLC() {
                   Profil Tim
                 </p>
                 <ul className='list-disc list-inside'>
-                  <div className='grid grid-cols-12 grid-rows-6 space-y-3 mt-4 text-lg'>
+                  <div className='grid grid-cols-12 space-y-3 mt-4 text-lg'>
                     <li className='col-span-5'>Nama Tim</li>
                     <p>:</p>
                     <p className='col-span-6 font-bold'>
@@ -97,6 +109,11 @@ function DashboardNLC() {
                     <p>:</p>
                     <p className='col-span-6 font-bold'>
                       {data.data.no_telp_guru_pendamping}
+                    </p>
+                    <li className='col-span-5'>Status Tim</li>
+                    <p>:</p>
+                    <p className='col-span-6 font-bold'>
+                      {TEAM_STATUS[data.data.status]}
                     </p>
                   </div>
                 </ul>

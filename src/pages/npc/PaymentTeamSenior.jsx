@@ -13,7 +13,7 @@ import { Redirect, useHistory } from 'react-router-dom';
 import useSWR from 'swr';
 import Error500 from '../error/500';
 
-export default function PaymentTeamJunior() {
+export default function PaymentTeamSenior() {
   const methods = useForm();
   const { handleSubmit } = methods;
   const history = useHistory();
