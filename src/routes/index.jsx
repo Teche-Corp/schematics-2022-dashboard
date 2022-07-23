@@ -427,9 +427,9 @@ const Routes = () => {
   return (
     <Router>
       <Switch>
-        {/* <Route exact path='/'>
+        <Route exact path='/'>
           <Redirect to='/login' />
-        </Route> */}
+        </Route>
 
         {routeItems.map((routeItem) => {
           if (process.env.PUBLIC_URL === '/landing' && !routeItem.visible)
