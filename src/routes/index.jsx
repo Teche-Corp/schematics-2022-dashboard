@@ -425,14 +425,14 @@ const routeItems = [
 
 const Routes = () => {
   return (
-    <Router>
+    <Router basename={process.env.PUBLIC_URL}>
       <Switch>
         <Route exact path='/'>
           <Redirect to='/login' />
         </Route>
 
         {routeItems.map((routeItem) => {
-          if (process.env.PUBLIC_URL === '/landing' && !routeItem.visible)
+          if (process.env.PUBLIC_URL === '/dashboard' && !routeItem.visible)
             return null;
           return (
             <routeItem.route
