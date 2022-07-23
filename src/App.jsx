@@ -9,9 +9,9 @@ import { AuthProvider } from '@/contexts/AuthContext';
 // import { TeamProvider } from '@/contexts/TeamContext';
 
 import '@/App.css';
+import { bearerToken } from './lib/helper';
 
 const App = () => {
-  console.log(process.env);
   axios.defaults.baseURL =
     process.env.APP_ENV === 'production'
       ? 'https://schematics.its.ac.id:8081/api'
@@ -58,7 +58,10 @@ const App = () => {
       </div>
       <SWRConfig
         value={{
-          fetcher: (url) => axios.get(url).then((res) => res.data),
+          fetcher: (url) =>
+            axios
+              .get(url, { headers: { ...bearerToken() } })
+              .then((res) => res.data),
         }}
       >
         <Routes />

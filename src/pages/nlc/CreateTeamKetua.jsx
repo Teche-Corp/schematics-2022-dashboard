@@ -1,92 +1,120 @@
 import DragnDropInput from '@/components/DragnDropInput';
 import Input from '@/components/Input';
+import Loading from '@/components/Loading';
 import SelectInput from '@/components/SelectInput';
 import SubmitButton from '@/components/SubmitButton';
-import React from 'react';
-import { useForm, FormProvider } from 'react-hook-form';
+import { useAuthState } from '@/contexts/AuthContext';
+import { INFO_SCH, NLC_REGION, VACCINE_TYPE } from '@/lib/constants';
+import { bearerToken } from '@/lib/helper';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { useForm, FormProvider, useWatch } from 'react-hook-form';
+import toast from 'react-hot-toast';
+import { useHistory } from 'react-router-dom';
+import useSWR from 'swr';
+import Error500 from '../error/500';
 
 export default function CreateTeamKetua() {
   const methods = useForm();
-  const { handleSubmit } = methods;
+  const history = useHistory();
+  const { control, handleSubmit } = methods;
+  const [provinces, setProvinces] = useState(undefined);
+  const [cities, setCities] = useState(undefined);
+  const { user } = useAuthState();
 
-  const positions = [
-    {
-      value: 'ketua',
-      text: 'Ketua',
-    },
-    {
-      value: 'anggota',
-      text: 'Anggota',
-    },
-  ];
+  const { data: teamPayment, error: teamPaymentError } = useSWR('/my_nlc', {
+    revalidateOnFocus: false,
+    revalidateOnMount: false,
+    revalidateOnReconnect: false,
+    refreshWhenOffline: false,
+    refreshWhenHidden: false,
+    refreshInterval: 0,
+  });
 
-  const regions = [
-    {
-      value: 1,
-      text: 'Madiun',
-    },
-    {
-      value: 2,
-      text: 'Kediri',
-    },
-    {
-      value: 3,
-      text: 'Surabaya',
-    },
-  ];
+  const handleCreateTeamKetua = async (data) => {
+    const formData = new FormData();
 
-  const provinces = [
-    {
-      value: 1,
-      text: 'Jawa Timur',
-    },
-    {
-      value: 2,
-      text: 'Jawa Tengah',
-    },
-    {
-      value: 3,
-      text: 'Jawa Barat',
-    },
-  ];
+    for (let key in data) {
+      if (
+        ['bukti_vaksin', 'bukti_poster', 'bukti_twibbon', 'surat'].includes(key)
+      ) {
+        formData.append(key, data[key][0]);
+      } else {
+        formData.append(key, data[key]);
+      }
+    }
 
-  const cities = [
-    {
-      value: 1,
-      text: 'Ngawi',
-    },
-    {
-      value: 2,
-      text: 'Madiun',
-    },
-    {
-      value: 3,
-      text: 'Surabaya',
-    },
-  ];
-
-  const vaccine_types = [
-    {
-      value: '1',
-      text: 'Pertama',
-    },
-    {
-      value: '2',
-      text: 'Kedua',
-    },
-    {
-      value: '3',
-      text: 'Booster',
-    },
-    {
-      value: 'health_problem',
-      text: 'Masalah Kesehatan',
-    },
-  ];
-
-  const handleCreateTeamKetua = (data) => {
-    console.log(data);
+    toast.promise(
+      axios.post('/register_nlc_ketua', formData, {
+        headers: { ...bearerToken(), 'Content-Type': 'multipart/form-data' },
+      }),
+      {
+        loading: 'Loading...',
+        success: (res) => {
+          history.push('/nlc/payment');
+          return 'Berhasil membuat tim';
+        },
+        error: (err) => {
+          return err.response.data.message;
+        },
+      },
+    );
   };
+
+  const { data: provincesData, error: errorProvinces } = useSWR('/provinces');
+
+  const provinceValue = useWatch({
+    control,
+    name: 'id_provinsi',
+  });
+
+  useEffect(() => {
+    if (provincesData) {
+      const provinces = provincesData.data.map((provinsi) => {
+        return {
+          text: provinsi.provinsi,
+          value: provinsi.id,
+        };
+      });
+      setProvinces(provinces);
+    }
+  }, [provincesData]);
+
+  const { data: citiesData } = useSWR(
+    provinceValue ? `/cities/${provinceValue}` : null,
+  );
+
+  useEffect(() => {
+    if (provinceValue && citiesData) {
+      const cities = citiesData.data.map((city) => {
+        return {
+          text: city.kota,
+          value: city.id,
+        };
+      });
+      setCities(cities);
+    }
+  }, [provinceValue, citiesData]);
+
+  useEffect(() => {
+    if (teamPayment) {
+      if (
+        teamPayment.data.status === 'active' ||
+        teamPayment.data.status === 'awaiting_verification'
+      ) {
+        history.push('/landing');
+      }
+      if (
+        teamPayment.data.status === 'need_revision' ||
+        teamPayment.data.status === 'awaiting_payment'
+      ) {
+        history.push('/nlc/payment');
+      }
+    }
+  }, [teamPayment]);
+
+  if (errorProvinces) return <Error500 />;
+  if (!provincesData) return <Loading />;
 
   return (
     <div className='w-full bg-black'>
@@ -99,15 +127,6 @@ export default function CreateTeamKetua() {
             onSubmit={handleSubmit(handleCreateTeamKetua)}
             className='space-y-4 mt-16'
           >
-            <SelectInput
-              label='Posisi dalam tim'
-              options={positions}
-              validation={{
-                required: 'Posisi dalam tim tidak boleh kosong',
-              }}
-              placeholder='Pilih posisi anda dalam tim'
-              id='team-position'
-            />
             <Input
               label={'Nama Tim'}
               validation={{
@@ -121,7 +140,7 @@ export default function CreateTeamKetua() {
                   message: 'Panjang nama tim setidaknya 32 karakter',
                 },
               }}
-              id='team-name'
+              id='nama_team'
             />
             <Input
               label={'Nama Sekolah'}
@@ -136,11 +155,11 @@ export default function CreateTeamKetua() {
                   message: 'Panjang nama sekolah setidaknya 64 karakter',
                 },
               }}
-              id='school-name'
+              id='asal_sekolah'
             />
             <SelectInput
               label='Pilihan Region'
-              options={regions}
+              options={NLC_REGION}
               validation={{
                 required: 'Pilihan region tidak boleh kosong',
               }}
@@ -154,36 +173,36 @@ export default function CreateTeamKetua() {
                 required: 'Provinsi tidak boleh kosong',
               }}
               placeholder='Pilih provinsi domisili anda'
-              id='province'
+              id='id_provinsi'
             />
             <SelectInput
               label='Kabupaten/Kota'
+              disabled={provinceValue ? false : true}
               options={cities}
               validation={{
                 required: 'kabupaten/kota tidak boleh kosong',
               }}
               placeholder='Pilih kabupaten/kota domisili anda'
-              id='city'
+              id='id_kota'
             />
             <Input
               label={'Nama Guru Pendamping'}
               validation={{
                 required: 'Nama guru pendamping tidak boleh kosong',
                 minLength: {
-                  value: 8,
-                  message: 'Panjang nama guru pendamping setidaknya 8 karakter',
+                  value: 3,
+                  message: 'Panjang nama guru pendamping setidaknya 3 karakter',
                 },
                 maxLength: {
                   value: 64,
-                  message:
-                    'Panjang nama guru pendamping setidaknya 64 karakter',
+                  message: 'Panjang nama guru pendamping maksimal 64 karakter',
                 },
               }}
-              id='gp-name'
+              id='nama_guru_pendamping'
             />
             <Input
               label='Nomor Telepon Guru Pendamping'
-              id='phone-gp'
+              id='no_telp_guru_pendamping'
               placeholder='+6285123456'
               validation={{
                 required: 'Nomor Telepon tidak boleh kosong',
@@ -198,6 +217,7 @@ export default function CreateTeamKetua() {
             <Input
               label={'Nama Lengkap'}
               id='name'
+              defaultValue={user.name}
               validation={{
                 required: 'Nama lengkap tidak boleh kosong',
                 minLength: {
@@ -214,6 +234,7 @@ export default function CreateTeamKetua() {
               label='Email'
               id='email'
               type='email'
+              defaultValue={user.email}
               validation={{
                 required: 'Email tidak boleh kosong',
                 pattern: {
@@ -236,9 +257,10 @@ export default function CreateTeamKetua() {
               }}
             />
             <Input
-              label='Nomor Telepon atau Whatsapp'
-              id='phone'
+              label='Nomor Telepon'
+              id='no_telp'
               placeholder='+6285123456'
+              defaultValue={user.no_telp}
               validation={{
                 required: 'Nomor Telepon tidak boleh kosong',
                 pattern: {
@@ -249,8 +271,22 @@ export default function CreateTeamKetua() {
               }}
             />
             <Input
+              label='Nomor Whatsapp'
+              id='no_wa'
+              placeholder='+6285123456'
+              defaultValue={user.no_telp}
+              validation={{
+                required: 'Nomor Whatsapp tidak boleh kosong',
+                pattern: {
+                  value: /^\+628[1-9][0-9]{7,11}$/,
+                  message:
+                    'Nomor Whatsapp harus diawali +62 dan memiliki panjang 13-15 karakter',
+                },
+              }}
+            />
+            <Input
               label={'ID Line'}
-              id='idline'
+              id='id_line'
               validation={{
                 required: 'ID Line tidak boleh kosong',
                 maxLength: {
@@ -261,7 +297,7 @@ export default function CreateTeamKetua() {
             />
             <Input
               label={'Alamat Domisili'}
-              id='address'
+              id='alamat'
               validation={{
                 required: 'Alamat domisili tidak boleh kosong',
                 minLength: {
@@ -275,18 +311,26 @@ export default function CreateTeamKetua() {
               }}
             />
             <SelectInput
+              label='Darimana kamu mendapat informasi Schematics'
+              options={INFO_SCH}
+              validation={{
+                required: 'Asal informasi Schematics tidak boleh kosong',
+              }}
+              id='info_sch'
+            />
+            <SelectInput
               label='Jenis Vaksinasi COVID-19'
-              options={vaccine_types}
+              options={VACCINE_TYPE}
               validation={{
                 required: 'Jenis vaksinasi COVID-19 tidak boleh kosong',
               }}
               placeholder='Pilih jenis vaksinasi anda'
-              id='vaccine_type'
+              id='jenis_vaksin'
             />
             <hr className='w-full bg-white' />
             <DragnDropInput
               label='Sertifikat Vaksinasi atau Surat Keterangan'
-              id='vaccine_certificate'
+              id='bukti_vaksin'
               accept='image/png, image/jpg, image/jpeg'
               helperText='File dalam format jpg, png, atau jpeg'
               maxFiles={1}
@@ -297,7 +341,7 @@ export default function CreateTeamKetua() {
             />
             <DragnDropInput
               label='Kartu Pelajar/Surat Keterangan Aktif/Surat Tugas'
-              id='student_card'
+              id='surat'
               accept='image/png, image/jpg, image/jpeg'
               helperText='File dalam format jpg, png, atau jpeg'
               maxFiles={1}
@@ -308,7 +352,7 @@ export default function CreateTeamKetua() {
             />
             <DragnDropInput
               label='Bukti Upload Twibbon Media Sosial'
-              id='twibbon_file'
+              id='bukti_twibbon'
               accept='image/png, image/jpg, image/jpeg'
               helperText='File dalam format jpg, png, atau jpeg'
               maxFiles={1}
@@ -319,7 +363,7 @@ export default function CreateTeamKetua() {
             />
             <DragnDropInput
               label='Bukti Upload Poster Instagram Story'
-              id='ig_poster_file'
+              id='bukti_poster'
               accept='image/png, image/jpg, image/jpeg'
               helperText='File dalam format jpg, png, atau jpeg'
               maxFiles={1}

@@ -8,6 +8,7 @@ export default function Input({
   type = 'text',
   disabled = false,
   validation,
+  ...rest
 }) {
   const {
     register,
@@ -21,6 +22,7 @@ export default function Input({
       <div className='relative mt-1 '>
         <input
           {...register(id, validation)}
+          {...rest}
           type={type}
           name={id}
           id={id}

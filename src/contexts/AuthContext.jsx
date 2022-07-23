@@ -1,11 +1,11 @@
-// import axios from 'axios';
+import axios from 'axios';
 import { createContext, useContext, useEffect, useReducer } from 'react';
 
-// import { bearerToken } from '@/lib/helper';
+import { bearerToken } from '@/lib/helper';
 
 const StateContext = createContext({
   authenticated: false,
-  // user: null,
+  user: null,
   loading: true,
 });
 StateContext.displayName = 'AuthState';
@@ -19,14 +19,14 @@ const reducer = (state, { type, payload }) => {
       return {
         ...state,
         authenticated: true,
-        // user: payload,
+        user: payload,
       };
     case 'LOGOUT':
       localStorage.removeItem('token');
       return {
         ...state,
         authenticated: false,
-        // user: null,
+        user: null,
       };
     // case 'EDIT_PROFILE':
     //   return {
@@ -93,14 +93,14 @@ const reducer = (state, { type, payload }) => {
     //     },
     //   };
     // }
-    // case 'POPULATE':
-    //   return {
-    //     ...state,
-    //     user: {
-    //       ...state.user,
-    //       ...payload,
-    //     },
-    //   };
+    case 'POPULATE':
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          ...payload,
+        },
+      };
     case 'STOP_LOADING':
       return {
         ...state,
@@ -113,7 +113,7 @@ const reducer = (state, { type, payload }) => {
 
 export const AuthProvider = ({ children }) => {
   const [state, defaultDispatch] = useReducer(reducer, {
-    // user: null,
+    user: null,
     authenticated: false,
     loading: true,
   });
@@ -128,13 +128,9 @@ export const AuthProvider = ({ children }) => {
           return;
         }
 
-        // const res = await axios.post(
-        //   '/user/get-user-info',
-        //   {},
-        //   { headers: { ...bearerToken() } },
-        // );
+        const res = await axios.get('/me', { headers: { ...bearerToken() } });
 
-        dispatch('LOGIN', {});
+        dispatch('LOGIN', res.data.data);
       } catch (err) {
         // eslint-disable-next-line no-console
         console.error('error context', err);

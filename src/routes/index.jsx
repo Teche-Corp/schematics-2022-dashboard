@@ -5,6 +5,7 @@ import {
   Redirect,
   Route,
   Switch,
+  useLocation,
 } from 'react-router-dom';
 
 import PrivateRoute from './PrivateRoute';
@@ -53,6 +54,15 @@ import Landing from '@/pages/Landing';
 // import GeneralEventDashboard from '@/components/GeneralEventDashboard';
 import Login from '@/pages/auth/Login';
 import Register from '@/pages/auth/Register';
+import PaymentTeam from '@/pages/nlc/PaymentTeam';
+import CreateTeamKetua from '@/pages/nlc/CreateTeamKetua';
+import JoinTeam from '@/pages/nlc/JoinTeam';
+import CreateTeamNPCSenior from '@/pages/npc/CreateTeamNPCSenior';
+import CreateTeamSeniorKetua from '@/pages/npc/CreateTeamSeniorKetua';
+import PaymentTeamSenior from '@/pages/npc/PaymentTeamSenior';
+import JoinTeamSenior from '@/pages/npc/JoinTeamSenior';
+import DashboardNPC from '@/pages/npc/DashboardNPC';
+import DashboardNLC from '@/pages/nlc/DashboardNLC';
 // import CreateTeamKetua from '@/pages/nlc/CreateTeamKetua';
 
 // const routeItems = [
@@ -300,9 +310,9 @@ import Register from '@/pages/auth/Register';
 
 const routeItems = [
   {
-    auth: 'all',
+    auth: 'user',
     route: PrivateRoute,
-    key: 'landing',
+    key: 'home',
     path: '/landing',
     component: Landing,
     visible: true,
@@ -316,27 +326,114 @@ const routeItems = [
     visible: true,
   },
   {
-    auth: 'all',
+    auth: 'user',
     route: AuthRoute,
     key: 'register',
     path: '/register',
     component: Register,
     visible: true,
   },
+  {
+    auth: 'user',
+    route: PrivateRoute,
+    key: 'nlc-dashboard',
+    path: '/nlc',
+    component: DashboardNLC,
+    visible: true,
+  },
+  {
+    auth: 'user',
+    route: PrivateRoute,
+    key: 'nlc-create-team',
+    path: '/nlc/registration',
+    component: CreateTeamKetua,
+    visible: true,
+  },
+  {
+    auth: 'user',
+    route: PrivateRoute,
+    key: 'nlc-payment',
+    path: '/nlc/payment',
+    component: PaymentTeam,
+    visible: true,
+  },
+  {
+    auth: 'user',
+    route: PrivateRoute,
+    key: 'nlc-join-team',
+    path: '/nlc/join_team',
+    component: JoinTeam,
+    visible: true,
+  },
+  {
+    auth: 'user',
+    route: PrivateRoute,
+    key: 'npc-dashboard',
+    path: '/npc',
+    component: DashboardNPC,
+    visible: true,
+  },
+  {
+    auth: 'user',
+    route: PrivateRoute,
+    key: 'npc-senior-create-team',
+    path: '/npc_senior/registration',
+    component: CreateTeamSeniorKetua,
+    visible: true,
+  },
+  {
+    auth: 'user',
+    route: PrivateRoute,
+    key: 'npc-senior-payment',
+    path: '/npc_senior/payment',
+    component: PaymentTeamSenior,
+    visible: true,
+  },
+  {
+    auth: 'user',
+    route: PrivateRoute,
+    key: 'npc-senior-join-team',
+    path: '/npc_senior/join_team',
+    component: JoinTeamSenior,
+    visible: true,
+  },
+  {
+    auth: 'user',
+    route: PrivateRoute,
+    key: 'npc-junior-create-team',
+    path: '/npc_junior/registration',
+    component: CreateTeamSeniorKetua,
+    visible: true,
+  },
+  {
+    auth: 'user',
+    route: PrivateRoute,
+    key: 'npc-junior-payment',
+    path: '/npc_junior/payment',
+    component: PaymentTeamSenior,
+    visible: true,
+  },
+  {
+    auth: 'user',
+    route: PrivateRoute,
+    key: 'npc-junior-join-team',
+    path: '/npc_junior/join_team',
+    component: JoinTeamSenior,
+    visible: true,
+  },
 ];
 
 const Routes = () => {
   return (
-    <Router basename={process.env.PUBLIC_URL}>
+    <Router>
       <Switch>
-        <Route exact path='/'>
+        {/* <Route exact path='/'>
           <Redirect to='/login' />
-        </Route>
+        </Route> */}
 
         {routeItems.map((routeItem) => {
-          if (process.env.PUBLIC_URL === '/dashboard' && !routeItem.visible)
+          if (process.env.PUBLIC_URL === '/landing' && !routeItem.visible)
             return null;
-
           return (
             <routeItem.route
               key={routeItem.key}

@@ -2,26 +2,45 @@ import DragnDropInput from '@/components/DragnDropInput';
 import Input from '@/components/Input';
 import SelectInput from '@/components/SelectInput';
 import SubmitButton from '@/components/SubmitButton';
+import { useAuthState } from '@/contexts/AuthContext';
+import { INFO_SCH, VACCINE_TYPE } from '@/lib/constants';
+import { bearerToken } from '@/lib/helper';
+import axios from 'axios';
 import React from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
+import toast from 'react-hot-toast';
+import { useHistory } from 'react-router-dom';
 
 export default function JoinTeamJunior() {
   const methods = useForm();
+  const history = useHistory();
   const { handleSubmit } = methods;
+  const { user } = useAuthState();
 
-  const positions = [
-    {
-      value: 'ketua',
-      text: 'Ketua',
-    },
-    {
-      value: 'anggota',
-      text: 'Anggota',
-    },
-  ];
-
-  const handleCreateTeamKetua = (data) => {
-    console.log(data);
+  const handleJoinTeamJunior = (data) => {
+    const formData = new FormData();
+    for (let key in data) {
+      if (['bukti_poster', 'bukti_twibbon', 'surat'].includes(key)) {
+        formData.append(key, data[key][0]);
+      } else {
+        formData.append(key, data[key]);
+      }
+    }
+    toast.promise(
+      axios.post('/register_npc_anggota', formData, {
+        headers: { ...bearerToken(), 'Content-Type': 'multipart/form-data' },
+      }),
+      {
+        loading: 'Loading...',
+        success: (res) => {
+          history.push('/landing');
+          return 'Berhasil masuk ke dalam tim';
+        },
+        error: (err) => {
+          return err.response.data.message;
+        },
+      },
+    );
   };
 
   return (
@@ -32,34 +51,26 @@ export default function JoinTeamJunior() {
         </p>
         <FormProvider {...methods}>
           <form
-            onSubmit={handleSubmit(handleCreateTeamKetua)}
+            onSubmit={handleSubmit(handleJoinTeamJunior)}
             className='space-y-4 mt-16'
           >
-            <SelectInput
-              label='Posisi dalam tim'
-              options={positions}
-              validation={{
-                required: 'Posisi dalam tim tidak boleh kosong',
-              }}
-              placeholder='Pilih posisi anda dalam tim'
-              id='team-position'
-            />
             <Input
               label={'Kode Afiliasi Tim'}
               validation={{
                 required: 'Kode afiliasi tim tidak boleh kosong',
                 pattern: {
-                  value: /^[A-Z0-9]{8}$/,
+                  value: /^[A-Z0-9]{6}$/,
                   message:
-                    'Kode afiliasi harus berupa angka dan huruf kapital sepanjang 8 karakter',
+                    'Kode afiliasi harus berupa angka dan huruf kapital sepanjang 6 karakter',
                 },
               }}
-              id='team-name'
+              id='kode_referral'
             />
             <hr className='bg-white w-full' />
             <Input
               label={'Nama Lengkap'}
               id='name'
+              defaultValue={user.name}
               validation={{
                 required: 'Nama lengkap tidak boleh kosong',
                 minLength: {
@@ -76,6 +87,7 @@ export default function JoinTeamJunior() {
               label='Email'
               id='email'
               type='email'
+              defaultValue={user.email}
               validation={{
                 required: 'Email tidak boleh kosong',
                 pattern: {
@@ -98,8 +110,9 @@ export default function JoinTeamJunior() {
               }}
             />
             <Input
-              label='Nomor Telepon atau Whatsapp'
-              id='phone'
+              label='Nomor Telepon'
+              id='no_telp'
+              defaultValue={user.no_telp}
               placeholder='+6285123456'
               validation={{
                 required: 'Nomor Telepon tidak boleh kosong',
@@ -111,19 +124,33 @@ export default function JoinTeamJunior() {
               }}
             />
             <Input
+              label='Nomor Whatsapp'
+              id='no_wa'
+              defaultValue={user.no_telp}
+              placeholder='+6285123456'
+              validation={{
+                required: 'Nomor Whatsapp tidak boleh kosong',
+                pattern: {
+                  value: /^\+628[1-9][0-9]{7,11}$/,
+                  message:
+                    'Nomor Whatsapp harus diawali +62 dan memiliki panjang 13-15 karakter',
+                },
+              }}
+            />
+            <Input
               label={'ID Line'}
-              id='idline'
+              id='id_line'
               validation={{
                 required: 'ID Line tidak boleh kosong',
                 maxLength: {
                   value: 128,
-                  message: 'Nama lengkap maksimal memiliki 128 karakter',
+                  message: 'Id Line maksimal memiliki 128 karakter',
                 },
               }}
             />
             <Input
               label={'Alamat Domisili'}
-              id='address'
+              id='alamat'
               validation={{
                 required: 'Alamat domisili tidak boleh kosong',
                 minLength: {
@@ -136,10 +163,18 @@ export default function JoinTeamJunior() {
                 },
               }}
             />
+            <SelectInput
+              label='Darimana kamu mendapat informasi Schematics'
+              options={INFO_SCH}
+              validation={{
+                required: 'Asal informasi Schematics tidak boleh kosong',
+              }}
+              id='info_sch'
+            />
             <hr className='w-full bg-white' />
             <DragnDropInput
               label='Kartu Pelajar/Surat Keterangan Aktif/Surat Tugas'
-              id='student_card'
+              id='surat'
               accept='image/png, image/jpg, image/jpeg'
               helperText='File dalam format jpg, png, atau jpeg'
               maxFiles={1}
@@ -150,7 +185,7 @@ export default function JoinTeamJunior() {
             />
             <DragnDropInput
               label='Bukti Upload Twibbon Media Sosial'
-              id='twibbon_file'
+              id='bukti_twibbon'
               accept='image/png, image/jpg, image/jpeg'
               helperText='File dalam format jpg, png, atau jpeg'
               maxFiles={1}
@@ -161,7 +196,7 @@ export default function JoinTeamJunior() {
             />
             <DragnDropInput
               label='Bukti Upload Poster Instagram Story'
-              id='ig_poster_file'
+              id='bukti_poster'
               accept='image/png, image/jpg, image/jpeg'
               helperText='File dalam format jpg, png, atau jpeg'
               maxFiles={1}
@@ -172,7 +207,7 @@ export default function JoinTeamJunior() {
             />
             <div>
               <SubmitButton
-                className='mt-16 bg-nlc-300 font-primary'
+                className='mt-16 bg-npc font-primary'
                 loading={false}
               >
                 Daftar
