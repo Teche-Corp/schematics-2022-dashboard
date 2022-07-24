@@ -113,7 +113,7 @@ export default function CreateTeamKetua() {
   if (!provincesData) return <Loading />;
 
   return (
-    <div className='w-full bg-black'>
+    <div className='w-full bg-dark-400'>
       <div className='md:w-3/6 w-11/12 mx-auto py-16'>
         <p className='md:text-5xl text-3xl font-primary text-center text-white'>
           Data Pendaftaran
