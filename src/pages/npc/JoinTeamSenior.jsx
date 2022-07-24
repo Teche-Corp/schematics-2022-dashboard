@@ -3,13 +3,14 @@ import Input from '@/components/Input';
 import SelectInput from '@/components/SelectInput';
 import SubmitButton from '@/components/SubmitButton';
 import { useAuthState } from '@/contexts/AuthContext';
-import { INFO_SCH, VACCINE_TYPE } from '@/lib/constants';
+import { INFO_SCH } from '@/lib/constants';
 import { bearerToken } from '@/lib/helper';
 import axios from 'axios';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useHistory } from 'react-router-dom';
+import useSWR from 'swr';
 
 export default function JoinTeamSenior() {
   const methods = useForm();
@@ -42,6 +43,17 @@ export default function JoinTeamSenior() {
       },
     );
   };
+
+  const { data: teamPayment, error: teamPaymentError } = useSWR('/my_npc', {
+    shouldRetryOnError: false,
+    errorRetryInterval: 0,
+  });
+
+  useEffect(() => {
+    if (teamPayment) {
+      history.push('/landing');
+    }
+  }, [teamPayment]);
 
   return (
     <div className='w-full bg-black'>

@@ -8,7 +8,10 @@ import Error500 from '../error/500';
 
 function DashboardNPC() {
   const history = useHistory();
-  const { data, error } = useSWR('/my_npc');
+  const { data, error } = useSWR('/my_npc', {
+    shouldRetryOnError: false,
+    errorRetryInterval: 0,
+  });
 
   useEffect(() => {
     if (data) {

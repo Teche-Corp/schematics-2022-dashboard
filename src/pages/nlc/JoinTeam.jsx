@@ -6,16 +6,22 @@ import { useAuthState } from '@/contexts/AuthContext';
 import { INFO_SCH, VACCINE_TYPE } from '@/lib/constants';
 import { bearerToken } from '@/lib/helper';
 import axios from 'axios';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useHistory } from 'react-router-dom';
+import useSWR from 'swr';
 
 export default function JoinTeam() {
   const methods = useForm();
   const history = useHistory();
   const { handleSubmit } = methods;
   const { user } = useAuthState();
+
+  const { data: teamPayment, error: teamPaymentError } = useSWR('/my_nlc', {
+    shouldRetryOnError: false,
+    errorRetryInterval: 0,
+  });
 
   const handleJoinTeam = (data) => {
     const formData = new FormData();
@@ -44,6 +50,23 @@ export default function JoinTeam() {
       },
     );
   };
+
+  useEffect(() => {
+    if (teamPayment) {
+      if (
+        teamPayment.data.status === 'active' ||
+        teamPayment.data.status === 'awaiting_verification'
+      ) {
+        history.push('/landing');
+      }
+      if (
+        teamPayment.data.status === 'need_revision' ||
+        teamPayment.data.status === 'awaiting_payment'
+      ) {
+        history.push('/nlc/payment');
+      }
+    }
+  }, [teamPayment]);
 
   return (
     <div className='w-full bg-black'>

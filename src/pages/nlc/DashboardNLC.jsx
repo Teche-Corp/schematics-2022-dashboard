@@ -15,7 +15,10 @@ function DashboardNLC() {
     return region[0].text;
   };
 
-  const { data, error } = useSWR('/my_nlc');
+  const { data, error } = useSWR('/my_nlc', {
+    shouldRetryOnError: false,
+    errorRetryInterval: 0,
+  });
 
   useEffect(() => {
     if (data) {

@@ -337,14 +337,6 @@ const routeItems = [
   {
     auth: 'user',
     route: PrivateRoute,
-    key: 'nlc-dashboard',
-    path: '/nlc',
-    component: DashboardNLC,
-    visible: true,
-  },
-  {
-    auth: 'user',
-    route: PrivateRoute,
     key: 'nlc-create-team',
     path: '/nlc/registration',
     component: CreateTeamKetua,
@@ -364,6 +356,14 @@ const routeItems = [
     key: 'nlc-join-team',
     path: '/nlc/join_team',
     component: JoinTeam,
+    visible: true,
+  },
+  {
+    auth: 'user',
+    route: PrivateRoute,
+    key: 'nlc-dashboard',
+    path: '/nlc',
+    component: DashboardNLC,
     visible: true,
   },
   {

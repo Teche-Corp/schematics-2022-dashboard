@@ -23,12 +23,8 @@ export default function CreateTeamJuniorKetua() {
   const { user } = useAuthState();
 
   const { data: teamPayment, error: teamPaymentError } = useSWR('/my_npc', {
-    revalidateOnFocus: false,
-    revalidateOnMount: false,
-    revalidateOnReconnect: false,
-    refreshWhenOffline: false,
-    refreshWhenHidden: false,
-    refreshInterval: 0,
+    shouldRetryOnError: false,
+    errorRetryInterval: 0,
   });
 
   const handleCreateTeamKetua = async (data) => {
