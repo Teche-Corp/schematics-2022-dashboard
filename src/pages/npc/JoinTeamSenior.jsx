@@ -56,7 +56,7 @@ export default function JoinTeamSenior() {
   }, [teamPayment]);
 
   return (
-    <div className='w-full bg-dark-400'>
+    <div className='w-full bg-dark-400 min-h-screen'>
       <div className='md:w-3/6 w-11/12 mx-auto py-16'>
         <p className='md:text-5xl text-3xl font-primary text-center text-white'>
           Data Pendaftaran

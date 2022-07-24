@@ -76,7 +76,7 @@ function DashboardNLC() {
           </div>
         </div>
       ) : (
-        <div className='bg-dark-100 py-8'>
+        <div className='bg-dark-100 py-8 min-h-screen'>
           <div className='md:px-16 px-6'>
             <div className='flex md:flex-row flex-col w-full justify-between md:space-y-0 space-y-3'>
               <div className='md:w-7/12 w-full bg-white rounded-lg p-4'>
