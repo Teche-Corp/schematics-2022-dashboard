@@ -21,7 +21,7 @@ export default function JoinTeamJunior() {
   const handleJoinTeamJunior = (data) => {
     const formData = new FormData();
     for (let key in data) {
-      if (['bukti_poster', 'bukti_twibbon', 'surat'].includes(key)) {
+      if (['surat'].includes(key)) {
         formData.append(key, data[key][0]);
       } else {
         formData.append(key, data[key]);
@@ -161,6 +161,17 @@ export default function JoinTeamJunior() {
               }}
             />
             <Input
+              label={'Discord Tag'}
+              id='discord_tag'
+              validation={{
+                required: 'Discord Tag tidak boleh kosong',
+                maxLength: {
+                  value: 128,
+                  message: 'Discord Tag maksimal memiliki 128 karakter',
+                },
+              }}
+            />
+            <Input
               label={'Alamat Domisili'}
               id='alamat'
               validation={{
@@ -193,28 +204,6 @@ export default function JoinTeamJunior() {
               validation={{
                 required:
                   'Kartu Pelajar/Surat Keterangan Aktif/Surat Tugas tidak boleh kosong',
-              }}
-            />
-            <DragnDropInput
-              label='Bukti Upload Twibbon Media Sosial'
-              id='bukti_twibbon'
-              accept='image/png, image/jpg, image/jpeg'
-              helperText='File dalam format jpg, png, atau jpeg'
-              maxFiles={1}
-              validation={{
-                required:
-                  'Bukti Upload Twibbon Media Sosial tidak boleh kosong',
-              }}
-            />
-            <DragnDropInput
-              label='Bukti Upload Poster Instagram Story'
-              id='bukti_poster'
-              accept='image/png, image/jpg, image/jpeg'
-              helperText='File dalam format jpg, png, atau jpeg'
-              maxFiles={1}
-              validation={{
-                required:
-                  'Bukti Upload Poster Instagram Story tidak boleh kosong',
               }}
             />
             <div>
