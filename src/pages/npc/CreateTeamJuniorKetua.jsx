@@ -294,7 +294,6 @@ export default function CreateTeamJuniorKetua() {
             />
             <Input
               label='Darimana kamu mendapat informasi Schematics'
-              options={INFO_SCH}
               validation={{
                 required: 'Asal informasi Schematics tidak boleh kosong',
               }}
