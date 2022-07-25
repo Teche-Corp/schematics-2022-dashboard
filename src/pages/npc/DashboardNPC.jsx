@@ -176,8 +176,20 @@ function DashboardNPC() {
                     </p>
                   </div>
                 )}
-                <Link to='/landing'>
-                  <button className='w-full h-full bg-white hover:bg-npc-200 rounded-lg flex justify-center items-center'>
+                <Link
+                  to={
+                    data.data.kategori === 'senior'
+                      ? {
+                          pathname:
+                            'https://drive.google.com/file/d/1zMvXQ3_GvcOHd2BsJ5p3DVPBmIgJS5Y9/view?usp=sharing',
+                        }
+                      : {
+                          pathname:
+                            'https://drive.google.com/file/d/1aagSVYQUoxqBj34OF0fLZ_Xrd5EWhrGl/view?usp=sharing',
+                        }
+                  }
+                >
+                  <button className='w-full h-full bg-npc hover:bg-white hover:text-npc rounded-lg flex justify-center items-center'>
                     <p className='text-xl font-bold py-4 px-2'>
                       Unduh Guidebook
                     </p>
