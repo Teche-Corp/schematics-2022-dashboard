@@ -58,8 +58,8 @@ export default function Login() {
                   validation={{
                     required: 'Nama Lengkap tidak boleh kosong',
                     minLength: {
-                      value: 6,
-                      message: 'Nama harus memiliki setidaknya 6 karakter',
+                      value: 8,
+                      message: 'Nama harus memiliki setidaknya 8 karakter',
                     },
                     maxLength: {
                       value: 128,
@@ -129,8 +129,7 @@ export default function Login() {
                 </div>
               </form>
             </FormProvider>
-          </div>
-          <div className='w-full mt-16'>
+            <br />
             <hr className='bg-white w-full' />
             <p className='text-white text-center py-2'>
               Telah memiliki akun?{' '}

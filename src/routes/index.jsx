@@ -65,6 +65,7 @@ import DashboardNLC from '@/pages/nlc/DashboardNLC';
 import PaymentTeamJunior from '@/pages/npc/PaymentTeamJunior';
 import CreateTeamJuniorKetua from '@/pages/npc/CreateTeamSeniorKetua';
 import AdminPagination from '@/components/AdminPagination';
+import NSTregister from '@/pages/nst/NSTregister';
 // import CreateTeamKetua from '@/pages/nlc/CreateTeamKetua';
 
 // const routeItems = [
@@ -423,101 +424,12 @@ const routeItems = [
     component: PaymentTeamJunior,
     visible: true,
   },
-  // admin
   {
-    auth: 'admin',
+    auth: 'user',
     route: PrivateRoute,
-    key: 'admin-dashboard',
-    path: '/admin/dashboard',
-    component: Admin,
-    visible: true,
-  },
-  {
-    auth: 'admin',
-    route: PrivateRoute,
-    key: 'admin-sch-nlc-user-edit',
-    path: '/admin/sch-nlc/user/:id/edit',
-    component: UpdateUserNLC,
-    visible: true,
-  },
-  {
-    auth: 'admin',
-    route: PrivateRoute,
-    key: 'admin-nlc',
-    path: '/admin/sch-nlc/user',
-    component: AdminNLC,
-    visible: true,
-  },
-  {
-    auth: 'admin',
-    route: PrivateRoute,
-    key: 'admin-sch-npc-senior-user-edit',
-    path: '/admin/sch-npc/senior/user/:id/edit',
-    component: UpdateUserNpcSenior,
-    visible: true,
-  },
-  {
-    auth: 'admin',
-    route: PrivateRoute,
-    key: 'admin-npc-senior',
-    path: '/admin/sch-npc/senior/user',
-    component: AdminNpcSenior,
-    visible: true,
-  },
-  {
-    auth: 'admin',
-    route: PrivateRoute,
-    key: 'admin-sch-npc-junior-user-edit',
-    path: '/admin/sch-npc/junior/user/:id/edit',
-    component: UpdateUserNpcJunior,
-    visible: true,
-  },
-  {
-    auth: 'admin',
-    route: PrivateRoute,
-    key: 'admin-npc-junior',
-    path: '/admin/sch-npc/junior/user',
-    component: AdminNpcJunior,
-    visible: true,
-  },
-  {
-    auth: 'admin',
-    route: PrivateRoute,
-    key: 'admin-npc',
-    path: '/admin/sch-npc',
-    component: AdminNpc,
-    visible: true,
-  },
-  {
-    auth: 'admin',
-    route: PrivateRoute,
-    key: 'admin-nst',
-    path: '/admin/sch-nst/user',
-    component: AdminNst,
-    visible: true,
-  },
-  {
-    auth: 'admin',
-    route: PrivateRoute,
-    key: 'admin-reeva',
-    path: '/admin/sch-reeva/user',
-    component: AdminReeva,
-    visible: false,
-  },
-  {
-    auth: 'admin',
-    route: PrivateRoute,
-    key: 'admin-add-voucher',
-    path: '/admin/voucher/add',
-    component: AddVoucher,
-    visible: true,
-  },
-  {
-    auth: 'admin',
-    route: PrivateRoute,
-    key: 'admin-voucher',
-    path: '/admin/voucher',
-    component: Voucher,
+    key: 'nst-registration',
+    path: '/nst/registration',
+    component: NSTregister,
     visible: true,
   },
 ];

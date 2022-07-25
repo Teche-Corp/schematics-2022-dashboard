@@ -76,7 +76,7 @@ function DashboardNLC() {
           </div>
         </div>
       ) : (
-        <div className='bg-dark-100 py-8'>
+        <div className='bg-dark-100 py-8 min-h-screen'>
           <div className='md:px-16 px-6'>
             <div className='flex md:flex-row flex-col w-full justify-between md:space-y-0 space-y-3'>
               <div className='md:w-7/12 w-full bg-white rounded-lg p-4'>
@@ -155,13 +155,17 @@ function DashboardNLC() {
                     {`Kode Afiliasi: ${data.data.referral_code}`}
                   </p>
                 </div>
-                <Link to='/landing'>
-                  <button className='w-full h-full bg-white hover:bg-nlc-200 rounded-lg flex justify-center items-center'>
+                <a
+                  href='https://drive.google.com/file/d/1QKap6V7x-k80DZ-1rCGuTIRRqaY4ceSH/view?usp=sharing'
+                  target='_blank'
+                  rel='noreferrer'
+                >
+                  <button className='w-full h-full bg-nlc hover:bg-white hover:text-nlc rounded-lg flex justify-center items-center'>
                     <p className='text-xl font-bold py-4 px-2'>
                       Unduh Guidebook
                     </p>
                   </button>
-                </Link>
+                </a>
               </div>
             </div>
             <div className='w-full md:h-64 h-96 bg-white p-6 mt-8 rounded-xl'>

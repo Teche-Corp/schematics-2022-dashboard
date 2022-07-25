@@ -596,6 +596,10 @@ export const NLC_REGION = [
     value: 8,
     text: 'Mojokerto',
   },
+  {
+    value: 9,
+    text: 'Online',
+  },
 ];
 
 export const INFO_SCH = [

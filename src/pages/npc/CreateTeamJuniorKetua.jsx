@@ -2,6 +2,7 @@ import DragnDropInput from '@/components/DragnDropInput';
 import Input from '@/components/Input';
 import Loading from '@/components/Loading';
 import SelectInput from '@/components/SelectInput';
+import SelectInput2 from '@/components/SelectInput2';
 import SubmitButton from '@/components/SubmitButton';
 import { useAuthState } from '@/contexts/AuthContext';
 import { INFO_SCH } from '@/lib/constants';
@@ -31,7 +32,7 @@ export default function CreateTeamJuniorKetua() {
     const formData = new FormData();
 
     for (let key in data) {
-      if (['bukti_poster', 'bukti_twibbon', 'surat'].includes(key)) {
+      if (['surat'].includes(key)) {
         formData.append(key, data[key][0]);
       } else {
         formData.append(key, data[key]);
@@ -112,7 +113,7 @@ export default function CreateTeamJuniorKetua() {
   if (!provincesData) return <Loading />;
 
   return (
-    <div className='w-full bg-black'>
+    <div className='w-full bg-dark-400 min-h-screen'>
       <div className='md:w-3/6 w-11/12 mx-auto py-16'>
         <p className='md:text-5xl text-3xl font-primary text-center text-white'>
           Data Pendaftaran
@@ -176,13 +177,12 @@ export default function CreateTeamJuniorKetua() {
               validation={{
                 required: 'Nama guru pendamping tidak boleh kosong',
                 minLength: {
-                  value: 8,
-                  message: 'Panjang nama guru pendamping setidaknya 8 karakter',
+                  value: 1,
+                  message: 'Panjang nama guru pendamping setidaknya 1 karakter',
                 },
                 maxLength: {
-                  value: 64,
-                  message:
-                    'Panjang nama guru pendamping setidaknya 64 karakter',
+                  value: 128,
+                  message: 'Panjang nama guru pendamping maksimal 64 karakter',
                 },
               }}
               id='nama_guru_pendamping'
@@ -190,11 +190,11 @@ export default function CreateTeamJuniorKetua() {
             <Input
               label='Nomor Telepon Guru Pendamping'
               id='no_telp_guru_pendamping'
-              placeholder='+6285123456'
+              placeholder='+6285123456789'
               validation={{
                 required: 'Nomor Telepon tidak boleh kosong',
                 pattern: {
-                  value: /^\+628[1-9][0-9]{7,11}$/,
+                  value: /^\+628[1-9][0-9]{8,10}$/,
                   message:
                     'Nomor Telepon harus diawali +62 dan memiliki panjang 13-15 karakter',
                 },
@@ -229,12 +229,12 @@ export default function CreateTeamJuniorKetua() {
             <Input
               label='Nomor Telepon'
               id='no_telp'
-              placeholder='+6285123456'
+              placeholder='+6285123456789'
               defaultValue={user.no_telp}
               validation={{
                 required: 'Nomor Telepon tidak boleh kosong',
                 pattern: {
-                  value: /^\+628[1-9][0-9]{7,11}$/,
+                  value: /^\+628[1-9][0-9]{8,10}$/,
                   message:
                     'Nomor Telepon harus diawali +62 dan memiliki panjang 13-15 karakter',
                 },
@@ -244,11 +244,11 @@ export default function CreateTeamJuniorKetua() {
               label='Nomor Whatsapp'
               id='no_wa'
               defaultValue={user.no_telp}
-              placeholder='+6285123456'
+              placeholder='+6285123456789'
               validation={{
                 required: 'Nomor Whatsapp tidak boleh kosong',
                 pattern: {
-                  value: /^\+628[1-9][0-9]{7,11}$/,
+                  value: /^\+628[1-9][0-9]{8,10}$/,
                   message:
                     'Nomor Whatsapp harus diawali +62 dan memiliki panjang 13-15 karakter',
                 },
@@ -262,6 +262,17 @@ export default function CreateTeamJuniorKetua() {
                 maxLength: {
                   value: 128,
                   message: 'ID Line maksimal memiliki 128 karakter',
+                },
+              }}
+            />
+            <Input
+              label={'Discord Tag'}
+              id='discord_tag'
+              validation={{
+                required: 'Discord Tag tidak boleh kosong',
+                maxLength: {
+                  value: 128,
+                  message: 'Discord Tag maksimal memiliki 128 karakter',
                 },
               }}
             />
@@ -280,9 +291,8 @@ export default function CreateTeamJuniorKetua() {
                 },
               }}
             />
-            <SelectInput
+            <Input
               label='Darimana kamu mendapat informasi Schematics'
-              options={INFO_SCH}
               validation={{
                 required: 'Asal informasi Schematics tidak boleh kosong',
               }}
@@ -298,28 +308,6 @@ export default function CreateTeamJuniorKetua() {
               validation={{
                 required:
                   'Kartu Pelajar/Surat Keterangan Aktif/Surat Tugas tidak boleh kosong',
-              }}
-            />
-            <DragnDropInput
-              label='Bukti Upload Twibbon Media Sosial'
-              id='bukti_twibbon'
-              accept='image/png, image/jpg, image/jpeg'
-              helperText='File dalam format jpg, png, atau jpeg'
-              maxFiles={1}
-              validation={{
-                required:
-                  'Bukti Upload Twibbon Media Sosial tidak boleh kosong',
-              }}
-            />
-            <DragnDropInput
-              label='Bukti Upload Poster Instagram Story'
-              id='bukti_poster'
-              accept='image/png, image/jpg, image/jpeg'
-              helperText='File dalam format jpg, png, atau jpeg'
-              maxFiles={1}
-              validation={{
-                required:
-                  'Bukti Upload Poster Instagram Story tidak boleh kosong',
               }}
             />
             <div>

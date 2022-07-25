@@ -93,7 +93,7 @@ function DashboardNPC() {
           </div>
         </div>
       ) : (
-        <div className='bg-dark-100 py-8'>
+        <div className='bg-dark-100 py-8 min-h-screen'>
           <div className='md:px-16 px-6'>
             <div className='flex md:flex-row flex-col w-full justify-between md:space-y-0 space-y-3'>
               <div className='md:w-7/12 w-full bg-white rounded-lg p-4'>
@@ -176,13 +176,21 @@ function DashboardNPC() {
                     </p>
                   </div>
                 )}
-                <Link to='/landing'>
-                  <button className='w-full h-full bg-white hover:bg-npc-200 rounded-lg flex justify-center items-center'>
+                <a
+                  href={
+                    data.data.kategori === 'senior'
+                      ? 'https://drive.google.com/file/d/1zMvXQ3_GvcOHd2BsJ5p3DVPBmIgJS5Y9/view?usp=sharing'
+                      : 'https://drive.google.com/file/d/1aagSVYQUoxqBj34OF0fLZ_Xrd5EWhrGl/view?usp=sharing'
+                  }
+                  target='_blank'
+                  rel='noreferrer'
+                >
+                  <button className='w-full h-full bg-npc hover:bg-white hover:text-npc rounded-lg flex justify-center items-center'>
                     <p className='text-xl font-bold py-4 px-2'>
                       Unduh Guidebook
                     </p>
                   </button>
-                </Link>
+                </a>
               </div>
             </div>
             <div className='w-full md:h-64 h-96 bg-white p-6 mt-8 rounded-xl'>

@@ -2,6 +2,7 @@ import DragnDropInput from '@/components/DragnDropInput';
 import Input from '@/components/Input';
 import Loading from '@/components/Loading';
 import SelectInput from '@/components/SelectInput';
+import SelectInput2 from '@/components/SelectInput2';
 import SubmitButton from '@/components/SubmitButton';
 import { useAuthState } from '@/contexts/AuthContext';
 import { INFO_SCH, NLC_REGION, VACCINE_TYPE } from '@/lib/constants';
@@ -10,7 +11,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useForm, FormProvider, useWatch } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import useSWR from 'swr';
 import Error500 from '../error/500';
 
@@ -94,6 +95,7 @@ export default function CreateTeamKetua() {
 
   useEffect(() => {
     if (teamPayment) {
+      console.log(teamPayment.data);
       if (
         teamPayment.data.status === 'active' ||
         teamPayment.data.status === 'awaiting_verification'
@@ -113,7 +115,7 @@ export default function CreateTeamKetua() {
   if (!provincesData) return <Loading />;
 
   return (
-    <div className='w-full bg-black'>
+    <div className='w-full bg-dark-400 min-h-screen'>
       <div className='md:w-3/6 w-11/12 mx-auto py-16'>
         <p className='md:text-5xl text-3xl font-primary text-center text-white'>
           Data Pendaftaran
@@ -203,7 +205,7 @@ export default function CreateTeamKetua() {
               validation={{
                 required: 'Nomor Telepon tidak boleh kosong',
                 pattern: {
-                  value: /^\+628[1-9][0-9]{7,11}$/,
+                  value: /^\+628[1-9][0-9]{8,10}$/,
                   message:
                     'Nomor Telepon harus diawali +62 dan memiliki panjang 13-15 karakter',
                 },
@@ -260,7 +262,7 @@ export default function CreateTeamKetua() {
               validation={{
                 required: 'Nomor Telepon tidak boleh kosong',
                 pattern: {
-                  value: /^\+628[1-9][0-9]{7,11}$/,
+                  value: /^\+628[1-9][0-9]{8,10}$/,
                   message:
                     'Nomor Telepon harus diawali +62 dan memiliki panjang 13-15 karakter',
                 },
@@ -274,7 +276,7 @@ export default function CreateTeamKetua() {
               validation={{
                 required: 'Nomor Whatsapp tidak boleh kosong',
                 pattern: {
-                  value: /^\+628[1-9][0-9]{7,11}$/,
+                  value: /^\+628[1-9][0-9]{8,10}$/,
                   message:
                     'Nomor Whatsapp harus diawali +62 dan memiliki panjang 13-15 karakter',
                 },
@@ -306,9 +308,8 @@ export default function CreateTeamKetua() {
                 },
               }}
             />
-            <SelectInput
+            <Input
               label='Darimana kamu mendapat informasi Schematics'
-              options={INFO_SCH}
               validation={{
                 required: 'Asal informasi Schematics tidak boleh kosong',
               }}
@@ -339,7 +340,7 @@ export default function CreateTeamKetua() {
               label='Kartu Pelajar/Surat Keterangan Aktif/Surat Tugas'
               id='surat'
               accept='image/png, image/jpg, image/jpeg'
-              helperText='File dalam format jpg, png, atau jpeg'
+              helperText='File dalam format jpg, png, atau jpeg maksimal 1 MB'
               maxFiles={1}
               validation={{
                 required:
@@ -347,10 +348,20 @@ export default function CreateTeamKetua() {
               }}
             />
             <DragnDropInput
-              label='Bukti Upload Twibbon Media Sosial'
+              label={
+                <span>
+                  Bukti Upload Twibbon Media Sosial.{' '}
+                  <a
+                    href='https://drive.google.com/drive/folders/1MMaohKdSb3EmrSnq8E--Ssk15BX1lhzV'
+                    className='text-white hover:text-nlc-300'
+                  >
+                    Twibbon Disini
+                  </a>
+                </span>
+              }
               id='bukti_twibbon'
               accept='image/png, image/jpg, image/jpeg'
-              helperText='File dalam format jpg, png, atau jpeg'
+              helperText='File dalam format jpg, png, atau jpeg maksimal 1 MB'
               maxFiles={1}
               validation={{
                 required:
@@ -358,10 +369,20 @@ export default function CreateTeamKetua() {
               }}
             />
             <DragnDropInput
-              label='Bukti Upload Poster Instagram Story'
+              label={
+                <span>
+                  'Bukti Upload Poster Instagram Story.
+                  <a
+                    href='https://drive.google.com/file/d/1GOjom5-0FyyQkd1JNGxJiLjOrYKKxxBD/view?usp=sharing'
+                    className='text-white hover:text-nlc-300'
+                  >
+                    Poster Disini
+                  </a>
+                </span>
+              }
               id='bukti_poster'
               accept='image/png, image/jpg, image/jpeg'
-              helperText='File dalam format jpg, png, atau jpeg'
+              helperText='File dalam format jpg, png, atau jpeg maksimal 1 MB'
               maxFiles={1}
               validation={{
                 required:
