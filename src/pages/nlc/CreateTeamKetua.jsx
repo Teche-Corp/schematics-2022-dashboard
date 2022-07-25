@@ -348,7 +348,7 @@ export default function CreateTeamKetua() {
               }}
             />
             <DragnDropInput
-              label='Bukti Upload Twibbon Media Sosial'
+              label='Bukti Upload Twibbon Media Sosial, link: https://drive.google.com/drive/folders/1MMaohKdSb3EmrSnq8E--Ssk15BX1lhzV'
               id='bukti_twibbon'
               accept='image/png, image/jpg, image/jpeg'
               helperText='File dalam format jpg, png, atau jpeg'
@@ -359,7 +359,7 @@ export default function CreateTeamKetua() {
               }}
             />
             <DragnDropInput
-              label='Bukti Upload Poster Instagram Story'
+              label='Bukti Upload Poster Instagram Story: link: https://drive.google.com/file/d/1GOjom5-0FyyQkd1JNGxJiLjOrYKKxxBD/view?usp=sharing'
               id='bukti_poster'
               accept='image/png, image/jpg, image/jpeg'
               helperText='File dalam format jpg, png, atau jpeg'
