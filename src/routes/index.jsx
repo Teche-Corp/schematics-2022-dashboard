@@ -10,41 +10,41 @@ import {
 
 import PrivateRoute from './PrivateRoute';
 import AuthRoute from './AuthRoute';
+// comment
+import ChooseEvent from '@/pages/ChooseEvent';
+import Dashboard from '@/pages/Dashboard';
+import EditProfile from '@/pages/EditProfile';
 
-// import ChooseEvent from '@/pages/ChooseEvent';
-// import Dashboard from '@/pages/Dashboard';
-// import EditProfile from '@/pages/EditProfile';
+import SignIn from '@/pages/auth/SignIn';
+import SignUp from '@/pages/auth/SignUp';
+import ForgotPassword from '@/pages/auth/ForgotPassword';
+import ChangePassword from '@/pages/auth/ChangePassword';
+import ResetPassword from '@/pages/auth/ResetPassword';
 
-// import SignIn from '@/pages/auth/SignIn';
-// import SignUp from '@/pages/auth/SignUp';
-// import ForgotPassword from '@/pages/auth/ForgotPassword';
-// import ChangePassword from '@/pages/auth/ChangePassword';
-// import ResetPassword from '@/pages/auth/ResetPassword';
+import EventNLC from '@/pages/nlc/EventNLC';
+import CreateTeam from '@/pages/nlc/CreateTeam';
+import PaymentNLC from '@/pages/nlc/PaymentNLC';
 
-// import EventNLC from '@/pages/nlc/EventNLC';
-// import CreateTeam from '@/pages/nlc/CreateTeam';
-// import PaymentNLC from '@/pages/nlc/PaymentNLC';
+import EventNPC from '@/pages/npc/EventNPC';
+import CreateTeamNPCJunior from '@/pages/npc/CreateTeamNPCJunior';
+import CreateTeamNPCSenior from '@/pages/npc/CreateTeamNPCSenior';
+import PaymentNPC from '@/pages/npc/PaymentNPC';
 
-// import EventNPC from '@/pages/npc/EventNPC';
-// import CreateTeamNPCJunior from '@/pages/npc/CreateTeamNPCJunior';
-// import CreateTeamNPCSenior from '@/pages/npc/CreateTeamNPCSenior';
-// import PaymentNPC from '@/pages/npc/PaymentNPC';
+import EventNST from '@/pages/nst/EventNST';
 
-// import EventNST from '@/pages/nst/EventNST';
-
-// import Admin from '@/pages/admin/Admin';
-// import Voucher from '@/pages/admin/voucher/Voucher';
-// import AddVoucher from '@/pages/admin/voucher/AddVoucher';
-// import UpdateUserNLC from '@/pages/admin/nlc/UpdateUserNLC';
-// import AdminNLC from '@/pages/admin/nlc/AdminNLC';
-// import AdminNpcSenior from '@/pages/admin/npc/AdminNpcSenior';
-// import UpdateUserNpcSenior from '@/pages/admin/npc/UpdateUserNpcSenior';
-// import AdminNst from '@/pages/admin/nst/AdminNst';
-// import AdminReeva from '@/pages/admin/reeva/AdminReeva';
-// import AdminNpc from '@/pages/admin/npc/AdminNpc';
-// import AdminNpcJunior from '@/pages/admin/npc/AdminNpcJunior';
-// import UpdateUserNpcJunior from '@/pages/admin/npc/UpdateUserNpcJunior';
-
+import Admin from '@/pages/admin/Admin';
+import Voucher from '@/pages/admin/voucher/Voucher';
+import AddVoucher from '@/pages/admin/voucher/AddVoucher';
+import UpdateUserNLC from '@/pages/admin/nlc/UpdateUserNLC';
+import AdminNLC from '@/pages/admin/nlc/AdminNLC';
+import AdminNpcSenior from '@/pages/admin/npc/AdminNpcSenior';
+import UpdateUserNpcSenior from '@/pages/admin/npc/UpdateUserNpcSenior';
+import AdminNst from '@/pages/admin/nst/AdminNst';
+import AdminReeva from '@/pages/admin/reeva/AdminReeva';
+import AdminNpc from '@/pages/admin/npc/AdminNpc';
+import AdminNpcJunior from '@/pages/admin/npc/AdminNpcJunior';
+import UpdateUserNpcJunior from '@/pages/admin/npc/UpdateUserNpcJunior';
+// -- comment
 import PageNotFound from '@/pages/error/404';
 // import Error500 from '@/pages/error/500';
 
@@ -64,6 +64,7 @@ import DashboardNPC from '@/pages/npc/DashboardNPC';
 import DashboardNLC from '@/pages/nlc/DashboardNLC';
 import PaymentTeamJunior from '@/pages/npc/PaymentTeamJunior';
 import CreateTeamJuniorKetua from '@/pages/npc/CreateTeamSeniorKetua';
+import AdminPagination from '@/components/AdminPagination';
 // import CreateTeamKetua from '@/pages/nlc/CreateTeamKetua';
 
 // const routeItems = [
@@ -321,6 +322,14 @@ const routeItems = [
   {
     auth: 'all',
     route: AuthRoute,
+    key: 'test-dashboard',
+    path: '/test-dashboard',
+    component: AdminPagination,
+    visible: true,
+  },
+  {
+    auth: 'all',
+    route: AuthRoute,
     key: 'login',
     path: '/login',
     component: Login,
@@ -414,6 +423,103 @@ const routeItems = [
     component: PaymentTeamJunior,
     visible: true,
   },
+  // admin
+  {
+    auth: 'admin',
+    route: PrivateRoute,
+    key: 'admin-dashboard',
+    path: '/admin/dashboard',
+    component: Admin,
+    visible: true,
+  },
+  {
+    auth: 'admin',
+    route: PrivateRoute,
+    key: 'admin-sch-nlc-user-edit',
+    path: '/admin/sch-nlc/user/:id/edit',
+    component: UpdateUserNLC,
+    visible: true,
+  },
+  {
+    auth: 'admin',
+    route: PrivateRoute,
+    key: 'admin-nlc',
+    path: '/admin/sch-nlc/user',
+    component: AdminNLC,
+    visible: true,
+  },
+  {
+    auth: 'admin',
+    route: PrivateRoute,
+    key: 'admin-sch-npc-senior-user-edit',
+    path: '/admin/sch-npc/senior/user/:id/edit',
+    component: UpdateUserNpcSenior,
+    visible: true,
+  },
+  {
+    auth: 'admin',
+    route: PrivateRoute,
+    key: 'admin-npc-senior',
+    path: '/admin/sch-npc/senior/user',
+    component: AdminNpcSenior,
+    visible: true,
+  },
+  {
+    auth: 'admin',
+    route: PrivateRoute,
+    key: 'admin-sch-npc-junior-user-edit',
+    path: '/admin/sch-npc/junior/user/:id/edit',
+    component: UpdateUserNpcJunior,
+    visible: true,
+  },
+  {
+    auth: 'admin',
+    route: PrivateRoute,
+    key: 'admin-npc-junior',
+    path: '/admin/sch-npc/junior/user',
+    component: AdminNpcJunior,
+    visible: true,
+  },
+  {
+    auth: 'admin',
+    route: PrivateRoute,
+    key: 'admin-npc',
+    path: '/admin/sch-npc',
+    component: AdminNpc,
+    visible: true,
+  },
+  {
+    auth: 'admin',
+    route: PrivateRoute,
+    key: 'admin-nst',
+    path: '/admin/sch-nst/user',
+    component: AdminNst,
+    visible: true,
+  },
+  {
+    auth: 'admin',
+    route: PrivateRoute,
+    key: 'admin-reeva',
+    path: '/admin/sch-reeva/user',
+    component: AdminReeva,
+    visible: false,
+  },
+  {
+    auth: 'admin',
+    route: PrivateRoute,
+    key: 'admin-add-voucher',
+    path: '/admin/voucher/add',
+    component: AddVoucher,
+    visible: true,
+  },
+  {
+    auth: 'admin',
+    route: PrivateRoute,
+    key: 'admin-voucher',
+    path: '/admin/voucher',
+    component: Voucher,
+    visible: true,
+  },
 ];
 
 const Routes = () => {
@@ -423,7 +529,8 @@ const Routes = () => {
         <Route exact path='/'>
           <Redirect to='/login' />
         </Route>
-
+        {/* test dashboard */}
+        <Route exact path='/test-dashboard' component={AdminPagination} />
         {routeItems.map((routeItem) => {
           if (process.env.PUBLIC_URL === '/dashboard' && !routeItem.visible)
             return null;
