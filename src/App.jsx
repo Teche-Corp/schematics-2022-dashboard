@@ -12,7 +12,6 @@ import '@/App.css';
 import { bearerToken } from './lib/helper';
 
 const App = () => {
-  console.log(process.env);
   axios.defaults.baseURL =
     process.env.NODE_ENV === 'production' &&
     process.env.PUBLIC_URL === '/dashboard'

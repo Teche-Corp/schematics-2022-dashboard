@@ -11,7 +11,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useForm, FormProvider, useWatch } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import useSWR from 'swr';
 import Error500 from '../error/500';
 
@@ -340,7 +340,7 @@ export default function CreateTeamKetua() {
               label='Kartu Pelajar/Surat Keterangan Aktif/Surat Tugas'
               id='surat'
               accept='image/png, image/jpg, image/jpeg'
-              helperText='File dalam format jpg, png, atau jpeg'
+              helperText='File dalam format jpg, png, atau jpeg maksimal 1 MB'
               maxFiles={1}
               validation={{
                 required:
@@ -348,10 +348,20 @@ export default function CreateTeamKetua() {
               }}
             />
             <DragnDropInput
-              label='Bukti Upload Twibbon Media Sosial, link: https://drive.google.com/drive/folders/1MMaohKdSb3EmrSnq8E--Ssk15BX1lhzV'
+              label={
+                <span>
+                  Bukti Upload Twibbon Media Sosial.{' '}
+                  <a
+                    href='https://drive.google.com/drive/folders/1MMaohKdSb3EmrSnq8E--Ssk15BX1lhzV'
+                    className='text-white hover:text-nlc-300'
+                  >
+                    Twibbon Disini
+                  </a>
+                </span>
+              }
               id='bukti_twibbon'
               accept='image/png, image/jpg, image/jpeg'
-              helperText='File dalam format jpg, png, atau jpeg'
+              helperText='File dalam format jpg, png, atau jpeg maksimal 1 MB'
               maxFiles={1}
               validation={{
                 required:
@@ -359,10 +369,20 @@ export default function CreateTeamKetua() {
               }}
             />
             <DragnDropInput
-              label='Bukti Upload Poster Instagram Story: link: https://drive.google.com/file/d/1GOjom5-0FyyQkd1JNGxJiLjOrYKKxxBD/view?usp=sharing'
+              label={
+                <span>
+                  'Bukti Upload Poster Instagram Story.
+                  <a
+                    href='https://drive.google.com/file/d/1GOjom5-0FyyQkd1JNGxJiLjOrYKKxxBD/view?usp=sharing'
+                    className='text-white hover:text-nlc-300'
+                  >
+                    Poster Disini
+                  </a>
+                </span>
+              }
               id='bukti_poster'
               accept='image/png, image/jpg, image/jpeg'
-              helperText='File dalam format jpg, png, atau jpeg'
+              helperText='File dalam format jpg, png, atau jpeg maksimal 1 MB'
               maxFiles={1}
               validation={{
                 required:

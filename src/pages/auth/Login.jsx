@@ -103,8 +103,7 @@ export default function Login() {
                 </div>
               </form>
             </FormProvider>
-          </div>
-          <div className='w-full mt-16'>
+            <br />
             <hr className='bg-white w-full' />
             <p className='text-white text-center py-2'>
               Belum memiliki akun?{' '}
