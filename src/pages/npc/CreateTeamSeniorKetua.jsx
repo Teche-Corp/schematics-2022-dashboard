@@ -177,13 +177,12 @@ export default function CreateTeamSeniorKetua() {
               validation={{
                 required: 'Nama guru pendamping tidak boleh kosong',
                 minLength: {
-                  value: 8,
-                  message: 'Panjang nama guru pendamping setidaknya 8 karakter',
+                  value: 1,
+                  message: 'Panjang nama guru pendamping setidaknya 1 karakter',
                 },
                 maxLength: {
-                  value: 64,
-                  message:
-                    'Panjang nama guru pendamping setidaknya 64 karakter',
+                  value: 128,
+                  message: 'Panjang nama guru pendamping maksimal 128 karakter',
                 },
               }}
               id='nama_guru_pendamping'
@@ -195,7 +194,7 @@ export default function CreateTeamSeniorKetua() {
               validation={{
                 required: 'Nomor Telepon tidak boleh kosong',
                 pattern: {
-                  value: /^\+628[1-9][0-9]{7,11}$/,
+                  value: /^\+628[1-9][0-9]{8,10}$/,
                   message:
                     'Nomor Telepon harus diawali +62 dan memiliki panjang 13-15 karakter',
                 },
@@ -235,7 +234,7 @@ export default function CreateTeamSeniorKetua() {
               validation={{
                 required: 'Nomor Telepon tidak boleh kosong',
                 pattern: {
-                  value: /^\+628[1-9][0-9]{7,11}$/,
+                  value: /^\+628[1-9][0-9]{8,10}$/,
                   message:
                     'Nomor Telepon harus diawali +62 dan memiliki panjang 13-15 karakter',
                 },
@@ -249,7 +248,7 @@ export default function CreateTeamSeniorKetua() {
               validation={{
                 required: 'Nomor Whatsapp tidak boleh kosong',
                 pattern: {
-                  value: /^\+628[1-9][0-9]{7,11}$/,
+                  value: /^\+628[1-9][0-9]{8,10}$/,
                   message:
                     'Nomor Whatsapp harus diawali +62 dan memiliki panjang 13-15 karakter',
                 },

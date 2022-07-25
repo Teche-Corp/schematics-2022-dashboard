@@ -176,26 +176,21 @@ function DashboardNPC() {
                     </p>
                   </div>
                 )}
-                <Link
-                  to={
+                <a
+                  href={
                     data.data.kategori === 'senior'
-                      ? {
-                          pathname:
-                            'https://drive.google.com/file/d/1zMvXQ3_GvcOHd2BsJ5p3DVPBmIgJS5Y9/view?usp=sharing',
-                        }
-                      : {
-                          pathname:
-                            'https://drive.google.com/file/d/1aagSVYQUoxqBj34OF0fLZ_Xrd5EWhrGl/view?usp=sharing',
-                        }
+                      ? 'https://drive.google.com/file/d/1zMvXQ3_GvcOHd2BsJ5p3DVPBmIgJS5Y9/view?usp=sharing'
+                      : 'https://drive.google.com/file/d/1aagSVYQUoxqBj34OF0fLZ_Xrd5EWhrGl/view?usp=sharing'
                   }
                   target='_blank'
+                  rel='noreferrer'
                 >
                   <button className='w-full h-full bg-npc hover:bg-white hover:text-npc rounded-lg flex justify-center items-center'>
                     <p className='text-xl font-bold py-4 px-2'>
                       Unduh Guidebook
                     </p>
                   </button>
-                </Link>
+                </a>
               </div>
             </div>
             <div className='w-full md:h-64 h-96 bg-white p-6 mt-8 rounded-xl'>

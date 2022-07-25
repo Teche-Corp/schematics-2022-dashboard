@@ -155,19 +155,17 @@ function DashboardNLC() {
                     {`Kode Afiliasi: ${data.data.referral_code}`}
                   </p>
                 </div>
-                <Link
-                  to={{
-                    pathname:
-                      'https://drive.google.com/file/d/1QKap6V7x-k80DZ-1rCGuTIRRqaY4ceSH/view?usp=sharing',
-                  }}
+                <a
+                  href='https://drive.google.com/file/d/1QKap6V7x-k80DZ-1rCGuTIRRqaY4ceSH/view?usp=sharing'
                   target='_blank'
+                  rel='noreferrer'
                 >
                   <button className='w-full h-full bg-nlc hover:bg-white hover:text-nlc rounded-lg flex justify-center items-center'>
                     <p className='text-xl font-bold py-4 px-2'>
                       Unduh Guidebook
                     </p>
                   </button>
-                </Link>
+                </a>
               </div>
             </div>
             <div className='w-full md:h-64 h-96 bg-white p-6 mt-8 rounded-xl'>
