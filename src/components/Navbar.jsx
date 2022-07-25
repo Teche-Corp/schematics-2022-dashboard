@@ -35,7 +35,7 @@ export default function Navbar({ setSidebarOpen }) {
         <HiMenuAlt1 className='w-6 h-6' aria-hidden='true' />
       </button>
       {/* Search bar */}
-      <div className='flex justify-between flex-1 px-4 sm:px-6 lg:max-w-6xl lg:mx-auto lg:px-8'>
+      <div className='flex justify-between flex-1 px-4 sm:px-6 lg:mx-auto lg:px-8'>
         <div className='flex flex-1'></div>
         <div className='flex items-center ml-4 md:ml-6'>
           <button className='p-1 text-gray-400 bg-white rounded-full hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-dark-100'>

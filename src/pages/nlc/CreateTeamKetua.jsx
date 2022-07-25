@@ -95,6 +95,7 @@ export default function CreateTeamKetua() {
 
   useEffect(() => {
     if (teamPayment) {
+      console.log(teamPayment.data);
       if (
         teamPayment.data.status === 'active' ||
         teamPayment.data.status === 'awaiting_verification'
@@ -307,9 +308,8 @@ export default function CreateTeamKetua() {
                 },
               }}
             />
-            <SelectInput2
+            <Input
               label='Darimana kamu mendapat informasi Schematics'
-              options={INFO_SCH}
               validation={{
                 required: 'Asal informasi Schematics tidak boleh kosong',
               }}

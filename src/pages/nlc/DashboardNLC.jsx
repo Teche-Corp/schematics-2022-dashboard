@@ -160,6 +160,7 @@ function DashboardNLC() {
                     pathname:
                       'https://drive.google.com/file/d/1QKap6V7x-k80DZ-1rCGuTIRRqaY4ceSH/view?usp=sharing',
                   }}
+                  target='_blank'
                 >
                   <button className='w-full h-full bg-nlc hover:bg-white hover:text-nlc rounded-lg flex justify-center items-center'>
                     <p className='text-xl font-bold py-4 px-2'>

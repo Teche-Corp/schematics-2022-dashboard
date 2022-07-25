@@ -2,6 +2,7 @@ import DragnDropInput from '@/components/DragnDropInput';
 import Input from '@/components/Input';
 import Loading from '@/components/Loading';
 import SelectInput from '@/components/SelectInput';
+import SelectInput2 from '@/components/SelectInput2';
 import SubmitButton from '@/components/SubmitButton';
 import { useAuthState } from '@/contexts/AuthContext';
 import { INFO_SCH } from '@/lib/constants';
@@ -291,7 +292,7 @@ export default function CreateTeamJuniorKetua() {
                 },
               }}
             />
-            <SelectInput
+            <Input
               label='Darimana kamu mendapat informasi Schematics'
               options={INFO_SCH}
               validation={{

@@ -1,6 +1,6 @@
 import DragnDropInput from '@/components/DragnDropInput';
 import Input from '@/components/Input';
-import SelectInput from '@/components/SelectInput';
+import SelectInput2 from '@/components/SelectInput2';
 import SubmitButton from '@/components/SubmitButton';
 import { useAuthState } from '@/contexts/AuthContext';
 import { INFO_SCH, VACCINE_TYPE } from '@/lib/constants';
@@ -186,9 +186,8 @@ export default function JoinTeamJunior() {
                 },
               }}
             />
-            <SelectInput
+            <Input
               label='Darimana kamu mendapat informasi Schematics'
-              options={INFO_SCH}
               validation={{
                 required: 'Asal informasi Schematics tidak boleh kosong',
               }}

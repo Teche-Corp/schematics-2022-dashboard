@@ -188,6 +188,7 @@ function DashboardNPC() {
                             'https://drive.google.com/file/d/1aagSVYQUoxqBj34OF0fLZ_Xrd5EWhrGl/view?usp=sharing',
                         }
                   }
+                  target='_blank'
                 >
                   <button className='w-full h-full bg-npc hover:bg-white hover:text-npc rounded-lg flex justify-center items-center'>
                     <p className='text-xl font-bold py-4 px-2'>

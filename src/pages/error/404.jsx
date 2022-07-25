@@ -20,7 +20,7 @@ export default function PageNotFound() {
             <p className='mt-3 text-lg'>You can go back to the homepage</p>
             <Link
               className='relative inline-block px-5 py-2 text-lg font-extrabold transition duration-200 bg-blue-600 mt-7 rounded-2xl hover:bg-blue-500'
-              to='/'
+              to='/landing'
             >
               Back To Home
             </Link>
