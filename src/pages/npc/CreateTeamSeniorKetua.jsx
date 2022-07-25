@@ -15,7 +15,7 @@ import { useHistory } from 'react-router-dom';
 import useSWR from 'swr';
 import Error500 from '../error/500';
 
-export default function CreateTeamJuniorKetua() {
+export default function CreateTeamSeniorKetua() {
   const methods = useForm();
   const history = useHistory();
   const { control, handleSubmit } = methods;

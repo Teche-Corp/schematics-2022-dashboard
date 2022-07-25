@@ -63,8 +63,8 @@ import JoinTeamSenior from '@/pages/npc/JoinTeamSenior';
 import DashboardNPC from '@/pages/npc/DashboardNPC';
 import DashboardNLC from '@/pages/nlc/DashboardNLC';
 import PaymentTeamJunior from '@/pages/npc/PaymentTeamJunior';
-import CreateTeamJuniorKetua from '@/pages/npc/CreateTeamSeniorKetua';
 import NSTregister from '@/pages/nst/NSTregister';
+import CreateTeamJuniorKetua from '@/pages/npc/CreateTeamJuniorKetua';
 // import CreateTeamKetua from '@/pages/nlc/CreateTeamKetua';
 
 // const routeItems = [
