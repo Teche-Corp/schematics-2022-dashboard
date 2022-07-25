@@ -64,7 +64,8 @@ import DashboardNPC from '@/pages/npc/DashboardNPC';
 import DashboardNLC from '@/pages/nlc/DashboardNLC';
 import PaymentTeamJunior from '@/pages/npc/PaymentTeamJunior';
 import CreateTeamJuniorKetua from '@/pages/npc/CreateTeamSeniorKetua';
-import AdminPagination from '@/components/AdminPagination';
+import AdminPaginationNLC from '@/components/AdminPaginationNLC';
+import AdminPaginationNPC from '@/components/AdminPaginationNPC';
 import NSTregister from '@/pages/nst/NSTregister';
 // import CreateTeamKetua from '@/pages/nlc/CreateTeamKetua';
 
@@ -323,9 +324,17 @@ const routeItems = [
   {
     auth: 'all',
     route: AuthRoute,
-    key: 'test-dashboard',
-    path: '/test-dashboard',
-    component: AdminPagination,
+    key: 'test-dashboard-nlc',
+    path: '/test-dashboard-nlc',
+    component: AdminPaginationNLC,
+    visible: true,
+  },
+  {
+    auth: 'all',
+    route: AuthRoute,
+    key: 'test-dashboard-npc',
+    path: '/test-dashboard-npc',
+    component: AdminPaginationNPC,
     visible: true,
   },
   {
@@ -441,8 +450,6 @@ const Routes = () => {
         <Route exact path='/'>
           <Redirect to='/login' />
         </Route>
-        {/* test dashboard */}
-        <Route exact path='/test-dashboard' component={AdminPagination} />
         {routeItems.map((routeItem) => {
           if (process.env.PUBLIC_URL === '/dashboard' && !routeItem.visible)
             return null;

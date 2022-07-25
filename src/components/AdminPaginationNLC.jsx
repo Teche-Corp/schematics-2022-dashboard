@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import TableComponent from './TableComponent/TableComponent';
 import Table, { Irow } from 'react-tailwind-table';
 import { textFilter } from 'react-bootstrap-table2-filter';
 const column = [
