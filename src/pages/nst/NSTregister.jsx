@@ -7,6 +7,8 @@ import React, { useEffect, useState } from 'react';
 import { useAuthState } from '@/contexts/AuthContext';
 import { useForm, FormProvider } from 'react-hook-form';
 import { INFO_SCH, VACCINE_TYPE } from '@/lib/constants';
+import axios from 'axios';
+import { bearerToken } from '@/lib/helper';
 
 function NSTcard({ count }) {
   const methods = useForm();
@@ -62,7 +64,7 @@ function NSTcard({ count }) {
       />
       <Input
         label={'Alamat Domisili'}
-        id={'address-' + count}
+        id={'alamat-' + count}
         validation={{
           required: 'Alamat domisili tidak boleh kosong',
           minLength: {
@@ -75,14 +77,16 @@ function NSTcard({ count }) {
           },
         }}
       />
-      <SelectInput2
-        label='Darimana kamu mendapat informasi Schematics'
-        id={'info_sch-' + count}
-        options={INFO_SCH}
-        validation={{
-          required: 'Asal informasi Schematics tidak boleh kosong',
-        }}
-      />
+      {count === 1 && (
+        <SelectInput2
+          label='Darimana kamu mendapat informasi Schematics'
+          id='info_sch'
+          options={INFO_SCH}
+          validation={{
+            required: 'Asal informasi Schematics tidak boleh kosong',
+          }}
+        />
+      )}
 
       {/*  */}
       <SelectInput
@@ -92,7 +96,7 @@ function NSTcard({ count }) {
           required: 'Jenis vaksinasi COVID-19 tidak boleh kosong',
         }}
         placeholder='Pilih jenis vaksinasi anda'
-        id={'jenis_vaksin-' + count}
+        id={'tipe_vaksin-' + count}
       />
       <hr className='w-full bg-white' />
       <DragnDropInput
@@ -122,31 +126,38 @@ export default function NSTregister() {
       cardAdd.concat([<NSTcard key={cardAdd.length} count={cardAdd.length} />]),
     );
   }
-  // function removeCard() {
-  //   setCardAdd(cardAdd.slice(0, -1));
-  // }
+  function removeCard() {
+    // Delete array
+    // setCardAdd(cardAdd.slice(0, cardAdd.length - 1));
+  }
 
   const handleNSTRegister = async (data) => {
     const formData = new FormData();
-    const ticket_orders = [];
-    for (let i = 0; i < cardAdd.length; i++) {
-      const ticket_order = {};
-      ticket_order.name = data['name-' + i];
-      ticket_order.email = data['email-' + i];
-      ticket_order.no_telp = data['no_telp-' + i];
-      ticket_order.address = data['address-' + i];
-      ticket_order.info_sch = data['info_sch-' + i];
-      ticket_order.jenis_vaksin = data['jenis_vaksin-' + i];
-      if (data['bukti_vaksin-' + i]) {
-        ticket_order.bukti_vaksin = data['bukti_vaksin-' + i][0];
-      } else {
-        ticket_order.bukti_vaksin = data['bukti_vaksin-' + i];
-      }
 
-      ticket_orders.push(ticket_order);
+    for (let key in data) {
+      let id = key.split('-')[0];
+      let index = key.split('-')[1];
+
+      if (key === 'info_sch') continue;
+
+      if (['bukti_vaksin-' + index].includes(key)) {
+        formData.append(`ticket_orders[${index}][${id}]`, data[key][0]);
+      } else {
+        // console.log(data[key]);
+        formData.append(`ticket_orders[${index}][${id}]`, data[key]);
+      }
     }
-    formData.append('ticket_orders', JSON.stringify(ticket_orders));
-    console.log(ticket_orders);
+    formData.append('info_sch', data['info_sch']);
+    axios
+      .post('/order_nst_ticket', formData, {
+        headers: {
+          ...bearerToken(user.token),
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      .then((res) => {
+        console.log(res);
+      });
   };
 
   return (
@@ -164,14 +175,25 @@ export default function NSTregister() {
             {/* <NSTcard count={count}/> */}
 
             {cardAdd}
-            {cardAdd.length < 4 && (
-              <button
-                className='text-neutral-400 bg-white px-4 py-2 rounded-md font-primary text-center'
-                onClick={addCard}
-                type='button'
-              >
-                Tambah Tiket
-              </button>
+            {cardAdd.length < 5 && (
+              <>
+                <button
+                  className='text-neutral-400 bg-white px-4 py-2 rounded-md font-primary text-center'
+                  onClick={addCard}
+                  type='button'
+                >
+                  Tambah Tiket
+                </button>
+                {cardAdd.length > 1 && (
+                  <button
+                    className='text-neutral-400 bg-white px-4 py-2 rounded-md font-primary text-center'
+                    onClick={removeCard}
+                    type='button'
+                  >
+                    Hapus Tiket
+                  </button>
+                )}
+              </>
             )}
             <div>
               <SubmitButton
