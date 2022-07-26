@@ -8,18 +8,17 @@ import { useAuthState } from '@/contexts/AuthContext';
 import { useForm, FormProvider } from 'react-hook-form';
 import { INFO_SCH, VACCINE_TYPE } from '@/lib/constants';
 
-function NSTcard() {
+function NSTcard({ count }) {
   const methods = useForm();
   const { user } = useAuthState();
-  const [value, setValue] = useState(
-    'Darimana kamu mendapat informasi Schematics',
-  );
+
+  // Status Dari Card
 
   return (
     <>
       <Input
         label={'Nama Lengkap'}
-        id='name'
+        id={'name-' + count}
         // defaultValue={user.name}
         validation={{
           required: 'Nama lengkap tidak boleh kosong',
@@ -35,7 +34,7 @@ function NSTcard() {
       />
       <Input
         label='Email'
-        id='email'
+        id={'email-' + count}
         type='email'
         // defaultValue={user.email}
         validation={{
@@ -49,7 +48,7 @@ function NSTcard() {
       />
       <Input
         label='Nomor Telepon'
-        id='no_telp'
+        id={'no_telp-' + count}
         placeholder='+6285123456'
         // defaultValue={user.no_telp}
         validation={{
@@ -63,7 +62,7 @@ function NSTcard() {
       />
       <Input
         label={'Alamat Domisili'}
-        id='alamat'
+        id={'address-' + count}
         validation={{
           required: 'Alamat domisili tidak boleh kosong',
           minLength: {
@@ -78,11 +77,11 @@ function NSTcard() {
       />
       <SelectInput2
         label='Darimana kamu mendapat informasi Schematics'
+        id={'info_sch-' + count}
         options={INFO_SCH}
         validation={{
           required: 'Asal informasi Schematics tidak boleh kosong',
         }}
-        id='info_sch'
       />
 
       {/*  */}
@@ -93,12 +92,12 @@ function NSTcard() {
           required: 'Jenis vaksinasi COVID-19 tidak boleh kosong',
         }}
         placeholder='Pilih jenis vaksinasi anda'
-        id='jenis_vaksin'
+        id={'jenis_vaksin-' + count}
       />
       <hr className='w-full bg-white' />
       <DragnDropInput
         label='Sertifikat Vaksinasi atau Surat Keterangan'
-        id='bukti_vaksin'
+        id={'bukti_vaksin-' + count}
         accept='image/png, image/jpg, image/jpeg'
         helperText='File dalam format jpg, png, atau jpeg'
         maxFiles={1}
@@ -113,20 +112,41 @@ function NSTcard() {
 
 export default function NSTregister() {
   const methods = useForm();
-  const [cardAdd, setCardAdd] = useState([]);
   const { control, handleSubmit } = methods;
+  const [cardAdd, setCardAdd] = useState([<NSTcard key={0} count={0} />]);
 
   const { user } = useAuthState();
 
   function addCard() {
-    setCardAdd(cardAdd.concat(<NSTcard key={cardAdd.length} />));
+    setCardAdd(
+      cardAdd.concat([<NSTcard key={cardAdd.length} count={cardAdd.length} />]),
+    );
   }
+  // function removeCard() {
+  //   setCardAdd(cardAdd.slice(0, -1));
+  // }
+
   const handleNSTRegister = async (data) => {
     const formData = new FormData();
-    // console.log(data);
-    for (let key in data) {
-      console.log(key);
+    const ticket_orders = [];
+    for (let i = 0; i < cardAdd.length; i++) {
+      const ticket_order = {};
+      ticket_order.name = data['name-' + i];
+      ticket_order.email = data['email-' + i];
+      ticket_order.no_telp = data['no_telp-' + i];
+      ticket_order.address = data['address-' + i];
+      ticket_order.info_sch = data['info_sch-' + i];
+      ticket_order.jenis_vaksin = data['jenis_vaksin-' + i];
+      if (data['bukti_vaksin-' + i]) {
+        ticket_order.bukti_vaksin = data['bukti_vaksin-' + i][0];
+      } else {
+        ticket_order.bukti_vaksin = data['bukti_vaksin-' + i];
+      }
+
+      ticket_orders.push(ticket_order);
     }
+    formData.append('ticket_orders', JSON.stringify(ticket_orders));
+    console.log(ticket_orders);
   };
 
   return (
@@ -141,7 +161,8 @@ export default function NSTregister() {
             onSubmit={handleSubmit(handleNSTRegister)}
             className='space-y-4 mt-16'
           >
-            <NSTcard />
+            {/* <NSTcard count={count}/> */}
+
             {cardAdd}
             {cardAdd.length < 4 && (
               <button
@@ -166,5 +187,3 @@ export default function NSTregister() {
     </div>
   );
 }
-
-// Nama Lengkap, Email, No. handphone, Alamat tempat Tinggal,  Darimana kamu mendapatkan informasi Schematics NST?,  Jenis Vaksinasi COVID-19, Sertifikat Vaksinasi atau Surat Dokter
