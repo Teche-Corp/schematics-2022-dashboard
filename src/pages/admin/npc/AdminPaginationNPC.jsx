@@ -1,17 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import Table, { Irow } from 'react-tailwind-table';
+import useSWR from 'swr';
+import { bearerToken } from '@/lib/helper';
+import Loading from '@/components/Loading';
 
 const column = [
   {
     // field: "front_end_position.name.full_name",
     // use: "Position",
-    field: 'front_end_position.name.full_name',
+    field: 'team.name.lead_name',
     use: 'Nama Ketua Tim',
     //Will not be used in search filtering
-    //  use_in_search:false
+    use_in_search: true,
   },
   {
-    field: 'name',
+    field: 'id',
+    use: 'pembayaran id',
+    use_in_display: false,
+  },
+  {
+    field: 'team.name.bank',
     use: 'Nama Bank',
   },
   {
@@ -22,8 +30,9 @@ const column = [
     use_in_display: true,
   },
   {
-    field: 'team',
+    field: 'team.name.name_team',
     use: 'Nama Tim',
+    use_in_search: true,
   },
 ];
 
@@ -64,7 +73,39 @@ const tableStyling = {
 };
 
 const AdminPagination = () => {
-  const [data, setData] = useState([]);
+  const page = 1;
+  const per_page = 10;
+  const url = `/admin_get_list_pembayaran_nlc?page=${page}&per_page=${per_page}`;
+  const { data, error } = useSWR(url, {
+    headers: { ...bearerToken() },
+  });
+  if (!data) console.log(error);
+
+  const [row, setRow] = useState(undefined);
+
+  useEffect(() => {
+    if (data) {
+      let rowMap = data?.data?.data_per_page?.map((payment) => {
+        return {
+          id: payment?.pembayaran_id,
+          team: {
+            name: {
+              lead_name: payment.nama_ketua,
+              bank: payment.nama_bank,
+              name_team: payment.nama_tim,
+            },
+          },
+          status: payment.status_pembayaran,
+        };
+      });
+      console.log('row map :', rowMap);
+      setRow(rowMap);
+    }
+  }, [data]);
+
+  if (!data || !row) {
+    return <Loading />;
+  }
   return (
     <div style={{ padding: '20px' }}>
       <Table
