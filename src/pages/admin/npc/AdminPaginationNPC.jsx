@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Table, { Irow } from 'react-tailwind-table';
-import { textFilter } from 'react-bootstrap-table2-filter';
+
 const column = [
   {
     // field: "front_end_position.name.full_name",
     // use: "Position",
     field: 'front_end_position.name.full_name',
-    use: 'Nama Ketua TIm',
+    use: 'Nama Ketua Tim',
     //Will not be used in search filtering
     //  use_in_search:false
   },
@@ -30,7 +30,7 @@ const column = [
 const row = [];
 
 const tableStyling = {
-  base_bg_color: 'bg-nlc',
+  base_bg_color: 'bg-npc',
   base_text_color: 'text-green-600',
   top: {
     // title:"text-red-700"
@@ -45,7 +45,7 @@ const tableStyling = {
     },
   },
   table_head: {
-    table_row: 'bg-nlc text-white',
+    table_row: 'bg-npc text-white',
     table_data: 'text-white',
   },
   table_body: {
@@ -71,7 +71,7 @@ const AdminPagination = () => {
         columns={column}
         rows={row}
         per_page={5}
-        table_header='Daftar Pembayaran Schematics NLC'
+        table_header='Daftar Pembayaran Schematics NPC'
         bulk_select_options={['Save', 'Delete', 'Update']}
         striped={true}
         bordered={true}

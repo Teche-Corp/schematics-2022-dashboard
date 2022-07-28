@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import Table, { Irow } from 'react-tailwind-table';
-import { textFilter } from 'react-bootstrap-table2-filter';
+import { toast } from 'react-hot-toast';
+import { bearerToken, defaultToastMessage } from '@/lib/helper';
+import { useHistory } from 'react-router';
+import axios from 'axios';
+import { useForm } from 'react-hook-form';
+import GetPembayaranNLC from '@/components/Infrastructure/GetPembayaranNLC';
+import useSWR from 'swr';
+
 const column = [
   {
     // field: "front_end_position.name.full_name",
     // use: "Position",
     field: 'front_end_position.name.full_name',
-    use: 'Nama Ketua TIm',
+    use: 'Nama Ketua Tim',
     //Will not be used in search filtering
     //  use_in_search:false
   },
@@ -30,7 +37,7 @@ const column = [
 const row = [];
 
 const tableStyling = {
-  base_bg_color: 'bg-npc',
+  base_bg_color: 'bg-nlc',
   base_text_color: 'text-green-600',
   top: {
     // title:"text-red-700"
@@ -45,7 +52,7 @@ const tableStyling = {
     },
   },
   table_head: {
-    table_row: 'bg-npc text-white',
+    table_row: 'bg-nlc text-white',
     table_data: 'text-white',
   },
   table_body: {
@@ -64,14 +71,32 @@ const tableStyling = {
 };
 
 const AdminPagination = () => {
-  const [data, setData] = useState([]);
+  const history = useHistory();
+
+  const methods = useForm();
+  const { control, handleSubmit } = methods;
+  const formData = new FormData();
+
+  axios.defaults.baseURL = `https://schematics.its.ac.id:8081/api`;
+  const page = 1;
+  const per_page = 10;
+  const { data, error } = useSWR(
+    `/admin_get_list_pembayaran_nlc?page=${page}&per_page=${per_page}`,
+    {
+      headers: { ...bearerToken() },
+    },
+  );
+  console.log('datanya : ', data);
+  if (!data) console.log(error);
+
   return (
     <div style={{ padding: '20px' }}>
       <Table
         columns={column}
+        // rows={handleData}
         rows={row}
         per_page={5}
-        table_header='Daftar Pembayaran Schematics NPC'
+        table_header='Daftar Pembayaran Schematics NLC'
         bulk_select_options={['Save', 'Delete', 'Update']}
         striped={true}
         bordered={true}

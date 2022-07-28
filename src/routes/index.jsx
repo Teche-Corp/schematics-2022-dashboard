@@ -64,8 +64,8 @@ import DashboardNPC from '@/pages/npc/DashboardNPC';
 import DashboardNLC from '@/pages/nlc/DashboardNLC';
 import PaymentTeamJunior from '@/pages/npc/PaymentTeamJunior';
 import CreateTeamJuniorKetua from '@/pages/npc/CreateTeamSeniorKetua';
-import AdminPaginationNLC from '@/components/AdminPaginationNLC';
-import AdminPaginationNPC from '@/components/AdminPaginationNPC';
+import AdminPaginationNLC from '@/pages/admin/nlc/AdminPaginationNLC';
+import AdminPaginationNPC from '@/pages/admin/npc/AdminPaginationNPC';
 import NSTregister from '@/pages/nst/NSTregister';
 // import CreateTeamKetua from '@/pages/nlc/CreateTeamKetua';
 
@@ -323,7 +323,7 @@ const routeItems = [
   },
   {
     auth: 'all',
-    route: AuthRoute,
+    route: PrivateRoute,
     key: 'test-dashboard-nlc',
     path: '/test-dashboard-nlc',
     component: AdminPaginationNLC,
@@ -331,7 +331,7 @@ const routeItems = [
   },
   {
     auth: 'all',
-    route: AuthRoute,
+    route: PrivateRoute,
     key: 'test-dashboard-npc',
     path: '/test-dashboard-npc',
     component: AdminPaginationNPC,
