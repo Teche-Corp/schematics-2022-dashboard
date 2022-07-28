@@ -75,7 +75,7 @@ const tableStyling = {
 const AdminPagination = () => {
   const page = 1;
   const per_page = 10;
-  const url = `/admin_get_list_pembayaran_nlc?page=${page}&per_page=${per_page}`;
+  const url = `/admin_get_list_pembayaran_npc?page=${page}&per_page=${per_page}`;
   const { data, error } = useSWR(url, {
     headers: { ...bearerToken() },
   });
