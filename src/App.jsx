@@ -16,8 +16,9 @@ const App = () => {
     process.env.NODE_ENV === 'production' &&
     process.env.PUBLIC_URL === '/dashboard'
       ? 'https://schematics.its.ac.id:8081/api'
-      : 'https://deploy-laravel.herokuapp.com/api';
+      : 'http://127.0.0.1:8000/api';
 
+  // axios.defaults.baseURL = 'http://127.0.0.1:8000/api';
   axios.interceptors.response.use(undefined, async function (err) {
     // const originalRequest = err.config;
 
