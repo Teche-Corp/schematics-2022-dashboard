@@ -157,7 +157,7 @@ export default function Dashboard() {
 
                     <a
                       className=' mb-4 flex justify-center bg-nst font-primary h-10 rounded-xl w-full text-white items-center md:mb-2'
-                      href='/'
+                      href='#'
                     >
                       Lihat Tiket Disini
                     </a>

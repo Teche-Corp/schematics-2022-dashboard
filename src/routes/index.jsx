@@ -66,6 +66,7 @@ import DashboardNST from '@/pages/nst/Dashboard';
 import PaymentTeamJunior from '@/pages/npc/PaymentTeamJunior';
 import NSTregister from '@/pages/nst/NSTregister';
 import CreateTeamJuniorKetua from '@/pages/npc/CreateTeamJuniorKetua';
+import PembayaranNST from '@/pages/nst/PaymentNST';
 // import CreateTeamKetua from '@/pages/nlc/CreateTeamKetua';
 
 // const routeItems = [
@@ -422,6 +423,14 @@ const routeItems = [
     key: 'nst-registration',
     path: '/nst/registration',
     component: NSTregister,
+    visible: true,
+  },
+  {
+    auth: 'user',
+    route: PrivateRoute,
+    key: 'nst-payment',
+    path: '/nst/payment',
+    component: PembayaranNST,
     visible: true,
   },
   {
