@@ -34,7 +34,7 @@ export default function Dashboard() {
 
   return (
     <DashboardShell>
-      {error?.response.status == 404 ? (
+      {error?.response.status === 404 ? (
         <div className='bg-dark-100 min-h-screen'>
           <div className='flex flex-col w-full px-4 py-8 font-primary items-center text-white'>
             <p className='text-3xl p-6'>
