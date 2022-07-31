@@ -29,7 +29,13 @@ export default function PembayaranNST() {
         nstPayment.data.status === 'active' ||
         nstPayment.data.status === 'awaiting_verification'
       ) {
-        history.push('/landing');
+        history.push('/nst/dashboard');
+      }
+      if (
+        nstPayment.data.status === 'awaiting_payment' ||
+        nstPayment.data.status === 'need_revision'
+      ) {
+        history.push('/nst/payment');
       }
     }
   }, [nstPayment]);
@@ -88,15 +94,19 @@ export default function PembayaranNST() {
               {/* Nominal */}
               <p className=' text-white text-5xl font-primary mt-6 md:mt-12'>
                 {biaya.slice(0, 7)}
-                <span className='text-nst-500 underline'>
-                  {biaya.slice(7, 11)}
-                </span>
+                <span className='text-nst underline'>{biaya.slice(7, 11)}</span>
               </p>
               <p className='font-tertiary font-normal mt-2 text-white text-sm md:text-base'>
                 (Nominal HARUS sesuai hingga digit terakhir)
               </p>
+              {/* Qris */}
+              <img
+                src={`${process.env.PUBLIC_URL}/images/nst/qris.png`}
+                alt='login'
+                className='w-44 mt-5'
+              ></img>
 
-              <p className='font-tertiary font-normal text-white mt-6 md:mt-12 text-sm md:text-base'>
+              <p className='font-tertiary font-normal text-white mt-6 md:mt-10 text-sm md:text-base'>
                 287871362786912 (BRI a.n AHMAD AHMAD)
               </p>
               <p className='font-tertiary font-normal text-white text-sm md:text-base'>
@@ -128,7 +138,7 @@ export default function PembayaranNST() {
                     placeholder='Pilih Bank'
                     id='nama_bank'
                   />
-                  <InputPayment
+                  {/* <InputPayment
                     label='Nama Rekening'
                     id='nama_rekening'
                     validation={{
@@ -136,8 +146,8 @@ export default function PembayaranNST() {
                     }}
                     placeholder='Nama Rekening'
                     readOnly={false}
-                  />
-                  <InputPayment
+                  /> */}
+                  {/* <InputPayment
                     label='Nomor Rekening'
                     id='no_rekening'
                     validation={{
@@ -150,7 +160,7 @@ export default function PembayaranNST() {
                     }}
                     placeholder='Nomor Rekening'
                     readOnly={false}
-                  />
+                  /> */}
 
                   <DragnDropInputPayment
                     label='Foto atau Bukti Pembayaran'
@@ -163,7 +173,7 @@ export default function PembayaranNST() {
                     }}
                   />
                   <SubmitButtonPayment
-                    className='mt-20 text-white hover:text-black bg-nst font-tertiary font-normal '
+                    className='mt-12 text-white hover:text-black bg-nst font-tertiary font-normal '
                     loading={false}
                   >
                     Kirim
