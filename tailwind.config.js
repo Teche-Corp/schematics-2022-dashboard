@@ -40,7 +40,9 @@ module.exports = {
           300: '#96DFD8',
           400: '#AEE6CB',
           'blue': "#0A91FF",
-          'red' : "#F1000B"
+          'red' : "#F1000B",
+          'black' : "#252525",
+          'orange' : "#F15412"
         },
         reeva: {
           DEFAULT: '#2E97EE',
