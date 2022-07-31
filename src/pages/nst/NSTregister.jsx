@@ -164,7 +164,7 @@ export default function NSTregister() {
       {
         loading: 'Loading...',
         success: (res) => {
-          history.push('/landing');
+          history.push('/nst/payment');
           return 'Berhasil membeli tiket';
         },
         error: (err) => {

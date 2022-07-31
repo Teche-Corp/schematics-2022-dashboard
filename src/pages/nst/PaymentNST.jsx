@@ -29,7 +29,7 @@ export default function PembayaranNST() {
         nstPayment.data.status === 'active' ||
         nstPayment.data.status === 'awaiting_verification'
       ) {
-        history.push('/nst/dashboard');
+        history.push('/nst');
       }
       if (
         nstPayment.data.status === 'awaiting_payment' ||
@@ -107,25 +107,7 @@ export default function PembayaranNST() {
               ></img>
 
               <p className='font-tertiary font-normal text-white mt-6 md:mt-10 text-sm md:text-base'>
-                287871362786912 (BRI a.n AHMAD AHMAD)
-              </p>
-              <p className='font-tertiary font-normal text-white text-sm md:text-base'>
-                287871362786912 (BNI a.n AHMAD AHMAD)
-              </p>
-              <p className='font-tertiary font-normal text-white text-sm md:text-base'>
-                287871362786912 (BCA a.n AHMAD AHMAD)
-              </p>
-              <p className='font-tertiary font-normal text-white text-sm md:text-base'>
-                287871362786912 (MANDIRI a.n AHMAD AHMAD)
-              </p>
-              <p className='font-tertiary font-normal text-white text-sm md:text-base'>
-                287871362786912 (BSI a.n AHMAD AHMAD)
-              </p>
-              <p className='font-tertiary font-normal text-white text-sm md:text-base'>
-                287871362786912 (DANA a.n AHMAD AHMAD)
-              </p>
-              <p className='font-tertiary font-normal text-white text-sm md:text-base'>
-                287871362786912 (GOPAY a.n AHMAD AHMAD)
+                1300018840515 (Bank Mandiri a.n ZAHRA FAYYADIYATI)
               </p>
             </div>
             <div className='flex justify-start  flex-col p-3'>

@@ -115,7 +115,7 @@ export default function Dashboard() {
                       <p className='font-secondary'>Status</p>
                       <div className='flex flex-row items-center'>
                         <img
-                          src='/images/nst/mark.svg'
+                          src={`${process.env.PUBLIC_URL}/images/nst/mark.svg`}
                           alt='mark'
                           className='mr-2'
                           height={13}
@@ -150,14 +150,14 @@ export default function Dashboard() {
                       nantinya.
                     </p>
                     <img
-                      src='/images/nst/assetNST3.svg'
+                      src={`${process.env.PUBLIC_URL}/images/nst/assetNST3.svg`}
                       className='my-4 h-20 w-20 mx-auto md:h-52 md:w-52 md:my-8 '
                       alt='Alien'
                     />
 
                     <a
                       className=' mb-4 flex justify-center bg-nst font-primary h-10 rounded-xl w-full text-white items-center md:mb-2'
-                      href='/'
+                      href='#'
                     >
                       Lihat Tiket Disini
                     </a>
