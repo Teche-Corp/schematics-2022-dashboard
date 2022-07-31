@@ -1,8 +1,36 @@
 import { useAuthState } from '@/contexts/AuthContext';
 import DashboardShell from '@/layout/DashboardShell';
+import { useState, useEffect } from 'react';
+import { bearerToken } from '@/lib/helper';
+import Loading from '@/components/Loading';
+import Error500 from '../error/500';
+import { Link, useHistory } from 'react-router-dom';
+import axios from 'axios';
+import useSWR from 'swr';
+import { ImFacebook } from 'react-icons/im';
 
 export default function Dashboard() {
   const { user } = useAuthState();
+  const history = useHistory();
+
+  const { data, error } = useSWR('/my_nst', {
+    shouldRetryOnError: false,
+    errorRetryInterval: 0,
+  });
+
+  useEffect(() => {
+    if (data) {
+      if (
+        data.data.status === 'awaiting_payment' ||
+        data.data.status === 'need_revision'
+      ) {
+        history.push(`/nst/payment`);
+      }
+    }
+  }, [data, history]);
+
+  if (error && error.response.status !== 404) return <Error500 />;
+  if (!data && !error) return <Loading />;
 
   return (
     <DashboardShell>
@@ -21,32 +49,27 @@ export default function Dashboard() {
                   <div className='mt-8 md:text-base text-sm'>
                     <p className='font-secondary'>Nama</p>
                     <p className='font-secondary font-semibold leading-6'>
-                      Christian Kevin Emor (me)
+                      {data.data.tickets[0].name}
                     </p>
                   </div>
                   {/* Alamat */}
                   <div className='mt-4 md:text-base text-sm'>
                     <p className='font-secondary'>Alamat</p>
                     <p className='font-secondary font-semibold leading-6'>
-                      Keputih
+                      {data.data.tickets[0].alamat}
                     </p>
                   </div>
                   <div className='mt-4 md:text-base text-sm'>
                     <p className='font-secondary'>No. Telp</p>
                     <p className='font-secondary font-semibold leading-6'>
-                      081255555555
+                      {data.data.tickets[0].no_telp}
                     </p>
                   </div>
-                  <div className='mt-4 md:text-base text-sm'>
-                    <p className='font-secondary'>Ticket</p>
-                    <p className='font-secondary font-semibold leading-6'>
-                      Pre Sale 1
-                    </p>
-                  </div>
+
                   <div className='mt-4 md:text-base text-sm'>
                     <p className='font-secondary'>Jumlah Ticket</p>
                     <p className='font-secondary font-semibold leading-6'>
-                      5 Ticket
+                      {data.data.tickets.length}
                     </p>
                   </div>
                   <div className='mt-4 md:text-base text-sm'>
@@ -66,7 +89,15 @@ export default function Dashboard() {
                         width={13}
                       />
                       <p className='font-secondary font-semibold leading-6 text-nst-red'>
-                        Bukti Pembayaran Belum Diupload
+                        {data.data.status === 'awaiting_payment'
+                          ? 'menunggu pembayaran'
+                          : data.data.status === 'awaiting_verification'
+                          ? 'menunggu verifikasi'
+                          : data.data.status === 'need_revision'
+                          ? 'pembayaran ditolak, silahkan upload ulang'
+                          : data.data.status === 'active'
+                          ? 'pembayaran terverifikasi'
+                          : ''}
                       </p>
                     </div>
                   </div>

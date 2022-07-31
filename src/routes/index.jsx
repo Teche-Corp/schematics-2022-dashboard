@@ -62,6 +62,7 @@ import PaymentTeamSenior from '@/pages/npc/PaymentTeamSenior';
 import JoinTeamSenior from '@/pages/npc/JoinTeamSenior';
 import DashboardNPC from '@/pages/npc/DashboardNPC';
 import DashboardNLC from '@/pages/nlc/DashboardNLC';
+import DashboardNST from '@/pages/nst/Dashboard';
 import PaymentTeamJunior from '@/pages/npc/PaymentTeamJunior';
 import NSTregister from '@/pages/nst/NSTregister';
 import CreateTeamJuniorKetua from '@/pages/npc/CreateTeamJuniorKetua';
@@ -421,6 +422,14 @@ const routeItems = [
     key: 'nst-registration',
     path: '/nst/registration',
     component: NSTregister,
+    visible: true,
+  },
+  {
+    auth: 'user',
+    route: PrivateRoute,
+    key: 'nst-dashboard',
+    path: '/nst',
+    component: DashboardNST,
     visible: true,
   },
 ];
