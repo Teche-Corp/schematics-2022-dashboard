@@ -1,26 +1,29 @@
 import DragnDropInput from '@/components/DragnDropInput';
+import toast from 'react-hot-toast';
 import Input from '@/components/Input';
-import SelectInput from '@/components/SelectInput';
 import SelectInput2 from '@/components/SelectInput2';
 import SubmitButton from '@/components/SubmitButton';
 import React, { useEffect, useState } from 'react';
 import { useAuthState } from '@/contexts/AuthContext';
 import { useForm, FormProvider } from 'react-hook-form';
 import { INFO_SCH, VACCINE_TYPE } from '@/lib/constants';
+import axios from 'axios';
+import { bearerToken } from '@/lib/helper';
+import { useHistory } from 'react-router-dom';
+import useSWR from 'swr';
+import Loading from '@/components/Loading';
+import Error500 from '../error/500';
 
-function NSTcard() {
-  const methods = useForm();
-  const { user } = useAuthState();
-  const [value, setValue] = useState(
-    'Darimana kamu mendapat informasi Schematics',
-  );
-
+function NSTcard({ count }) {
   return (
     <>
+      <hr className={count === 0 ? 'hidden' : 'w-full bg-white'} />
+      <h1 className='text-white text-center text-xl font-bold'>
+        Tiket {count + 1}
+      </h1>
       <Input
         label={'Nama Lengkap'}
-        id='name'
-        // defaultValue={user.name}
+        id={'name-' + count}
         validation={{
           required: 'Nama lengkap tidak boleh kosong',
           minLength: {
@@ -35,9 +38,8 @@ function NSTcard() {
       />
       <Input
         label='Email'
-        id='email'
+        id={'email-' + count}
         type='email'
-        // defaultValue={user.email}
         validation={{
           required: 'Email tidak boleh kosong',
           pattern: {
@@ -49,9 +51,8 @@ function NSTcard() {
       />
       <Input
         label='Nomor Telepon'
-        id='no_telp'
+        id={'no_telp-' + count}
         placeholder='+6285123456'
-        // defaultValue={user.no_telp}
         validation={{
           required: 'Nomor Telepon tidak boleh kosong',
           pattern: {
@@ -63,7 +64,7 @@ function NSTcard() {
       />
       <Input
         label={'Alamat Domisili'}
-        id='alamat'
+        id={'alamat-' + count}
         validation={{
           required: 'Alamat domisili tidak boleh kosong',
           minLength: {
@@ -76,29 +77,33 @@ function NSTcard() {
           },
         }}
       />
-      <SelectInput2
-        label='Darimana kamu mendapat informasi Schematics'
-        options={INFO_SCH}
-        validation={{
-          required: 'Asal informasi Schematics tidak boleh kosong',
-        }}
-        id='info_sch'
-      />
+      {count === 0 && (
+        <SelectInput2
+          label='Darimana kamu mendapat informasi Schematics'
+          id='info_sch'
+          options={INFO_SCH}
+          validation={{
+            required: 'Asal informasi Schematics tidak boleh kosong',
+          }}
+          placeholder='Pilih asal informasi Schematics'
+        />
+      )}
 
       {/*  */}
-      <SelectInput
+      <SelectInput2
+        defaultValue={null}
         label='Jenis Vaksinasi COVID-19'
         options={VACCINE_TYPE}
         validation={{
           required: 'Jenis vaksinasi COVID-19 tidak boleh kosong',
         }}
         placeholder='Pilih jenis vaksinasi anda'
-        id='jenis_vaksin'
+        id={'tipe_vaksin-' + count}
       />
       <hr className='w-full bg-white' />
       <DragnDropInput
         label='Sertifikat Vaksinasi atau Surat Keterangan'
-        id='bukti_vaksin'
+        id={'bukti_vaksin-' + count}
         accept='image/png, image/jpg, image/jpeg'
         helperText='File dalam format jpg, png, atau jpeg'
         maxFiles={1}
@@ -107,27 +112,95 @@ function NSTcard() {
             'Sertifikat Vaksinasi atau Surat Keterangan tidak boleh kosong',
         }}
       />
+      <br />
     </>
   );
 }
 
 export default function NSTregister() {
   const methods = useForm();
-  const [cardAdd, setCardAdd] = useState([]);
   const { control, handleSubmit } = methods;
-
+  const [cardAdd, setCardAdd] = useState([<NSTcard key={0} count={0} />]);
+  const history = useHistory();
   const { user } = useAuthState();
 
   function addCard() {
-    setCardAdd(cardAdd.concat(<NSTcard key={cardAdd.length} />));
+    setCardAdd((prev) =>
+      prev.concat([<NSTcard key={prev.length} count={prev.length} />]),
+    );
   }
+
+  // function to remove card
+  function removeCard() {
+    setCardAdd((prev) =>
+      prev.filter((card, index) => index !== prev.length - 1),
+    );
+  }
+
   const handleNSTRegister = async (data) => {
     const formData = new FormData();
-    // console.log(data);
+
     for (let key in data) {
-      console.log(key);
+      let id = key.split('-')[0];
+      let index = key.split('-')[1];
+
+      if (
+        id === 'info_sch' ||
+        index === undefined ||
+        data[key] === '' ||
+        data[key] === undefined ||
+        data[key][0] === undefined
+      )
+        continue;
+      if (['bukti_vaksin-' + index].includes(key)) {
+        formData.append(`ticket_orders[${index}][${id}]`, data?.[key][0]);
+      } else {
+        formData.append(`ticket_orders[${index}][${id}]`, data?.[key]);
+      }
     }
+    formData.append('info_sch', data['info_sch']);
+
+    toast.promise(
+      axios.post('/order_nst_ticket', formData, {
+        headers: { ...bearerToken(), 'Content-Type': 'multipart/form-data' },
+      }),
+      {
+        loading: 'Loading...',
+        success: (res) => {
+          history.push('/nst/payment');
+          return 'Berhasil membeli tiket';
+        },
+        error: (err) => {
+          return err.response.data.message;
+        },
+      },
+    );
   };
+
+  const { data: nstOrder, error } = useSWR('/my_nst', {
+    shouldRetryOnError: false,
+    errorRetryInterval: 0,
+  });
+
+  useEffect(() => {
+    if (nstOrder) {
+      if (
+        nstOrder.data.status === 'awaiting_payment' ||
+        nstOrder.data.status === 'need_revision'
+      ) {
+        history.push(`/nst/payment`);
+      }
+      if (
+        nstOrder.data.status === 'active' ||
+        nstOrder.data.status === 'awaiting_verification'
+      ) {
+        history.push('/nst');
+      }
+    }
+  }, [nstOrder, history]);
+
+  if (error && error.response.status !== 404) return <Error500 />;
+  if (!nstOrder && !error) return <Loading />;
 
   return (
     <div className='w-full bg-black'>
@@ -141,15 +214,36 @@ export default function NSTregister() {
             onSubmit={handleSubmit(handleNSTRegister)}
             className='space-y-4 mt-16'
           >
-            <NSTcard />
+            {/* <NSTcard count={count}/> */}
+
             {cardAdd}
-            {cardAdd.length < 4 && (
+            {cardAdd.length < 5 && (
+              <>
+                <button
+                  className='text-neutral-400 bg-white px-4 py-2 mr-4 rounded-md font-primary text-center'
+                  onClick={addCard}
+                  type='button'
+                >
+                  Tambah Tiket
+                </button>
+                {cardAdd.length > 1 && (
+                  <button
+                    className='text-neutral-400 bg-white px-4 py-2  rounded-md font-primary text-center'
+                    onClick={removeCard}
+                    type='button'
+                  >
+                    Hapus Tiket
+                  </button>
+                )}
+              </>
+            )}
+            {cardAdd.length == 5 && (
               <button
                 className='text-neutral-400 bg-white px-4 py-2 rounded-md font-primary text-center'
-                onClick={addCard}
+                onClick={removeCard}
                 type='button'
               >
-                Tambah Tiket
+                Hapus Tiket
               </button>
             )}
             <div>
@@ -166,5 +260,3 @@ export default function NSTregister() {
     </div>
   );
 }
-
-// Nama Lengkap, Email, No. handphone, Alamat tempat Tinggal,  Darimana kamu mendapatkan informasi Schematics NST?,  Jenis Vaksinasi COVID-19, Sertifikat Vaksinasi atau Surat Dokter

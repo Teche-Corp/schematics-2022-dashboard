@@ -101,33 +101,6 @@ export default function PaymentTeam() {
                 placeholder='Pilih bank pilihan anda'
                 id='nama_bank'
               />
-              <Input
-                label={'Nama Rekening'}
-                validation={{
-                  required: 'Nama Rekening tidak boleh kosong',
-                  minLength: {
-                    value: 6,
-                    message: 'Panjang nama rekening setidaknya 6 karakter',
-                  },
-                  maxLength: {
-                    value: 32,
-                    message: 'Panjang nama rekening maksimal 32 karakter',
-                  },
-                }}
-                id='nama_rekening'
-              />
-              <Input
-                label={'Nomor Rekening'}
-                id='no_rekening'
-                validation={{
-                  required: 'Nomor rekening tidak boleh kosong',
-                  pattern: {
-                    value: /^[0-9]{10,}$/,
-                    message:
-                      'Nomor rekening Harus berupa angka dan memiliki panjang minimal 10 karakter',
-                  },
-                }}
-              />
               <DragnDropInput
                 label='Foto atau bukti pembayaran'
                 id='bukti_bayar'

@@ -103,7 +103,7 @@ export default function PaymentTeamJunior() {
                 placeholder='Pilih bank pilihan anda'
                 id='nama_bank'
               />
-              <Input
+              {/* <Input
                 label={'Nama Rekening'}
                 validation={{
                   required: 'Nama Rekening tidak boleh kosong',
@@ -129,7 +129,7 @@ export default function PaymentTeamJunior() {
                       'Nomor rekening Harus berupa angka dan memiliki setidaknya 10 karakter',
                   },
                 }}
-              />
+              /> */}
               <DragnDropInput
                 label='Foto atau bukti pembayaran'
                 id='bukti_bayar'

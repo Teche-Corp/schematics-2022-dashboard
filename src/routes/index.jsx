@@ -62,11 +62,15 @@ import PaymentTeamSenior from '@/pages/npc/PaymentTeamSenior';
 import JoinTeamSenior from '@/pages/npc/JoinTeamSenior';
 import DashboardNPC from '@/pages/npc/DashboardNPC';
 import DashboardNLC from '@/pages/nlc/DashboardNLC';
+import DashboardNST from '@/pages/nst/Dashboard';
 import PaymentTeamJunior from '@/pages/npc/PaymentTeamJunior';
 import CreateTeamJuniorKetua from '@/pages/npc/CreateTeamSeniorKetua';
 import AdminPaginationNLC from '@/pages/admin/nlc/AdminPaginationNLC';
 import AdminPaginationNPC from '@/pages/admin/npc/AdminPaginationNPC';
 import NSTregister from '@/pages/nst/NSTregister';
+import CreateTeamJuniorKetua from '@/pages/npc/CreateTeamJuniorKetua';
+import PembayaranNST from '@/pages/nst/PaymentNST';
+import TicketNST from '@/pages/nst/TicketNST';
 // import CreateTeamKetua from '@/pages/nlc/CreateTeamKetua';
 
 // const routeItems = [
@@ -439,6 +443,30 @@ const routeItems = [
     key: 'nst-registration',
     path: '/nst/registration',
     component: NSTregister,
+    visible: true,
+  },
+  {
+    auth: 'user',
+    route: PrivateRoute,
+    key: 'nst-payment',
+    path: '/nst/payment',
+    component: PembayaranNST,
+    visible: true,
+  },
+  {
+    auth: 'user',
+    route: PrivateRoute,
+    key: 'nst-ticket',
+    path: '/nst/ticket',
+    component: TicketNST,
+    visible: true,
+  },
+  {
+    auth: 'user',
+    route: PrivateRoute,
+    key: 'nst-dashboard',
+    path: '/nst',
+    component: DashboardNST,
     visible: true,
   },
 ];

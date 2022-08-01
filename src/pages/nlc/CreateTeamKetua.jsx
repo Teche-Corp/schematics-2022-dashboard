@@ -315,7 +315,7 @@ export default function CreateTeamKetua() {
               }}
               id='info_sch'
             />
-            <SelectInput
+            {/* <SelectInput
               label='Jenis Vaksinasi COVID-19'
               options={VACCINE_TYPE}
               validation={{
@@ -323,9 +323,9 @@ export default function CreateTeamKetua() {
               }}
               placeholder='Pilih jenis vaksinasi anda'
               id='jenis_vaksin'
-            />
+            /> */}
             <hr className='w-full bg-white' />
-            <DragnDropInput
+            {/* <DragnDropInput
               label='Sertifikat Vaksinasi atau Surat Keterangan'
               id='bukti_vaksin'
               accept='image/png, image/jpg, image/jpeg'
@@ -335,7 +335,7 @@ export default function CreateTeamKetua() {
                 required:
                   'Sertifikat Vaksinasi atau Surat Keterangan tidak boleh kosong',
               }}
-            />
+            /> */}
             <DragnDropInput
               label='Kartu Pelajar/Surat Keterangan Aktif/Surat Tugas'
               id='surat'
@@ -347,7 +347,7 @@ export default function CreateTeamKetua() {
                   'Kartu Pelajar/Surat Keterangan Aktif/Surat Tugas tidak boleh kosong',
               }}
             />
-            <DragnDropInput
+            {/* <DragnDropInput
               label={
                 <span>
                   Bukti Upload Twibbon Media Sosial.{' '}
@@ -388,7 +388,7 @@ export default function CreateTeamKetua() {
                 required:
                   'Bukti Upload Poster Instagram Story tidak boleh kosong',
               }}
-            />
+            /> */}
             <div>
               <SubmitButton
                 className='mt-16 bg-nlc-300 font-primary'

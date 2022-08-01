@@ -5,8 +5,7 @@ import Input from '@/components/Input';
 
 import { classNames } from '@/lib/helper';
 
-export default function SelectInput({
-  value,
+export default function SelectInput2({
   label,
   helperText = '',
   id,
@@ -33,6 +32,7 @@ export default function SelectInput({
             ? {
                 text: option.text,
                 value: lainnya,
+                ...option,
               }
             : option;
         });
