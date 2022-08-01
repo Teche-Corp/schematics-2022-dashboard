@@ -68,6 +68,10 @@ import NSTregister from '@/pages/nst/NSTregister';
 import CreateTeamJuniorKetua from '@/pages/npc/CreateTeamJuniorKetua';
 import PembayaranNST from '@/pages/nst/PaymentNST';
 import TicketNST from '@/pages/nst/TicketNST';
+import DashboardReeva from '@/pages/reeva/DashboardReeva';
+import PaymentReeva from '@/pages/reeva/PaymentReeva';
+import ReevaRegister from '@/pages/reeva/ReevaRegister';
+
 // import CreateTeamKetua from '@/pages/nlc/CreateTeamKetua';
 
 // const routeItems = [
@@ -448,6 +452,30 @@ const routeItems = [
     key: 'nst-dashboard',
     path: '/nst',
     component: DashboardNST,
+    visible: true,
+  },
+  {
+    auth: 'user',
+    route: PrivateRoute,
+    key: 'reeva-payment',
+    path: '/reeva/payment',
+    component: PaymentReeva,
+    visible: true,
+  },
+  {
+    auth: 'user',
+    route: PrivateRoute,
+    key: 'reeva-registration',
+    path: '/reeva/registration',
+    component: ReevaRegister,
+    visible: true,
+  },
+  {
+    auth: 'user',
+    route: PrivateRoute,
+    key: 'reeva-dashboard',
+    path: '/reeva',
+    component: DashboardReeva,
     visible: true,
   },
 ];
