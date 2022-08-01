@@ -67,7 +67,7 @@ export default function PembayaranNST() {
       {
         loading: 'Loading...',
         success: (res) => {
-          history.push('/nst/dashboard');
+          history.push('/nst');
           return 'Berhasil membuat pembayaran, mohon tunggu verifikasi dari admin';
         },
         error: (err) => {

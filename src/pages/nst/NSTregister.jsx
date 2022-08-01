@@ -3,13 +3,16 @@ import toast from 'react-hot-toast';
 import Input from '@/components/Input';
 import SelectInput2 from '@/components/SelectInput2';
 import SubmitButton from '@/components/SubmitButton';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAuthState } from '@/contexts/AuthContext';
 import { useForm, FormProvider } from 'react-hook-form';
 import { INFO_SCH, VACCINE_TYPE } from '@/lib/constants';
 import axios from 'axios';
 import { bearerToken } from '@/lib/helper';
 import { useHistory } from 'react-router-dom';
+import useSWR from 'swr';
+import Loading from '@/components/Loading';
+import Error500 from '../error/500';
 
 function NSTcard({ count }) {
   return (
@@ -173,6 +176,31 @@ export default function NSTregister() {
       },
     );
   };
+
+  const { data: nstOrder, error } = useSWR('/my_nst', {
+    shouldRetryOnError: false,
+    errorRetryInterval: 0,
+  });
+
+  useEffect(() => {
+    if (nstOrder) {
+      if (
+        nstOrder.data.status === 'awaiting_payment' ||
+        nstOrder.data.status === 'need_revision'
+      ) {
+        history.push(`/nst/payment`);
+      }
+      if (
+        nstOrder.data.status === 'active' ||
+        nstOrder.data.status === 'awaiting_verification'
+      ) {
+        history.push('/nst');
+      }
+    }
+  }, [nstOrder, history]);
+
+  if (error && error.response.status !== 404) return <Error500 />;
+  if (!nstOrder && !error) return <Loading />;
 
   return (
     <div className='w-full bg-black'>
