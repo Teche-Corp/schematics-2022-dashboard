@@ -30,13 +30,13 @@ const navigation = [
     icon: BsCircleFill,
     current: false,
   },
-  // {
-  //   name: 'Schematics NST',
-  //   href: '/my/sch-nst/ticket',
-  //   color: 'text-nst',
-  //   icon: BsCircleFill,
-  //   current: false,
-  // },
+  {
+    name: 'Schematics NST',
+    href: '/nst',
+    color: 'text-nst',
+    icon: BsCircleFill,
+    current: false,
+  },
   // {
   //   name: 'Schematics Reeva',
   //   href: '/my/sch-reeva/ticket',
