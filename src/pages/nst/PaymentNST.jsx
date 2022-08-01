@@ -85,7 +85,7 @@ export default function PembayaranNST() {
           <h1 className='mt-10 text-white font-primary text-5xl md:text-5xl lg:text-7xl'>
             Pembayaran
           </h1>
-          <div className='flex justify-center flex-col md:flex-row md:gap-x-3 lg:gap-x-14 mt-10 md:mt-20 pb-4'>
+          <div className='flex justify-center flex-col md:flex-row md:gap-x-3 lg:gap-x-10 mt-10 md:mt-20 pb-4'>
             <div className='flex justify-start items-start md:items-end flex-col p-3'>
               <p className='text-white font-tertiary font-normal  text-sm md:text-base'>
                 Lakukan pembayaran dengan nominal
@@ -97,16 +97,24 @@ export default function PembayaranNST() {
                 <span className='text-nst underline'>{biaya.slice(7, 11)}</span>
               </p>
               <p className='font-tertiary font-normal mt-2 text-white text-sm md:text-base'>
-                (Nominal HARUS sesuai hingga digit terakhir)
+                (Nominal <span className='font-bold'>HARUS</span> sesuai hingga
+                digit terakhir)
               </p>
+              <p className='font-tertiary font-normal mt-6 text-white text-sm md:text-base'>
+                Pembayaran melalui scan QRIS Schematics ITS berikut:
+              </p>
+
               {/* Qris */}
               <img
                 src={`${process.env.PUBLIC_URL}/images/nst/qris.png`}
                 alt='login'
-                className='w-44 mt-5'
+                className='w-44 mt-3'
               ></img>
 
-              <p className='font-tertiary font-normal text-white mt-6 md:mt-10 text-sm md:text-base'>
+              <p className='font-tertiary font-normal text-white mt-4 md:mt-6 text-sm md:text-base'>
+                Atau melalui rekening berikut:
+              </p>
+              <p className='font-tertiary font-normal text-white mt-1 text-sm md:text-base'>
                 1300018840515 (Bank Mandiri a.n ZAHRA FAYYADIYATI)
               </p>
             </div>
