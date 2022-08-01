@@ -38,7 +38,7 @@ const ComponentToPrint = React.forwardRef((props, ref, data) => {
           </div>
 
           <img
-            src='/images/nst/assetApproved.svg'
+            src={`${process.env.PUBLIC_URL}/images/nst/assetApproved.svg`}
             alt=''
             className='md:mx-auto rotate-90 w-14 md:w-48'
           />
@@ -46,7 +46,7 @@ const ComponentToPrint = React.forwardRef((props, ref, data) => {
           {/* Barcode Mobile */}
           <img
             className='w-64 mx-auto block md:hidden'
-            src='/images/nst/barcode.png'
+            src={`${process.env.PUBLIC_URL}/images/nst/barcode.png`}
             alt='qris'
           />
         </div>
@@ -55,7 +55,7 @@ const ComponentToPrint = React.forwardRef((props, ref, data) => {
           {/* Barcode Desktop */}
           <img
             className='w-64 mx-auto hidden md:block'
-            src='/images/nst/barcode.png'
+            src={`${process.env.PUBLIC_URL}/images/nst/barcode.png`}
             alt='qris'
           />
 
