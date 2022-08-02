@@ -202,14 +202,13 @@ export default function CreateTeamSeniorKetua() {
               disabled={true}
             />
             <Input
-              label={'NISN'}
+              label={'Nomor Induk Mahasiswa'}
               id='nisn'
               validation={{
-                required: 'NISN tidak boleh kosong',
-                pattern: {
-                  value: /^[0-9]{10}$/,
-                  message:
-                    'NISN Harus berupa angka dan memiliki panjang 10 karakter',
+                required: 'Nomor Induk Mahasiswa boleh kosong',
+                minLength: {
+                  value: 5,
+                  text: 'Nomor Induk Mahasiswa setidaknya sepanjang 5 karakter',
                 },
               }}
             />
@@ -242,14 +241,10 @@ export default function CreateTeamSeniorKetua() {
               }}
             />
             <Input
-              label={'ID Line'}
+              label={'ID Line (opsional)'}
               id='id_line'
               validation={{
-                required: 'ID Line tidak boleh kosong',
-                maxLength: {
-                  value: 128,
-                  message: 'ID Line maksimal memiliki 128 karakter',
-                },
+                required: false,
               }}
             />
             <Input
