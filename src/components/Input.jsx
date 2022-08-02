@@ -2,6 +2,7 @@ import { useFormContext } from 'react-hook-form';
 import { HiExclamationCircle } from 'react-icons/hi';
 
 export default function Input({
+  value = '',
   label,
   placeholder = '',
   id,
@@ -25,6 +26,7 @@ export default function Input({
           {...rest}
           type={type}
           name={id}
+          value={value}
           id={id}
           disabled={disabled}
           className={`block w-full border-gray-600 bg-white rounded-md shadow-sm   ${
