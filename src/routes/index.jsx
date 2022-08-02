@@ -70,6 +70,8 @@ import PembayaranNST from '@/pages/nst/PaymentNST';
 import TicketNST from '@/pages/nst/TicketNST';
 // import CreateTeamKetua from '@/pages/nlc/CreateTeamKetua';
 
+import VerifikasiNLC from '@/pages/admin/nlc/VerifikasiNLC';
+
 // const routeItems = [
 //   {
 //     auth: 'all',
@@ -448,6 +450,14 @@ const routeItems = [
     key: 'nst-dashboard',
     path: '/nst',
     component: DashboardNST,
+    visible: true,
+  },
+  {
+    auth: 'admin',
+    route: PrivateRoute,
+    key: 'admin-nlc-verifikasi',
+    path: '/admin/sch-nlc/verifikasi',
+    component: VerifikasiNLC,
     visible: true,
   },
 ];
