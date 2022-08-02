@@ -184,37 +184,25 @@ export default function CreateTeamKetua() {
               id='id_kota'
             />
             <Input
-              label={'Nama Guru Pendamping'}
+              label={'Nama Guru Pendamping (opsional)'}
               validation={{
-                required: 'Nama guru pendamping tidak boleh kosong',
-                minLength: {
-                  value: 3,
-                  message: 'Panjang nama guru pendamping setidaknya 3 karakter',
-                },
-                maxLength: {
-                  value: 64,
-                  message: 'Panjang nama guru pendamping maksimal 64 karakter',
-                },
+                required: false,
               }}
               id='nama_guru_pendamping'
             />
             <Input
-              label='Nomor Telepon Guru Pendamping'
+              label='Nomor Telepon Guru Pendamping (opsional)'
               id='no_telp_guru_pendamping'
               placeholder='+6285123456'
               validation={{
-                required: 'Nomor Telepon tidak boleh kosong',
-                pattern: {
-                  value: /^\+628[1-9][0-9]{8,10}$/,
-                  message:
-                    'Nomor Telepon harus diawali +62 dan memiliki panjang 13-15 karakter',
-                },
+                required: false,
               }}
             />
             <hr className='bg-white w-full' />
             <Input
               label={'Nama Lengkap'}
               id='name'
+              disabled={true}
               defaultValue={user.name}
               validation={{
                 required: 'Nama lengkap tidak boleh kosong',
@@ -232,6 +220,7 @@ export default function CreateTeamKetua() {
               label='Email'
               id='email'
               type='email'
+              disabled={true}
               defaultValue={user.email}
               validation={{
                 required: 'Email tidak boleh kosong',
