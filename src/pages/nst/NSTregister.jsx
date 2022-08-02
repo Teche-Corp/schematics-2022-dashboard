@@ -184,18 +184,18 @@ export default function NSTregister() {
 
   useEffect(() => {
     if (nstOrder) {
-      if (
-        nstOrder.data.status === 'awaiting_payment' ||
-        nstOrder.data.status === 'need_revision'
-      ) {
-        history.push(`/nst/payment`);
-      }
-      if (
-        nstOrder.data.status === 'active' ||
-        nstOrder.data.status === 'awaiting_verification'
-      ) {
-        history.push('/nst');
-      }
+      // if (
+      //   nstOrder.data.status === 'awaiting_payment' ||
+      //   nstOrder.data.status === 'need_revision'
+      // ) {
+      //   history.push(`/nst/payment`);
+      // }
+      // if (
+      //   nstOrder.data.status === 'active' ||
+      //   nstOrder.data.status === 'awaiting_verification'
+      // ) {
+      //   history.push('/nst');
+      // }
     }
   }, [nstOrder, history]);
 

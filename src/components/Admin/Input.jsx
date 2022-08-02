@@ -1,8 +1,10 @@
 import { useFormContext } from 'react-hook-form';
 import { HiExclamationCircle } from 'react-icons/hi';
+import { useState } from 'react';
 
-export default function Input({
+export default function InputAdmin({
   label,
+  value,
   placeholder = '',
   id,
   type = 'text',
@@ -14,6 +16,8 @@ export default function Input({
     register,
     formState: { errors },
   } = useFormContext();
+
+  const [formValue, setformValue] = useState(value);
   return (
     <div className=''>
       <label htmlFor={id} className='block text-sm font-bold text-gray-50'>
@@ -25,6 +29,8 @@ export default function Input({
           {...rest}
           type={type}
           name={id}
+          value={formValue}
+          onChange={(e) => setformValue(e.target.value)}
           id={id}
           disabled={disabled}
           className={`block w-full border-gray-600 bg-white rounded-md shadow-sm   ${
