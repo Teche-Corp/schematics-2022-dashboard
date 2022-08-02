@@ -41,7 +41,7 @@ export default function SelectInput({
           )}
           aria-describedby={id}
         >
-          <option value='' disabled hidden>
+          <option value='' disabled>
             {placeholder}
           </option>
           {options.map((option) => (

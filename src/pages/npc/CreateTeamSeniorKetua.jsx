@@ -173,31 +173,18 @@ export default function CreateTeamSeniorKetua() {
               id='id_kota'
             />
             <Input
-              label={'Nama Guru Pendamping'}
+              label={'Nama Dosen Pendamping (opsional)'}
               validation={{
-                required: 'Nama guru pendamping tidak boleh kosong',
-                minLength: {
-                  value: 1,
-                  message: 'Panjang nama guru pendamping setidaknya 1 karakter',
-                },
-                maxLength: {
-                  value: 128,
-                  message: 'Panjang nama guru pendamping maksimal 128 karakter',
-                },
+                required: false,
               }}
               id='nama_guru_pendamping'
             />
             <Input
-              label='Nomor Telepon Guru Pendamping'
+              label='Nomor Telepon Dosen Pendamping (opsional)'
               id='no_telp_guru_pendamping'
               placeholder='+6285123456'
               validation={{
-                required: 'Nomor Telepon tidak boleh kosong',
-                pattern: {
-                  value: /^\+628[1-9][0-9]{8,10}$/,
-                  message:
-                    'Nomor Telepon harus diawali +62 dan memiliki panjang 13-15 karakter',
-                },
+                required: false,
               }}
             />
             <hr className='bg-white w-full' />
