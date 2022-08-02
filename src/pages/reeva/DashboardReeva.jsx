@@ -13,20 +13,20 @@ export default function DashboardReeva() {
   const { user } = useAuthState();
   const history = useHistory();
 
-  const { data, error } = useSWR('/my_nst', {
+  const { data, error } = useSWR('/my_reeva', {
     shouldRetryOnError: false,
     errorRetryInterval: 0,
   });
 
   useEffect(() => {
-    // if (data) {
-    //   if (
-    //     data.data.status === 'awaiting_payment' ||
-    //     data.data.status === 'need_revision'
-    //   ) {
-    //     history.push(`/nst/payment`);
-    //   }
-    // }
+    if (data) {
+      if (
+        data.data.status === 'awaiting_payment' ||
+        data.data.status === 'need_revision'
+      ) {
+        history.push(`/reeva/payment`);
+      }
+    }
   }, [data, history]);
 
   if (error && error.response.status !== 404) return <Error500 />;
@@ -90,14 +90,14 @@ export default function DashboardReeva() {
                     <div className='mt-8 md:text-base text-sm'>
                       <p className='font-secondary'>Nama</p>
                       <p className='font-secondary font-semibold leading-6'>
-                        {data?.data.tickets[0].name}
+                        {data.data.tickets[0].name}
                       </p>
                     </div>
                     {/* Alamat */}
                     <div className='mt-4 md:text-base text-sm'>
                       <p className='font-secondary'>Alamat</p>
                       <p className='font-secondary font-semibold leading-6'>
-                        {data?.data.tickets[0].alamat}
+                        {data.data.tickets[0].alamat}
                       </p>
                     </div>
                     <div className='mt-4 md:text-base text-sm'>
@@ -136,13 +136,13 @@ export default function DashboardReeva() {
                           width={13}
                         />
                         <p className='font-secondary font-semibold leading-6 text-nst-red hover:text-reeva-400-red'>
-                          {data?.data.status === 'awaiting_payment'
+                          {data.data.status === 'awaiting_payment'
                             ? 'menunggu pembayaran'
-                            : data?.data.status === 'awaiting_verification'
+                            : data.data.status === 'awaiting_verification'
                             ? 'menunggu verifikasi'
-                            : data?.data.status === 'need_revision'
+                            : data.data.status === 'need_revision'
                             ? 'pembayaran ditolak, silahkan upload ulang'
-                            : data?.data.status === 'active'
+                            : data.data.status === 'active'
                             ? 'pembayaran terverifikasi'
                             : ''}
                         </p>
@@ -169,12 +169,22 @@ export default function DashboardReeva() {
                       alt='Reeva Mascot'
                     />
 
-                    <a
-                      className=' mb-4 flex justify-center bg-reeva hover:bg-reeva-400 font-primary h-10 rounded-xl w-full text-white items-center md:mb-2'
-                      href={`${process.env.PUBLIC_URL}/nst/ticket`}
-                    >
-                      Lihat Tiket Disini
-                    </a>
+                    {data.data.status === 'active' ? (
+                      <Link
+                        className=' mb-4 flex justify-center bg-reeva hover:bg-reeva-100 font-primary h-10 rounded-xl w-full text-white hover:text-reeva items-center md:mb-2'
+                        href={`${process.env.PUBLIC_URL}/nst/ticket`}
+                      >
+                        Lihat Tiket Disini
+                      </Link>
+                    ) : data.data.status === 'awaiting_verification' ? (
+                      <p className='mb-4 text-nst-red align-center font-primary'>
+                        Tiket sedang dalam proses verifikasi.
+                      </p>
+                    ) : (
+                      <p className='mb-4 text-nst-red align-center font-primary'>
+                        Harap melakukan pembayaran terlebih dahulu.
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>

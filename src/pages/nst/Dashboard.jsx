@@ -155,12 +155,22 @@ export default function Dashboard() {
                       alt='Alien'
                     />
 
-                    <a
-                      className=' mb-4 flex justify-center bg-nst font-primary h-10 rounded-xl w-full text-white items-center md:mb-2'
-                      href={`${process.env.PUBLIC_URL}/nst/ticket`}
-                    >
-                      Lihat Tiket Disini
-                    </a>
+                    {data.data.status === 'active' ? (
+                      <Link
+                        className=' mb-4 flex justify-center bg-nst hover:bg-nst-100 font-primary h-10 rounded-xl w-full text-white hover:text-nst items-center md:mb-2'
+                        href={`${process.env.PUBLIC_URL}/nst/ticket`}
+                      >
+                        Lihat Tiket Disini
+                      </Link>
+                    ) : data.data.status === 'awaiting_verification' ? (
+                      <p className='mb-4 text-nst-red align-center font-primary'>
+                        Tiket sedang dalam proses verifikasi.
+                      </p>
+                    ) : (
+                      <p className='mb-4 text-nst-red align-center font-primary'>
+                        Harap melakukan pembayaran terlebih dahulu.
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>

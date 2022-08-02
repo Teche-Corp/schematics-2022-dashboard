@@ -13,7 +13,7 @@ import useSWR from 'swr';
 import Error500 from '../error/500';
 
 import { BANKS } from '@/lib/constants';
-export default function PembayaranNST() {
+export default function PaymentReeva() {
   const methods = useForm();
   const { control, handleSubmit } = methods;
   const history = useHistory();
@@ -95,7 +95,9 @@ export default function PembayaranNST() {
               {/* Nominal */}
               <p className=' text-white text-5xl font-primary mt-6 md:mt-12'>
                 {biaya.slice(0, 7)}
-                <span className='text-nst underline'>{biaya.slice(7, 11)}</span>
+                <span className='text-reeva underline'>
+                  {biaya.slice(7, 11)}
+                </span>
               </p>
               <p className='font-tertiary font-normal mt-2 text-white text-sm md:text-base'>
                 (Nominal <span className='font-bold'>HARUS</span> sesuai hingga
@@ -153,7 +155,7 @@ export default function PembayaranNST() {
                     readOnly={false}
                   /> */}
 
-                  {/* <DragnDropInputPayment
+                  <DragnDropInputPayment
                     label='Foto atau Bukti Pembayaran'
                     id='bukti_bayar'
                     accept='image/png, image/jpg, image/jpeg'
@@ -162,9 +164,9 @@ export default function PembayaranNST() {
                     validation={{
                       required: 'Foto atau Bukti Pembayaran tidak boleh kosong',
                     }}
-                  /> */}
+                  />
                   <SubmitButtonPayment
-                    className='mt-12 text-white hover:text-black bg-nst font-tertiary font-normal '
+                    className='mt-12 text-white hover:text-black bg-reeva font-tertiary font-normal '
                     loading={false}
                   >
                     Kirim
