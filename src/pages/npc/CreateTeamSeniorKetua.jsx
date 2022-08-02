@@ -139,16 +139,16 @@ export default function CreateTeamSeniorKetua() {
               id='nama_team'
             />
             <Input
-              label={'Nama Sekolah'}
+              label={'Nama Universitas'}
               validation={{
-                required: 'Nama sekolah tidak boleh kosong',
+                required: 'Nama Universitas tidak boleh kosong',
                 minLength: {
                   value: 8,
-                  message: 'Panjang nama sekolah setidaknya 8 karakter',
+                  message: 'Panjang Nama Universitas setidaknya 8 karakter',
                 },
                 maxLength: {
                   value: 64,
-                  message: 'Panjang nama sekolah setidaknya 64 karakter',
+                  message: 'Panjang Nama Universitas setidaknya 64 karakter',
                 },
               }}
               id='asal_sekolah'

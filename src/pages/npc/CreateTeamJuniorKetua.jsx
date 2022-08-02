@@ -242,14 +242,10 @@ export default function CreateTeamJuniorKetua() {
               }}
             />
             <Input
-              label={'ID Line'}
+              label={'ID Line (opsional)'}
               id='id_line'
               validation={{
-                required: 'ID Line tidak boleh kosong',
-                maxLength: {
-                  value: 128,
-                  message: 'ID Line maksimal memiliki 128 karakter',
-                },
+                required: false,
               }}
             />
             <Input
