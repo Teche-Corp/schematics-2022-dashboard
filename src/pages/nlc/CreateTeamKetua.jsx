@@ -204,17 +204,6 @@ export default function CreateTeamKetua() {
               id='name'
               disabled={true}
               defaultValue={user.name}
-              validation={{
-                required: 'Nama lengkap tidak boleh kosong',
-                minLength: {
-                  value: 6,
-                  message: 'Nama lengkap setidaknya memiliki 6 karakter',
-                },
-                maxLength: {
-                  value: 128,
-                  message: 'Nama lengkap maksimal memiliki 128 karakter',
-                },
-              }}
             />
             <Input
               label='Email'
@@ -222,14 +211,6 @@ export default function CreateTeamKetua() {
               type='email'
               disabled={true}
               defaultValue={user.email}
-              validation={{
-                required: 'Email tidak boleh kosong',
-                pattern: {
-                  value:
-                    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                  message: 'Email tidak valid',
-                },
-              }}
             />
             <Input
               label={'NISN'}
