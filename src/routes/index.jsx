@@ -67,11 +67,15 @@ import PaymentTeamJunior from '@/pages/npc/PaymentTeamJunior';
 import CreateTeamJuniorKetua from '@/pages/npc/CreateTeamSeniorKetua';
 import AdminPaginationNLC from '@/pages/admin/nlc/AdminPaginationNLC';
 import AdminPaginationNPC from '@/pages/admin/npc/AdminPaginationNPC';
+import AdminVerifikasiPembayaranJunior from '@/pages/admin/npc/AdminVerifikasiPembayaranNPCJunior';
+import AdminVerifikasiDataNLC from '@/pages/admin/nlc/AdminVerifikasiData';
 import NSTregister from '@/pages/nst/NSTregister';
-import CreateTeamJuniorKetua from '@/pages/npc/CreateTeamJuniorKetua';
+// import CreateTeamJuniorKetua from '@/pages/npc/CreateTeamJuniorKetua';
 import PembayaranNST from '@/pages/nst/PaymentNST';
 import TicketNST from '@/pages/nst/TicketNST';
 // import CreateTeamKetua from '@/pages/nlc/CreateTeamKetua';
+import AdminVerifikasiDataNPCJunior from '../pages/admin/npc/AdminVerifikasiDataNPCJunior';
+import AdminVerifikasiDataNPCSenior from '../pages/admin/npc/AdminVerifikasiDataSenior';
 
 // const routeItems = [
 //   {
@@ -325,6 +329,7 @@ const routeItems = [
     component: Landing,
     visible: true,
   },
+  // verifikasi pembayaran
   {
     auth: 'all',
     route: PrivateRoute,
@@ -339,6 +344,39 @@ const routeItems = [
     key: 'admin-dashboard-npc',
     path: '/admin/dashboard-npc',
     component: AdminPaginationNPC,
+    visible: true,
+  },
+  {
+    auth: 'all',
+    route: PrivateRoute,
+    key: 'admin-dashboard-npc',
+    path: '/admin/dashboard-npc-junior',
+    component: AdminVerifikasiPembayaranJunior,
+    visible: true,
+  },
+  //  Verifikasi data
+  {
+    auth: 'all',
+    route: PrivateRoute,
+    key: 'admin-verifikasi-data',
+    path: '/admin/verifikasi-data/nlc',
+    component: AdminVerifikasiDataNLC,
+    visible: true,
+  },
+  {
+    auth: 'all',
+    route: PrivateRoute,
+    key: 'admin-verifikasi-data-npc-junior',
+    path: '/admin/verifikasi-data/npc-junior',
+    component: AdminVerifikasiDataNPCJunior,
+    visible: true,
+  },
+  {
+    auth: 'all',
+    route: PrivateRoute,
+    key: 'admin-verifikasi-data-npc-senior',
+    path: '/admin/verifikasi-data/npc-senior',
+    component: AdminVerifikasiDataNPCSenior,
     visible: true,
   },
   {
