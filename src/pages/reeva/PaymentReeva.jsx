@@ -13,7 +13,7 @@ import useSWR from 'swr';
 import Error500 from '../error/500';
 
 import { BANKS } from '@/lib/constants';
-export default function PembayaranReeva() {
+export default function PaymentReeva() {
   const methods = useForm();
   const { control, handleSubmit } = methods;
   const history = useHistory();

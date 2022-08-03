@@ -95,14 +95,14 @@ export default function DashboardReeva() {
                     <div className='mt-8 md:text-base text-sm'>
                       <p className='font-secondary'>Nama</p>
                       <p className='font-secondary font-semibold leading-6'>
-                        {data?.data.tickets[0].name}
+                        {data.data.tickets[0].name}
                       </p>
                     </div>
                     {/* Alamat */}
                     <div className='mt-4 md:text-base text-sm'>
                       <p className='font-secondary'>Alamat</p>
                       <p className='font-secondary font-semibold leading-6'>
-                        {data?.data.tickets[0].alamat}
+                        {data.data.tickets[0].alamat}
                       </p>
                     </div>
                     <div className='mt-4 md:text-base text-sm'>
@@ -182,16 +182,20 @@ export default function DashboardReeva() {
                       alt='Reeva Mascot'
                     />
 
-                    {data?.data.status === 'active' ? (
-                      <a
-                        className=' mb-4 flex justify-center bg-reeva hover:bg-reeva-400 font-primary h-10 rounded-xl w-full text-white items-center md:mb-2'
-                        href={`${process.env.PUBLIC_URL}/reeva/ticket`}
+                    {data.data.status === 'active' ? (
+                      <Link
+                        className=' mb-4 flex justify-center bg-reeva hover:bg-reeva-100 font-primary h-10 rounded-xl w-full text-white hover:text-reeva items-center md:mb-2'
+                        href={`${process.env.PUBLIC_URL}/nst/ticket`}
                       >
                         Lihat Tiket Disini
-                      </a>
+                      </Link>
+                    ) : data.data.status === 'awaiting_verification' ? (
+                      <p className='mb-4 text-nst-red align-center font-primary'>
+                        Tiket sedang dalam proses verifikasi.
+                      </p>
                     ) : (
-                      <p className='font-secondary text-red-500 font-semibold'>
-                        Harap menyelesaikan pembayaran terlebih dahulu.
+                      <p className='mb-4 text-nst-red align-center font-primary'>
+                        Harap melakukan pembayaran terlebih dahulu.
                       </p>
                     )}
                   </div>
