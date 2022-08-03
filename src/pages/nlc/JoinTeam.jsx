@@ -97,14 +97,14 @@ export default function JoinTeam() {
               label={'Nama Lengkap'}
               id='name'
               defaultValue={user.name}
-              disabled={false}
+              disabled={true}
             />
             <Input
               label='Email'
               id='email'
               type='email'
               defaultValue={user.email}
-              disabled={false}
+              disabled={true}
             />
             <Input
               label={'NISN'}

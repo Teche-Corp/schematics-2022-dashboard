@@ -8,6 +8,8 @@ import { HiBell, HiChevronDown, HiMenuAlt1 } from 'react-icons/hi';
 import { VscAccount } from 'react-icons/vsc';
 
 import { useAuthDispatch } from '@/contexts/AuthContext';
+import { useSWRConfig } from 'swr';
+
 // import { useTeamDispatch } from '@/contexts/TeamContext';
 
 // import { classNames } from '@/lib/helper';
@@ -15,12 +17,14 @@ import { useAuthDispatch } from '@/contexts/AuthContext';
 export default function Navbar({ setSidebarOpen }) {
   // const { user } = useAuthState();
   const authDispatch = useAuthDispatch();
+  const { cache } = useSWRConfig();
   // const teamDispatch = useTeamDispatch();
 
   const history = useHistory();
 
   const handleLogout = () => {
     authDispatch('LOGOUT');
+    cache.clear();
     // teamDispatch('CLEAR');
     history.replace('/login');
   };
