@@ -186,11 +186,16 @@ export default function ReevaRegister() {
     }
   }, [reevaOrder, history]);
 
-  if (error && error.response.status !== 404) return <Error500 />;
+  if (error) {
+    if (error.response.status === 404) {
+      history.push('/reeva/registration');
+    }
+    return <Error500 />;
+  }
   if (!reevaOrder && !error) return <Loading />;
 
   return (
-    <div className='w-full bg-black'>
+    <div className='w-full bg-black min-h-screen'>
       <div className='md:w-3/6 w-11/12 mx-auto py-16'>
         <p className='md:text-5xl text-3xl font-primary text-center text-white'>
           Data Pendaftaran

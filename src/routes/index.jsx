@@ -71,6 +71,7 @@ import TicketNST from '@/pages/nst/TicketNST';
 import DashboardReeva from '@/pages/reeva/DashboardReeva';
 import PaymentReeva from '@/pages/reeva/PaymentReeva';
 import ReevaRegister from '@/pages/reeva/ReevaRegister';
+import ReevaTicket from '@/pages/reeva/TicketReeva';
 
 // import CreateTeamKetua from '@/pages/nlc/CreateTeamKetua';
 
@@ -468,6 +469,14 @@ const routeItems = [
     key: 'reeva-registration',
     path: '/reeva/registration',
     component: ReevaRegister,
+    visible: true,
+  },
+  {
+    auth: 'user',
+    route: PrivateRoute,
+    key: 'reeva-ticket',
+    path: '/reeva/ticket',
+    component: ReevaTicket,
     visible: true,
   },
   {

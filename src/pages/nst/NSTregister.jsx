@@ -199,7 +199,12 @@ export default function NSTregister() {
     }
   }, [nstOrder, history]);
 
-  if (error && error.response.status !== 404) return <Error500 />;
+  if (error) {
+    if (error.response.status !== 404) {
+      history.push(`/nst/registration`);
+    }
+    return <Error500 />;
+  }
   if (!nstOrder && !error) return <Loading />;
 
   return (
