@@ -19,7 +19,7 @@ export default function InputAdmin({
 
   const [formValue, setformValue] = useState(value);
   return (
-    <div className=''>
+    <div className='mt-2'>
       <label htmlFor={id} className='block text-sm font-bold text-gray-50'>
         {label}
       </label>
