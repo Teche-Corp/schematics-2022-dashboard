@@ -95,7 +95,6 @@ export default function CreateTeamKetua() {
 
   useEffect(() => {
     if (teamPayment) {
-      console.log(teamPayment.data);
       if (
         teamPayment.data.status === 'active' ||
         teamPayment.data.status === 'awaiting_verification'

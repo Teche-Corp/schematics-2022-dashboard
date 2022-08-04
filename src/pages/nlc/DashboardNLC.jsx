@@ -1,18 +1,45 @@
+import DragnDropInputBox from '@/components/DragnDropInputBox';
 import Loading from '@/components/Loading';
+import SubmitButton from '@/components/SubmitButton';
 import DashboardShell from '@/layout/DashboardShell';
 import { NLC_REGION, TEAM_STATUS } from '@/lib/constants';
+import { bearerToken } from '@/lib/helper';
+import axios from 'axios';
 import React, { useEffect } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import { Link, useHistory } from 'react-router-dom';
 import useSWR from 'swr';
 import Error500 from '../error/500';
 
 function DashboardNLC() {
   const history = useHistory();
+  const methods = useForm();
+  const { control, handleSubmit } = methods;
   const getNlcRegion = (region_id) => {
     const region = NLC_REGION.filter((region) => {
       return region.value.toString() === region_id;
     });
     return region[0].text;
+  };
+
+  const handleImageUpload = (data) => {
+    const formData = new FormData();
+    for (let key in data) {
+      formData.append(key, data[key][0]);
+    }
+    toast.promise(
+      axios.post('/upload_nlc_berkas', formData, {
+        headers: { ...bearerToken(), 'Content-Type': 'multipart/form-data' },
+      }),
+      {
+        loading: 'Loading...',
+        success: 'Berhasil mengupload data',
+        error: (err) => {
+          return err.response.data.message;
+        },
+      },
+    );
   };
 
   const { data, error } = useSWR('/my_nlc', {
@@ -166,6 +193,87 @@ function DashboardNLC() {
                     </p>
                   </button>
                 </a>
+              </div>
+            </div>
+            <div className='w-full bg-white p-6 mt-8 rounded-xl'>
+              <div className='w-full'>
+                <FormProvider {...methods}>
+                  <form onSubmit={handleSubmit(handleImageUpload)}>
+                    <div className='grid md:grid-cols-3 md:grid-rows-1 grid-rows-3 grid-cols-1 gap-4'>
+                      <div className='col-span-1'>
+                        <DragnDropInputBox
+                          label={
+                            <span className='text-dark-400'>
+                              Sertifikat Vaksinasi atau Surat Keterangan
+                            </span>
+                          }
+                          id='bukti_vaksin'
+                          accept='image/png, image/jpg, image/jpeg'
+                          helperText='File dalam format jpg, png, atau jpeg maksimal 1 MB'
+                          maxFiles={1}
+                          validation={{
+                            required:
+                              'Sertifikat Vaksinasi atau Surat Keterangan tidak boleh kosong',
+                          }}
+                        />
+                      </div>
+                      <div className='col-span-1'>
+                        <DragnDropInputBox
+                          label={
+                            <span className='text-dark-400'>
+                              Bukti Upload Twibbon Media Sosial.{' '}
+                              <a
+                                href='https://drive.google.com/drive/folders/1MMaohKdSb3EmrSnq8E--Ssk15BX1lhzV'
+                                className='text-nlc hover:text-nlc-300'
+                              >
+                                Twibbon Disini
+                              </a>
+                            </span>
+                          }
+                          id='bukti_twibbon'
+                          accept='image/png, image/jpg, image/jpeg'
+                          helperText='File dalam format jpg, png, atau jpeg maksimal 1 MB'
+                          maxFiles={1}
+                          validation={{
+                            required:
+                              'Bukti Upload Twibbon Media Sosial tidak boleh kosong',
+                          }}
+                        />
+                      </div>
+                      <div className='col-span-1'>
+                        <DragnDropInputBox
+                          label={
+                            <span className='text-dark-400'>
+                              Bukti Upload Poster Instagram Story.{' '}
+                              <a
+                                href='https://drive.google.com/file/d/1GOjom5-0FyyQkd1JNGxJiLjOrYKKxxBD/view?usp=sharing'
+                                className='text-nlc hover:text-nlc-300'
+                              >
+                                Poster Disini
+                              </a>
+                            </span>
+                          }
+                          id='bukti_poster'
+                          accept='image/png, image/jpg, image/jpeg'
+                          helperText='File dalam format jpg, png, atau jpeg maksimal 1 MB'
+                          maxFiles={1}
+                          validation={{
+                            required:
+                              'Bukti Upload Poster Instagram Story tidak boleh kosong',
+                          }}
+                        />
+                      </div>
+                    </div>
+                    <div className='w-full'>
+                      <SubmitButton
+                        className='bg-nlc hover:bg-nlc-300 font-primary'
+                        loading={false}
+                      >
+                        Daftar
+                      </SubmitButton>
+                    </div>
+                  </form>
+                </FormProvider>
               </div>
             </div>
             <div className='w-full md:h-64 h-96 bg-white p-6 mt-8 rounded-xl'>
