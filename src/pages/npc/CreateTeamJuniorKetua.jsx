@@ -128,8 +128,8 @@ export default function CreateTeamJuniorKetua() {
               validation={{
                 required: 'Nama tim tidak boleh kosong',
                 minLength: {
-                  value: 6,
-                  message: 'Panjang nama tim setidaknya 6 karakter',
+                  value: 3,
+                  message: 'Panjang nama tim setidaknya 3 karakter',
                 },
                 maxLength: {
                   value: 32,
