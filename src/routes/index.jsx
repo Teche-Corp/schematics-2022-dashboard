@@ -74,7 +74,9 @@ import ReevaRegister from '@/pages/reeva/ReevaRegister';
 import ReevaTicket from '@/pages/reeva/TicketReeva';
 
 import PublicImage from '@/pages/PublicImage';
-
+import { ForgotPassword } from '@/pages/auth/ForgotPassword';
+import { ResetPassword } from '@/pages/auth/ResetPassword';
+import { SuccessResetPassword } from '@/pages/auth/SuccessResetPassword';
 // import CreateTeamKetua from '@/pages/nlc/CreateTeamKetua';
 
 import VerifikasiNLC from '@/pages/admin/nlc/VerifikasiNLC';
@@ -353,6 +355,30 @@ const routeItems = [
     key: 'getimage',
     path: '/getimage',
     component: PublicImage,
+    visible: true,
+  },
+  {
+    auth: 'user',
+    route: AuthRoute,
+    key: 'forgot_password',
+    path: '/forgot_password',
+    component: ForgotPassword,
+    visible: true,
+  },
+  {
+    auth: 'user',
+    route: AuthRoute,
+    key: 'reset_password',
+    path: '/reset_password',
+    component: ResetPassword,
+    visible: true,
+  },
+  {
+    auth: 'user',
+    route: AuthRoute,
+    key: 'success_reset_password',
+    path: '/success_reset_password',
+    component: SuccessResetPassword,
     visible: true,
   },
   {
