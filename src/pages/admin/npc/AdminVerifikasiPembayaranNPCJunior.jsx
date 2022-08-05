@@ -71,11 +71,46 @@ const tableStyling = {
 };
 
 const AdminVerifikasiPembayaranJunior = () => {
+  // /api/admin_verify_pembayaran terus ini buat apa?
+  const page = 1;
+  const per_page = 10;
+  const url = `/admin_get_list_pembayaran_npc_junior?page=${page}&per_page=${per_page}`;
+  const { data, error } = useSWR(url, {
+    headers: { ...bearerToken() },
+  });
+  if (!data) console.log(error);
+  console.log(`data nya: `, data?.data?.data_per_page);
+
+  const [row, setRow] = useState(undefined);
+
+  useEffect(() => {
+    if (data) {
+      let rowMap = data?.data?.data_per_page?.map((payment) => {
+        return {
+          id: payment?.pembayaran_id,
+          team: {
+            name: {
+              lead_name: payment.nama_ketua,
+              bank: payment.nama_bank,
+              name_team: payment.nama_tim,
+            },
+          },
+          status: payment.status_pembayaran,
+        };
+      });
+      console.log('row map :', rowMap);
+      setRow(rowMap);
+    }
+  }, [data]);
+  if (!data || !row) {
+    return <Loading />;
+  }
+
   return (
     <div style={{ padding: '20px' }}>
       <Table
         columns={column}
-        rows={[]}
+        rows={row}
         per_page={5}
         table_header='Daftar Verifikasi Pembayaran Schematics NPC Junior'
         bulk_select_options={['Save', 'Delete', 'Update']}

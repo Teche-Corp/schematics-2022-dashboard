@@ -65,8 +65,8 @@ import DashboardNLC from '@/pages/nlc/DashboardNLC';
 import DashboardNST from '@/pages/nst/Dashboard';
 import PaymentTeamJunior from '@/pages/npc/PaymentTeamJunior';
 import CreateTeamJuniorKetua from '@/pages/npc/CreateTeamSeniorKetua';
-import AdminPaginationNLC from '@/pages/admin/nlc/AdminPaginationNLC';
-import AdminPaginationNPC from '@/pages/admin/npc/AdminPaginationNPC';
+import AdminVerifikasiPembayaran from '@/pages/admin/nlc/AdminVerifikasiPembayaran';
+import AdminVerifikasiPembayaranSenior from '@/pages/admin/npc/AdminVerifikasiPembayaranNPCSenior';
 import AdminVerifikasiPembayaranJunior from '@/pages/admin/npc/AdminVerifikasiPembayaranNPCJunior';
 import AdminVerifikasiDataNLC from '@/pages/admin/nlc/AdminVerifikasiData';
 import NSTregister from '@/pages/nst/NSTregister';
@@ -335,15 +335,15 @@ const routeItems = [
     route: PrivateRoute,
     key: 'admin-dashboard-nlc',
     path: '/admin/dashboard-nlc',
-    component: AdminPaginationNLC,
+    component: AdminVerifikasiPembayaran,
     visible: true,
   },
   {
     auth: 'all',
     route: PrivateRoute,
     key: 'admin-dashboard-npc',
-    path: '/admin/dashboard-npc',
-    component: AdminPaginationNPC,
+    path: '/admin/dashboard-npc-senior',
+    component: AdminVerifikasiPembayaranSenior,
     visible: true,
   },
   {

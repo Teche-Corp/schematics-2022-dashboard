@@ -791,6 +791,15 @@ const tableStyling = {
 // ];
 
 const AdminVerifikasiDataNLC = () => {
+  const page = 1;
+  const per_page = 10;
+  const url = `/admin_verify_nlc_member?page=${page}&per_page=${per_page}`;
+  const { data, error } = useSWR(url, {
+    headers: { ...bearerToken() },
+  });
+  console.log('datanya :', data?.data?.data_per_page);
+  if (!data) console.log(error);
+
   return (
     <div style={{ padding: '20px' }}>
       <Table
