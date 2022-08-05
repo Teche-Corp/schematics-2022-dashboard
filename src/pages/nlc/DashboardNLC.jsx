@@ -14,8 +14,8 @@ import Error500 from '../error/500';
 
 function DashboardNLC() {
   const history = useHistory();
-  const methods = useForm();
-  const { control, handleSubmit } = methods;
+  // const methods = useForm();
+  // const { control, handleSubmit } = methods;
   const getNlcRegion = (region_id) => {
     const region = NLC_REGION.filter((region) => {
       return region.value.toString() === region_id;
@@ -23,24 +23,24 @@ function DashboardNLC() {
     return region[0].text;
   };
 
-  const handleImageUpload = (data) => {
-    const formData = new FormData();
-    for (let key in data) {
-      formData.append(key, data[key][0]);
-    }
-    toast.promise(
-      axios.post('/upload_nlc_berkas', formData, {
-        headers: { ...bearerToken(), 'Content-Type': 'multipart/form-data' },
-      }),
-      {
-        loading: 'Loading...',
-        success: 'Berhasil mengupload data',
-        error: (err) => {
-          return err.response.data.message;
-        },
-      },
-    );
-  };
+  // const handleImageUpload = (data) => {
+  //   const formData = new FormData();
+  //   for (let key in data) {
+  //     formData.append(key, data[key][0]);
+  //   }
+  //   toast.promise(
+  //     axios.post('/upload_nlc_berkas', formData, {
+  //       headers: { ...bearerToken(), 'Content-Type': 'multipart/form-data' },
+  //     }),
+  //     {
+  //       loading: 'Loading...',
+  //       success: 'Berhasil mengupload data',
+  //       error: (err) => {
+  //         return err.response.data.message;
+  //       },
+  //     },
+  //   );
+  // };
 
   const { data, error } = useSWR('/my_nlc', {
     shouldRetryOnError: false,
@@ -195,7 +195,7 @@ function DashboardNLC() {
                 </a>
               </div>
             </div>
-            <div className='w-full bg-white p-6 mt-8 rounded-xl'>
+            {/* <div className='w-full bg-white p-6 mt-8 rounded-xl'>
               <div className='w-full'>
                 <FormProvider {...methods}>
                   <form onSubmit={handleSubmit(handleImageUpload)}>
@@ -275,7 +275,7 @@ function DashboardNLC() {
                   </form>
                 </FormProvider>
               </div>
-            </div>
+            </div> */}
             <div className='w-full md:h-64 h-96 bg-white p-6 mt-8 rounded-xl'>
               <p className='text-3xl font-bold text-center md:text-left text-nlc'>
                 Pemberitahuan
