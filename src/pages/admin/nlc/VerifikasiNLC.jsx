@@ -6,10 +6,16 @@ import SelectInput from '@/components/SelectInput';
 
 import { NLC_REGION } from '@/lib/constants';
 import DetailAnggota from '@/components/Admin/DetailAnggota';
+import { useEffect } from 'react';
 
 export default function VerifikasiNLC() {
   const methods = useForm();
-  const { data, error } = useSWR('/my_nlc');
+  const { data: nlcData, error: nlcError } = useSWR('/admin_get_nlc_team');
+
+  useEffect(() => {
+    console.log(nlcData);
+  }, [nlcData]);
+
   return (
     <DashboardAdminShell>
       <div className='w-full min-h-screen p-10 bg-dark-100'>
