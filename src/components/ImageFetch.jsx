@@ -8,7 +8,7 @@ export default function ImageFetch({ imgpath, tag, ...rest }) {
 
   const getImageUrl = (url) => {
     const imageFetcher = axios.create({
-      baseURL: 'https://schematics.its.ac.id:8081/api',
+      baseURL: axios.defaults.baseURL,
     });
     imageFetcher
       .get(url, {
