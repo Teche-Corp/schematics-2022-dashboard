@@ -1,4 +1,5 @@
 import InputAdmin from '@/components/Admin/InputAdmin';
+import ImageFetch from '../ImageFetch';
 import axios from 'axios';
 import { FormProvider, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
@@ -38,7 +39,7 @@ export default function DetailAnggota({ detailAnggota, index }) {
         loading: 'Loading...',
         success: (res) => {
           history.push('/admin');
-          return 'Berhasil membuat pembayaran, mohon tunggu verifikasi dari admin';
+          return 'Berhasil merubah setatus verifikasi';
         },
         error: (err) => {
           return err.response.data.message;
@@ -59,7 +60,7 @@ export default function DetailAnggota({ detailAnggota, index }) {
             <h2 className='text-center text-white text-2xl font-primary'>
               {detailAnggota.member_type === 'ketua'
                 ? 'Ketua'
-                : `Anggota ${index + 1}`}
+                : `Anggota ${index}`}
             </h2>
             <InputAdmin
               value={detailAnggota && detailAnggota?.name}
@@ -89,11 +90,9 @@ export default function DetailAnggota({ detailAnggota, index }) {
               id='nisn'
               // validation={{ required: 'NISN tidak boleh kosong' }}
             />
-
-            <ImageLightboxAdmin
-              src={`${process.env.PUBLIC_URL}/images/qris.jpg`}
-              alt='Cek Gambar'
-              label='Scan KT Pelajar / surat keterangan aktif / surat tugas'
+            <ImageFetch
+              imgpath={detailAnggota?.surat_url}
+              tag='Scan KT Pelajar / Surat Keterangan Aktif'
             />
             <InputAdmin
               value={detailAnggota.no_telp}
@@ -131,16 +130,16 @@ export default function DetailAnggota({ detailAnggota, index }) {
               id='address'
               // validation={{ required: 'Alamat tidak boleh kosong' }}
             />
-            <ImageLightboxAdmin
-              src={`${process.env.PUBLIC_URL}/images/error-icon.png`}
-              alt='Cek Gambar'
-              label='Bukti Up Twibbon'
+            {/* Butki Upload Twibbon */}
+            <ImageFetch
+              imgpath={detailAnggota?.bukti_twibbon_url}
+              tag='Bukti Upload Twibbon'
             />
-            <ImageLightboxAdmin
-              src={`${process.env.PUBLIC_URL}/images/qris.jpg`}
-              alt='Cek Gambar'
-              label='Sg Poster'
+            <ImageFetch
+              imgpath={detailAnggota?.bukti_twibbon_url}
+              tag='Bukti Upload Poster'
             />
+
             <InputAdmin
               value='Pefizer'
               type='text'
@@ -150,10 +149,9 @@ export default function DetailAnggota({ detailAnggota, index }) {
               id='jenis-vaksin'
               // validation={{ required: 'Jenis vaksin tidak boleh kosong' }}
             />
-            <ImageLightboxAdmin
-              src={`${process.env.PUBLIC_URL}/images/qris.jpg`}
-              alt='Cek Gambar'
-              label='Bukti Vaksin'
+            <ImageFetch
+              imgpath={detailAnggota?.bukti_twibbon_url}
+              tag='Bukti Vaksin'
             />
             <ValidasiAdmin
               options={validationList}

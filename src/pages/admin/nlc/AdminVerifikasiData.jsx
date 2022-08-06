@@ -112,9 +112,12 @@ export default function AdminVerifikasiData() {
           </form>
         </FormProvider>
         <div>
-          {nlcData?.data?.members.map((data, index) => (
-            <DetailAnggota detailAnggota={data} index={index} key={index} />
-          ))}
+          {nlcData?.data?.members
+            .slice(0)
+            .reverse()
+            .map((data, index) => (
+              <DetailAnggota detailAnggota={data} index={index} key={index} />
+            ))}
         </div>
         {/* <Input disabled={true} label='Nama' /> */}
       </div>
