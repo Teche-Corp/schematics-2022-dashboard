@@ -1,828 +1,123 @@
-import React, { useState, useEffect } from 'react';
-import Table, { Irow } from 'react-tailwind-table';
-import { toast } from 'react-hot-toast';
-import { bearerToken, defaultToastMessage } from '@/lib/helper';
+import DashboardAdminShell from '@/layout/DashboardAdminShell';
+import InputAdmin from '@/components/Admin/InputAdmin';
+import { FormProvider, useForm } from 'react-hook-form';
 import useSWR from 'swr';
+import SelectInput from '@/components/SelectInput';
+
+import { NLC_REGION } from '@/lib/constants';
+import DetailAnggota from '@/components/Admin/DetailAnggota';
+import { useEffect } from 'react';
+import axios from 'axios';
+import { bearerToken } from '@/lib/helper';
 import Loading from '@/components/Loading';
+import { useParams } from 'react-router-dom';
 
-const column = [
-  {
-    field: 'front_end_position.name.full_name',
-    use: 'Nama Tim',
-    //Will not be used in search filtering
-    //  use_in_search:false
-  },
-  {
-    field: 'name',
-    use: 'Nama Ketua',
-  },
-  {
-    field: 'country_id',
-    use: 'Status Tim',
-
-    //Will not be displayed in the table
-  },
-];
-
-const tableStyling = {
-  base_bg_color: 'bg-nlc',
-  base_text_color: 'text-green-600',
-  top: {
-    // title:"text-red-700"
-    elements: {
-      // main: "bg-green-700",
-      // search: "text-white",
-      bulk_select: {
-        // main:"bg-green-700 text-white",
-        // button:"bg-yellow-700 text-black px-5 "
-      },
-      // export:"text-yellow-800"
+export default function VerifikasiNLC() {
+  const methods = useForm();
+  let { id } = useParams();
+  const { handleSubmit } = methods;
+  const { data: nlcData, error: nlcError } = useSWR(
+    [`/admin_get_nlc_team?team_id=${id}`],
+    {
+      shouldRetryOnError: false,
+      errorRetryInterval: 0,
     },
-  },
-  table_head: {
-    table_row: 'bg-nlc text-white',
-    table_data: 'text-white',
-  },
-  table_body: {
-    // main:"bg-red-600",
-    // table_row:"text-yellow-900",
-    // table_data: "text-base"
-  },
-  footer: {
-    // main: "bg-yellow-700",
-    statistics: {
-      // main: "bg-white text-green-900",
-      // bold_numbers:"text-yellow-800 font-thin"
-    },
-    // page_numbers:"bg-red-600 text-white"
-  },
-};
+  );
 
-// const row = [
-//   {
-//         id: 1,
-//         name: "Miracle Nwabueze",
-//         country_id: 3,
-//         club_id: 2,
-//         front_end_position:{
-//           name:{
-//             full_name:"Forward",
-//             short_code:"FW"
-//           },
-//           id:2
-//         }
-//   },
-//   {
-//         id: 3,
-//         name: "Virgil an VanDijk",
-//         country_id: 30,
-//         club_id: 2,
-//         front_end_position:{
-//           name:{
-//             full_name:"Defence",
-//             short_code:"DF"
-//           },
-//           id:2
-//         }
-//   },{
-//         id: 1,
-//         name: "Sadio Mane",
-//         country_id: 3,
-//         club_id: 2,
-//         front_end_position:{
-//           name:{
-//             full_name:"Forward",
-//             short_code:"FW"
-//           },
-//           id:2
-//         }
-//   },
-//   {
-//         id: 3,
-//         name: "Virgil VanDijk",
-//         country_id: 30,
-//         club_id: 2,
-//         front_end_position:{
-//           name:{
-//             full_name:"Defence",
-//             short_code:"DF"
-//           },
-//           id:2
-//         }
-//   },{
-//         id: 1,
-//         name: "Xherdan Shaqiri",
-//         country_id: 3,
-//         club_id: 2,
-//         front_end_position:{
-//           name:{
-//             full_name:"Forward",
-//             short_code:"FW"
-//           },
-//           id:2
-//         }
-//   },
-//   {
-//         id: 3,
-//         name:"Gini WjNadumn",
-//         country_id: 30,
-//         club_id: 2,
-//         front_end_position:{
-//           name:{
-//             full_name:"Defence",
-//             short_code:"DF"
-//           },
-//           id:2
-//         }
-//   },{
-//         id: 1,
-//         name: "Sadio Mane",
-//         country_id: 3,
-//         club_id: 2,
-//         front_end_position:{
-//           name:{
-//             full_name:"Forward",
-//             short_code:"FW"
-//           },
-//           id:2
-//         }
-//   },
-//   {
-//         id: 3,
-//         name: "Oluebube Odogwu",
-//         country_id: 30,
-//         club_id: 2,
-//         front_end_position:{
-//           name:{
-//             full_name:"Defence",
-//             short_code:"DF"
-//           },
-//           id:2
-//         }
-//   },{
-//         id: 1,
-//         name: "Sadio Mane",
-//         country_id: 3,
-//         club_id: 2,
-//         front_end_position:{
-//           name:{
-//             full_name:"Forward",
-//             short_code:"FW"
-//           },
-//           id:2
-//         }
-//   },
-//   {
-//         id: 3,
-//         name: "Virgil VanDijk",
-//         country_id: 30,
-//         club_id: 2,
-//         front_end_position:{
-//           name:{
-//             full_name:"Defence",
-//             short_code:"DF"
-//           },
-//           id:2
-//         }
-//   },{
-//         id: 1,
-//         name: "Sadio Mane",
-//         country_id: 3,
-//         club_id: 2,
-//         front_end_position:{
-//           name:{
-//             full_name:"Forward",
-//             short_code:"FW"
-//           },
-//           id:2
-//         }
-//   },
-//   {
-//         id: 3,
-//         name: "Virgil VanDijk",
-//         country_id: 30,
-//         club_id: 2,
-//         front_end_position:{
-//           name:{
-//             full_name:"Defence",
-//             short_code:"DF"
-//           },
-//           id:2
-//         }
-//   },{
-//         id: 1,
-//         name: "Sadio Mane",
-//         country_id: 3,
-//         club_id: 2,
-//         front_end_position:{
-//           name:{
-//             full_name:"Forward",
-//             short_code:"FW"
-//           },
-//           id:2
-//         }
-//   },
-//   {
-//         id: 3,
-//         name: "Virgil VanDijk",
-//         country_id: 30,
-//         club_id: 2,
-//         front_end_position:{
-//           name:{
-//             full_name:"Defence",
-//             short_code:"DF"
-//           },
-//           id:2
-//         }
-//   },{
-//         id: 1,
-//         name: "Sadio Mane",
-//         country_id: 3,
-//         club_id: 2,
-//         front_end_position:{
-//           name:{
-//             full_name:"Forward",
-//             short_code:"FW"
-//           },
-//           id:2
-//         }
-//   },
-//   {
-//         id: 3,
-//         name: "Virgil VanDijk",
-//         country_id: 30,
-//         club_id: 2,
-//         front_end_position:{
-//           name:{
-//             full_name:"Defence",
-//             short_code:"DF"
-//           },
-//           id:2
-//         }
-//   },{
-//         id: 1,
-//         name: "Sadio Mane",
-//         country_id: 3,
-//         club_id: 2,
-//         front_end_position:{
-//           name:{
-//             full_name:"Forward",
-//             short_code:"FW"
-//           },
-//           id:2
-//         }
-//   },
-//   {
-//         id: 3,
-//         name: "Virgil VanDijk",
-//         country_id: 30,
-//         club_id: 2,
-//         front_end_position:{
-//           name:{
-//             full_name:"Defence",
-//             short_code:"DF"
-//           },
-//           id:2
-//         }
-//   },{
-//         id: 1,
-//         name: "Sadio Mane",
-//         country_id: 3,
-//         club_id: 2,
-//         front_end_position:{
-//           name:{
-//             full_name:"Forward",
-//             short_code:"FW"
-//           },
-//           id:2
-//         }
-//   },
-//   {
-//         id: 3,
-//         name: "Virgil VanDijk",
-//         country_id: 30,
-//         club_id: 2,
-//         front_end_position:{
-//           name:{
-//             full_name:"Defence",
-//             short_code:"DF"
-//           },
-//           id:2
-//         }
-//   },
-//   {
-//         id: 1,
-//         name: "Minamino Sale",
-//         country_id: 3,
-//         club_id: 2,
-//         front_end_position:{
-//           name:{
-//             full_name:"Forward",
-//             short_code:"FW"
-//           },
-//           id:2
-//         }
-//   },
-//   {
-//         id: 3,
-//         name: "Thiago Silva",
-//         country_id: 30,
-//         club_id: 2,
-//         front_end_position:{
-//           name:{
-//             full_name:"Mid Fielder",
-//             short_code:"MF"
-//           },
-//           id:2
-//         }
-//   },{
-//         id: 1,
-//         name: "Xherdan Shaqiri",
-//         country_id: 3,
-//         club_id: 2,
-//         front_end_position:{
-//           name:{
-//             full_name:"Forward",
-//             short_code:"FW"
-//           },
-//           id:2
-//         }
-//   },
-//   {
-//         id: 3,
-//         name:"Gini WjNadumn",
-//         country_id: 30,
-//         club_id: 2,
-//         front_end_position:{
-//           name:{
-//             full_name:"Defence",
-//             short_code:"DF"
-//           },
-//           id:2
-//         }
-//   },{
-//         id: 1,
-//         name: "Sadio Mane",
-//         country_id: 3,
-//         club_id: 2,
-//         front_end_position:{
-//           name:{
-//             full_name:"Forward",
-//             short_code:"FW"
-//           },
-//           id:2
-//         }
-//   },
-//   {
-//         id: 3,
-//         name: "Virgil VanDijk",
-//         country_id: 30,
-//         club_id: 2,
-//         front_end_position:{
-//           name:{
-//             full_name:"Defence",
-//             short_code:"DF"
-//           },
-//           id:2
-//         }
-//   },{
-//         id: 1,
-//         name: "Sadio Mane",
-//         country_id: 3,
-//         club_id: 2,
-//         front_end_position:{
-//           name:{
-//             full_name:"Forward",
-//             short_code:"FW"
-//           },
-//           id:2
-//         }
-//   },
-//   {
-//         id: 3,
-//         name: "Virgil VanDijk",
-//         country_id: 30,
-//         club_id: 2,
-//         front_end_position:{
-//           name:{
-//             full_name:"Defence",
-//             short_code:"DF"
-//           },
-//           id:2
-//         }
-//   },{
-//         id: 1,
-//         name: "Sadio Mane",
-//         country_id: 3,
-//         club_id: 2,
-//         front_end_position:{
-//           name:{
-//             full_name:"Forward",
-//             short_code:"FW"
-//           },
-//           id:2
-//         }
-//   },
-//   {
-//         id: 3,
-//         name: "Virgil VanDijk",
-//         country_id: 30,
-//         club_id: 2,
-//         front_end_position:{
-//           name:{
-//             full_name:"Defence",
-//             short_code:"DF"
-//           },
-//           id:2
-//         }
-//   },{
-//         id: 1,
-//         name: "Sadio Mane",
-//         country_id: 3,
-//         club_id: 2,
-//         front_end_position:{
-//           name:{
-//             full_name:"Forward",
-//             short_code:"FW"
-//           },
-//           id:2
-//         }
-//   },
-//   {
-//         id: 3,
-//         name: "Virgil VanDijk",
-//         country_id: 30,
-//         club_id: 2,
-//         front_end_position:{
-//           name:{
-//             full_name:"Defence",
-//             short_code:"DF"
-//           },
-//           id:2
-//         }
-//   },{
-//         id: 1,
-//         name: "Sadio Mane",
-//         country_id: 3,
-//         club_id: 2,
-//         front_end_position:{
-//           name:{
-//             full_name:"Forward",
-//             short_code:"FW"
-//           },
-//           id:2
-//         }
-//   },
-//   {
-//         id: 3,
-//         name: "Virgil VanDijk",
-//         country_id: 30,
-//         club_id: 2,
-//         front_end_position:{
-//           name:{
-//             full_name:"Defence",
-//             short_code:"DF"
-//           },
-//           id:2
-//         }
-//   },{
-//         id: 1,
-//         name: "Sadio Mane",
-//         country_id: 3,
-//         club_id: 2,
-//         front_end_position:{
-//           name:{
-//             full_name:"Forward",
-//             short_code:"FW"
-//           },
-//           id:2
-//         }
-//   },
-//   {
-//         id: 3,
-//         name: "Virgil VanDijk",
-//         country_id: 30,
-//         club_id: 2,
-//         front_end_position:{
-//           name:{
-//             full_name:"Defence",
-//             short_code:"DF"
-//           },
-//           id:2
-//         }
-//   },{
-//         id: 1,
-//         name: "Sadio Mane",
-//         country_id: 3,
-//         club_id: 2,
-//         front_end_position:{
-//           name:{
-//             full_name:"Forward",
-//             short_code:"FW"
-//           },
-//           id:2
-//         }
-//   },
-//   {
-//         id: 3,
-//         name: "Virgil VanDijk",
-//         country_id: 30,
-//         club_id: 2,
-//         front_end_position:{
-//           name:{
-//             full_name:"Defence",
-//             short_code:"DF"
-//           },
-//           id:2
-//         }
-//   },
-//   {
-//         id: 1,
-//         name: "Minamino Sale",
-//         country_id: 3,
-//         club_id: 2,
-//         front_end_position:{
-//           name:{
-//             full_name:"Forward",
-//             short_code:"FW"
-//           },
-//           id:2
-//         }
-//   },
-//   {
-//         id: 3,
-//         name: "Thiago Silva",
-//         country_id: 30,
-//         club_id: 2,
-//         front_end_position:{
-//           name:{
-//             full_name:"Mid Fielder",
-//             short_code:"MF"
-//           },
-//           id:2
-//         }
-//   },{
-//         id: 1,
-//         name: "Xherdan Shaqiri",
-//         country_id: 3,
-//         club_id: 2,
-//         front_end_position:{
-//           name:{
-//             full_name:"Forward",
-//             short_code:"FW"
-//           },
-//           id:2
-//         }
-//   },
-//   {
-//         id: 3,
-//         name:"Gini WjNadumn",
-//         country_id: 30,
-//         club_id: 2,
-//         front_end_position:{
-//           name:{
-//             full_name:"Defence",
-//             short_code:"DF"
-//           },
-//           id:2
-//         }
-//   },{
-//         id: 1,
-//         name: "Sadio Mane",
-//         country_id: 3,
-//         club_id: 2,
-//         front_end_position:{
-//           name:{
-//             full_name:"Forward",
-//             short_code:"FW"
-//           },
-//           id:2
-//         }
-//   },
-//   {
-//         id: 3,
-//         name: "Virgil VanDijk",
-//         country_id: 30,
-//         club_id: 2,
-//         front_end_position:{
-//           name:{
-//             full_name:"Defence",
-//             short_code:"DF"
-//           },
-//           id:2
-//         }
-//   },{
-//         id: 1,
-//         name: "Sadio Mane",
-//         country_id: 3,
-//         club_id: 2,
-//         front_end_position:{
-//           name:{
-//             full_name:"Forward",
-//             short_code:"FW"
-//           },
-//           id:2
-//         }
-//   },
-//   {
-//         id: 3,
-//         name: "Virgil VanDijk",
-//         country_id: 30,
-//         club_id: 2,
-//         front_end_position:{
-//           name:{
-//             full_name:"Defence",
-//             short_code:"DF"
-//           },
-//           id:2
-//         }
-//   },{
-//         id: 1,
-//         name: "Sadio Mane",
-//         country_id: 3,
-//         club_id: 2,
-//         front_end_position:{
-//           name:{
-//             full_name:"Forward",
-//             short_code:"FW"
-//           },
-//           id:2
-//         }
-//   },
-//   {
-//         id: 3,
-//         name: "Virgil VanDijk",
-//         country_id: 30,
-//         club_id: 2,
-//         front_end_position:{
-//           name:{
-//             full_name:"Defence",
-//             short_code:"DF"
-//           },
-//           id:2
-//         }
-//   },{
-//         id: 1,
-//         name: "Sadio Mane",
-//         country_id: 3,
-//         club_id: 2,
-//         front_end_position:{
-//           name:{
-//             full_name:"Forward",
-//             short_code:"FW"
-//           },
-//           id:2
-//         }
-//   },
-//   {
-//         id: 3,
-//         name: "Virgil VanDijk",
-//         country_id: 30,
-//         club_id: 2,
-//         front_end_position:{
-//           name:{
-//             full_name:"Defence",
-//             short_code:"DF"
-//           },
-//           id:2
-//         }
-//   },{
-//         id: 1,
-//         name: "Sadio Mane",
-//         country_id: 3,
-//         club_id: 2,
-//         front_end_position:{
-//           name:{
-//             full_name:"Forward",
-//             short_code:"FW"
-//           },
-//           id:2
-//         }
-//   },
-//   {
-//         id: 3,
-//         name: "Virgil VanDijk",
-//         country_id: 30,
-//         club_id: 2,
-//         front_end_position:{
-//           name:{
-//             full_name:"Defence",
-//             short_code:"DF"
-//           },
-//           id:2
-//         }
-//   },{
-//         id: 1,
-//         name: "Sadio Mane",
-//         country_id: 3,
-//         club_id: 2,
-//         front_end_position:{
-//           name:{
-//             full_name:"Forward",
-//             short_code:"FW"
-//           },
-//           id:2
-//         }
-//   },
-//   {
-//         id: 3,
-//         name: "Virgil VanDijk",
-//         country_id: 30,
-//         club_id: 2,
-//         front_end_position:{
-//           name:{
-//             full_name:"Defence",
-//             short_code:"DF"
-//           },
-//           id:2
-//         }
-//   },{
-//         id: 1,
-//         name: "Sadio Mane",
-//         country_id: 3,
-//         club_id: 2,
-//         front_end_position:{
-//           name:{
-//             full_name:"Forward",
-//             short_code:"FW"
-//           },
-//           id:2
-//         }
-//   },
-//   {
-//         id: 3,
-//         name: "Virgil VanDijk",
-//         country_id: 30,
-//         club_id: 2,
-//         front_end_position:{
-//           name:{
-//             full_name:"Defence",
-//             short_code:"DF"
-//           },
-//           id:2
-//         }
-//   },
-//   {
-//         id: 1,
-//         name: "Minamino Sale",
-//         country_id: 3,
-//         club_id: 2,
-//         front_end_position:{
-//           name:{
-//             full_name:"Forward",
-//             short_code:"FW"
-//           },
-//           id:2
-//         }
-//   },
-//   {
-//         id: 3,
-//         name: "Thiago Silva",
-//         country_id: 30,
-//         club_id: 2,
-//         front_end_position:{
-//           name:{
-//             full_name:"Mid Fielder",
-//             short_code:"MF"
-//           },
-//           id:2
-//         }
-//   }
-// ];
+  // useEffect(() => {
+  //   console.log(nlcData);
+  // }, [nlcData]);
 
-const AdminVerifikasiDataNLC = () => {
-  const page = 1;
-  const per_page = 10;
-  const url = `/admin_verify_nlc_member?page=${page}&per_page=${per_page}`;
-  const { data, error } = useSWR(url, {
-    headers: { ...bearerToken() },
-  });
-  console.log('datanya :', data?.data?.data_per_page);
-  if (!data) console.log(error);
+  if (!nlcData) {
+    return <Loading />;
+  }
+  const updateTim = (data) => {
+    console.log(data);
+  };
 
   return (
-    <div style={{ padding: '20px' }}>
-      <Table
-        columns={column}
-        rows={[]}
-        per_page={5}
-        table_header='Daftar Verifikasi Data Schematics NLC'
-        bulk_select_options={['Save', 'Delete', 'Update']}
-        // export_csv_file = "FuckThisShit"
-        // on_bulk_action={tableBulkClick}
-        // should_export={true}
-        // on_search={onSearch}
-        show_search={true}
-        // export_modify={exportModify}
-        striped={true}
-        bordered={true}
-        hovered={true}
-        styling={tableStyling}
-        // row_render={this.rowcheck}
-        // bulk_select_button_text="Apply"
-      ></Table>
-    </div>
+    <DashboardAdminShell>
+      <div className='w-full min-h-screen p-10 bg-dark-100'>
+        {/* Judul */}
+        <h1 className='text-center font-primary text-5xl text-white'>
+          Verifikasi Pendaftaran NLC
+        </h1>
+        <FormProvider {...methods}>
+          <form
+            className='flex justify-center'
+            onSubmit={handleSubmit(updateTim)}
+          >
+            <div className='w-1/2 '>
+              <h2 className='font-primary text-2xl text-white mb-2 text-center mt-10'>
+                Detail TIM
+              </h2>
+              <InputAdmin
+                value={nlcData.data.nama_team}
+                type='text'
+                placeholder='Nama Tim'
+                disabled={true}
+                label='Nama Tim'
+                id='nama-tim'
+                validation={{ required: 'Nama Tim tidak boleh kosong' }}
+              />
+              <InputAdmin
+                value={nlcData.data.asal_sekolah}
+                type='text'
+                placeholder='Asal Sekolah'
+                disabled={true}
+                label='Asal Sekolah'
+                id='nama-sekolah'
+                validation={{ required: 'Email tidak boleh kosong' }}
+              />
+              <SelectInput
+                value={nlcData.data.region}
+                label='Pilihan Region'
+                options={NLC_REGION}
+                disabled={true}
+                id='region'
+              />
+              <InputAdmin
+                value={nlcData.data.kota}
+                type='text'
+                placeholder='Kabupaten / Kota'
+                disabled={true}
+                label='Kabupaten / Kota'
+                id='kabupaten-kota'
+                validation={{ required: 'Kabupaten / Kota tidak boleh kosong' }}
+              />
+              <InputAdmin
+                value={nlcData.data.nama_guru_pendamping}
+                type='text'
+                placeholder='Guru Pendamping (GP)'
+                disabled={true}
+                label='Guru Pendamping (GP)'
+                id='guru-pendamping'
+                validation={{ required: 'Guru pendamping tidak boleh kosong' }}
+              />
+              <InputAdmin
+                value={nlcData.data.no_telp_guru_pendamping}
+                type='text'
+                placeholder='Nomor telpon guru pendamping (GP)'
+                disabled={true}
+                label='Nomor telpon guru pendamping (GP)'
+                id='no-hp-gp'
+                validation={{ required: 'Nomor telpon tidak boleh kosong' }}
+              />
+            </div>
+          </form>
+        </FormProvider>
+        <div>
+          {nlcData.data.members.map((data, index) => (
+            <DetailAnggota
+              detailAnggota={data}
+              index={index}
+              key={index}
+              team_id={id}
+            />
+          ))}
+        </div>
+        {/* <Input disabled={true} label='Nama' /> */}
+      </div>
+    </DashboardAdminShell>
   );
-};
-
-export default AdminVerifikasiDataNLC;
+}
