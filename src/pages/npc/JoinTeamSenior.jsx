@@ -110,15 +110,10 @@ export default function JoinTeamSenior() {
               }}
             />
             <Input
-              label={'NISN'}
+              label={'Nomor Induk Mahasiswa'}
               id='nisn'
               validation={{
-                required: 'NISN tidak boleh kosong',
-                pattern: {
-                  value: /^[0-9]{10}$/,
-                  message:
-                    'NISN Harus berupa angka dan memiliki panjang 10 karakter',
-                },
+                required: 'Nomor Induk Mahasiswa tidak boleh kosong',
               }}
             />
             <Input
@@ -150,14 +145,10 @@ export default function JoinTeamSenior() {
               }}
             />
             <Input
-              label={'ID Line'}
+              label={'ID Line (opsional)'}
               id='id_line'
               validation={{
-                required: 'ID Line tidak boleh kosong',
-                maxLength: {
-                  value: 128,
-                  message: 'Id Line maksimal memiliki 128 karakter',
-                },
+                required: false,
               }}
             />
             <Input

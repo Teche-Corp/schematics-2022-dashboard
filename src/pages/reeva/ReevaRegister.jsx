@@ -14,7 +14,7 @@ import useSWR from 'swr';
 import Loading from '@/components/Loading';
 import Error500 from '../error/500';
 
-function NSTcard({ count }) {
+function ReevaCard({ count }) {
   return (
     <>
       <hr className={count === 0 ? 'hidden' : 'w-full bg-white'} />
@@ -50,7 +50,19 @@ function NSTcard({ count }) {
         }}
       />
       <Input
-        label='Nomor Telepon'
+        label='NIK'
+        id={'nik-' + count}
+        validation={{
+          required: 'NIK tidak boleh kosong',
+          pattern: {
+            value: /^[0-9]{16}$/,
+            message:
+              'NIK harus berupa karakter dan memiliki panjang 16 karakter',
+          },
+        }}
+      />
+      <Input
+        label='Nomor Telepon atau Whatsapp'
         id={'no_telp-' + count}
         placeholder='+6285123456'
         validation={{
@@ -62,14 +74,15 @@ function NSTcard({ count }) {
           },
         }}
       />
+
       <Input
-        label={'Alamat Domisili'}
+        label={'Alamat Tempat Tinggal'}
         id={'alamat-' + count}
         validation={{
-          required: 'Alamat domisili tidak boleh kosong',
+          required: 'Alamat tempat tinggal tidak boleh kosong',
           minLength: {
             value: 16,
-            message: 'Alamat domisili setidaknya memiliki 16 karakter',
+            message: 'Alamat tempat tinggal setidaknya memiliki 16 karakter',
           },
           maxLength: {
             value: 128,
@@ -89,44 +102,21 @@ function NSTcard({ count }) {
         />
       )}
 
-      {/*  */}
-      <SelectInput2
-        defaultValue={null}
-        label='Jenis Vaksinasi COVID-19'
-        options={VACCINE_TYPE}
-        validation={{
-          required: 'Jenis vaksinasi COVID-19 tidak boleh kosong',
-        }}
-        placeholder='Pilih jenis vaksinasi anda'
-        id={'tipe_vaksin-' + count}
-      />
-      <hr className='w-full bg-white' />
-      <DragnDropInput
-        label='Sertifikat Vaksinasi atau Surat Keterangan'
-        id={'bukti_vaksin-' + count}
-        accept='image/png, image/jpg, image/jpeg'
-        helperText='File dalam format jpg, png, atau jpeg'
-        maxFiles={1}
-        validation={{
-          required:
-            'Sertifikat Vaksinasi atau Surat Keterangan tidak boleh kosong',
-        }}
-      />
       <br />
     </>
   );
 }
 
-export default function NSTregister() {
+export default function ReevaRegister() {
   const methods = useForm();
   const { control, handleSubmit } = methods;
-  const [cardAdd, setCardAdd] = useState([<NSTcard key={0} count={0} />]);
+  const [cardAdd, setCardAdd] = useState([<ReevaCard key={0} count={0} />]);
   const history = useHistory();
   const { user } = useAuthState();
 
   function addCard() {
     setCardAdd((prev) =>
-      prev.concat([<NSTcard key={prev.length} count={prev.length} />]),
+      prev.concat([<ReevaCard key={prev.length} count={prev.length} />]),
     );
   }
 
@@ -137,7 +127,7 @@ export default function NSTregister() {
     );
   }
 
-  const handleNSTRegister = async (data) => {
+  const handleReevaRegister = async (data) => {
     const formData = new FormData();
 
     for (let key in data) {
@@ -148,26 +138,23 @@ export default function NSTregister() {
         id === 'info_sch' ||
         index === undefined ||
         data[key] === '' ||
-        data[key] === undefined ||
-        data[key][0] === undefined
+        data[key] === undefined
       )
         continue;
-      if (['bukti_vaksin-' + index].includes(key)) {
-        formData.append(`ticket_orders[${index}][${id}]`, data?.[key][0]);
-      } else {
-        formData.append(`ticket_orders[${index}][${id}]`, data?.[key]);
-      }
+      console.log(key);
+
+      formData.append(`ticket_orders[${index}][${id}]`, data?.[key]);
     }
     formData.append('info_sch', data['info_sch']);
 
     toast.promise(
-      axios.post('/order_nst_ticket', formData, {
+      axios.post('/order_reeva_ticket', formData, {
         headers: { ...bearerToken(), 'Content-Type': 'multipart/form-data' },
       }),
       {
         loading: 'Loading...',
         success: (res) => {
-          history.push('/nst/payment');
+          history.push('/reeva/payment');
           return 'Berhasil membeli tiket';
         },
         error: (err) => {
@@ -177,30 +164,30 @@ export default function NSTregister() {
     );
   };
 
-  const { data: nstOrder, error } = useSWR('/my_nst', {
+  const { data: reevaOrder, error } = useSWR('/my_reeva', {
     shouldRetryOnError: false,
     errorRetryInterval: 0,
   });
 
   useEffect(() => {
-    if (nstOrder) {
-      // if (
-      //   nstOrder.data.status === 'awaiting_payment' ||
-      //   nstOrder.data.status === 'need_revision'
-      // ) {
-      //   history.push(`/nst/payment`);
-      // }
-      // if (
-      //   nstOrder.data.status === 'active' ||
-      //   nstOrder.data.status === 'awaiting_verification'
-      // ) {
-      //   history.push('/nst');
-      // }
+    if (reevaOrder) {
+      if (
+        reevaOrder.data.status === 'awaiting_payment' ||
+        reevaOrder.data.status === 'need_revision'
+      ) {
+        history.push(`/reeva/payment`);
+      }
+      if (
+        reevaOrder.data.status === 'active' ||
+        reevaOrder.data.status === 'awaiting_verification'
+      ) {
+        history.push('/reeva');
+      }
     }
-  }, [nstOrder, history]);
+  }, [reevaOrder, history]);
 
   if (error && error.response.status !== 404) return <Error500 />;
-  if (!nstOrder && !error) return <Loading />;
+  if (!reevaOrder && !error) return <Loading />;
 
   return (
     <div className='w-full bg-black'>
@@ -211,13 +198,13 @@ export default function NSTregister() {
         <FormProvider {...methods}>
           {/* Loop  */}
           <form
-            onSubmit={handleSubmit(handleNSTRegister)}
+            onSubmit={handleSubmit(handleReevaRegister)}
             className='space-y-4 mt-16'
           >
-            {/* <NSTcard count={count}/> */}
+            {/* <ReevaCard count={count}/> */}
 
             {cardAdd}
-            {cardAdd.length < 5 && (
+            {cardAdd.length < 10 && (
               <>
                 <button
                   className='text-neutral-400 bg-white px-4 py-2 mr-4 rounded-md font-primary text-center'
@@ -237,7 +224,7 @@ export default function NSTregister() {
                 )}
               </>
             )}
-            {cardAdd.length == 5 && (
+            {cardAdd.length == 10 && (
               <button
                 className='text-neutral-400 bg-white px-4 py-2 rounded-md font-primary text-center'
                 onClick={removeCard}
@@ -248,7 +235,7 @@ export default function NSTregister() {
             )}
             <div>
               <SubmitButton
-                className='mt-8 bg-nst-400 font-primary'
+                className='mt-8 bg-reeva font-primary text-white'
                 loading={false}
               >
                 Daftar
