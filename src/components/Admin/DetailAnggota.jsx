@@ -1,33 +1,51 @@
 import InputAdmin from '@/components/Admin/InputAdmin';
+import ImageFetch from '../ImageFetch';
 import axios from 'axios';
 import { FormProvider, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import DragnDropInput from '../DragnDropInput';
-import SelectInput from '../SelectInput';
-import SubmitButton from '../SubmitButton';
-import ImageLightboxAdmin from './ImageLightboxAdmin';
+import { bearerToken } from '@/lib/helper';
+import { useHistory } from 'react-router-dom';
+import ImageLightboxAdmin from '@/components/Admin/ImageLightboxAdmin';
 import ValidasiAdmin from './ValidasiAdmin';
+
 const validationList = [
   {
-    value: 'validasi',
+    value: 'active',
     text: 'Validasi',
   },
   {
-    value: 'tolak-validasi',
+    value: 'need_revision',
     text: 'Tolak Validasi',
   },
 ];
 
-export default function DetailAnggota({ detailAnggota, index, team_id }) {
+export default function DetailAnggota({ detailAnggota, index }) {
   const methods = useForm();
-  const { control, handleSubmit } = methods;
+  const { handleSubmit } = methods;
+  const history = useHistory();
 
   // console.log(detailAnggota);
 
   const verifikasiAnggota = (data) => {
     const formData = new FormData();
-    formData.apeend('validasi', data.validasi);
-    formData.append('member_id', team_id);
+    formData.append('member_id', detailAnggota.member_id);
+    formData.append('new_status', data.validasi);
+
+    toast.promise(
+      axios.post('/admin_verify_nlc_member', formData, {
+        headers: { ...bearerToken(), 'Content-Type': 'multipart/form-data' },
+      }),
+      {
+        loading: 'Loading...',
+        success: (res) => {
+          history.push('/admin');
+          return 'Berhasil merubah setatus verifikasi';
+        },
+        error: (err) => {
+          return err.response.data.message;
+        },
+      },
+    );
   };
 
   return (
@@ -40,12 +58,14 @@ export default function DetailAnggota({ detailAnggota, index, team_id }) {
         >
           <div className='w-1/2'>
             <h2 className='text-center text-white text-2xl font-primary'>
-              Anggota {index + 1}
+              {detailAnggota.member_type === 'ketua'
+                ? 'Ketua'
+                : `Anggota ${index}`}
             </h2>
             <InputAdmin
               value={detailAnggota && detailAnggota?.name}
               type='text'
-              placeholder='Nama '
+              placeholder='Nama'
               disabled={true}
               label='Nama'
               id='nama'
@@ -70,11 +90,9 @@ export default function DetailAnggota({ detailAnggota, index, team_id }) {
               id='nisn'
               // validation={{ required: 'NISN tidak boleh kosong' }}
             />
-
-            <ImageLightboxAdmin
-              src={`${process.env.PUBLIC_URL}/images/qris.jpg`}
-              alt='Cek Gambar'
-              label='Scan KT Pelajar / surat keterangan aktif / surat tugas'
+            <ImageFetch
+              imgpath={detailAnggota?.surat_url}
+              tag='Scan KT Pelajar / Surat Keterangan Aktif'
             />
             <InputAdmin
               value={detailAnggota.no_telp}
@@ -112,16 +130,16 @@ export default function DetailAnggota({ detailAnggota, index, team_id }) {
               id='address'
               // validation={{ required: 'Alamat tidak boleh kosong' }}
             />
-            <ImageLightboxAdmin
-              src={`${process.env.PUBLIC_URL}/images/error-icon.png`}
-              alt='Cek Gambar'
-              label='Bukti Up Twibbon'
+            {/* Butki Upload Twibbon */}
+            <ImageFetch
+              imgpath={detailAnggota?.bukti_twibbon_url}
+              tag='Bukti Upload Twibbon'
             />
-            <ImageLightboxAdmin
-              src={`${process.env.PUBLIC_URL}/images/qris.jpg`}
-              alt='Cek Gambar'
-              label='Sg Poster'
+            <ImageFetch
+              imgpath={detailAnggota?.bukti_twibbon_url}
+              tag='Bukti Upload Poster'
             />
+
             <InputAdmin
               value='Pefizer'
               type='text'
@@ -131,10 +149,9 @@ export default function DetailAnggota({ detailAnggota, index, team_id }) {
               id='jenis-vaksin'
               // validation={{ required: 'Jenis vaksin tidak boleh kosong' }}
             />
-            <ImageLightboxAdmin
-              src={`${process.env.PUBLIC_URL}/images/qris.jpg`}
-              alt='Cek Gambar'
-              label='Bukti Vaksin'
+            <ImageFetch
+              imgpath={detailAnggota?.bukti_twibbon_url}
+              tag='Bukti Vaksin'
             />
             <ValidasiAdmin
               options={validationList}
