@@ -13,20 +13,20 @@ export default function TicketReeva() {
     errorRetryInterval: 0,
   });
   useEffect(() => {
-    // if (reevaTickets) {
-    //   if (
-    //     reevaTickets.data.status === 'awaiting_payment' ||
-    //     reevaTickets.data.status === 'need_revision'
-    //   ) {
-    //     history.push('/reeva/payment');
-    //   }
-    //   if (
-    //     reevaTickets.data.status === 'active' ||
-    //     reevaTickets.data.status === 'awaiting_verification'
-    //   ) {
-    //     history.push('/reeva');
-    //   }
-    // }
+    if (reevaTickets) {
+      if (
+        reevaTickets.data.status === 'awaiting_payment' ||
+        reevaTickets.data.status === 'need_revision'
+      ) {
+        history.push('/reeva/payment');
+      }
+      if (
+        reevaTickets.data.status === 'active' ||
+        reevaTickets.data.status === 'awaiting_verification'
+      ) {
+        history.push('/reeva');
+      }
+    }
   }, [reevaTickets]);
 
   if (error) {
