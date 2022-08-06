@@ -12,6 +12,7 @@ export default function ValidasiAdmin({
   options = [],
   validation,
   disabled = false,
+  ...rest
 }) {
   const {
     register,
@@ -51,7 +52,11 @@ export default function ValidasiAdmin({
               </option>
             ))}
           </select>
-          <button className='bg-blue-600 w-1/3 rounded font-primary text-white shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800'>
+          <button
+            {...rest}
+            className='bg-blue-600 w-1/3 rounded font-primary text-white shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800'
+            type='submit'
+          >
             Update
           </button>
         </div>
