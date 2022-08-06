@@ -2,32 +2,49 @@ import InputAdmin from '@/components/Admin/InputAdmin';
 import axios from 'axios';
 import { FormProvider, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import DragnDropInput from '../DragnDropInput';
-import SelectInput from '../SelectInput';
-import SubmitButton from '../SubmitButton';
-import ImageLightboxAdmin from './ImageLightboxAdmin';
+import { bearerToken } from '@/lib/helper';
+import { useHistory } from 'react-router-dom';
+import ImageLightboxAdmin from '@/components/Admin/ImageLightboxAdmin';
 import ValidasiAdmin from './ValidasiAdmin';
+
 const validationList = [
   {
-    value: 'validasi',
+    value: 'active',
     text: 'Validasi',
   },
   {
-    value: 'tolak-validasi',
+    value: 'need_revision',
     text: 'Tolak Validasi',
   },
 ];
 
-export default function DetailAnggota({ detailAnggota, index, team_id }) {
+export default function DetailAnggota({ detailAnggota, index }) {
   const methods = useForm();
-  const { control, handleSubmit } = methods;
+  const { handleSubmit } = methods;
+  const history = useHistory();
 
   // console.log(detailAnggota);
 
   const verifikasiAnggota = (data) => {
     const formData = new FormData();
-    formData.apeend('validasi', data.validasi);
-    formData.append('member_id', team_id);
+    formData.append('member_id', detailAnggota.member_id);
+    formData.append('new_status', data.validasi);
+
+    toast.promise(
+      axios.post('/admin_verify_nlc_member', formData, {
+        headers: { ...bearerToken(), 'Content-Type': 'multipart/form-data' },
+      }),
+      {
+        loading: 'Loading...',
+        success: (res) => {
+          history.push('/admin');
+          return 'Berhasil membuat pembayaran, mohon tunggu verifikasi dari admin';
+        },
+        error: (err) => {
+          return err.response.data.message;
+        },
+      },
+    );
   };
 
   return (
@@ -40,12 +57,14 @@ export default function DetailAnggota({ detailAnggota, index, team_id }) {
         >
           <div className='w-1/2'>
             <h2 className='text-center text-white text-2xl font-primary'>
-              Anggota {index + 1}
+              {detailAnggota.member_type === 'ketua'
+                ? 'Ketua'
+                : `Anggota ${index + 1}`}
             </h2>
             <InputAdmin
               value={detailAnggota && detailAnggota?.name}
               type='text'
-              placeholder='Nama '
+              placeholder='Nama'
               disabled={true}
               label='Nama'
               id='nama'
