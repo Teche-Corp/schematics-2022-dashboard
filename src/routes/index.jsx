@@ -362,7 +362,7 @@ const routeItems = [
     auth: 'all',
     route: PrivateRoute,
     key: 'admin-verifikasi-data',
-    path: '/admin/verifikasi-data/nlc',
+    path: '/admin/verifikasi-data/nlc/:id',
     component: AdminVerifikasiDataNLC,
     visible: true,
   },

@@ -18,17 +18,16 @@ const validationList = [
   },
 ];
 
-export default function DetailAnggota({ detailAnggota, index }) {
+export default function DetailAnggota({ detailAnggota, index, team_id }) {
   const methods = useForm();
   const { control, handleSubmit } = methods;
 
   // console.log(detailAnggota);
 
   const verifikasiAnggota = (data) => {
-    console.log(data);
-    // toast.promise(
-    //   axios.post('/api/admin_verify_nlc_member',)
-    // )
+    const formData = new FormData();
+    formData.apeend('validasi', data.validasi);
+    formData.append('member_id', team_id);
   };
 
   return (
@@ -44,13 +43,13 @@ export default function DetailAnggota({ detailAnggota, index }) {
               Anggota {index + 1}
             </h2>
             <InputAdmin
-              value={detailAnggota.name}
+              value={detailAnggota && detailAnggota?.name}
               type='text'
               placeholder='Nama '
               disabled={true}
               label='Nama'
               id='nama'
-              validation={{ required: 'Nama tidak boleh kosong' }}
+              // validation={{ required: 'Nama tidak boleh kosong' }}
             />
             {/* Email Tidak ada dalam object */}
             {/* <InputAdmin
@@ -63,13 +62,13 @@ export default function DetailAnggota({ detailAnggota, index }) {
               validation={{ required: 'Email tidak boleh kosong' }}
             /> */}
             <InputAdmin
-              value={detailAnggota.nisn}
+              value={detailAnggota?.nisn}
               type='text'
               placeholder='nsin '
               disabled={true}
               label='NISN'
               id='nisn'
-              validation={{ required: 'NISN tidak boleh kosong' }}
+              // validation={{ required: 'NISN tidak boleh kosong' }}
             />
 
             <ImageLightboxAdmin
@@ -84,34 +83,34 @@ export default function DetailAnggota({ detailAnggota, index }) {
               disabled={true}
               label='Nomor telepon'
               id='no-tlpn'
-              validation={{ required: 'no-telp tidak boleh kosong' }}
+              // validation={{ required: 'no-telp tidak boleh kosong' }}
             />
             <InputAdmin
-              value={detailAnggota.no_wa}
+              value={detailAnggota?.no_wa}
               type='text'
               placeholder='Nomer WA'
               disabled={true}
               label='Nomer WA'
               id='no-wa'
-              validation={{ required: 'no-wa tidak boleh kosong' }}
+              // validation={{ required: 'no-wa tidak boleh kosong' }}
             />
             <InputAdmin
-              value={detailAnggota.id_line}
+              value={detailAnggota?.id_line}
               type='text'
               placeholder='Id Line'
               disabled={true}
               label='ID Line'
               id='id-line'
-              validation={{ required: 'Id-Line tidak boleh kosong' }}
+              // validation={{ required: 'Id-Line tidak boleh kosong' }}
             />
             <InputAdmin
-              value={detailAnggota.alamat}
+              value={detailAnggota?.alamat}
               type='text'
               placeholder='Alamat'
               disabled={true}
               label='Alamat'
               id='address'
-              validation={{ required: 'Alamat tidak boleh kosong' }}
+              // validation={{ required: 'Alamat tidak boleh kosong' }}
             />
             <ImageLightboxAdmin
               src={`${process.env.PUBLIC_URL}/images/error-icon.png`}
@@ -130,7 +129,7 @@ export default function DetailAnggota({ detailAnggota, index }) {
               disabled={true}
               label='Jenis Vaksin'
               id='jenis-vaksin'
-              validation={{ required: 'Jenis vaksin tidak boleh kosong' }}
+              // validation={{ required: 'Jenis vaksin tidak boleh kosong' }}
             />
             <ImageLightboxAdmin
               src={`${process.env.PUBLIC_URL}/images/qris.jpg`}
@@ -140,25 +139,11 @@ export default function DetailAnggota({ detailAnggota, index }) {
             <ValidasiAdmin
               options={validationList}
               label='Validasi'
-              validation={{
-                required: 'Asal informasi Schematics tidak boleh kosong',
-              }}
+              // validation={{
+              //   required: 'Asal informasi Schematics tidak boleh kosong',
+              // }}
               id='validasi'
             />
-            {/* <div>
-              <SelectInput
-                label='Validasi'
-                id='validasi'
-                options={validationList}
-              />
-              <SubmitButton
-                className='mt-12 text-white hover:text-black bg-nst font-tertiary font-normal '
-                loading={false}
-              >
-                {' '}
-                Update
-              </SubmitButton>
-            </div> */}
           </div>
         </form>
       </FormProvider>
