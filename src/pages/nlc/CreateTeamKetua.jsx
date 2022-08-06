@@ -95,7 +95,6 @@ export default function CreateTeamKetua() {
 
   useEffect(() => {
     if (teamPayment) {
-      console.log(teamPayment.data);
       if (
         teamPayment.data.status === 'active' ||
         teamPayment.data.status === 'awaiting_verification'
@@ -130,8 +129,8 @@ export default function CreateTeamKetua() {
               validation={{
                 required: 'Nama tim tidak boleh kosong',
                 minLength: {
-                  value: 6,
-                  message: 'Panjang nama tim setidaknya 6 karakter',
+                  value: 3,
+                  message: 'Panjang nama tim setidaknya 3 karakter',
                 },
                 maxLength: {
                   value: 32,
@@ -184,63 +183,33 @@ export default function CreateTeamKetua() {
               id='id_kota'
             />
             <Input
-              label={'Nama Guru Pendamping'}
+              label={'Nama Guru Pendamping (opsional)'}
               validation={{
-                required: 'Nama guru pendamping tidak boleh kosong',
-                minLength: {
-                  value: 3,
-                  message: 'Panjang nama guru pendamping setidaknya 3 karakter',
-                },
-                maxLength: {
-                  value: 64,
-                  message: 'Panjang nama guru pendamping maksimal 64 karakter',
-                },
+                required: false,
               }}
               id='nama_guru_pendamping'
             />
             <Input
-              label='Nomor Telepon Guru Pendamping'
+              label='Nomor Telepon Guru Pendamping (opsional)'
               id='no_telp_guru_pendamping'
               placeholder='+6285123456'
               validation={{
-                required: 'Nomor Telepon tidak boleh kosong',
-                pattern: {
-                  value: /^\+628[1-9][0-9]{8,10}$/,
-                  message:
-                    'Nomor Telepon harus diawali +62 dan memiliki panjang 13-15 karakter',
-                },
+                required: false,
               }}
             />
             <hr className='bg-white w-full' />
             <Input
               label={'Nama Lengkap'}
               id='name'
+              disabled={true}
               defaultValue={user.name}
-              validation={{
-                required: 'Nama lengkap tidak boleh kosong',
-                minLength: {
-                  value: 6,
-                  message: 'Nama lengkap setidaknya memiliki 6 karakter',
-                },
-                maxLength: {
-                  value: 128,
-                  message: 'Nama lengkap maksimal memiliki 128 karakter',
-                },
-              }}
             />
             <Input
               label='Email'
               id='email'
               type='email'
+              disabled={true}
               defaultValue={user.email}
-              validation={{
-                required: 'Email tidak boleh kosong',
-                pattern: {
-                  value:
-                    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                  message: 'Email tidak valid',
-                },
-              }}
             />
             <Input
               label={'NISN'}

@@ -128,8 +128,8 @@ export default function CreateTeamJuniorKetua() {
               validation={{
                 required: 'Nama tim tidak boleh kosong',
                 minLength: {
-                  value: 6,
-                  message: 'Panjang nama tim setidaknya 6 karakter',
+                  value: 3,
+                  message: 'Panjang nama tim setidaknya 3 karakter',
                 },
                 maxLength: {
                   value: 32,
@@ -173,31 +173,18 @@ export default function CreateTeamJuniorKetua() {
               id='id_kota'
             />
             <Input
-              label={'Nama Guru Pendamping'}
+              label={'Nama Guru Pendamping (opsional)'}
               validation={{
-                required: 'Nama guru pendamping tidak boleh kosong',
-                minLength: {
-                  value: 1,
-                  message: 'Panjang nama guru pendamping setidaknya 1 karakter',
-                },
-                maxLength: {
-                  value: 128,
-                  message: 'Panjang nama guru pendamping maksimal 64 karakter',
-                },
+                required: false,
               }}
               id='nama_guru_pendamping'
             />
             <Input
-              label='Nomor Telepon Guru Pendamping'
+              label='Nomor Telepon Guru Pendamping (opsional)'
               id='no_telp_guru_pendamping'
               placeholder='+6285123456789'
               validation={{
-                required: 'Nomor Telepon tidak boleh kosong',
-                pattern: {
-                  value: /^\+628[1-9][0-9]{8,10}$/,
-                  message:
-                    'Nomor Telepon harus diawali +62 dan memiliki panjang 13-15 karakter',
-                },
+                required: false,
               }}
             />
             <hr className='bg-white w-full' />
@@ -255,14 +242,10 @@ export default function CreateTeamJuniorKetua() {
               }}
             />
             <Input
-              label={'ID Line'}
+              label={'ID Line (opsional)'}
               id='id_line'
               validation={{
-                required: 'ID Line tidak boleh kosong',
-                maxLength: {
-                  value: 128,
-                  message: 'ID Line maksimal memiliki 128 karakter',
-                },
+                required: false,
               }}
             />
             <Input

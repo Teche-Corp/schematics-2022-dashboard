@@ -73,6 +73,7 @@ import NSTregister from '@/pages/nst/NSTregister';
 // import CreateTeamJuniorKetua from '@/pages/npc/CreateTeamJuniorKetua';
 import PembayaranNST from '@/pages/nst/PaymentNST';
 import TicketNST from '@/pages/nst/TicketNST';
+import PublicImage from '@/pages/PublicImage';
 // import CreateTeamKetua from '@/pages/nlc/CreateTeamKetua';
 import AdminVerifikasiDataNPCJunior from '../pages/admin/npc/AdminVerifikasiDataNPCJunior';
 import AdminVerifikasiDataNPCSenior from '../pages/admin/npc/AdminVerifikasiDataSenior';
@@ -393,6 +394,14 @@ const routeItems = [
     key: 'register',
     path: '/register',
     component: Register,
+    visible: true,
+  },
+  {
+    auth: 'all',
+    route: AuthRoute,
+    key: 'getimage',
+    path: '/getimage',
+    component: PublicImage,
     visible: true,
   },
   {
