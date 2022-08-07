@@ -79,6 +79,7 @@ import AdminVerifikasiDataNPCJunior from '../pages/admin/npc/AdminVerifikasiData
 import AdminVerifikasiDataNPCSenior from '../pages/admin/npc/AdminVerifikasiDataSenior';
 
 import VerifikasiNLC from '@/pages/admin/nlc/VerifikasiNLC';
+import TableNLC from '@/pages/admin/nlc/TableNLC';
 
 // const routeItems = [
 //   {
@@ -339,6 +340,14 @@ const routeItems = [
     key: 'admin-dashboard-nlc',
     path: '/admin/dashboard-nlc',
     component: AdminVerifikasiPembayaran,
+    visible: true,
+  },
+  {
+    auth: 'all',
+    route: PrivateRoute,
+    key: 'admin-table-nlc',
+    path: '/admin/table-nlc',
+    component: TableNLC,
     visible: true,
   },
   {
