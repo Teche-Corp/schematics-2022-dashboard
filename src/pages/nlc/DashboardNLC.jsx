@@ -1,11 +1,12 @@
 import DragnDropInputBox from '@/components/DragnDropInputBox';
 import Loading from '@/components/Loading';
 import SubmitButton from '@/components/SubmitButton';
+import { useAuthState } from '@/contexts/AuthContext';
 import DashboardShell from '@/layout/DashboardShell';
 import { NLC_REGION, TEAM_STATUS } from '@/lib/constants';
 import { bearerToken } from '@/lib/helper';
 import axios from 'axios';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { Link, useHistory } from 'react-router-dom';
@@ -13,9 +14,11 @@ import useSWR from 'swr';
 import Error500 from '../error/500';
 
 function DashboardNLC() {
+  const [nlcProfile, setNlcProfile] = useState(undefined);
+  const { user } = useAuthState();
   const history = useHistory();
-  // const methods = useForm();
-  // const { control, handleSubmit } = methods;
+  const methods = useForm();
+  const { handleSubmit } = methods;
   const getNlcRegion = (region_id) => {
     const region = NLC_REGION.filter((region) => {
       return region.value.toString() === region_id;
@@ -23,24 +26,30 @@ function DashboardNLC() {
     return region[0].text;
   };
 
-  // const handleImageUpload = (data) => {
-  //   const formData = new FormData();
-  //   for (let key in data) {
-  //     formData.append(key, data[key][0]);
-  //   }
-  //   toast.promise(
-  //     axios.post('/upload_nlc_berkas', formData, {
-  //       headers: { ...bearerToken(), 'Content-Type': 'multipart/form-data' },
-  //     }),
-  //     {
-  //       loading: 'Loading...',
-  //       success: 'Berhasil mengupload data',
-  //       error: (err) => {
-  //         return err.response.data.message;
-  //       },
-  //     },
-  //   );
-  // };
+  const getMyNLCProfile = (nlcdata) => {
+    const nlcMember = nlcdata.members;
+    const myProfile = nlcMember.find((member) => member.name === user.name);
+    setNlcProfile(myProfile);
+  };
+
+  const handleImageUpload = (data) => {
+    const formData = new FormData();
+    for (let key in data) {
+      formData.append(key, data[key][0]);
+    }
+    toast.promise(
+      axios.post('/upload_nlc_berkas', formData, {
+        headers: { ...bearerToken(), 'Content-Type': 'multipart/form-data' },
+      }),
+      {
+        loading: 'Loading...',
+        success: 'Berhasil mengupload data',
+        error: (err) => {
+          return err.response.data.message;
+        },
+      },
+    );
+  };
 
   const { data, error } = useSWR('/my_nlc', {
     shouldRetryOnError: false,
@@ -55,6 +64,7 @@ function DashboardNLC() {
       ) {
         history.push('/nlc/payment');
       }
+      getMyNLCProfile(data.data);
     }
   }, [data, history]);
 
@@ -195,13 +205,16 @@ function DashboardNLC() {
                 </a>
               </div>
             </div>
-            {/* <div className='w-full bg-white p-6 mt-8 rounded-xl'>
+            <div className='w-full bg-white p-6 mt-8 rounded-xl'>
               <div className='w-full'>
                 <FormProvider {...methods}>
                   <form onSubmit={handleSubmit(handleImageUpload)}>
                     <div className='grid md:grid-cols-3 md:grid-rows-1 grid-rows-3 grid-cols-1 gap-4'>
                       <div className='col-span-1'>
                         <DragnDropInputBox
+                          defaultValue={
+                            nlcProfile?.bukti_vaksin_url ?? undefined
+                          }
                           label={
                             <span className='text-dark-400'>
                               Sertifikat Vaksinasi atau Surat Keterangan
@@ -230,6 +243,9 @@ function DashboardNLC() {
                               </a>
                             </span>
                           }
+                          defaultValue={
+                            nlcProfile?.bukti_twibbon_url ?? undefined
+                          }
                           id='bukti_twibbon'
                           accept='image/png, image/jpg, image/jpeg'
                           helperText='File dalam format jpg, png, atau jpeg maksimal 1 MB'
@@ -253,6 +269,9 @@ function DashboardNLC() {
                               </a>
                             </span>
                           }
+                          defaultValue={
+                            nlcProfile?.bukti_poster_url ?? undefined
+                          }
                           id='bukti_poster'
                           accept='image/png, image/jpg, image/jpeg'
                           helperText='File dalam format jpg, png, atau jpeg maksimal 1 MB'
@@ -264,18 +283,20 @@ function DashboardNLC() {
                         />
                       </div>
                     </div>
-                    <div className='w-full'>
-                      <SubmitButton
-                        className='bg-nlc hover:bg-nlc-300 font-primary'
-                        loading={false}
-                      >
-                        Daftar
-                      </SubmitButton>
-                    </div>
+                    {!nlcProfile?.bukti_vaksin_url && (
+                      <div className='w-full'>
+                        <SubmitButton
+                          className='bg-nlc hover:bg-nlc-300 font-primary'
+                          loading={false}
+                        >
+                          Daftar
+                        </SubmitButton>
+                      </div>
+                    )}
                   </form>
                 </FormProvider>
               </div>
-            </div> */}
+            </div>
             <div className='w-full md:h-64 h-96 bg-white p-6 mt-8 rounded-xl'>
               <p className='text-3xl font-bold text-center md:text-left text-nlc'>
                 Pemberitahuan

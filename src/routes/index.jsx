@@ -378,7 +378,7 @@ const routeItems = [
     auth: 'all',
     route: PrivateRoute,
     key: 'admin-verifikasi-data-npc-senior',
-    path: '/admin/verifikasi-data/npc-senior',
+    path: '/admin/verifikasi-data/npc-senior/:id',
     component: AdminVerifikasiDataNPCSenior,
     visible: true,
   },
