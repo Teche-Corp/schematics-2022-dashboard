@@ -3,16 +3,25 @@ import { Controller, useFormContext } from 'react-hook-form';
 import { useDropzone } from 'react-dropzone';
 
 import { classNames } from '@/lib/helper';
+import ImageFetch from './ImageFetch';
 
 const FilePreview = ({ file, deleteFile }) => {
+  console.log('fileValue ' + file);
+  if (typeof file === 'string') {
+    return (
+      <>
+        <li className='w-full h-full' key={file}>
+          <div className='w-full h-full border p-0 m-0 border-gray-300 border-dashed rounded cursor-pointer focus:ring-dark-400 focus:border-dark-400'>
+            <ImageFetch imgpath={file} tag={file} className='w-full h-full' />
+          </div>
+        </li>
+      </>
+    );
+  }
   const handleDelete = (e) => {
     e.stopPropagation();
     deleteFile(e, file);
   };
-
-  useEffect(() => {
-    console.log(file);
-  }, []);
 
   return (
     <>
@@ -37,7 +46,9 @@ export default function DragnDropInputBox({
   helperText = '',
   maxFiles = 1,
   validation,
+  defaultValue,
 }) {
+  console.log('component defaultValue ' + defaultValue);
   const {
     control,
     setValue,
@@ -93,11 +104,15 @@ export default function DragnDropInputBox({
         {label}
       </label>
 
-      {files?.length >= maxFiles ? (
+      {defaultValue !== undefined || files?.length >= maxFiles ? (
         <ul className='border h-64 border-gray-200 divide-y divide-gray-200 rounded-md'>
-          {files.map((file) => (
-            <FilePreview key={file} file={file} deleteFile={deleteFile} />
-          ))}
+          {defaultValue ? (
+            <FilePreview key={defaultValue} file={defaultValue} />
+          ) : (
+            files.map((file) => (
+              <FilePreview key={file} file={file} deleteFile={deleteFile} />
+            ))
+          )}
         </ul>
       ) : (
         <Controller
@@ -133,15 +148,19 @@ export default function DragnDropInputBox({
                   <p className='text-sm text-red-500'>{errors[id].message}</p>
                 )}
               </div>
-              {!!files?.length && (
+              {defaultValue !== undefined && !(files?.length >= maxFiles) && (
                 <ul className='border border-gray-200 divide-y divide-gray-200 rounded-md'>
-                  {files.map((file) => (
-                    <FilePreview
-                      key={file}
-                      file={file}
-                      deleteFile={deleteFile}
-                    />
-                  ))}
+                  {defaultValue ? (
+                    <FilePreview key={defaultValue} file={defaultValue} />
+                  ) : (
+                    files.map((file) => (
+                      <FilePreview
+                        key={file}
+                        file={file}
+                        deleteFile={deleteFile}
+                      />
+                    ))
+                  )}
                 </ul>
               )}
             </>
