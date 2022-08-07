@@ -370,7 +370,7 @@ const routeItems = [
     auth: 'all',
     route: PrivateRoute,
     key: 'admin-verifikasi-data-npc-junior',
-    path: '/admin/verifikasi-data/npc-junior',
+    path: '/admin/verifikasi-data/npc-junior/:id',
     component: AdminVerifikasiDataNPCJunior,
     visible: true,
   },
