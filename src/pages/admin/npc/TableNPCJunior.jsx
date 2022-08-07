@@ -3,10 +3,10 @@ import { useState } from 'react';
 import useSWR from 'swr';
 import { Link } from 'react-router-dom';
 
-export default function TableNPCSenior() {
+export default function TableNPCJunior() {
   const page = 1;
   const per_page = 10;
-  const url = `/admin_get_list_pembayaran_npc_senior?page=${page}&per_page=${per_page}`;
+  const url = `/admin_get_list_pembayaran_npc_junior?page=${page}&per_page=${per_page}`;
 
   const { data, error } = useSWR(
     url,
@@ -19,7 +19,7 @@ export default function TableNPCSenior() {
   return (
     <>
       <div className='p-8'>
-        <h1>Daftar Verifikasi Data Schematics NPC Senior</h1>
+        <h1>Daftar Verifikasi Data Schematics NPC Junior</h1>
         <div className='flex flex-col md:flex-row md:items-center py-2 justify-between px-4 mt-4 mb-2 react-table-top '>
           <div className='relative flex items-center mt-3 md:mt-0 table-top-search'>
             <input
@@ -55,7 +55,7 @@ export default function TableNPCSenior() {
                 >
                   <td className='px-2 py-4 text-sm '>
                     <Link
-                      to={`/admin/verifikasi-data/npc-senior/${payment.pembayaran_id}`}
+                      to={`/admin/verifikasi-data/npc-junioe/${payment.pembayaran_id}`}
                     >
                       {payment.nama_tim}{' '}
                     </Link>

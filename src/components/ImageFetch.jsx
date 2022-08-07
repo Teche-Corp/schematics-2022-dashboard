@@ -10,8 +10,7 @@ export default function ImageFetch({ imgpath, tag, label, ...rest }) {
 
   const getImageUrl = (url) => {
     const imageFetcher = axios.create({
-      // baseURL: (process.env.NODE_ENV === 'production' && process.env.PUBLIC_URL === '/dashboard') ? 'https://schematics.its.ac.id:8081/api' : 'https://deploy-laravel.herokuapp.com/api' ,
-      baseURL: 'https://schematics.its.ac.id:8081/api',
+      baseURL: axios.defaults.baseURL,
     });
     imageFetcher
       .get(url, {

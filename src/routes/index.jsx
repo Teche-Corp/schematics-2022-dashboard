@@ -79,6 +79,9 @@ import AdminVerifikasiDataNPCJunior from '../pages/admin/npc/AdminVerifikasiData
 import AdminVerifikasiDataNPCSenior from '../pages/admin/npc/AdminVerifikasiDataSenior';
 
 import VerifikasiNLC from '@/pages/admin/nlc/VerifikasiNLC';
+import TableNLC from '@/pages/admin/nlc/TableNLC';
+import TableNPCSenior from '@/pages/admin/npc/TableNPCSenior';
+import TableNPCJunior from '@/pages/admin/npc/TableNPCJunior';
 
 // const routeItems = [
 //   {
@@ -344,6 +347,30 @@ const routeItems = [
   {
     auth: 'all',
     route: PrivateRoute,
+    key: 'admin-table-nlc',
+    path: '/admin/table-nlc',
+    component: TableNLC,
+    visible: true,
+  },
+  {
+    auth: 'all',
+    route: PrivateRoute,
+    key: 'admin-table-npc-senior',
+    path: '/admin/table-npc-senior',
+    component: TableNPCSenior,
+    visible: true,
+  },
+  {
+    auth: 'all',
+    route: PrivateRoute,
+    key: 'admin-table-npc-junior',
+    path: '/admin/table-npc-junior',
+    component: TableNPCJunior,
+    visible: true,
+  },
+  {
+    auth: 'all',
+    route: PrivateRoute,
     key: 'admin-dashboard-npc',
     path: '/admin/dashboard-npc-senior',
     component: AdminVerifikasiPembayaranSenior,
@@ -378,7 +405,7 @@ const routeItems = [
     auth: 'all',
     route: PrivateRoute,
     key: 'admin-verifikasi-data-npc-senior',
-    path: '/admin/verifikasi-data/npc-senior',
+    path: '/admin/verifikasi-data/npc-senior/:id',
     component: AdminVerifikasiDataNPCSenior,
     visible: true,
   },

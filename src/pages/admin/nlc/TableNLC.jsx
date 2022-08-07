@@ -2,12 +2,10 @@ import { bearerToken } from '@/lib/helper';
 import { useState } from 'react';
 import useSWR from 'swr';
 import { Link } from 'react-router-dom';
-
-export default function TableNPCSenior() {
-  const page = 1;
-  const per_page = 10;
-  const url = `/admin_get_list_pembayaran_npc_senior?page=${page}&per_page=${per_page}`;
-
+export default function TableNLC() {
+  const [page, setPage] = useState(1);
+  const [per_page, setPerPage] = useState(10);
+  const url = `/admin_get_list_pembayaran_nlc?page=${page}&per_page=${per_page}`;
   const { data, error } = useSWR(
     url,
     {
@@ -16,10 +14,12 @@ export default function TableNPCSenior() {
     // fetcher(url)
   );
   console.log('datanya : ', data?.data?.data_per_page);
+  // if (!data) console.log(error);
+
   return (
     <>
       <div className='p-8'>
-        <h1>Daftar Verifikasi Data Schematics NPC Senior</h1>
+        <h1>Daftar Verifikasi Data Schematics NLC</h1>
         <div className='flex flex-col md:flex-row md:items-center py-2 justify-between px-4 mt-4 mb-2 react-table-top '>
           <div className='relative flex items-center mt-3 md:mt-0 table-top-search'>
             <input
@@ -33,7 +33,7 @@ export default function TableNPCSenior() {
         </div>
         <table className='table-auto border-collapse w-full'>
           <thead>
-            <tr className='bg-npc text-left  text-white'>
+            <tr className='bg-nlc text-left  text-white'>
               <th className='text-base font-semibold py-3.5 px-2 pl-4 text-white'>
                 Nama Tim
               </th>
@@ -55,7 +55,7 @@ export default function TableNPCSenior() {
                 >
                   <td className='px-2 py-4 text-sm '>
                     <Link
-                      to={`/admin/verifikasi-data/npc-senior/${payment.pembayaran_id}`}
+                      to={`/admin/verifikasi-data/nlc/${payment.pembayaran_id}`}
                     >
                       {payment.nama_tim}{' '}
                     </Link>

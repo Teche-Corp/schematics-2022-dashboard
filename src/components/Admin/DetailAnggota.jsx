@@ -19,12 +19,15 @@ const validationList = [
   },
 ];
 
-export default function DetailAnggota({ detailAnggota, index }) {
+export default function DetailAnggota({ detailAnggota, index, from = '' }) {
   const methods = useForm();
   const { handleSubmit } = methods;
   const history = useHistory();
 
-  // console.log(detailAnggota);
+  const API =
+    from.split('-')[0] === 'npc'
+      ? '/admin_verify_npc_member'
+      : '/admin_verify_nlc_member';
 
   const verifikasiAnggota = (data) => {
     const formData = new FormData();
@@ -32,7 +35,7 @@ export default function DetailAnggota({ detailAnggota, index }) {
     formData.append('new_status', data.validasi);
 
     toast.promise(
-      axios.post('/admin_verify_nlc_member', formData, {
+      axios.post(API, formData, {
         headers: { ...bearerToken(), 'Content-Type': 'multipart/form-data' },
       }),
       {
@@ -84,9 +87,9 @@ export default function DetailAnggota({ detailAnggota, index }) {
             <InputAdmin
               value={detailAnggota?.nisn}
               type='text'
-              placeholder='nsin '
+              placeholder={from.split('-')[1] === 'senior' ? 'NIM' : 'NISN'}
               disabled={true}
-              label='NISN'
+              label={from === 'npc-senior' ? 'NIM' : 'NISN'}
               id='nisn'
               // validation={{ required: 'NISN tidak boleh kosong' }}
             />
@@ -130,7 +133,27 @@ export default function DetailAnggota({ detailAnggota, index }) {
               id='address'
               // validation={{ required: 'Alamat tidak boleh kosong' }}
             />
+            <InputAdmin
+              value={detailAnggota?.alamat}
+              type='text'
+              placeholder='Alamat'
+              disabled={true}
+              label='Alamat'
+              id='address'
+              // validation={{ required: 'Alamat tidak boleh kosong' }}
+            />
             {/* Butki Upload Twibbon */}
+            {from && from.split('-')[0] === 'npc' ? (
+              <InputAdmin
+                value={detailAnggota?.discord_tag}
+                type='text'
+                placeholder='Discord Tag'
+                disabled={true}
+                label='Discord Tag'
+                id='discord-tag'
+              ></InputAdmin>
+            ) : null}
+
             <ImageFetch
               imgpath={detailAnggota?.bukti_twibbon_url}
               tag='Bukti Upload Twibbon'
