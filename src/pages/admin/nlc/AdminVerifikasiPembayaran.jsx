@@ -111,12 +111,13 @@ const AdminPagination = () => {
           id: payment?.pembayaran_id,
           team: {
             name: {
-              lead_name: payment.nama_ketua,
-              bank: payment.nama_bank,
-              name_team: payment.nama_tim,
+              lead_name: payment?.nama_ketua,
+              bank: payment?.nama_bank,
+              // name_team: payment?.nama_tim,
+              name_team: `${payment?.nama_tim}`,
             },
           },
-          status: payment.status_pembayaran,
+          status: payment?.status_pembayaran,
         };
       });
       console.log('row map :', rowMap);
