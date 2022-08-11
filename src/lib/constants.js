@@ -6,6 +6,10 @@ export const BANKS = [
     value: 'cash',
   },
   {
+    text: 'BANK BSI',
+    value: 'bank_bsi',
+  },
+  {
     text: 'BANK BRI',
     value: 'bank_bri',
   },
