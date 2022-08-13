@@ -35,7 +35,24 @@ export default function PaymentReeva() {
         reevaPayment.data.status === 'awaiting_payment' ||
         reevaPayment.data.status === 'need_revision'
       ) {
-        history.push('/reeva/payment');
+        axios
+          .post(
+            '/request_payment_link_reeva',
+            {},
+            {
+              headers: { ...bearerToken() },
+            },
+          )
+          .then((res) => {
+            console.log('1');
+            console.log(res);
+            return res.data;
+          })
+          .then((res) => {
+            console.log('2');
+            console.log(res.data);
+            window.location.href = res.data.payment_url;
+          });
       }
     }
   }, [reevaPayment]);
@@ -48,51 +65,51 @@ export default function PaymentReeva() {
   }
   if (!reevaPayment && !reevaPaymentError) return <Loading />;
 
-  const handleReevaPayment = (data) => {
-    const formData = new FormData();
+  // const handleReevaPayment = (data) => {
+  //   const formData = new FormData();
 
-    for (let key in data) {
-      if (['bukti_bayar'].includes(key)) {
-        formData.append(key, data[key][0]);
-      } else {
-        formData.append(key, data[key]);
-      }
-    }
-    formData.append('tipe_pembayaran', 'reeva_order');
+  //   for (let key in data) {
+  //     if (['bukti_bayar'].includes(key)) {
+  //       formData.append(key, data[key][0]);
+  //     } else {
+  //       formData.append(key, data[key]);
+  //     }
+  //   }
+  //   formData.append('tipe_pembayaran', 'reeva_order');
 
-    toast.promise(
-      axios.post('/create_pembayaran', formData, {
-        headers: { ...bearerToken(), 'Content-Type': 'multipart/form-data' },
-      }),
-      {
-        loading: 'Loading...',
-        success: (res) => {
-          history.push('/reeva');
-          return 'Berhasil membuat pembayaran, mohon tunggu verifikasi dari admin';
-        },
-        error: (err) => {
-          return err.response.data.message;
-        },
-      },
-    );
-  };
+  //   toast.promise(
+  //     axios.post('/create_pembayaran', formData, {
+  //       headers: { ...bearerToken(), 'Content-Type': 'multipart/form-data' },
+  //     }),
+  //     {
+  //       loading: 'Loading...',
+  //       success: (res) => {
+  //         history.push('/reeva');
+  //         return 'Berhasil membuat pembayaran, mohon tunggu verifikasi dari admin';
+  //       },
+  //       error: (err) => {
+  //         return err.response.data.message;
+  //       },
+  //     },
+  //   );
+  // };
 
   return (
     <>
-      <main className='w-full min-h-screen bg-nst-black p-2'>
-        <div className='flex justify-center items-center flex-col pb-10'>
-          {/* Pembayaran */}
-          <h1 className='mt-10 text-white font-primary text-5xl md:text-5xl lg:text-7xl'>
+      {/* <main className='w-full min-h-screen bg-nst-black p-2'>
+        <div className='flex justify-center items-center flex-col pb-10'> */}
+      {/* Pembayaran */}
+      {/* <h1 className='mt-10 text-white font-primary text-5xl md:text-5xl lg:text-7xl'>
             Pembayaran
           </h1>
           <div className='flex justify-center flex-col md:flex-row md:gap-x-3 lg:gap-x-10 mt-10 md:mt-20 pb-4'>
             <div className='flex justify-start items-start md:items-end flex-col p-3'>
               <p className='text-white font-tertiary font-normal  text-sm md:text-base'>
                 Lakukan pembayaran dengan nominal
-              </p>
+              </p> */}
 
-              {/* Nominal */}
-              <p className=' text-white text-5xl font-primary mt-6 md:mt-12'>
+      {/* Nominal */}
+      {/* <p className=' text-white text-5xl font-primary mt-6 md:mt-12'>
                 {biaya.slice(0, 7)}
                 <span className='text-reeva underline'>
                   {biaya.slice(7, 11)}
@@ -104,10 +121,10 @@ export default function PaymentReeva() {
               </p>
               <p className='font-tertiary font-normal mt-6 text-white text-sm md:text-base'>
                 Pembayaran melalui scan QRIS Schematics ITS berikut:
-              </p>
+              </p> */}
 
-              {/* Qris */}
-              <img
+      {/* Qris */}
+      {/* <img
                 src={`${process.env.PUBLIC_URL}/images/nst/qris.png`}
                 alt='login'
                 className='w-44 mt-3'
@@ -178,7 +195,7 @@ export default function PaymentReeva() {
             </div>
           </div>
         </div>
-      </main>
+      </main> */}
     </>
   );
 }

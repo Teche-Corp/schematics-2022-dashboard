@@ -8,6 +8,7 @@ import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import useSWR from 'swr';
 import { ImFacebook } from 'react-icons/im';
+import UnstyledLink from '@/components/UnstyledLink';
 
 export default function Dashboard() {
   const { user } = useAuthState();
@@ -29,10 +30,7 @@ export default function Dashboard() {
     }
   }, [data, history]);
 
-  if (error) {
-    if (error.response.status !== 404) {
-      history.push(`/nst/registration`);
-    }
+  if (error && error.response.status !== 404) {
     return <Error500 />;
   }
   if (!data && !error) return <Loading />;
@@ -40,7 +38,7 @@ export default function Dashboard() {
   return (
     <DashboardShell>
       {error?.response.status === 404 ? (
-        <div className='bg-gray-100 min-h-screen'>
+        <div className='bg-dark-100 min-h-screen'>
           <div className='flex flex-col w-full px-4 py-8 font-primary items-center text-white'>
             <p className='text-3xl p-6'>
               Schematics{' '}
@@ -169,12 +167,13 @@ export default function Dashboard() {
                     />
 
                     {data.data.status === 'active' ? (
-                      <Link
+                      <UnstyledLink
                         className=' mb-4 flex justify-center bg-nst hover:bg-nst-100 font-primary h-10 rounded-xl w-full text-white hover:text-nst items-center md:mb-2'
                         href={`${process.env.PUBLIC_URL}/nst/ticket`}
+                        openNewTab={false}
                       >
                         Lihat Tiket Disini
-                      </Link>
+                      </UnstyledLink>
                     ) : data.data.status === 'awaiting_verification' ? (
                       <p className='mb-4 text-nst-red align-center font-primary'>
                         Tiket sedang dalam proses verifikasi.

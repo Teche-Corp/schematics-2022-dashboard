@@ -186,12 +186,10 @@ export default function ReevaRegister() {
     }
   }, [reevaOrder, history]);
 
-  if (error) {
-    if (error.response.status === 404) {
-      history.push('/reeva/registration');
-    }
+  if (error && error.response.status !== 404) {
     return <Error500 />;
   }
+
   if (!reevaOrder && !error) return <Loading />;
 
   return (

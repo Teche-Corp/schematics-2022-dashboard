@@ -184,25 +184,22 @@ export default function NSTregister() {
 
   useEffect(() => {
     if (nstOrder) {
-      // if (
-      //   nstOrder.data.status === 'awaiting_payment' ||
-      //   nstOrder.data.status === 'need_revision'
-      // ) {
-      //   history.push(`/nst/payment`);
-      // }
-      // if (
-      //   nstOrder.data.status === 'active' ||
-      //   nstOrder.data.status === 'awaiting_verification'
-      // ) {
-      //   history.push('/nst');
-      // }
+      if (
+        nstOrder.data.status === 'awaiting_payment' ||
+        nstOrder.data.status === 'need_revision'
+      ) {
+        history.push(`/nst/payment`);
+      }
+      if (
+        nstOrder.data.status === 'active' ||
+        nstOrder.data.status === 'awaiting_verification'
+      ) {
+        history.push('/nst');
+      }
     }
   }, [nstOrder, history]);
 
-  if (error) {
-    if (error.response.status !== 404) {
-      history.push(`/nst/registration`);
-    }
+  if (error && error.response.status !== 404) {
     return <Error500 />;
   }
   if (!nstOrder && !error) return <Loading />;

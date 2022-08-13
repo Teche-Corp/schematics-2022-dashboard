@@ -20,10 +20,7 @@ export default function TicketNST() {
       ) {
         history.push('/nst/payment');
       }
-      if (
-        nstTickets.data.status === 'active' ||
-        nstTickets.data.status === 'awaiting_verification'
-      ) {
+      if (nstTickets.data.status === 'awaiting_verification') {
         history.push('/nst');
       }
     }

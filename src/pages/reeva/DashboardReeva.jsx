@@ -8,6 +8,7 @@ import Loading from '@/components/Loading';
 import Error500 from '../error/500';
 import axios from 'axios';
 import useSWR from 'swr';
+import UnstyledLink from '@/components/UnstyledLink';
 
 export default function DashboardReeva() {
   const { user } = useAuthState();
@@ -20,6 +21,7 @@ export default function DashboardReeva() {
 
   useEffect(() => {
     if (data) {
+      console.log(data.data);
       if (
         data.data.status === 'awaiting_payment' ||
         data.data.status === 'need_revision'
@@ -29,10 +31,7 @@ export default function DashboardReeva() {
     }
   }, [data, history]);
 
-  if (error) {
-    if (error.response.status === 404) {
-      history.push(`/reeva/registration`);
-    }
+  if (error && error.response.status !== 404) {
     return <Error500 />;
   }
   if (!data && !error) return <Loading />;
@@ -183,12 +182,13 @@ export default function DashboardReeva() {
                     />
 
                     {data.data.status === 'active' ? (
-                      <Link
+                      <UnstyledLink
                         className=' mb-4 flex justify-center bg-reeva hover:bg-reeva-100 font-primary h-10 rounded-xl w-full text-white hover:text-reeva items-center md:mb-2'
-                        href={`${process.env.PUBLIC_URL}/nst/ticket`}
+                        href={`${process.env.PUBLIC_URL}/reeva/ticket`}
+                        openNewTab={false}
                       >
                         Lihat Tiket Disini
-                      </Link>
+                      </UnstyledLink>
                     ) : data.data.status === 'awaiting_verification' ? (
                       <p className='mb-4 text-nst-red align-center font-primary'>
                         Tiket sedang dalam proses verifikasi.

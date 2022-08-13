@@ -31,12 +31,6 @@ export default function PembayaranNST() {
       ) {
         history.push('/nst');
       }
-      if (
-        nstPayment.data.status === 'awaiting_payment' ||
-        nstPayment.data.status === 'need_revision'
-      ) {
-        history.push('/nst/payment');
-      }
     }
   }, [nstPayment]);
 

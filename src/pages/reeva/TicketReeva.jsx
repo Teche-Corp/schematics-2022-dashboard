@@ -20,10 +20,7 @@ export default function TicketReeva() {
       ) {
         history.push('/reeva/payment');
       }
-      if (
-        reevaTickets.data.status === 'active' ||
-        reevaTickets.data.status === 'awaiting_verification'
-      ) {
+      if (reevaTickets.data.status === 'awaiting_verification') {
         history.push('/reeva');
       }
     }

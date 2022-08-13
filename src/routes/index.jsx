@@ -473,7 +473,7 @@ const routeItems = [
     key: 'admin-nlc-verifikasi',
     path: '/admin/sch-nlc/verifikasi',
     component: VerifikasiNLC,
-    visible: true
+    visible: true,
   },
   {
     auth: 'user',
@@ -481,6 +481,22 @@ const routeItems = [
     key: 'reeva-ticket',
     path: '/reeva/ticket',
     component: ReevaTicket,
+    visible: true,
+  },
+  {
+    auth: 'user',
+    route: PrivateRoute,
+    key: 'reeva-registration',
+    path: '/reeva/registration',
+    component: ReevaRegister,
+    visible: true,
+  },
+  {
+    auth: 'user',
+    route: PrivateRoute,
+    key: 'reeva-payment',
+    path: '/reeva/payment',
+    component: PaymentReeva,
     visible: true,
   },
   {
