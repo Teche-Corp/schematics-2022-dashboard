@@ -6,7 +6,6 @@ import {
 } from 'react-component-export-image';
 
 const ComponentToPrint = React.forwardRef((props, ref, data) => {
-  console.log(data);
   return (
     <>
       <div
@@ -23,7 +22,7 @@ const ComponentToPrint = React.forwardRef((props, ref, data) => {
 
             <p className='text-gray-300 '>Date &amp; Time</p>
             <p className='font-bold mb-4  text-xl md:text-2xl'>
-              {'21 Dec 2021 / 07.00 PM'}
+              {'22 Oktober 2022'}
             </p>
 
             <p className='text-gray-300 '>Ticket</p>

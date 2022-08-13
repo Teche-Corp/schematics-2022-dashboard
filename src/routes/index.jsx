@@ -68,6 +68,12 @@ import NSTregister from '@/pages/nst/NSTregister';
 import CreateTeamJuniorKetua from '@/pages/npc/CreateTeamJuniorKetua';
 import PembayaranNST from '@/pages/nst/PaymentNST';
 import TicketNST from '@/pages/nst/TicketNST';
+import DashboardReeva from '@/pages/reeva/DashboardReeva';
+import PaymentReeva from '@/pages/reeva/PaymentReeva';
+import ReevaRegister from '@/pages/reeva/ReevaRegister';
+import ReevaTicket from '@/pages/reeva/TicketReeva';
+
+import PublicImage from '@/pages/PublicImage';
 
 // import CreateTeamKetua from '@/pages/nlc/CreateTeamKetua';
 
@@ -342,6 +348,14 @@ const routeItems = [
     visible: true,
   },
   {
+    auth: 'all',
+    route: AuthRoute,
+    key: 'getimage',
+    path: '/getimage',
+    component: PublicImage,
+    visible: true,
+  },
+  {
     auth: 'user',
     route: PrivateRoute,
     key: 'nlc-create-team',
@@ -459,6 +473,22 @@ const routeItems = [
     key: 'admin-nlc-verifikasi',
     path: '/admin/sch-nlc/verifikasi',
     component: VerifikasiNLC,
+    visible: true
+  },
+  {
+    auth: 'user',
+    route: PrivateRoute,
+    key: 'reeva-ticket',
+    path: '/reeva/ticket',
+    component: ReevaTicket,
+    visible: true,
+  },
+  {
+    auth: 'user',
+    route: PrivateRoute,
+    key: 'reeva-dashboard',
+    path: '/reeva',
+    component: DashboardReeva,
     visible: true,
   },
 ];

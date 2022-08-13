@@ -95,7 +95,6 @@ export default function CreateTeamKetua() {
 
   useEffect(() => {
     if (teamPayment) {
-      console.log(teamPayment.data);
       if (
         teamPayment.data.status === 'active' ||
         teamPayment.data.status === 'awaiting_verification'
@@ -130,8 +129,8 @@ export default function CreateTeamKetua() {
               validation={{
                 required: 'Nama tim tidak boleh kosong',
                 minLength: {
-                  value: 6,
-                  message: 'Panjang nama tim setidaknya 6 karakter',
+                  value: 3,
+                  message: 'Panjang nama tim setidaknya 3 karakter',
                 },
                 maxLength: {
                   value: 32,

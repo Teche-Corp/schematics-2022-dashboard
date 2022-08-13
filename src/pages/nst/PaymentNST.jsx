@@ -42,7 +42,7 @@ export default function PembayaranNST() {
 
   if (nstPaymentError) {
     if (nstPaymentError.response.status === 404) {
-      return <Redirect to={'/nst/registration'} />;
+      history.push('/nst/registration');
     }
     return <Error500 />;
   }
@@ -111,6 +111,9 @@ export default function PembayaranNST() {
                 className='w-44 mt-3'
               ></img>
 
+              <p className='font-tertiary font-normal text-white mt-4 md:mt-6 text-sm md:text-base'>
+                QRIS a.n Schematics ITS
+              </p>
               <p className='font-tertiary font-normal text-white mt-4 md:mt-6 text-sm md:text-base'>
                 Atau melalui rekening berikut:
               </p>
