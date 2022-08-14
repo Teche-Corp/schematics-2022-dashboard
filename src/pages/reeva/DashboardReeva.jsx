@@ -52,15 +52,12 @@ export default function DashboardReeva() {
               <span className='text-reeva'>
                 Revolutionary Entertainments and Expo with Various Art 2022
               </span>{' '}
-              merupakan penutup dari rangkaian acara Schematics. Schematics
-              REEVA ini akan digelar dengan menghadirkan
+              merupakan penutup dari rangkaian acara Schematics.
               <span className='text-reeva'>
                 {' '}
-                expo dan konser musik dengan talkshow bersama sederet bintang
-                tamu.
+                Schematics REEVA ini akan digelar dengan menghadirkan expo dan
+                konser musik.
               </span>{' '}
-              Schematics REEVA dapat diikuti oleh masyarakat umum Schematics
-              REEVA dapat diakses melalui Youtube.
             </p>
           </div>
           <div className='w-full flex flex-row px-4 justify-center'>
