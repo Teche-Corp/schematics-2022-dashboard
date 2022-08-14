@@ -30,7 +30,7 @@ export default function VerifikasiNLC() {
     return <Loading />;
   }
   const updateTim = (data) => {
-    console.log(data);
+    // console.log(data);
   };
 
   return (

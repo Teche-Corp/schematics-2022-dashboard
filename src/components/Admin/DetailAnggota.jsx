@@ -153,7 +153,7 @@ export default function DetailAnggota({ detailAnggota, index, from = '' }) {
                 id='discord-tag'
               ></InputAdmin>
             ) : null}
-            {from && from.split('-')[0] === 'nlc' ? (
+            {from.split('-')[0] !== 'npc' ? (
               <>
                 <ImageFetch
                   imgpath={detailAnggota?.bukti_twibbon_url}

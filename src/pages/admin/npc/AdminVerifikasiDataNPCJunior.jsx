@@ -33,7 +33,7 @@ export default function AdminVerifikasiData() {
     return <Loading />;
   }
   const updateTim = (data) => {
-    console.log(data);
+    // console.log(data);
   };
 
   return (
@@ -108,12 +108,14 @@ export default function AdminVerifikasiData() {
           </form>
         </FormProvider>
         <div>
-          {npcData?.data?.members
-            .slice(0)
-            .reverse()
-            .map((data, index) => (
-              <DetailAnggota detailAnggota={data} index={index} key={index} />
-            ))}
+          {npcData?.data?.members.map((data, index) => (
+            <DetailAnggota
+              detailAnggota={data}
+              index={index}
+              key={index}
+              from={'npc-junior'}
+            />
+          ))}
         </div>
         {/* <Input disabled={true} label='Nama' /> */}
       </div>
