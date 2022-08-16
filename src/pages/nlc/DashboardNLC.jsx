@@ -239,7 +239,7 @@ function DashboardNLC() {
                                 href='https://drive.google.com/drive/folders/1MMaohKdSb3EmrSnq8E--Ssk15BX1lhzV'
                                 className='text-nlc hover:text-nlc-300'
                               >
-                                Twibbon Disini
+                                Twibbon di sini
                               </a>
                             </span>
                           }
@@ -265,7 +265,7 @@ function DashboardNLC() {
                                 href='https://drive.google.com/file/d/1GOjom5-0FyyQkd1JNGxJiLjOrYKKxxBD/view?usp=sharing'
                                 className='text-nlc hover:text-nlc-300'
                               >
-                                Poster Disini
+                                Poster di sini
                               </a>
                             </span>
                           }
@@ -289,7 +289,7 @@ function DashboardNLC() {
                           className='bg-nlc hover:bg-nlc-300 font-primary'
                           loading={false}
                         >
-                          Daftar
+                          Upload
                         </SubmitButton>
                       </div>
                     )}
