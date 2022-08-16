@@ -4,7 +4,7 @@ import SubmitButton from '@/components/SubmitButton';
 import { useAuthState } from '@/contexts/AuthContext';
 import DashboardShell from '@/layout/DashboardShell';
 import { NLC_REGION, TEAM_STATUS } from '@/lib/constants';
-import { bearerToken } from '@/lib/helper';
+import { bearerToken, getNLCTeamStatus } from '@/lib/helper';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -23,7 +23,7 @@ function DashboardNLC() {
     const region = NLC_REGION.filter((region) => {
       return region.value.toString() === region_id;
     });
-    return region[0].text;
+    return region[0];
   };
 
   const getMyNLCProfile = (nlcdata) => {
@@ -138,7 +138,7 @@ function DashboardNLC() {
                     <li className='col-span-5'>Region</li>
                     <p>:</p>
                     <p className='col-span-6 font-bold'>
-                      {getNlcRegion(data.data.region)}
+                      {getNlcRegion(data.data.region).text}
                     </p>
                     <li className='col-span-5'>Guru Pendamping (GP)</li>
                     <p>:</p>
@@ -153,8 +153,24 @@ function DashboardNLC() {
                     <li className='col-span-5'>Status Tim</li>
                     <p>:</p>
                     <p className='col-span-6 font-bold'>
-                      {TEAM_STATUS[data.data.status]}
+                      {TEAM_STATUS[getNLCTeamStatus(data.data)]}
                     </p>
+                    {getNLCTeamStatus(data.data) === 'active' && (
+                      <>
+                        <li className='col-span-5'>
+                          Link Grup Whatsapp Region
+                        </li>
+                        <p>:</p>
+                        <p className='col-span-6 font-bold'>
+                          <a
+                            className='text-nlc hover:text-nlc-200'
+                            href={getNlcRegion(data.data.region).waGroup}
+                          >
+                            Di sini
+                          </a>
+                        </p>
+                      </>
+                    )}
                   </div>
                 </ul>
               </div>
@@ -301,6 +317,18 @@ function DashboardNLC() {
               <p className='text-3xl font-bold text-center md:text-left text-nlc'>
                 Pemberitahuan
               </p>
+              <ul className='list-disc list-inside mt-2 font-bold text-lg'>
+                <li>
+                  Untuk tim yang berstatus Aktif, mohon untuk segera masuk ke
+                  grup WA region melalui link yang tertera pada dashboard
+                </li>
+                <li>
+                  Untuk tim yang berstatus "Menunggu anggota mengupload file
+                  pendaftaran", mohon untuk setiap anggota segera melengkapi
+                  berkas bukti vaksin, bukti bagikan poster, dan bukti upload
+                  twibbon
+                </li>
+              </ul>
             </div>
           </div>
         </div>
