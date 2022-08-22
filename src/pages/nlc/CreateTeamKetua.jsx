@@ -18,10 +18,13 @@ import Error500 from '../error/500';
 export default function CreateTeamKetua() {
   const methods = useForm();
   const history = useHistory();
-  const { control, handleSubmit } = methods;
+  const { control, handleSubmit, watch } = methods;
   const [provinces, setProvinces] = useState(undefined);
   const [cities, setCities] = useState(undefined);
   const { user } = useAuthState();
+
+  const kode_voucher = watch('kode_voucher');
+  const region = watch('region');
 
   const { data: teamPayment, error: teamPaymentError } = useSWR('/my_nlc', {
     shouldRetryOnError: false,
@@ -51,6 +54,35 @@ export default function CreateTeamKetua() {
           history.push('/nlc/payment');
           return 'Berhasil membuat tim';
         },
+        error: (err) => {
+          return err.response.data.message;
+        },
+      },
+    );
+  };
+
+  const handleCheckKode = async () => {
+    if (kode_voucher === undefined) {
+      return toast.error('Anda belum mengisi form kode promo');
+    }
+    if (region === undefined) {
+      return toast.error('Anda belum memilih region anda');
+    }
+    toast.promise(
+      axios.post(
+        '/check_voucher',
+        {
+          kode: kode_voucher,
+          region: region,
+          tipe: 'nlc',
+        },
+        {
+          headers: { ...bearerToken() },
+        },
+      ),
+      {
+        loading: 'Loading...',
+        success: 'Kode promo dapat digunakan',
         error: (err) => {
           return err.response.data.message;
         },
@@ -277,6 +309,29 @@ export default function CreateTeamKetua() {
                 },
               }}
             />
+            <div className='w-full space-y-2'>
+              <div className='w-full'>
+                <Input
+                  label='Kode Voucher'
+                  validation={{
+                    maxLength: {
+                      value: 32,
+                      message: 'Kode promo tidak boleh lebih dari 32 karakter',
+                    },
+                  }}
+                  id='kode_voucher'
+                />
+              </div>
+              <div className='w-1/5'>
+                <button
+                  type='button'
+                  onClick={handleCheckKode}
+                  className='flex items-center justify-center w-full px-4 py-2 text-sm font-medium border border-transparent rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 hover:bg-light-700 font-primary bg-npc'
+                >
+                  Cek Kode
+                </button>
+              </div>
+            </div>
             <Input
               label='Darimana kamu mendapat informasi Schematics'
               validation={{
