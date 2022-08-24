@@ -10,6 +10,10 @@ export const BANKS = [
     value: 'shopee_pay',
   },
   {
+    text: 'Gopay',
+    value: 'gopay',
+  },
+  {
     text: 'Seabank',
     value: 'seabank',
   },
