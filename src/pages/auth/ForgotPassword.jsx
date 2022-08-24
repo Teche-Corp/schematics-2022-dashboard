@@ -2,13 +2,38 @@ import Input from '@/components/Input';
 import SubmitButton from '@/components/SubmitButton';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import axios from 'axios';
+import { bearerToken } from '@/lib/helper';
+import toast from 'react-hot-toast';
+import { useHistory } from 'react-router-dom';
 
 export const ForgotPassword = () => {
+  const history = useHistory();
   const methods = useForm();
   const { handleSubmit } = methods;
 
-  const handleLupaPassword = (data) => {
+  const handleLupaPassword = async (data) => {
     console.log(data);
+    const formData = new FormData();
+
+    formData.append('email', data);
+
+    toast.promise(
+      axios.post('/forgot_password', formData, {
+        headers: { ...bearerToken(), 'Content-Type': 'multipart/form-data' },
+      }),
+      {
+        loading: 'Loading...',
+        success: (res) => {
+          history.push('/reset_password');
+          return 'Berhasil membeli tiket';
+        },
+        error: (err) => {
+          console.log(err);
+          return err;
+        },
+      },
+    );
   };
 
   return (

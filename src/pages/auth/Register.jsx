@@ -23,7 +23,7 @@ export default function Login() {
         history.push('/login', state);
         return 'Berhasil mendaftarkan akun';
       },
-      error: (error) => error.response.data.message,
+      error: (error) => error.response.data?.message,
     });
   };
 
