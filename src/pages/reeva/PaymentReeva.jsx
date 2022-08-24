@@ -108,7 +108,7 @@ export default function PaymentReeva() {
               ></img>
 
               <p className='font-tertiary font-normal text-white mt-4 md:mt-6 text-sm md:text-base'>
-                QRIS a.n Schematics ITS
+                QRIS a.n Schematics Reeva 2022
               </p>
               <p className='font-tertiary font-normal text-white mt-4 md:mt-6 text-sm md:text-base'>
                 Atau melalui rekening berikut:
