@@ -4,16 +4,35 @@ import SubmitButton from '@/components/SubmitButton';
 import useQuery from '@/hooks/useQuery';
 import React, { useRef } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import axios from 'axios';
+import { bearerToken } from '@/lib/helper';
+import toast from 'react-hot-toast';
+import { useHistory } from 'react-router-dom';
 
 export const ResetPassword = () => {
+  const history = useHistory();
   const query = useQuery();
   const methods = useForm();
   const { handleSubmit, watch } = methods;
   const password = useRef({});
-  password.current = watch('password', '');
+  password.current = watch('new_password', '');
 
   const handleResetPassword = (data) => {
-    console.log(data);
+    toast.promise(
+      axios.post('/reset_password', data, {
+        headers: { ...bearerToken() },
+      }),
+      {
+        loading: 'Loading...',
+        success: (res) => {
+          history.push('/login');
+          return 'Password berhasil diubah';
+        },
+        error: (err) => {
+          return err.response.data?.message;
+        },
+      },
+    );
   };
 
   return (
@@ -34,7 +53,7 @@ export const ResetPassword = () => {
             />
             <PasswordInput
               label='Password Baru'
-              id='password'
+              id='new_password'
               validation={{
                 required: 'Password tidak boleh kosong',
                 minLength: {

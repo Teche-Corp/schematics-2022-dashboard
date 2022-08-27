@@ -13,24 +13,18 @@ export const ForgotPassword = () => {
   const { handleSubmit } = methods;
 
   const handleLupaPassword = async (data) => {
-    console.log(data);
-    const formData = new FormData();
-
-    formData.append('email', data);
-
     toast.promise(
-      axios.post('/forgot_password', formData, {
-        headers: { ...bearerToken(), 'Content-Type': 'multipart/form-data' },
+      axios.post('/forgot_password', data, {
+        headers: { ...bearerToken() },
       }),
       {
         loading: 'Loading...',
         success: (res) => {
-          history.push('/reset_password');
-          return 'Berhasil membeli tiket';
+          history.push('/login');
+          return 'Email berhsail dikirim, silahkan cek email anda';
         },
         error: (err) => {
-          console.log(err);
-          return err;
+          return err.response.data?.message;
         },
       },
     );
