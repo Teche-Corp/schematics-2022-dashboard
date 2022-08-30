@@ -193,7 +193,7 @@ export default function JoinTeamJunior() {
             <DragnDropInput
               label={
                 <span>
-                  diganti jadi "Screenshot Hasil Pencarian NISN".{' '}
+                  Screenshot Hasil Pencarian NISN.{' '}
                   <a
                     href='https://nisn.data.kemdikbud.go.id/index.php/Cindex/formcaribynama'
                     className='text-white hover:text-nlc-300'
