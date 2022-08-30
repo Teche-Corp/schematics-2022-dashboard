@@ -191,7 +191,17 @@ export default function JoinTeamJunior() {
             />
             <hr className='w-full bg-white' />
             <DragnDropInput
-              label='Kartu Pelajar/Surat Keterangan Aktif/Surat Tugas'
+              label={
+                <span>
+                  diganti jadi "Screenshot Hasil Pencarian NISN".{' '}
+                  <a
+                    href='https://nisn.data.kemdikbud.go.id/index.php/Cindex/formcaribynama'
+                    className='text-white hover:text-nlc-300'
+                  >
+                    Cek Di Sini
+                  </a>
+                </span>
+              }
               id='surat'
               accept='image/png, image/jpg, image/jpeg'
               helperText='File dalam format jpg, png, atau jpeg'
