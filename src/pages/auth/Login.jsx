@@ -34,7 +34,7 @@ export default function Login() {
           history.push('/landing', state);
           return 'Berhasil masuk ke akun anda';
         },
-        error: (err) => err,
+        error: (err) => err.response.data?.message,
       },
     );
   };
