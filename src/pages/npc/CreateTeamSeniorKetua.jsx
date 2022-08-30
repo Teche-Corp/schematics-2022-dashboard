@@ -337,9 +337,9 @@ export default function CreateTeamSeniorKetua() {
                   Screenshot Hasil Pencarian NISN.{' '}
                   <a
                     href='https://nisn.data.kemdikbud.go.id/index.php/Cindex/formcaribynama'
-                    className='text-white hover:text-nlc-300'
+                    className='text-npc hover:text-npc-300'
                   >
-                    Cek Di Sini
+                    Cek Link Di Sini
                   </a>
                 </span>
               }
