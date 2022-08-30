@@ -6,6 +6,10 @@ export const BANKS = [
     value: 'cash',
   },
   {
+    text: 'Bank Jago',
+    value: 'bank_jago',
+  },
+  {
     text: 'Shopee Pay',
     value: 'shopee_pay',
   },
