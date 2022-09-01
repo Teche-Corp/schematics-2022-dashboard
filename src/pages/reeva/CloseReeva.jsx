@@ -23,7 +23,7 @@ export default function CloseReeva() {
           <p className='md:text-5xl text-3xl py-12'>Stay Tune for Presale 2</p>
         </div>
         <a
-          href='/landing'
+          href='/'
           type='button'
           className='w-72 h-12 rounded-md bg-reeva text-white'
         >
