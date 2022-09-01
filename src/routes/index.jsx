@@ -80,6 +80,7 @@ import { SuccessResetPassword } from '@/pages/auth/SuccessResetPassword';
 // import CreateTeamKetua from '@/pages/nlc/CreateTeamKetua';
 
 import VerifikasiNLC from '@/pages/admin/nlc/VerifikasiNLC';
+import CloseReeva from '@/pages/reeva/CloseReeva';
 
 // const routeItems = [
 //   {
@@ -515,6 +516,14 @@ const routeItems = [
     key: 'reeva-registration',
     path: '/reeva/registration',
     component: ReevaRegister,
+    visible: true,
+  },
+  {
+    auth: 'user',
+    route: PrivateRoute,
+    key: 'reeva-close',
+    path: '/reeva/close',
+    component: CloseReeva,
     visible: true,
   },
   {
