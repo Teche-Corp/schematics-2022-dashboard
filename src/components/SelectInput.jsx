@@ -31,6 +31,7 @@ export default function SelectInput({
           {...register(id, validation)}
           name={id}
           id={id}
+          defaultValue=''
           disabled={disabled}
           className={classNames(
             readOnly || disabled === true ? 'bg-gray-100' : '',
