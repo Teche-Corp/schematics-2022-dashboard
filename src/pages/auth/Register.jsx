@@ -57,10 +57,6 @@ export default function Login() {
                   id='name'
                   validation={{
                     required: 'Nama Lengkap tidak boleh kosong',
-                    minLength: {
-                      value: 8,
-                      message: 'Nama harus memiliki setidaknya 8 karakter',
-                    },
                     maxLength: {
                       value: 128,
                       message: 'Nama dapat memiliki maksimal 128 karakter',
