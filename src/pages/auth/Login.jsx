@@ -106,6 +106,17 @@ export default function Login() {
             <br />
             <hr className='bg-white w-full' />
             <p className='text-white text-center py-2'>
+              Lupa Password?{' '}
+              <span style={{ color: '#F15412' }}>
+                <UnstyledLink
+                  href='/forgot_password'
+                  className='hover:text-yellow-500'
+                >
+                  Ubah Password
+                </UnstyledLink>
+              </span>
+            </p>
+            <p className='text-white text-center py-2'>
               Belum memiliki akun?{' '}
               <span style={{ color: '#F15412' }}>
                 <UnstyledLink

@@ -29,7 +29,7 @@ export default function ReevaRegister() {
         formData.append(`${key}`, data?.[key][0]);
       } else {
         if (key === 'jumlah_tiket' && data[key] === 5) {
-          data[key] += 1;
+          // data[key] += 1;
         }
         formData.append(`${key}`, data?.[key]);
       }
