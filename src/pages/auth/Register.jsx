@@ -120,7 +120,7 @@ export default function Login() {
 
                 <div>
                   <SubmitButton className='mt-16' loading={false}>
-                    Masuk
+                    Daftar
                   </SubmitButton>
                 </div>
               </form>

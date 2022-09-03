@@ -160,10 +160,6 @@ export default function CreateTeamKetua() {
               label={'Nama Tim'}
               validation={{
                 required: 'Nama tim tidak boleh kosong',
-                minLength: {
-                  value: 3,
-                  message: 'Panjang nama tim setidaknya 3 karakter',
-                },
                 maxLength: {
                   value: 32,
                   message: 'Panjang nama tim setidaknya 32 karakter',
