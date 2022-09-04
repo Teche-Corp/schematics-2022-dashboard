@@ -157,7 +157,7 @@ export default function EditProfile() {
                                   pattern: {
                                     value: /^\+628[1-9][0-9]{7,11}$/,
                                     message:
-                                      'Nomor Telepon harus diawali +62 dan memiliki panjang 13-15 karakter',
+                                      'Nomor Telepon harus diawali +62 dan memiliki panjang 12-16 karakter',
                                   },
                                 }}
                               />

@@ -129,9 +129,9 @@ export default function JoinTeamJunior() {
               validation={{
                 required: 'Nomor Telepon tidak boleh kosong',
                 pattern: {
-                  value: /^\+628[1-9][0-9]{8,10}$/,
+                  value: /^\+628[1-9][0-9]{7,11}$/,
                   message:
-                    'Nomor Telepon harus diawali +62 dan memiliki panjang 13-15 karakter',
+                    'Nomor Telepon harus diawali +62 dan memiliki panjang 12-16 karakter',
                 },
               }}
             />
@@ -143,9 +143,9 @@ export default function JoinTeamJunior() {
               validation={{
                 required: 'Nomor Whatsapp tidak boleh kosong',
                 pattern: {
-                  value: /^\+628[1-9][0-9]{8,10}$/,
+                  value: /^\+628[1-9][0-9]{7,11}$/,
                   message:
-                    'Nomor Whatsapp harus diawali +62 dan memiliki panjang 13-15 karakter',
+                    'Nomor Whatsapp harus diawali +62 dan memiliki panjang 12-16 karakter',
                 },
               }}
             />
@@ -191,7 +191,17 @@ export default function JoinTeamJunior() {
             />
             <hr className='w-full bg-white' />
             <DragnDropInput
-              label='Kartu Pelajar/Surat Keterangan Aktif/Surat Tugas'
+              label={
+                <span>
+                  Screenshot Hasil Pencarian NISN.{' '}
+                  <a
+                    href='https://nisn.data.kemdikbud.go.id/index.php/Cindex/formcaribynama'
+                    className='text-white hover:text-nlc-300'
+                  >
+                    Cek Di Sini
+                  </a>
+                </span>
+              }
               id='surat'
               accept='image/png, image/jpg, image/jpeg'
               helperText='File dalam format jpg, png, atau jpeg'

@@ -13,7 +13,7 @@ import useSWR from 'swr';
 import Error500 from '../error/500';
 
 import { BANKS } from '@/lib/constants';
-export default function PembayaranNST() {
+export default function PaymentReeva() {
   const methods = useForm();
   const { control, handleSubmit } = methods;
   const history = useHistory();
@@ -25,31 +25,24 @@ export default function PembayaranNST() {
   const biaya = String(numberToRupiah(reevaPayment?.data?.biaya));
   useEffect(() => {
     if (reevaPayment) {
-      console.log(reevaPayment);
       if (
         reevaPayment.data.status === 'active' ||
         reevaPayment.data.status === 'awaiting_verification'
       ) {
         history.push('/reeva');
       }
-      if (
-        reevaPayment.data.status === 'awaiting_payment' ||
-        reevaPayment.data.status === 'need_revision'
-      ) {
-        history.push('/reeva/payment');
-      }
     }
   }, [reevaPayment]);
 
   if (reevaPaymentError) {
     if (reevaPaymentError.response.status === 404) {
-      return <Redirect to={'/reeva/registration'} />;
+      history.push('/reeva/registration');
     }
     return <Error500 />;
   }
-  if (!reevaPayment) return <Loading />;
+  if (!reevaPayment && !reevaPaymentError) return <Loading />;
 
-  const handlereevaPayment = (data) => {
+  const handleReevaPayment = (data) => {
     const formData = new FormData();
 
     for (let key in data) {
@@ -95,7 +88,9 @@ export default function PembayaranNST() {
               {/* Nominal */}
               <p className=' text-white text-5xl font-primary mt-6 md:mt-12'>
                 {biaya.slice(0, 7)}
-                <span className='text-nst underline'>{biaya.slice(7, 11)}</span>
+                <span className='text-reeva underline'>
+                  {biaya.slice(7, 11)}
+                </span>
               </p>
               <p className='font-tertiary font-normal mt-2 text-white text-sm md:text-base'>
                 (Nominal <span className='font-bold'>HARUS</span> sesuai hingga
@@ -107,21 +102,24 @@ export default function PembayaranNST() {
 
               {/* Qris */}
               <img
-                src={`${process.env.PUBLIC_URL}/images/nst/qris.png`}
+                src={`${process.env.PUBLIC_URL}/images/reeva/qris.jpg`}
                 alt='login'
                 className='w-44 mt-3'
               ></img>
 
               <p className='font-tertiary font-normal text-white mt-4 md:mt-6 text-sm md:text-base'>
+                QRIS a.n Schematics Reeva 2022
+              </p>
+              <p className='font-tertiary font-normal text-white mt-4 md:mt-6 text-sm md:text-base'>
                 Atau melalui rekening berikut:
               </p>
               <p className='font-tertiary font-normal text-white mt-1 text-sm md:text-base'>
-                1300018840515 (Bank Mandiri a.n ZAHRA FAYYADIYATI)
+                1400021406518 (Bank Mandiri a.n AQSHA NAUFALDY INDRI)
               </p>
             </div>
             <div className='flex justify-start  flex-col p-3'>
               <FormProvider {...methods}>
-                <form onSubmit={handleSubmit(handlereevaPayment)}>
+                <form onSubmit={handleSubmit(handleReevaPayment)}>
                   <SelectInputPayment
                     label='Nama Bank'
                     options={BANKS}
@@ -137,8 +135,8 @@ export default function PembayaranNST() {
                     }}
                     placeholder='Nama Rekening'
                     readOnly={false}
-                  /> */}
-                  {/* <InputPayment
+                  />
+                  <InputPayment
                     label='Nomor Rekening'
                     id='no_rekening'
                     validation={{
@@ -152,8 +150,7 @@ export default function PembayaranNST() {
                     placeholder='Nomor Rekening'
                     readOnly={false}
                   /> */}
-
-                  {/* <DragnDropInputPayment
+                  <DragnDropInputPayment
                     label='Foto atau Bukti Pembayaran'
                     id='bukti_bayar'
                     accept='image/png, image/jpg, image/jpeg'
@@ -162,9 +159,9 @@ export default function PembayaranNST() {
                     validation={{
                       required: 'Foto atau Bukti Pembayaran tidak boleh kosong',
                     }}
-                  /> */}
+                  />
                   <SubmitButtonPayment
-                    className='mt-12 text-white hover:text-black bg-nst font-tertiary font-normal '
+                    className='mt-12 text-white hover:text-black bg-reeva font-tertiary font-normal '
                     loading={false}
                   >
                     Kirim

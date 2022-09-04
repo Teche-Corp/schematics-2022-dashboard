@@ -50,3 +50,29 @@ export const formatUTC = (dateInt, addOffset = false) => {
     return offsetDate;
   }
 };
+
+export function getNLCTeamStatus(team) {
+  const members = team.members;
+  if (team.status !== 'payment_verified') {
+    return team.status;
+  }
+  let status = 'active';
+  for (let member of members) {
+    if (member.status === 'awaiting_file_upload') {
+      status = 'awaiting_file_upload';
+      return status;
+    }
+  }
+  return status;
+}
+
+export function getTicketOption(n) {
+  const res = [];
+  for (let i = 1; i <= n; i++) {
+    res.push({
+      text: i.toString(),
+      value: i,
+    });
+  }
+  return res;
+}

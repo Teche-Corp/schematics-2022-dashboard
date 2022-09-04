@@ -135,6 +135,20 @@ function DashboardNPC() {
                     <p className='col-span-6 font-bold'>
                       {TEAM_STATUS[data.data.status]}
                     </p>
+                    {data.data.status === 'active' && (
+                      <>
+                        <li className='col-span-5'>Link Grup Discord</li>
+                        <p>:</p>
+                        <p className='col-span-6 font-bold'>
+                          <a
+                            className='text-npc hover:text-npc-300'
+                            href='https://discord.gg/amvajPDkVf'
+                          >
+                            https://discord.gg/amvajPDkVf
+                          </a>
+                        </p>
+                      </>
+                    )}
                   </div>
                 </ul>
               </div>
@@ -197,6 +211,12 @@ function DashboardNPC() {
               <p className='text-3xl font-bold text-center md:text-left text-npc'>
                 Pemberitahuan
               </p>
+              <ul className='list-disc list-inside mt-2 font-bold text-lg'>
+                <li>
+                  Untuk tim yang berstatus aktif, mohon untuk segera masuk ke
+                  link discord yang tertera pada dashboard
+                </li>
+              </ul>
             </div>
           </div>
         </div>

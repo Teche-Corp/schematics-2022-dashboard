@@ -8,6 +8,7 @@ import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import useSWR from 'swr';
 import { ImFacebook } from 'react-icons/im';
+import UnstyledLink from '@/components/UnstyledLink';
 
 export default function Dashboard() {
   const { user } = useAuthState();
@@ -29,7 +30,9 @@ export default function Dashboard() {
     }
   }, [data, history]);
 
-  if (error && error.response.status !== 404) return <Error500 />;
+  if (error && error.response.status !== 404) {
+    return <Error500 />;
+  }
   if (!data && !error) return <Loading />;
 
   return (
@@ -69,7 +72,7 @@ export default function Dashboard() {
       ) : (
         <main className='relative z-0 overflow-hidden'>
           {/* Page header */}
-          <div className='bg-dark shadow h-max p-2 md:p-4'>
+          <div className='bg-dark-100 shadow h-max p-2 md:p-4'>
             <div className='flex justify-center md:flex-row flex-col-reverse h-full pt-8 md:gap-x-14 w-full'>
               {/* Biodata  */}
               <div className='w-full flex justify-center md:w-1/2'>
@@ -114,22 +117,30 @@ export default function Dashboard() {
                     <div className='mt-4 md:text-base text-sm'>
                       <p className='font-secondary'>Status</p>
                       <div className='flex flex-row items-center'>
-                        <img
-                          src={`${process.env.PUBLIC_URL}/images/nst/mark.svg`}
-                          alt='mark'
-                          className='mr-2'
-                          height={13}
-                          width={13}
-                        />
-                        <p className='font-secondary font-semibold leading-6 text-nst-red'>
-                          {data.data.status === 'awaiting_payment'
-                            ? 'menunggu pembayaran'
-                            : data.data.status === 'awaiting_verification'
-                            ? 'menunggu verifikasi'
-                            : data.data.status === 'need_revision'
-                            ? 'pembayaran ditolak, silahkan upload ulang'
-                            : data.data.status === 'active'
-                            ? 'pembayaran terverifikasi'
+                        {data?.data.status !== 'active' && (
+                          <img
+                            src={`${process.env.PUBLIC_URL}/images/nst/mark.svg`}
+                            alt='mark'
+                            className='mr-2'
+                            height={13}
+                            width={13}
+                          />
+                        )}
+                        <p
+                          className={`font-secondary font-semibold leading-6 ${
+                            data?.data.status === 'active'
+                              ? 'text-green-500'
+                              : 'text-red-500'
+                          } hover:text-reeva-400-red`}
+                        >
+                          {data?.data.status === 'awaiting_payment'
+                            ? 'Menunggu pembayaran'
+                            : data?.data.status === 'awaiting_verification'
+                            ? 'Menunggu verifikasi'
+                            : data?.data.status === 'need_revision'
+                            ? 'Pembayaran ditolak, silahkan upload ulang'
+                            : data?.data.status === 'active'
+                            ? 'Pembayaran Terverifikasi'
                             : ''}
                         </p>
                       </div>
@@ -151,16 +162,27 @@ export default function Dashboard() {
                     </p>
                     <img
                       src={`${process.env.PUBLIC_URL}/images/nst/assetNST3.svg`}
-                      className='my-4 h-20 w-20 mx-auto md:h-52 md:w-52 md:my-8 '
+                      className='my-4 h-20 w-20 mx-auto md:h-52 md:w-52 md:my-4 '
                       alt='Alien'
                     />
 
-                    <a
-                      className=' mb-4 flex justify-center bg-nst font-primary h-10 rounded-xl w-full text-white items-center md:mb-2'
-                      href={`${process.env.PUBLIC_URL}/nst/ticket`}
-                    >
-                      Lihat Tiket Disini
-                    </a>
+                    {data.data.status === 'active' ? (
+                      <UnstyledLink
+                        className=' mb-4 flex justify-center bg-nst hover:bg-nst-100 font-primary h-10 rounded-xl w-full text-white hover:text-nst items-center md:mb-2'
+                        href={`${process.env.PUBLIC_URL}/nst/ticket`}
+                        openNewTab={false}
+                      >
+                        Lihat Tiket Disini
+                      </UnstyledLink>
+                    ) : data.data.status === 'awaiting_verification' ? (
+                      <p className='mb-4 text-nst-red align-center font-primary'>
+                        Tiket sedang dalam proses verifikasi.
+                      </p>
+                    ) : (
+                      <p className='mb-4 text-nst-red align-center font-primary'>
+                        Harap melakukan pembayaran terlebih dahulu.
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>

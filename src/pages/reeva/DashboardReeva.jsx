@@ -8,28 +8,32 @@ import Loading from '@/components/Loading';
 import Error500 from '../error/500';
 import axios from 'axios';
 import useSWR from 'swr';
+import UnstyledLink from '@/components/UnstyledLink';
 
 export default function DashboardReeva() {
   const { user } = useAuthState();
   const history = useHistory();
 
-  const { data, error } = useSWR('/my_nst', {
+  const { data, error } = useSWR('/my_reeva', {
     shouldRetryOnError: false,
     errorRetryInterval: 0,
   });
 
   useEffect(() => {
-    // if (data) {
-    //   if (
-    //     data.data.status === 'awaiting_payment' ||
-    //     data.data.status === 'need_revision'
-    //   ) {
-    //     history.push(`/nst/payment`);
-    //   }
-    // }
+    if (data) {
+      console.log(data.data);
+      if (
+        data.data.status === 'awaiting_payment' ||
+        data.data.status === 'need_revision'
+      ) {
+        history.push(`/reeva/payment`);
+      }
+    }
   }, [data, history]);
 
-  if (error && error.response.status !== 404) return <Error500 />;
+  if (error && error.response.status !== 404) {
+    return <Error500 />;
+  }
   if (!data && !error) return <Loading />;
 
   return (
@@ -48,15 +52,12 @@ export default function DashboardReeva() {
               <span className='text-reeva'>
                 Revolutionary Entertainments and Expo with Various Art 2022
               </span>{' '}
-              merupakan penutup dari rangkaian acara Schematics. Schematics
-              REEVA ini akan digelar dengan menghadirkan
+              merupakan penutup dari rangkaian acara Schematics.
               <span className='text-reeva'>
                 {' '}
-                expo dan konser musik dengan talkshow bersama sederet bintang
-                tamu.
+                Schematics REEVA ini akan digelar dengan menghadirkan expo dan
+                konser musik.
               </span>{' '}
-              Schematics REEVA dapat diikuti oleh masyarakat umum Schematics
-              REEVA dapat diakses melalui Youtube.
             </p>
           </div>
           <div className='w-full flex flex-row px-4 justify-center'>
@@ -77,7 +78,7 @@ export default function DashboardReeva() {
       ) : (
         <main className='relative z-0 overflow-hidden'>
           {/* Page header */}
-          <div className='bg-dark shadow h-max p-2 md:p-4'>
+          <div className='bg-dark-100 shadow h-max p-2 md:p-4'>
             <div className='flex justify-center md:flex-row flex-col-reverse h-full pt-8 md:gap-x-14 w-full'>
               {/* Biodata  */}
               <div className='w-full flex justify-center md:w-1/2'>
@@ -90,14 +91,14 @@ export default function DashboardReeva() {
                     <div className='mt-8 md:text-base text-sm'>
                       <p className='font-secondary'>Nama</p>
                       <p className='font-secondary font-semibold leading-6'>
-                        {data?.data.tickets[0].name}
+                        {data.data.tickets[0].name}
                       </p>
                     </div>
                     {/* Alamat */}
                     <div className='mt-4 md:text-base text-sm'>
                       <p className='font-secondary'>Alamat</p>
                       <p className='font-secondary font-semibold leading-6'>
-                        {data?.data.tickets[0].alamat}
+                        {data.data.tickets[0].alamat}
                       </p>
                     </div>
                     <div className='mt-4 md:text-base text-sm'>
@@ -128,22 +129,30 @@ export default function DashboardReeva() {
                     <div className='mt-4 md:text-base text-sm'>
                       <p className='font-secondary'>Status</p>
                       <div className='flex flex-row items-center'>
-                        <img
-                          src={`${process.env.PUBLIC_URL}/images/nst/mark.svg`}
-                          alt='mark'
-                          className='mr-2'
-                          height={13}
-                          width={13}
-                        />
-                        <p className='font-secondary font-semibold leading-6 text-nst-red hover:text-reeva-400-red'>
+                        {data?.data.status !== 'active' && (
+                          <img
+                            src={`${process.env.PUBLIC_URL}/images/nst/mark.svg`}
+                            alt='mark'
+                            className='mr-2'
+                            height={13}
+                            width={13}
+                          />
+                        )}
+                        <p
+                          className={`font-secondary font-semibold leading-6 ${
+                            data?.data.status === 'active'
+                              ? 'text-green-500'
+                              : 'text-red-500'
+                          } hover:text-reeva-400-red`}
+                        >
                           {data?.data.status === 'awaiting_payment'
-                            ? 'menunggu pembayaran'
+                            ? 'Menunggu pembayaran'
                             : data?.data.status === 'awaiting_verification'
-                            ? 'menunggu verifikasi'
+                            ? 'Menunggu verifikasi'
                             : data?.data.status === 'need_revision'
-                            ? 'pembayaran ditolak, silahkan upload ulang'
+                            ? 'Pembayaran ditolak, silahkan upload ulang'
                             : data?.data.status === 'active'
-                            ? 'pembayaran terverifikasi'
+                            ? 'Pembayaran Terverifikasi'
                             : ''}
                         </p>
                       </div>
@@ -169,12 +178,23 @@ export default function DashboardReeva() {
                       alt='Reeva Mascot'
                     />
 
-                    <a
-                      className=' mb-4 flex justify-center bg-reeva hover:bg-reeva-400 font-primary h-10 rounded-xl w-full text-white items-center md:mb-2'
-                      href={`${process.env.PUBLIC_URL}/nst/ticket`}
-                    >
-                      Lihat Tiket Disini
-                    </a>
+                    {data.data.status === 'active' ? (
+                      <UnstyledLink
+                        className=' mb-4 flex justify-center bg-reeva hover:bg-reeva-100 font-primary h-10 rounded-xl w-full text-white hover:text-reeva items-center md:mb-2'
+                        href={`${process.env.PUBLIC_URL}/reeva/ticket`}
+                        openNewTab={false}
+                      >
+                        Lihat Tiket Disini
+                      </UnstyledLink>
+                    ) : data.data.status === 'awaiting_verification' ? (
+                      <p className='mb-4 text-nst-red align-center font-primary'>
+                        Tiket sedang dalam proses verifikasi.
+                      </p>
+                    ) : (
+                      <p className='mb-4 text-nst-red align-center font-primary'>
+                        Harap melakukan pembayaran terlebih dahulu.
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>

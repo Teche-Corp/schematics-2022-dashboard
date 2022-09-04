@@ -11,39 +11,39 @@ import {
 import PrivateRoute from './PrivateRoute';
 import AuthRoute from './AuthRoute';
 // comment
-import ChooseEvent from '@/pages/ChooseEvent';
-import Dashboard from '@/pages/Dashboard';
-import EditProfile from '@/pages/EditProfile';
+// import ChooseEvent from '@/pages/ChooseEvent';
+// import Dashboard from '@/pages/Dashboard';
+// import EditProfile from '@/pages/EditProfile';
 
-import SignIn from '@/pages/auth/SignIn';
-import SignUp from '@/pages/auth/SignUp';
-import ForgotPassword from '@/pages/auth/ForgotPassword';
-import ChangePassword from '@/pages/auth/ChangePassword';
-import ResetPassword from '@/pages/auth/ResetPassword';
+// import SignIn from '@/pages/auth/SignIn';
+// import SignUp from '@/pages/auth/SignUp';
+// import ForgotPassword from '@/pages/auth/ForgotPassword';
+// import ChangePassword from '@/pages/auth/ChangePassword';
+// import ResetPassword from '@/pages/auth/ResetPassword';
 
-import EventNLC from '@/pages/nlc/EventNLC';
-import CreateTeam from '@/pages/nlc/CreateTeam';
-import PaymentNLC from '@/pages/nlc/PaymentNLC';
+// import EventNLC from '@/pages/nlc/EventNLC';
+// import CreateTeam from '@/pages/nlc/CreateTeam';
+// import PaymentNLC from '@/pages/nlc/PaymentNLC';
 
-import EventNPC from '@/pages/npc/EventNPC';
-import CreateTeamNPCJunior from '@/pages/npc/CreateTeamNPCJunior';
-import CreateTeamNPCSenior from '@/pages/npc/CreateTeamNPCSenior';
-import PaymentNPC from '@/pages/npc/PaymentNPC';
+// import EventNPC from '@/pages/npc/EventNPC';
+// import CreateTeamNPCJunior from '@/pages/npc/CreateTeamNPCJunior';
+// import CreateTeamNPCSenior from '@/pages/npc/CreateTeamNPCSenior';
+// import PaymentNPC from '@/pages/npc/PaymentNPC';
 
-import EventNST from '@/pages/nst/EventNST';
+// import EventNST from '@/pages/nst/EventNST';
 
-import Admin from '@/pages/admin/Admin';
-import Voucher from '@/pages/admin/voucher/Voucher';
-import AddVoucher from '@/pages/admin/voucher/AddVoucher';
-import UpdateUserNLC from '@/pages/admin/nlc/UpdateUserNLC';
-import AdminNLC from '@/pages/admin/nlc/AdminNLC';
-import AdminNpcSenior from '@/pages/admin/npc/AdminNpcSenior';
-import UpdateUserNpcSenior from '@/pages/admin/npc/UpdateUserNpcSenior';
-import AdminNst from '@/pages/admin/nst/AdminNst';
-import AdminReeva from '@/pages/admin/reeva/AdminReeva';
-import AdminNpc from '@/pages/admin/npc/AdminNpc';
-import AdminNpcJunior from '@/pages/admin/npc/AdminNpcJunior';
-import UpdateUserNpcJunior from '@/pages/admin/npc/UpdateUserNpcJunior';
+// import Admin from '@/pages/admin/Admin';
+// import Voucher from '@/pages/admin/voucher/Voucher';
+// import AddVoucher from '@/pages/admin/voucher/AddVoucher';
+// import UpdateUserNLC from '@/pages/admin/nlc/UpdateUserNLC';
+// import AdminNLC from '@/pages/admin/nlc/AdminNLC';
+// import AdminNpcSenior from '@/pages/admin/npc/AdminNpcSenior';
+// import UpdateUserNpcSenior from '@/pages/admin/npc/UpdateUserNpcSenior';
+// import AdminNst from '@/pages/admin/nst/AdminNst';
+// import AdminReeva from '@/pages/admin/reeva/AdminReeva';
+// import AdminNpc from '@/pages/admin/npc/AdminNpc';
+// import AdminNpcJunior from '@/pages/admin/npc/AdminNpcJunior';
+// import UpdateUserNpcJunior from '@/pages/admin/npc/UpdateUserNpcJunior';
 // -- comment
 import PageNotFound from '@/pages/error/404';
 // import Error500 from '@/pages/error/500';
@@ -73,12 +73,21 @@ import NSTregister from '@/pages/nst/NSTregister';
 // import CreateTeamJuniorKetua from '@/pages/npc/CreateTeamJuniorKetua';
 import PembayaranNST from '@/pages/nst/PaymentNST';
 import TicketNST from '@/pages/nst/TicketNST';
+import DashboardReeva from '@/pages/reeva/DashboardReeva';
+import PaymentReeva from '@/pages/reeva/PaymentReeva';
+import ReevaRegister from '@/pages/reeva/ReevaRegister';
+import ReevaTicket from '@/pages/reeva/TicketReeva';
+
 import PublicImage from '@/pages/PublicImage';
+import { ForgotPassword } from '@/pages/auth/ForgotPassword';
+import { ResetPassword } from '@/pages/auth/ResetPassword';
+import { SuccessResetPassword } from '@/pages/auth/SuccessResetPassword';
 // import CreateTeamKetua from '@/pages/nlc/CreateTeamKetua';
 import AdminVerifikasiDataNPCJunior from '../pages/admin/npc/AdminVerifikasiDataNPCJunior';
 import AdminVerifikasiDataNPCSenior from '../pages/admin/npc/AdminVerifikasiDataSenior';
 
 import VerifikasiNLC from '@/pages/admin/nlc/VerifikasiNLC';
+import CloseReeva from '@/pages/reeva/CloseReeva';
 import TableNLC from '@/pages/admin/nlc/TableNLC';
 import TableNPCSenior from '@/pages/admin/npc/TableNPCSenior';
 import TableNPCJunior from '@/pages/admin/npc/TableNPCJunior';
@@ -435,6 +444,30 @@ const routeItems = [
   },
   {
     auth: 'user',
+    route: AuthRoute,
+    key: 'forgot_password',
+    path: '/forgot_password',
+    component: ForgotPassword,
+    visible: true,
+  },
+  {
+    auth: 'user',
+    route: AuthRoute,
+    key: 'reset_password',
+    path: '/reset_password',
+    component: ResetPassword,
+    visible: true,
+  },
+  {
+    auth: 'user',
+    route: AuthRoute,
+    key: 'success_reset_password',
+    path: '/success_reset_password',
+    component: SuccessResetPassword,
+    visible: true,
+  },
+  {
+    auth: 'user',
     route: PrivateRoute,
     key: 'nlc-create-team',
     path: '/nlc/registration',
@@ -551,6 +584,46 @@ const routeItems = [
     key: 'admin-nlc-verifikasi',
     path: '/admin/sch-nlc/verifikasi',
     component: VerifikasiNLC,
+    visible: true,
+  },
+  {
+    auth: 'user',
+    route: PrivateRoute,
+    key: 'reeva-ticket',
+    path: '/reeva/ticket',
+    component: ReevaTicket,
+    visible: true,
+  },
+  {
+    auth: 'user',
+    route: PrivateRoute,
+    key: 'reeva-registration',
+    path: '/reeva/registration',
+    component: CloseReeva,
+    visible: true,
+  },
+  {
+    auth: 'user',
+    route: PrivateRoute,
+    key: 'reeva-close',
+    path: '/reeva/close',
+    component: CloseReeva,
+    visible: true,
+  },
+  {
+    auth: 'user',
+    route: PrivateRoute,
+    key: 'reeva-payment',
+    path: '/reeva/payment',
+    component: PaymentReeva,
+    visible: true,
+  },
+  {
+    auth: 'user',
+    route: PrivateRoute,
+    key: 'reeva-dashboard',
+    path: '/reeva',
+    component: DashboardReeva,
     visible: true,
   },
 ];

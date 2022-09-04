@@ -6,7 +6,6 @@ import {
 } from 'react-component-export-image';
 
 const ComponentToPrint = React.forwardRef((props, ref, data) => {
-  console.log(data);
   return (
     <>
       <div

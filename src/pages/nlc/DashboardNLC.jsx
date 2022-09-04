@@ -4,7 +4,7 @@ import SubmitButton from '@/components/SubmitButton';
 import { useAuthState } from '@/contexts/AuthContext';
 import DashboardShell from '@/layout/DashboardShell';
 import { NLC_REGION, TEAM_STATUS } from '@/lib/constants';
-import { bearerToken } from '@/lib/helper';
+import { bearerToken, getNLCTeamStatus } from '@/lib/helper';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -23,7 +23,7 @@ function DashboardNLC() {
     const region = NLC_REGION.filter((region) => {
       return region.value.toString() === region_id;
     });
-    return region[0].text;
+    return region[0];
   };
 
   const getMyNLCProfile = (nlcdata) => {
@@ -138,7 +138,7 @@ function DashboardNLC() {
                     <li className='col-span-5'>Region</li>
                     <p>:</p>
                     <p className='col-span-6 font-bold'>
-                      {getNlcRegion(data.data.region)}
+                      {getNlcRegion(data.data.region).text}
                     </p>
                     <li className='col-span-5'>Guru Pendamping (GP)</li>
                     <p>:</p>
@@ -153,8 +153,24 @@ function DashboardNLC() {
                     <li className='col-span-5'>Status Tim</li>
                     <p>:</p>
                     <p className='col-span-6 font-bold'>
-                      {TEAM_STATUS[data.data.status]}
+                      {TEAM_STATUS[getNLCTeamStatus(data.data)]}
                     </p>
+                    {getNLCTeamStatus(data.data) === 'active' && (
+                      <>
+                        <li className='col-span-5'>
+                          Link Grup Whatsapp Region
+                        </li>
+                        <p>:</p>
+                        <p className='col-span-6 font-bold'>
+                          <a
+                            className='text-nlc hover:text-nlc-200'
+                            href={getNlcRegion(data.data.region).waGroup}
+                          >
+                            Di sini
+                          </a>
+                        </p>
+                      </>
+                    )}
                   </div>
                 </ul>
               </div>
@@ -203,104 +219,129 @@ function DashboardNLC() {
                     </p>
                   </button>
                 </a>
+                <a
+                  href='https://drive.google.com/drive/folders/1TgcidIjyzGt7xXtmqJ6ty24EboesImsI?usp=sharing'
+                  target='_blank'
+                  rel='noreferrer'
+                >
+                  <button className='w-full h-full bg-nlc hover:bg-white hover:text-nlc rounded-lg flex justify-center items-center'>
+                    <p className='text-xl font-bold py-4 px-2'>
+                      Unduh Contoh Soal
+                    </p>
+                  </button>
+                </a>
               </div>
             </div>
-            <div className='w-full bg-white p-6 mt-8 rounded-xl'>
-              <div className='w-full'>
-                <FormProvider {...methods}>
-                  <form onSubmit={handleSubmit(handleImageUpload)}>
-                    <div className='grid md:grid-cols-3 md:grid-rows-1 grid-rows-3 grid-cols-1 gap-4'>
-                      <div className='col-span-1'>
-                        <DragnDropInputBox
-                          defaultValue={
-                            nlcProfile?.bukti_vaksin_url ?? undefined
-                          }
-                          label={
-                            <span className='text-dark-400'>
-                              Sertifikat Vaksinasi atau Surat Keterangan
-                            </span>
-                          }
-                          id='bukti_vaksin'
-                          accept='image/png, image/jpg, image/jpeg'
-                          helperText='File dalam format jpg, png, atau jpeg maksimal 1 MB'
-                          maxFiles={1}
-                          validation={{
-                            required:
-                              'Sertifikat Vaksinasi atau Surat Keterangan tidak boleh kosong',
-                          }}
-                        />
+            {getNLCTeamStatus(data.data) === 'awaiting_file_upload' && (
+              <div className='w-full bg-white p-6 mt-8 rounded-xl'>
+                <div className='w-full'>
+                  <FormProvider {...methods}>
+                    <form onSubmit={handleSubmit(handleImageUpload)}>
+                      <div className='grid md:grid-cols-3 md:grid-rows-1 grid-rows-3 grid-cols-1 gap-4'>
+                        <div className='col-span-1'>
+                          <DragnDropInputBox
+                            defaultValue={
+                              nlcProfile?.bukti_vaksin_url ?? undefined
+                            }
+                            label={
+                              <span className='text-dark-400'>
+                                Sertifikat Vaksinasi atau Surat Keterangan
+                              </span>
+                            }
+                            id='bukti_vaksin'
+                            accept='image/png, image/jpg, image/jpeg'
+                            helperText='File dalam format jpg, png, atau jpeg maksimal 1 MB'
+                            maxFiles={1}
+                            validation={{
+                              required:
+                                'Sertifikat Vaksinasi atau Surat Keterangan tidak boleh kosong',
+                            }}
+                          />
+                        </div>
+                        <div className='col-span-1'>
+                          <DragnDropInputBox
+                            label={
+                              <span className='text-dark-400'>
+                                Bukti Upload Twibbon Media Sosial.{' '}
+                                <a
+                                  href='https://drive.google.com/drive/folders/1MMaohKdSb3EmrSnq8E--Ssk15BX1lhzV'
+                                  className='text-nlc hover:text-nlc-300'
+                                >
+                                  Twibbon di sini
+                                </a>
+                              </span>
+                            }
+                            defaultValue={
+                              nlcProfile?.bukti_twibbon_url ?? undefined
+                            }
+                            id='bukti_twibbon'
+                            accept='image/png, image/jpg, image/jpeg'
+                            helperText='File dalam format jpg, png, atau jpeg maksimal 1 MB'
+                            maxFiles={1}
+                            validation={{
+                              required:
+                                'Bukti Upload Twibbon Media Sosial tidak boleh kosong',
+                            }}
+                          />
+                        </div>
+                        <div className='col-span-1'>
+                          <DragnDropInputBox
+                            label={
+                              <span className='text-dark-400'>
+                                Bukti Upload Poster Instagram Story.{' '}
+                                <a
+                                  href='https://drive.google.com/file/d/1GOjom5-0FyyQkd1JNGxJiLjOrYKKxxBD/view?usp=sharing'
+                                  className='text-nlc hover:text-nlc-300'
+                                >
+                                  Poster di sini
+                                </a>
+                              </span>
+                            }
+                            defaultValue={
+                              nlcProfile?.bukti_poster_url ?? undefined
+                            }
+                            id='bukti_poster'
+                            accept='image/png, image/jpg, image/jpeg'
+                            helperText='File dalam format jpg, png, atau jpeg maksimal 1 MB'
+                            maxFiles={1}
+                            validation={{
+                              required:
+                                'Bukti Upload Poster Instagram Story tidak boleh kosong',
+                            }}
+                          />
+                        </div>
                       </div>
-                      <div className='col-span-1'>
-                        <DragnDropInputBox
-                          label={
-                            <span className='text-dark-400'>
-                              Bukti Upload Twibbon Media Sosial.{' '}
-                              <a
-                                href='https://drive.google.com/drive/folders/1MMaohKdSb3EmrSnq8E--Ssk15BX1lhzV'
-                                className='text-nlc hover:text-nlc-300'
-                              >
-                                Twibbon Disini
-                              </a>
-                            </span>
-                          }
-                          defaultValue={
-                            nlcProfile?.bukti_twibbon_url ?? undefined
-                          }
-                          id='bukti_twibbon'
-                          accept='image/png, image/jpg, image/jpeg'
-                          helperText='File dalam format jpg, png, atau jpeg maksimal 1 MB'
-                          maxFiles={1}
-                          validation={{
-                            required:
-                              'Bukti Upload Twibbon Media Sosial tidak boleh kosong',
-                          }}
-                        />
-                      </div>
-                      <div className='col-span-1'>
-                        <DragnDropInputBox
-                          label={
-                            <span className='text-dark-400'>
-                              Bukti Upload Poster Instagram Story.{' '}
-                              <a
-                                href='https://drive.google.com/file/d/1GOjom5-0FyyQkd1JNGxJiLjOrYKKxxBD/view?usp=sharing'
-                                className='text-nlc hover:text-nlc-300'
-                              >
-                                Poster Disini
-                              </a>
-                            </span>
-                          }
-                          defaultValue={
-                            nlcProfile?.bukti_poster_url ?? undefined
-                          }
-                          id='bukti_poster'
-                          accept='image/png, image/jpg, image/jpeg'
-                          helperText='File dalam format jpg, png, atau jpeg maksimal 1 MB'
-                          maxFiles={1}
-                          validation={{
-                            required:
-                              'Bukti Upload Poster Instagram Story tidak boleh kosong',
-                          }}
-                        />
-                      </div>
-                    </div>
-                    {!nlcProfile?.bukti_vaksin_url && (
-                      <div className='w-full'>
-                        <SubmitButton
-                          className='bg-nlc hover:bg-nlc-300 font-primary'
-                          loading={false}
-                        >
-                          Daftar
-                        </SubmitButton>
-                      </div>
-                    )}
-                  </form>
-                </FormProvider>
+                      {!nlcProfile?.bukti_vaksin_url && (
+                        <div className='w-full'>
+                          <SubmitButton
+                            className='bg-nlc hover:bg-nlc-300 font-primary'
+                            loading={false}
+                          >
+                            Upload
+                          </SubmitButton>
+                        </div>
+                      )}
+                    </form>
+                  </FormProvider>
+                </div>
               </div>
-            </div>
+            )}
             <div className='w-full md:h-64 h-96 bg-white p-6 mt-8 rounded-xl'>
               <p className='text-3xl font-bold text-center md:text-left text-nlc'>
                 Pemberitahuan
               </p>
+              <ul className='list-disc list-inside mt-2 font-bold text-lg'>
+                <li>
+                  Untuk tim yang berstatus Aktif, mohon untuk segera masuk ke
+                  grup WA region melalui link yang tertera pada dashboard
+                </li>
+                <li>
+                  Untuk tim yang berstatus "Menunggu anggota mengupload file
+                  pendaftaran", mohon untuk setiap anggota segera melengkapi
+                  berkas bukti vaksin, bukti bagikan poster, dan bukti upload
+                  twibbon
+                </li>
+              </ul>
             </div>
           </div>
         </div>

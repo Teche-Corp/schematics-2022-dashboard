@@ -2,10 +2,8 @@ import DragnDropInput from '@/components/DragnDropInput';
 import Input from '@/components/Input';
 import Loading from '@/components/Loading';
 import SelectInput from '@/components/SelectInput';
-import SelectInput2 from '@/components/SelectInput2';
 import SubmitButton from '@/components/SubmitButton';
 import { useAuthState } from '@/contexts/AuthContext';
-import { INFO_SCH } from '@/lib/constants';
 import { bearerToken } from '@/lib/helper';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
@@ -18,10 +16,11 @@ import Error500 from '../error/500';
 export default function CreateTeamJuniorKetua() {
   const methods = useForm();
   const history = useHistory();
-  const { control, handleSubmit } = methods;
+  const { control, handleSubmit, watch } = methods;
   const [provinces, setProvinces] = useState(undefined);
   const [cities, setCities] = useState(undefined);
   const { user } = useAuthState();
+  const kode_voucher = watch('kode_voucher');
 
   const { data: teamPayment, error: teamPaymentError } = useSWR('/my_npc', {
     shouldRetryOnError: false,
@@ -50,6 +49,32 @@ export default function CreateTeamJuniorKetua() {
           history.push('/npc_junior/payment');
           return 'Berhasil membuat tim';
         },
+        error: (err) => {
+          return err.response.data.message;
+        },
+      },
+    );
+  };
+
+  const handleCheckKode = async () => {
+    if (kode_voucher === undefined) {
+      return toast.error('Anda belum mengisi form kode promo');
+    }
+    toast.promise(
+      axios.post(
+        '/check_voucher',
+        {
+          kode: kode_voucher,
+          region: 0,
+          tipe: 'npc_junior',
+        },
+        {
+          headers: { ...bearerToken() },
+        },
+      ),
+      {
+        loading: 'Loading...',
+        success: 'Kode promo dapat digunakan',
         error: (err) => {
           return err.response.data.message;
         },
@@ -221,9 +246,9 @@ export default function CreateTeamJuniorKetua() {
               validation={{
                 required: 'Nomor Telepon tidak boleh kosong',
                 pattern: {
-                  value: /^\+628[1-9][0-9]{8,10}$/,
+                  value: /^\+628[1-9][0-9]{7,11}$/,
                   message:
-                    'Nomor Telepon harus diawali +62 dan memiliki panjang 13-15 karakter',
+                    'Nomor Telepon harus diawali +62 dan memiliki panjang 12-16 karakter',
                 },
               }}
             />
@@ -235,9 +260,9 @@ export default function CreateTeamJuniorKetua() {
               validation={{
                 required: 'Nomor Whatsapp tidak boleh kosong',
                 pattern: {
-                  value: /^\+628[1-9][0-9]{8,10}$/,
+                  value: /^\+628[1-9][0-9]{7,11}$/,
                   message:
-                    'Nomor Whatsapp harus diawali +62 dan memiliki panjang 13-15 karakter',
+                    'Nomor Whatsapp harus diawali +62 dan memiliki panjang 12-16 karakter',
                 },
               }}
             />
@@ -274,6 +299,29 @@ export default function CreateTeamJuniorKetua() {
                 },
               }}
             />
+            <div className='w-full space-y-2'>
+              <div className='w-full'>
+                <Input
+                  label='Kode Voucher'
+                  validation={{
+                    maxLength: {
+                      value: 32,
+                      message: 'Kode promo tidak boleh lebih dari 32 karakter',
+                    },
+                  }}
+                  id='kode_voucher'
+                />
+              </div>
+              <div className='w-1/5'>
+                <button
+                  type='button'
+                  onClick={handleCheckKode}
+                  className='flex items-center justify-center w-full px-4 py-2 text-sm font-medium border border-transparent rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 hover:bg-light-700 font-primary bg-npc'
+                >
+                  Cek Kode
+                </button>
+              </div>
+            </div>
             <Input
               label='Darimana kamu mendapat informasi Schematics'
               validation={{
@@ -283,7 +331,17 @@ export default function CreateTeamJuniorKetua() {
             />
             <hr className='w-full bg-white' />
             <DragnDropInput
-              label='Kartu Pelajar/Surat Keterangan Aktif/Surat Tugas'
+              label={
+                <span>
+                  Screenshot Hasil Pencarian NISN.{' '}
+                  <a
+                    href='https://nisn.data.kemdikbud.go.id/index.php/Cindex/formcaribynama'
+                    className='text-white hover:text-nlc-300'
+                  >
+                    Cek Link Di Sini
+                  </a>
+                </span>
+              }
               id='surat'
               accept='image/png, image/jpg, image/jpeg'
               helperText='File dalam format jpg, png, atau jpeg'
