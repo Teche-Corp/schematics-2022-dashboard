@@ -93,6 +93,7 @@ import VerifikasiNLC from '@/pages/admin/nlc/VerifikasiNLC';
 import TableNLC from '@/pages/admin/nlc/TableNLC';
 import TableNPCSenior from '@/pages/admin/npc/TableNPCSenior';
 import TableNPCJunior from '@/pages/admin/npc/TableNPCJunior';
+import CloseReeva from '@/pages/reeva/CloseReeva';
 
 // const routeItems = [
 //   {
@@ -601,7 +602,15 @@ const routeItems = [
     route: PrivateRoute,
     key: 'reeva-registration',
     path: '/reeva/registration',
-    component: ReevaRegister,
+    component: CloseReeva,
+    visible: true,
+  },
+  {
+    auth: 'user',
+    route: PrivateRoute,
+    key: 'reeva-close',
+    path: '/reeva/close',
+    component: CloseReeva,
     visible: true,
   },
   {

@@ -2,13 +2,32 @@ import Input from '@/components/Input';
 import SubmitButton from '@/components/SubmitButton';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import axios from 'axios';
+import { bearerToken } from '@/lib/helper';
+import toast from 'react-hot-toast';
+import { useHistory } from 'react-router-dom';
 
 export const ForgotPassword = () => {
+  const history = useHistory();
   const methods = useForm();
   const { handleSubmit } = methods;
 
-  const handleLupaPassword = (data) => {
-    console.log(data);
+  const handleLupaPassword = async (data) => {
+    toast.promise(
+      axios.post('/forgot_password', data, {
+        headers: { ...bearerToken() },
+      }),
+      {
+        loading: 'Loading...',
+        success: (res) => {
+          history.push('/login');
+          return 'Email berhsail dikirim, silahkan cek email anda';
+        },
+        error: (err) => {
+          return err.response.data?.message;
+        },
+      },
+    );
   };
 
   return (

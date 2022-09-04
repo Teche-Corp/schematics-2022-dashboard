@@ -219,6 +219,17 @@ function DashboardNLC() {
                     </p>
                   </button>
                 </a>
+                <a
+                  href='https://drive.google.com/drive/folders/1TgcidIjyzGt7xXtmqJ6ty24EboesImsI?usp=sharing'
+                  target='_blank'
+                  rel='noreferrer'
+                >
+                  <button className='w-full h-full bg-nlc hover:bg-white hover:text-nlc rounded-lg flex justify-center items-center'>
+                    <p className='text-xl font-bold py-4 px-2'>
+                      Unduh Contoh Soal
+                    </p>
+                  </button>
+                </a>
               </div>
             </div>
             {getNLCTeamStatus(data.data) === 'awaiting_file_upload' && (

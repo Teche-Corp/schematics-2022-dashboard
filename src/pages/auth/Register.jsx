@@ -23,7 +23,7 @@ export default function Login() {
         history.push('/login', state);
         return 'Berhasil mendaftarkan akun';
       },
-      error: (error) => error.response.data.message,
+      error: (error) => error.response.data?.message,
     });
   };
 
@@ -57,10 +57,6 @@ export default function Login() {
                   id='name'
                   validation={{
                     required: 'Nama Lengkap tidak boleh kosong',
-                    minLength: {
-                      value: 8,
-                      message: 'Nama harus memiliki setidaknya 8 karakter',
-                    },
                     maxLength: {
                       value: 128,
                       message: 'Nama dapat memiliki maksimal 128 karakter',
@@ -124,7 +120,7 @@ export default function Login() {
 
                 <div>
                   <SubmitButton className='mt-16' loading={false}>
-                    Masuk
+                    Daftar
                   </SubmitButton>
                 </div>
               </form>

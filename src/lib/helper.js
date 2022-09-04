@@ -65,3 +65,14 @@ export function getNLCTeamStatus(team) {
   }
   return status;
 }
+
+export function getTicketOption(n) {
+  const res = [];
+  for (let i = 1; i <= n; i++) {
+    res.push({
+      text: i.toString(),
+      value: i,
+    });
+  }
+  return res;
+}
