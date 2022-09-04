@@ -142,7 +142,7 @@ function DashboardNPC() {
                         <p className='col-span-6 font-bold'>
                           <a
                             className='text-npc hover:text-npc-300'
-                            href='https://discord.gg/HTazXXeX'
+                            href='https://discord.gg/amvajPDkVf'
                           >
                             https://discord.gg/amvajPDkVf
                           </a>
