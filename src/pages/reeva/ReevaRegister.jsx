@@ -156,7 +156,7 @@ export default function ReevaRegister() {
             />
 
             <SelectInput2
-              label='Darimana kamu mendapat informasi Schematics'
+              label='Darimana kamu mendapat informasi Schematics?'
               id='info_sch'
               options={INFO_SCH}
               validation={{

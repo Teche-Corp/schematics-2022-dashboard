@@ -310,7 +310,7 @@ export default function CreateTeamNPCSenior() {
                           label='Foto Kartu Tanda Mahasiswa/Surat Keterangan Mahasiswa Aktif'
                           id='leader-student-id'
                           accept='image/png, image/jpg, image/jpeg'
-                          helperText='Pastikan nama lengkap di KTM/surat keterangan sesuai dengan nama lengkap yang anda masukkan. File dalam format jpg, png, atau jpeg.'
+                          helperText='*Pastikan nama lengkap di KTM/surat keterangan sesuai dengan nama lengkap yang anda masukkan. File dalam format jpg, png, atau jpeg.'
                           maxFiles={1}
                           validation={{
                             required:
@@ -423,7 +423,7 @@ export default function CreateTeamNPCSenior() {
                               label='Foto Kartus Tanda Mahasiswa/Surat Keterangan Mahasiswa Aktif'
                               id='member1-student-id'
                               accept='image/png, image/jpg, image/jpeg'
-                              helperText='Pastikan nama lengkap di KTM/surat keterangan sesuai dengan nama lengkap yang anda masukkan. File dalam format jpg, png, atau jpeg.'
+                              helperText='*Pastikan nama lengkap di KTM/surat keterangan sesuai dengan nama lengkap yang anda masukkan.  jpg, png, atau jpeg.'
                               maxFiles={1}
                               validation={{
                                 required:
@@ -542,7 +542,7 @@ export default function CreateTeamNPCSenior() {
                                   label='Foto Kartu Tanda Mahasiswa/Surat Keterangan Mahasiswa Aktif'
                                   id='member2-student-id'
                                   accept='image/png, image/jpg, image/jpeg'
-                                  helperText='Pastikan nama lengkap di KTM/surat keterangan sesuai dengan nama lengkap yang anda masukkan. File dalam format jpg, png, atau jpeg.'
+                                  helperText='*Pastikan nama lengkap di KTM/surat keterangan sesuai dengan nama lengkap yang anda masukkan. File dalam format jpg, png, atau jpeg.'
                                   maxFiles={1}
                                   validation={{
                                     required:

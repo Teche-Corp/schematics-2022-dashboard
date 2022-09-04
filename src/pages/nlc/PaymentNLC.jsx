@@ -617,7 +617,7 @@ export default function PaymentNLC() {
                       label='Bukti Pembayaran'
                       id='payment-receipt'
                       accept='image/png, image/jpg, image/jpeg'
-                      helperText='File dalam format jpg, png, atau jpeg'
+                      helperText='*File dalam format jpg, png, atau jpeg'
                       maxFiles={1}
                       validation={{
                         required: 'Bukti Pembayaran tidak boleh kosong',

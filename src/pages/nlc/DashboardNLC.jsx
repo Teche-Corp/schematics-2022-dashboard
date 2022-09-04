@@ -250,7 +250,7 @@ function DashboardNLC() {
                             }
                             id='bukti_vaksin'
                             accept='image/png, image/jpg, image/jpeg'
-                            helperText='File dalam format jpg, png, atau jpeg maksimal 1 MB'
+                            helperText='*File dalam format jpg, png, atau jpeg maksimal 1 MB'
                             maxFiles={1}
                             validation={{
                               required:
@@ -276,7 +276,7 @@ function DashboardNLC() {
                             }
                             id='bukti_twibbon'
                             accept='image/png, image/jpg, image/jpeg'
-                            helperText='File dalam format jpg, png, atau jpeg maksimal 1 MB'
+                            helperText='*File dalam format jpg, png, atau jpeg maksimal 1 MB'
                             maxFiles={1}
                             validation={{
                               required:
@@ -302,7 +302,7 @@ function DashboardNLC() {
                             }
                             id='bukti_poster'
                             accept='image/png, image/jpg, image/jpeg'
-                            helperText='File dalam format jpg, png, atau jpeg maksimal 1 MB'
+                            helperText='*File dalam format jpg, png, atau jpeg maksimal 1 MB'
                             maxFiles={1}
                             validation={{
                               required:
