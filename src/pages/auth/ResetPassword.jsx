@@ -85,3 +85,4 @@ export const ResetPassword = () => {
     </div>
   );
 };
+export default ResetPassword;

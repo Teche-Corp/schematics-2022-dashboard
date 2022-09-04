@@ -153,29 +153,32 @@ export default function DetailAnggota({ detailAnggota, index, from = '' }) {
                 id='discord-tag'
               ></InputAdmin>
             ) : null}
+            {from.split('-')[0] !== 'npc' ? (
+              <>
+                <ImageFetch
+                  imgpath={detailAnggota?.bukti_twibbon_url}
+                  tag='Bukti Upload Twibbon'
+                />
+                <ImageFetch
+                  imgpath={detailAnggota?.bukti_twibbon_url}
+                  tag='Bukti Upload Poster'
+                />
+                <InputAdmin
+                  value='Pefizer'
+                  type='text'
+                  placeholder='Jenis Vaksin'
+                  disabled={true}
+                  label='Jenis Vaksin'
+                  id='jenis-vaksin'
+                  // validation={{ required: 'Jenis vaksin tidak boleh kosong' }}
+                />
+                <ImageFetch
+                  imgpath={detailAnggota?.bukti_twibbon_url}
+                  tag='Bukti Vaksin'
+                />
+              </>
+            ) : null}
 
-            <ImageFetch
-              imgpath={detailAnggota?.bukti_twibbon_url}
-              tag='Bukti Upload Twibbon'
-            />
-            <ImageFetch
-              imgpath={detailAnggota?.bukti_twibbon_url}
-              tag='Bukti Upload Poster'
-            />
-
-            <InputAdmin
-              value='Pefizer'
-              type='text'
-              placeholder='Jenis Vaksin'
-              disabled={true}
-              label='Jenis Vaksin'
-              id='jenis-vaksin'
-              // validation={{ required: 'Jenis vaksin tidak boleh kosong' }}
-            />
-            <ImageFetch
-              imgpath={detailAnggota?.bukti_twibbon_url}
-              tag='Bukti Vaksin'
-            />
             <ValidasiAdmin
               options={validationList}
               label='Validasi'

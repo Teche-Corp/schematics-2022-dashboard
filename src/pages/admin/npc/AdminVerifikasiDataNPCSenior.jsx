@@ -11,7 +11,7 @@ import axios from 'axios';
 import Loading from '@/components/Loading';
 import { Redirect, useParams } from 'react-router-dom';
 
-export default function AdminVerifikasiData() {
+export default function AdminVerifikasiDataNPCSenior() {
   const methods = useForm();
   let { id } = useParams();
   const { handleSubmit } = methods;
@@ -33,7 +33,7 @@ export default function AdminVerifikasiData() {
     return <Loading />;
   }
   const updateTim = (data) => {
-    console.log(data);
+    // console.log(data);
   };
 
   return (
@@ -108,17 +108,14 @@ export default function AdminVerifikasiData() {
           </form>
         </FormProvider>
         <div>
-          {npcData?.data?.members
-            .slice(0)
-            .reverse()
-            .map((data, index) => (
-              <DetailAnggota
-                detailAnggota={data}
-                index={index}
-                key={index}
-                from={'npc-senior'}
-              />
-            ))}
+          {npcData?.data?.members.map((data, index) => (
+            <DetailAnggota
+              detailAnggota={data}
+              index={index}
+              key={index}
+              from={'npc-senior'}
+            />
+          ))}
         </div>
         {/* <Input disabled={true} label='Nama' /> */}
       </div>
