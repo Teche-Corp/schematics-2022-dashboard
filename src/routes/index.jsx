@@ -10,41 +10,41 @@ import {
 
 import PrivateRoute from './PrivateRoute';
 import AuthRoute from './AuthRoute';
-// comment
-import ChooseEvent from '@/pages/ChooseEvent';
-import Dashboard from '@/pages/Dashboard';
-import EditProfile from '@/pages/EditProfile';
 
-import SignIn from '@/pages/auth/SignIn';
-import SignUp from '@/pages/auth/SignUp';
-import ForgotPassword from '@/pages/auth/ForgotPassword';
-import ChangePassword from '@/pages/auth/ChangePassword';
-import ResetPassword from '@/pages/auth/ResetPassword';
+// import ChooseEvent from '@/pages/ChooseEvent';
+// import Dashboard from '@/pages/Dashboard';
+// import EditProfile from '@/pages/EditProfile';
 
-import EventNLC from '@/pages/nlc/EventNLC';
-import CreateTeam from '@/pages/nlc/CreateTeam';
-import PaymentNLC from '@/pages/nlc/PaymentNLC';
+// import SignIn from '@/pages/auth/SignIn';
+// import SignUp from '@/pages/auth/SignUp';
+// import ForgotPassword from '@/pages/auth/ForgotPassword';
+// import ChangePassword from '@/pages/auth/ChangePassword';
+// import ResetPassword from '@/pages/auth/ResetPassword';
 
-import EventNPC from '@/pages/npc/EventNPC';
-import CreateTeamNPCJunior from '@/pages/npc/CreateTeamNPCJunior';
-import CreateTeamNPCSenior from '@/pages/npc/CreateTeamNPCSenior';
-import PaymentNPC from '@/pages/npc/PaymentNPC';
+// import EventNLC from '@/pages/nlc/EventNLC';
+// import CreateTeam from '@/pages/nlc/CreateTeam';
+// import PaymentNLC from '@/pages/nlc/PaymentNLC';
 
-import EventNST from '@/pages/nst/EventNST';
+// import EventNPC from '@/pages/npc/EventNPC';
+// import CreateTeamNPCJunior from '@/pages/npc/CreateTeamNPCJunior';
+// import CreateTeamNPCSenior from '@/pages/npc/CreateTeamNPCSenior';
+// import PaymentNPC from '@/pages/npc/PaymentNPC';
 
-import Admin from '@/pages/admin/Admin';
-import Voucher from '@/pages/admin/voucher/Voucher';
-import AddVoucher from '@/pages/admin/voucher/AddVoucher';
-import UpdateUserNLC from '@/pages/admin/nlc/UpdateUserNLC';
-import AdminNLC from '@/pages/admin/nlc/AdminNLC';
-import AdminNpcSenior from '@/pages/admin/npc/AdminNpcSenior';
-import UpdateUserNpcSenior from '@/pages/admin/npc/UpdateUserNpcSenior';
-import AdminNst from '@/pages/admin/nst/AdminNst';
-import AdminReeva from '@/pages/admin/reeva/AdminReeva';
-import AdminNpc from '@/pages/admin/npc/AdminNpc';
-import AdminNpcJunior from '@/pages/admin/npc/AdminNpcJunior';
-import UpdateUserNpcJunior from '@/pages/admin/npc/UpdateUserNpcJunior';
-// -- comment
+// import EventNST from '@/pages/nst/EventNST';
+
+// import Admin from '@/pages/admin/Admin';
+// import Voucher from '@/pages/admin/voucher/Voucher';
+// import AddVoucher from '@/pages/admin/voucher/AddVoucher';
+// import UpdateUserNLC from '@/pages/admin/nlc/UpdateUserNLC';
+// import AdminNLC from '@/pages/admin/nlc/AdminNLC';
+// import AdminNpcSenior from '@/pages/admin/npc/AdminNpcSenior';
+// import UpdateUserNpcSenior from '@/pages/admin/npc/UpdateUserNpcSenior';
+// import AdminNst from '@/pages/admin/nst/AdminNst';
+// import AdminReeva from '@/pages/admin/reeva/AdminReeva';
+// import AdminNpc from '@/pages/admin/npc/AdminNpc';
+// import AdminNpcJunior from '@/pages/admin/npc/AdminNpcJunior';
+// import UpdateUserNpcJunior from '@/pages/admin/npc/UpdateUserNpcJunior';
+
 import PageNotFound from '@/pages/error/404';
 // import Error500 from '@/pages/error/500';
 
@@ -64,17 +64,10 @@ import DashboardNPC from '@/pages/npc/DashboardNPC';
 import DashboardNLC from '@/pages/nlc/DashboardNLC';
 import DashboardNST from '@/pages/nst/Dashboard';
 import PaymentTeamJunior from '@/pages/npc/PaymentTeamJunior';
-import CreateTeamJuniorKetua from '@/pages/npc/CreateTeamSeniorKetua';
-import AdminVerifikasiPembayaran from '@/pages/admin/nlc/AdminVerifikasiPembayaran';
-import AdminVerifikasiPembayaranSenior from '@/pages/admin/npc/AdminVerifikasiPembayaranNPCSenior';
-import AdminVerifikasiPembayaranJunior from '@/pages/admin/npc/AdminVerifikasiPembayaranNPCJunior';
-import AdminVerifikasiDataNLC from '@/pages/admin/nlc/AdminVerifikasiData';
 import NSTregister from '@/pages/nst/NSTregister';
-// import CreateTeamJuniorKetua from '@/pages/npc/CreateTeamJuniorKetua';
+import CreateTeamJuniorKetua from '@/pages/npc/CreateTeamJuniorKetua';
 import PembayaranNST from '@/pages/nst/PaymentNST';
 import TicketNST from '@/pages/nst/TicketNST';
-import PublicImage from '@/pages/PublicImage';
-
 import DashboardReeva from '@/pages/reeva/DashboardReeva';
 import PaymentReeva from '@/pages/reeva/PaymentReeva';
 import ReevaRegister from '@/pages/reeva/ReevaRegister';
@@ -84,15 +77,9 @@ import PublicImage from '@/pages/PublicImage';
 import { ForgotPassword } from '@/pages/auth/ForgotPassword';
 import { ResetPassword } from '@/pages/auth/ResetPassword';
 import { SuccessResetPassword } from '@/pages/auth/SuccessResetPassword';
-
 // import CreateTeamKetua from '@/pages/nlc/CreateTeamKetua';
-import AdminVerifikasiDataNPCJunior from '../pages/admin/npc/AdminVerifikasiDataNPCJunior';
-import AdminVerifikasiDataNPCSenior from '../pages/admin/npc/AdminVerifikasiDataSenior';
 
 import VerifikasiNLC from '@/pages/admin/nlc/VerifikasiNLC';
-import TableNLC from '@/pages/admin/nlc/TableNLC';
-import TableNPCSenior from '@/pages/admin/npc/TableNPCSenior';
-import TableNPCJunior from '@/pages/admin/npc/TableNPCJunior';
 import CloseReeva from '@/pages/reeva/CloseReeva';
 
 // const routeItems = [
@@ -347,80 +334,6 @@ const routeItems = [
     component: Landing,
     visible: true,
   },
-  // verifikasi pembayaran
-  {
-    auth: 'all',
-    route: PrivateRoute,
-    key: 'admin-dashboard-nlc',
-    path: '/admin/dashboard-nlc',
-    component: AdminVerifikasiPembayaran,
-    visible: true,
-  },
-  {
-    auth: 'all',
-    route: PrivateRoute,
-    key: 'admin-table-nlc',
-    path: '/admin/table-nlc',
-    component: TableNLC,
-    visible: true,
-  },
-  {
-    auth: 'all',
-    route: PrivateRoute,
-    key: 'admin-table-npc-senior',
-    path: '/admin/table-npc-senior',
-    component: TableNPCSenior,
-    visible: true,
-  },
-  {
-    auth: 'all',
-    route: PrivateRoute,
-    key: 'admin-table-npc-junior',
-    path: '/admin/table-npc-junior',
-    component: TableNPCJunior,
-    visible: true,
-  },
-  {
-    auth: 'all',
-    route: PrivateRoute,
-    key: 'admin-dashboard-npc',
-    path: '/admin/dashboard-npc-senior',
-    component: AdminVerifikasiPembayaranSenior,
-    visible: true,
-  },
-  {
-    auth: 'all',
-    route: PrivateRoute,
-    key: 'admin-dashboard-npc',
-    path: '/admin/dashboard-npc-junior',
-    component: AdminVerifikasiPembayaranJunior,
-    visible: true,
-  },
-  //  Verifikasi data
-  {
-    auth: 'all',
-    route: PrivateRoute,
-    key: 'admin-verifikasi-data',
-    path: '/admin/verifikasi-data/nlc/:id',
-    component: AdminVerifikasiDataNLC,
-    visible: true,
-  },
-  {
-    auth: 'all',
-    route: PrivateRoute,
-    key: 'admin-verifikasi-data-npc-junior',
-    path: '/admin/verifikasi-data/npc-junior/:id',
-    component: AdminVerifikasiDataNPCJunior,
-    visible: true,
-  },
-  {
-    auth: 'all',
-    route: PrivateRoute,
-    key: 'admin-verifikasi-data-npc-senior',
-    path: '/admin/verifikasi-data/npc-senior/:id',
-    component: AdminVerifikasiDataNPCSenior,
-    visible: true,
-  },
   {
     auth: 'all',
     route: AuthRoute,
@@ -638,6 +551,7 @@ const Routes = () => {
         <Route exact path='/'>
           <Redirect to='/login' />
         </Route>
+
         {routeItems.map((routeItem) => {
           if (process.env.PUBLIC_URL === '/dashboard' && !routeItem.visible)
             return null;
