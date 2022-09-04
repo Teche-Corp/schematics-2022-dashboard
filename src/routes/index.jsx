@@ -74,6 +74,17 @@ import NSTregister from '@/pages/nst/NSTregister';
 import PembayaranNST from '@/pages/nst/PaymentNST';
 import TicketNST from '@/pages/nst/TicketNST';
 import PublicImage from '@/pages/PublicImage';
+
+import DashboardReeva from '@/pages/reeva/DashboardReeva';
+import PaymentReeva from '@/pages/reeva/PaymentReeva';
+import ReevaRegister from '@/pages/reeva/ReevaRegister';
+import ReevaTicket from '@/pages/reeva/TicketReeva';
+
+import PublicImage from '@/pages/PublicImage';
+import { ForgotPassword } from '@/pages/auth/ForgotPassword';
+import { ResetPassword } from '@/pages/auth/ResetPassword';
+import { SuccessResetPassword } from '@/pages/auth/SuccessResetPassword';
+
 // import CreateTeamKetua from '@/pages/nlc/CreateTeamKetua';
 import AdminVerifikasiDataNPCJunior from '../pages/admin/npc/AdminVerifikasiDataNPCJunior';
 import AdminVerifikasiDataNPCSenior from '../pages/admin/npc/AdminVerifikasiDataSenior';
@@ -435,6 +446,30 @@ const routeItems = [
   },
   {
     auth: 'user',
+    route: AuthRoute,
+    key: 'forgot_password',
+    path: '/forgot_password',
+    component: ForgotPassword,
+    visible: true,
+  },
+  {
+    auth: 'user',
+    route: AuthRoute,
+    key: 'reset_password',
+    path: '/reset_password',
+    component: ResetPassword,
+    visible: true,
+  },
+  {
+    auth: 'user',
+    route: AuthRoute,
+    key: 'success_reset_password',
+    path: '/success_reset_password',
+    component: SuccessResetPassword,
+    visible: true,
+  },
+  {
+    auth: 'user',
     route: PrivateRoute,
     key: 'nlc-create-team',
     path: '/nlc/registration',
@@ -551,6 +586,38 @@ const routeItems = [
     key: 'admin-nlc-verifikasi',
     path: '/admin/sch-nlc/verifikasi',
     component: VerifikasiNLC,
+    visible: true,
+  },
+  {
+    auth: 'user',
+    route: PrivateRoute,
+    key: 'reeva-ticket',
+    path: '/reeva/ticket',
+    component: ReevaTicket,
+    visible: true,
+  },
+  {
+    auth: 'user',
+    route: PrivateRoute,
+    key: 'reeva-registration',
+    path: '/reeva/registration',
+    component: ReevaRegister,
+    visible: true,
+  },
+  {
+    auth: 'user',
+    route: PrivateRoute,
+    key: 'reeva-payment',
+    path: '/reeva/payment',
+    component: PaymentReeva,
+    visible: true,
+  },
+  {
+    auth: 'user',
+    route: PrivateRoute,
+    key: 'reeva-dashboard',
+    path: '/reeva',
+    component: DashboardReeva,
     visible: true,
   },
 ];

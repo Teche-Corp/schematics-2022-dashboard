@@ -6,6 +6,14 @@ export const BANKS = [
     value: 'cash',
   },
   {
+    text: 'Seabank',
+    value: 'seabank',
+  },
+  {
+    text: 'BANK BSI',
+    value: 'bank_bsi',
+  },
+  {
     text: 'BANK BRI',
     value: 'bank_bri',
   },
@@ -571,38 +579,47 @@ export const NLC_REGION = [
   {
     value: 1,
     text: 'Surabaya',
+    waGroup: 'https://chat.whatsapp.com/CddJwFqA7DqFuiB7KpM3WU',
   },
   {
     value: 2,
     text: 'Jakarta',
+    waGroup: 'https://chat.whatsapp.com/FYwowCKH1FQFfrIFGHZ5cI',
   },
   {
     value: 3,
     text: 'Jember',
+    waGroup: 'https://chat.whatsapp.com/Brz9JY2CHENFzw1c2G8XIP',
   },
   {
     value: 4,
     text: 'Kediri',
+    waGroup: 'https://chat.whatsapp.com/EXLknHoEtWP6ShlOnPzIyx',
   },
   {
     value: 5,
     text: 'Lumajang',
+    waGroup: 'https://chat.whatsapp.com/Grw2GRPQSvA4IaJdP0uNwr',
   },
   {
     value: 6,
     text: 'Malang',
+    waGroup: 'https://chat.whatsapp.com/F1sKWykMIZ84y3VFcyInjU',
   },
   {
     value: 7,
     text: 'Sampang',
+    waGroup: 'https://chat.whatsapp.com/GP7E31wPth9BEtJEIgIvBf',
   },
   {
     value: 8,
     text: 'Mojokerto',
+    waGroup: 'https://chat.whatsapp.com/LMhUNHWNbDPLjmRn2n07DB',
   },
   {
     value: 9,
     text: 'Online',
+    waGroup: 'https://chat.whatsapp.com/ERe5fWFvHYMAizdnIPaAiU',
   },
 ];
 
@@ -658,6 +675,7 @@ export const VACCINE_TYPE = [
 
 export const TEAM_STATUS = {
   awaiting_payment: 'Menunggu Pembayaran',
+  awaiting_file_upload: 'Menunggu anggota mengupload file pendaftaran',
   awaiting_verification: 'Menunggu Verifikasi',
   need_revision: 'Bukti Ditolak, Perlu Upload Ulang',
   active: 'Aktif',

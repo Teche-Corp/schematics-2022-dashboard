@@ -70,7 +70,7 @@ function ReevaCard({ count }) {
           pattern: {
             value: /^\+628[1-9][0-9]{7,11}$/,
             message:
-              'Nomor Telepon harus diawali +62 dan memiliki panjang 13-15 karakter',
+              'Nomor Telepon harus diawali +62 dan memiliki panjang 12-16 karakter',
           },
         }}
       />
@@ -186,11 +186,14 @@ export default function ReevaRegister() {
     }
   }, [reevaOrder, history]);
 
-  if (error && error.response.status !== 404) return <Error500 />;
+  if (error && error.response.status !== 404) {
+    return <Error500 />;
+  }
+
   if (!reevaOrder && !error) return <Loading />;
 
   return (
-    <div className='w-full bg-black'>
+    <div className='w-full bg-black min-h-screen'>
       <div className='md:w-3/6 w-11/12 mx-auto py-16'>
         <p className='md:text-5xl text-3xl font-primary text-center text-white'>
           Data Pendaftaran

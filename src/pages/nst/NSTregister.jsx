@@ -58,7 +58,7 @@ function NSTcard({ count }) {
           pattern: {
             value: /^\+628[1-9][0-9]{7,11}$/,
             message:
-              'Nomor Telepon harus diawali +62 dan memiliki panjang 13-15 karakter',
+              'Nomor Telepon harus diawali +62 dan memiliki panjang 12-16 karakter',
           },
         }}
       />
@@ -184,22 +184,24 @@ export default function NSTregister() {
 
   useEffect(() => {
     if (nstOrder) {
-      // if (
-      //   nstOrder.data.status === 'awaiting_payment' ||
-      //   nstOrder.data.status === 'need_revision'
-      // ) {
-      //   history.push(`/nst/payment`);
-      // }
-      // if (
-      //   nstOrder.data.status === 'active' ||
-      //   nstOrder.data.status === 'awaiting_verification'
-      // ) {
-      //   history.push('/nst');
-      // }
+      if (
+        nstOrder.data.status === 'awaiting_payment' ||
+        nstOrder.data.status === 'need_revision'
+      ) {
+        history.push(`/nst/payment`);
+      }
+      if (
+        nstOrder.data.status === 'active' ||
+        nstOrder.data.status === 'awaiting_verification'
+      ) {
+        history.push('/nst');
+      }
     }
   }, [nstOrder, history]);
 
-  if (error && error.response.status !== 404) return <Error500 />;
+  if (error && error.response.status !== 404) {
+    return <Error500 />;
+  }
   if (!nstOrder && !error) return <Loading />;
 
   return (

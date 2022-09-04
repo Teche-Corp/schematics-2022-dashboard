@@ -37,6 +37,13 @@ const navigation = [
     icon: BsCircleFill,
     current: false,
   },
+  {
+    name: 'Schematics Reeva',
+    href: '/reeva',
+    color: 'text-reeva',
+    icon: BsCircleFill,
+    current: false,
+  },
   // {
   //   name: 'Schematics Reeva',
   //   href: '/my/sch-reeva/ticket',

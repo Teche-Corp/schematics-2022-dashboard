@@ -76,7 +76,7 @@ export default function PaymentTeam() {
           Pembayaran
         </p>
         <div className='flex md:flex-row flex-col justify-center mt-16'>
-          <div className='px-4 py-8 text-right text-white'>
+          <div className='px-4 py-8 text-center md:text-right text-white flex flex-col items-center md:items-end'>
             <p>Lakukan Pembayaran dengan nominal</p>
             <br />
             <p className='font-primary text-3xl md:text-5xl'>
@@ -84,8 +84,23 @@ export default function PaymentTeam() {
             </p>
             <br />
             <p>(Nominal HARUS sesuai hingga digit terakhir)</p>
-            <br />
-            <p>1300018840515 (Bank Mandiri a.n ZAHRA FAYYADIYATI)</p>
+
+            {/* Qris */}
+            <p className='font-tertiary font-normal mt-6 text-white text-sm md:text-base'>
+              Pembayaran melalui scan QRIS Schematics ITS berikut:
+            </p>
+            <img
+              src={`${process.env.PUBLIC_URL}/images/nst/qris.png`}
+              alt='login'
+              className='w-56 mt-3'
+            ></img>
+
+            <p className='font-tertiary font-normal text-white mt-4 md:mt-6 text-sm md:text-base'>
+              Atau melalui rekening berikut:
+            </p>
+            <p className='font-tertiary font-normal text-white mt-1 text-sm md:text-base'>
+              1300018840515 (Bank Mandiri a.n ZAHRA FAYYADIYATI)
+            </p>
           </div>
           <FormProvider {...methods}>
             <form

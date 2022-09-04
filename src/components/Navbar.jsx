@@ -8,7 +8,8 @@ import { HiBell, HiChevronDown, HiMenuAlt1 } from 'react-icons/hi';
 import { VscAccount } from 'react-icons/vsc';
 
 import { useAuthDispatch } from '@/contexts/AuthContext';
-import { useSWRConfig } from 'swr';
+
+import useSWR, { useSWRConfig } from 'swr';
 
 // import { useTeamDispatch } from '@/contexts/TeamContext';
 
@@ -21,6 +22,11 @@ export default function Navbar({ setSidebarOpen }) {
   // const teamDispatch = useTeamDispatch();
 
   const history = useHistory();
+
+  const { data, error } = useSWR('/me', {
+    shouldRetryOnError: false,
+    errorRetryInterval: 0,
+  });
 
   const handleLogout = () => {
     authDispatch('LOGOUT');
@@ -46,6 +52,8 @@ export default function Navbar({ setSidebarOpen }) {
             <span className='sr-only'>View notifications</span>
             <HiBell className='w-6 h-6' aria-hidden='true' />
           </button>
+
+          <p className='ml-2'>{data?.data.name}</p>
 
           {/* Profile dropdown */}
           <Menu as='div' className='relative ml-3'>
