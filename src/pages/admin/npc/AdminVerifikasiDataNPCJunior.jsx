@@ -11,7 +11,7 @@ import axios from 'axios';
 import Loading from '@/components/Loading';
 import { Redirect, useParams } from 'react-router-dom';
 
-export default function AdminVerifikasiData() {
+export default function AdminVerifikasiDataNPCJunior() {
   const methods = useForm();
   let { id } = useParams();
   const { handleSubmit } = methods;
