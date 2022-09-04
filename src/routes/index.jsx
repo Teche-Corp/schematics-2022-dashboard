@@ -84,7 +84,7 @@ import { ResetPassword } from '@/pages/auth/ResetPassword';
 import { SuccessResetPassword } from '@/pages/auth/SuccessResetPassword';
 // import CreateTeamKetua from '@/pages/nlc/CreateTeamKetua';
 import AdminVerifikasiDataNPCJunior from '../pages/admin/npc/AdminVerifikasiDataNPCJunior';
-import AdminVerifikasiDataNPCSenior from '../pages/admin/npc/AdminVerifikasiDataSenior';
+import AdminVerifikasiDataNPCSenior from '../pages/admin/npc/AdminVerifikasiDataNPCSenior';
 
 import VerifikasiNLC from '@/pages/admin/nlc/VerifikasiNLC';
 import CloseReeva from '@/pages/reeva/CloseReeva';
@@ -584,6 +584,46 @@ const routeItems = [
     key: 'admin-nlc-verifikasi',
     path: '/admin/sch-nlc/verifikasi',
     component: VerifikasiNLC,
+    visible: true,
+  },
+  {
+    auth: 'admin',
+    route: PrivateRoute,
+    key: 'admin-npc-junior-verifikasi',
+    path: '/admin/sch-npc-junior/verifikasi',
+    component: AdminVerifikasiDataNPCJunior,
+    visible: true,
+  },
+  {
+    auth: 'admin',
+    route: PrivateRoute,
+    key: 'admin-npc-senior-verifikasi',
+    path: '/admin/sch-npc-senior/verifikasi',
+    component: AdminVerifikasiDataNPCSenior,
+    visible: true,
+  },
+  {
+    auth: 'admin',
+    route: PrivateRoute,
+    key: 'admin-nlc',
+    path: '/admin/sch-nlc',
+    component: TableNLC,
+    visible: true,
+  },
+  {
+    auth: 'admin',
+    route: PrivateRoute,
+    key: 'admin-npc',
+    path: '/admin/sch-npc-junior',
+    component: TableNPCJunior,
+    visible: true,
+  },
+  {
+    auth: 'admin',
+    route: PrivateRoute,
+    key: 'admin-npc',
+    path: '/admin/sch-npc-senior',
+    component: TableNPCSenior,
     visible: true,
   },
   {
