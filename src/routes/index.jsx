@@ -95,7 +95,7 @@ import TableNPCSenior from '@/pages/admin/npc/TableNPCSenior';
 import TableNPCJunior from '@/pages/admin/npc/TableNPCJunior';
 import TableNLCTeam from '@/pages/admin/nlc/TableNLCTeam';
 import AdminRoute from './AdminRoute';
-
+import TableNST from '@/pages/admin/nst/TableNST';
 // const routeItems = [
 //   {
 //     auth: 'all',
@@ -353,7 +353,7 @@ const routeItems = [
     route: AdminRoute,
     key: 'admin-verifikasi-pembayaran-nst',
     path: '/admin/sch-nst',
-    component: AdminVerifikasiPembayaranNST,
+    component: TableNST,
     visible: true,
   },
   {
