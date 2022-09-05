@@ -131,7 +131,7 @@ export const AuthProvider = ({ children }) => {
         const res = await axios.get('/me', { headers: { ...bearerToken() } });
 
         // dispatch('LOGIN', res.data.data);
-        dispatch('LOGIN', {});
+        dispatch('LOGIN', res.data.data);
       } catch (err) {
         // eslint-disable-next-line no-console
         console.error('error context', err);

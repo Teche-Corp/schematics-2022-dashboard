@@ -91,9 +91,10 @@ import AdminVerifikasiDataNPCSenior from '../pages/admin/npc/AdminVerifikasiData
 import AdminPembayaran from '@/pages/admin/pembayaran/AdminPembayaran';
 import VerifikasiNLC from '@/pages/admin/nlc/VerifikasiNLC';
 import CloseReeva from '@/pages/reeva/CloseReeva';
-import TableNLC from '@/pages/admin/nlc/TableNLC';
 import TableNPCSenior from '@/pages/admin/npc/TableNPCSenior';
 import TableNPCJunior from '@/pages/admin/npc/TableNPCJunior';
+import TableNLCTeam from '@/pages/admin/nlc/TableNLCTeam';
+import AdminRoute from './AdminRoute';
 
 // const routeItems = [
 //   {
@@ -341,7 +342,7 @@ import TableNPCJunior from '@/pages/admin/npc/TableNPCJunior';
 const routeItems = [
   {
     auth: 'admin',
-    route: PrivateRoute,
+    route: AdminRoute,
     key: 'admin-verifikasi-pembayaran-reeva',
     path: '/admin/sch-reeva',
     component: AdminVerifikasiPembayaranReeva,
@@ -349,7 +350,7 @@ const routeItems = [
   },
   {
     auth: 'admin',
-    route: PrivateRoute,
+    route: AdminRoute,
     key: 'admin-verifikasi-pembayaran-nst',
     path: '/admin/sch-nst',
     component: AdminVerifikasiPembayaranNST,
@@ -383,7 +384,7 @@ const routeItems = [
     auth: 'admin',
     route: AdminPembayaran,
     key: 'admin-pembayaran',
-    path: '/admin/detail-pembayaran',
+    path: '/admin/detail-pembayaran/:id',
     component: AdminPembayaran,
     visible: true,
   },
@@ -584,21 +585,21 @@ const routeItems = [
     route: PrivateRoute,
     key: 'admin-nlc',
     path: '/admin/sch-nlc',
-    component: TableNLC,
+    component: TableNLCTeam,
     visible: true,
   },
   {
     auth: 'admin',
-    route: PrivateRoute,
-    key: 'admin-npc',
+    route: AdminRoute,
+    key: 'admin-npc-senior',
     path: '/admin/sch-npc-junior',
     component: TableNPCJunior,
     visible: true,
   },
   {
     auth: 'admin',
-    route: PrivateRoute,
-    key: 'admin-npc',
+    route: AdminRoute,
+    key: 'admin-npc-senior',
     path: '/admin/sch-npc-senior',
     component: TableNPCSenior,
     visible: true,

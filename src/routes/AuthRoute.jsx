@@ -12,7 +12,7 @@ import { useAuthState } from '@/contexts/AuthContext';
 //     : 'https://schematics-webkes-backend-dev.herokuapp.com/api';
 
 const AuthRoute = ({ component: Component, ...rest }) => {
-  const { authenticated, loading } = useAuthState();
+  const { authenticated, loading, user } = useAuthState();
 
   // const query = useQuery();
   // const redirectTo = query.get('redirect_to');
@@ -32,7 +32,9 @@ const AuthRoute = ({ component: Component, ...rest }) => {
             <ImSpinner8 className='mb-2 text-4xl animate-spin' />
             <p>Loading...</p>
           </div>
-        ) : authenticated ? (
+        ) : authenticated && user?.user_type === 'admin' ? (
+          <Redirect to={'/admin/sch-npc-junior'} />
+        ) : authenticated && user?.user_type === 'user' ? (
           <Redirect to={'/landing'} />
         ) : (
           <Component {...props} />
