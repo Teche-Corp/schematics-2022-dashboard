@@ -6,7 +6,7 @@ import SelectInput from '@/components/SelectInput';
 
 import { NLC_REGION } from '@/lib/constants';
 import DetailAnggota from '@/components/Admin/DetailAnggota';
-import { useEffect } from 'react';
+import { useParams } from 'react';
 import axios from 'axios';
 import { bearerToken } from '@/lib/helper';
 import Loading from '@/components/Loading';
@@ -14,6 +14,7 @@ import Loading from '@/components/Loading';
 export default function VerifikasiNLC() {
   const methods = useForm();
   const { handleSubmit } = methods;
+
   const { data: nlcData, error: nlcError } = useSWR(
     ['/admin_get_nlc_team?team_id=450c0d7b-5315-4777-a932-50a6be3c6256'],
     {

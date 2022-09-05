@@ -3,7 +3,7 @@ import { useState } from 'react';
 import useSWR from 'swr';
 import { Link } from 'react-router-dom';
 import DashboardAdminShell from '@/layout/DashboardAdminShell';
-export default function TableNLC() {
+export default function TableNLCPembayaran() {
   const [page, setPage] = useState(1);
   const [per_page, setPerPage] = useState(10);
   const url = `/admin_get_list_pembayaran_nlc?page=${page}&per_page=${per_page}`;
@@ -14,7 +14,6 @@ export default function TableNLC() {
     },
     // fetcher(url)
   );
-  console.log('datanya : ', data?.data?.data_per_page);
   // if (!data) console.log(error);
 
   return (
@@ -57,7 +56,7 @@ export default function TableNLC() {
                   >
                     <td className='px-2 py-4 text-sm '>
                       <Link
-                        to={`/admin/sch-nlc/verifikasi/${payment?.pembayaran_id}`}
+                        to={`/admin/detail-pembayaran/${payment.pembayaran_id}`}
                       >
                         {payment.nama_tim}{' '}
                       </Link>
