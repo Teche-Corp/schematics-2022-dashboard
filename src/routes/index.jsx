@@ -69,6 +69,9 @@ import AdminVerifikasiPembayaran from '@/pages/admin/nlc/AdminVerifikasiPembayar
 import AdminVerifikasiPembayaranSenior from '@/pages/admin/npc/AdminVerifikasiPembayaranNPCSenior';
 import AdminVerifikasiPembayaranJunior from '@/pages/admin/npc/AdminVerifikasiPembayaranNPCJunior';
 import AdminVerifikasiDataNLC from '@/pages/admin/nlc/AdminVerifikasiData';
+import AdminVerifikasiPembayaranReeva from '@/pages/admin/reeva/AdminVerifikasiPembayaran';
+import AdminVerifikasiPembayaranNST from '@/pages/admin/nst/AdminVarifikasiPembayaran';
+
 import NSTregister from '@/pages/nst/NSTregister';
 // import CreateTeamJuniorKetua from '@/pages/npc/CreateTeamJuniorKetua';
 import PembayaranNST from '@/pages/nst/PaymentNST';
@@ -337,6 +340,46 @@ import TableNPCJunior from '@/pages/admin/npc/TableNPCJunior';
 
 const routeItems = [
   {
+    auth: 'all',
+    route: PrivateRoute,
+    key: 'admin-verifikasi-pembayaran-reeva',
+    path: '/admin/sch-reeva',
+    component: AdminVerifikasiPembayaranReeva,
+    visible: true,
+  },
+  {
+    auth: 'admin',
+    route: PrivateRoute,
+    key: 'admin-verifikasi-pembayaran-nst',
+    path: '/admin/sch-nst',
+    component: AdminVerifikasiPembayaranNST,
+    visible: true,
+  },
+  {
+    auth: 'admin',
+    route: PrivateRoute,
+    key: 'admin-verifikasi-pembayaran-npc-senior',
+    path: '/admin/sch-npc-senior-payment',
+    component: AdminVerifikasiPembayaranSenior,
+    visible: true,
+  },
+  {
+    auth: 'admin',
+    route: PrivateRoute,
+    key: 'admin-verifikasi-pembayaran-npc-junior',
+    path: '/admin/sch-npc-junior-payment',
+    component: AdminVerifikasiPembayaranJunior,
+    visible: true,
+  },
+  {
+    auth: 'admin',
+    route: PrivateRoute,
+    key: 'admin-verifikasi-pembayaran-nlc',
+    path: '/admin/sch-nlc-payment',
+    component: AdminVerifikasiPembayaran,
+    visible: true,
+  },
+  {
     auth: 'user',
     route: PrivateRoute,
     key: 'home',
@@ -468,7 +511,7 @@ const routeItems = [
     auth: 'user',
     route: PrivateRoute,
     key: 'npc-junior-payment',
-    path: '/npc_junior/payment',
+    path: '/admin/npc_junior-payment',
     component: PaymentTeamJunior,
     visible: true,
   },

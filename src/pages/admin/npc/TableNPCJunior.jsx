@@ -57,7 +57,7 @@ export default function TableNPCJunior() {
                   >
                     <td className='px-2 py-4 text-sm '>
                       <Link
-                        to={`/admin/verifikasi-data/npc-junioe/${payment.pembayaran_id}`}
+                        to={`/admin/sch-npc-junior/verifikasi/${payment?.pembayaran_id}`}
                       >
                         {payment.nama_tim}{' '}
                       </Link>

@@ -57,7 +57,7 @@ export default function TableNLC() {
                   >
                     <td className='px-2 py-4 text-sm '>
                       <Link
-                        to={`/admin/verifikasi-data/nlc/${payment.pembayaran_id}`}
+                        to={`/admin/sch-nlc/verifikasi/${payment?.pembayaran_id}`}
                       >
                         {payment.nama_tim}{' '}
                       </Link>

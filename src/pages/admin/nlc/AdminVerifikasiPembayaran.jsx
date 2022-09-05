@@ -8,6 +8,7 @@ import { useForm } from 'react-hook-form';
 import GetPembayaranNLC from '@/components/Infrastructure/GetPembayaranNLC';
 import useSWR from 'swr';
 import Loading from '@/components/Loading';
+import DashboardAdminShell from '@/layout/DashboardAdminShell';
 
 const column = [
   {
@@ -128,19 +129,21 @@ const AdminPagination = () => {
     return <Loading />;
   }
   return (
-    <div style={{ padding: '20px' }}>
-      <Table
-        columns={column}
-        rows={row}
-        per_page={5}
-        table_header='Daftar Pembayaran Schematics NLC'
-        bulk_select_options={['Save', 'Delete', 'Update']}
-        striped={true}
-        bordered={true}
-        hovered={true}
-        styling={tableStyling}
-      ></Table>
-    </div>
+    <DashboardAdminShell>
+      <div style={{ padding: '20px' }}>
+        <Table
+          columns={column}
+          rows={row}
+          per_page={5}
+          table_header='Daftar Pembayaran Schematics NLC'
+          bulk_select_options={['Save', 'Delete', 'Update']}
+          striped={true}
+          bordered={true}
+          hovered={true}
+          styling={tableStyling}
+        ></Table>
+      </div>
+    </DashboardAdminShell>
   );
 };
 

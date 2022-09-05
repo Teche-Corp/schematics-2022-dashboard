@@ -7,6 +7,7 @@ import { useAuthState } from '@/contexts/AuthContext';
 const PrivateRoute = ({ component: Component, auth, ...rest }) => {
   const { authenticated, loading } = useAuthState();
   const { pathname } = useLocation();
+  const { user } = useAuthState();
 
   return (
     <Route
@@ -23,15 +24,11 @@ const PrivateRoute = ({ component: Component, auth, ...rest }) => {
           if (authenticated) {
             return <Component {...props} />;
             // If current user role not allowed to access this route
-            // if (auth !== 'all' && user?.user_role !== auth) {
-            //   return user?.user_role === 'user' ? (
-            //     <Redirect to={'/my'} />
-            //   ) : (
-            //     <Redirect to={'/admin/dashboard'} />
-            //   );
-            // } else {
-            //   return <Component {...props} />;
-            // }
+            if (auth !== 'all' && user?.user_type !== auth) {
+              return user?.user_role === 'user' && <Redirect to={'/my'} />;
+            } else {
+              return <Component {...props} />;
+            }
           } else {
             return (
               <Redirect

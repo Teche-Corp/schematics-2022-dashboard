@@ -3,6 +3,7 @@ import Table, { Irow } from 'react-tailwind-table';
 import useSWR from 'swr';
 import { bearerToken } from '@/lib/helper';
 import Loading from '@/components/Loading';
+import DashboardAdminShell from '@/layout/DashboardAdminShell';
 
 const column = [
   {
@@ -107,27 +108,29 @@ const AdminVerifikasiPembayaranJunior = () => {
   }
 
   return (
-    <div style={{ padding: '20px' }}>
-      <Table
-        columns={column}
-        rows={row}
-        per_page={5}
-        table_header='Daftar Verifikasi Pembayaran Schematics NPC Junior'
-        bulk_select_options={['Save', 'Delete', 'Update']}
-        // export_csv_file = "FuckThisShit"
-        // on_bulk_action={tableBulkClick}
-        // should_export={true}
-        // on_search={onSearch}
-        show_search={true}
-        // export_modify={exportModify}
-        striped={true}
-        bordered={true}
-        hovered={true}
-        styling={tableStyling}
-        // row_render={this.rowcheck}
-        // bulk_select_button_text="Apply"
-      ></Table>
-    </div>
+    <DashboardAdminShell>
+      <div style={{ padding: '20px' }}>
+        <Table
+          columns={column}
+          rows={row}
+          per_page={5}
+          table_header='Daftar Verifikasi Pembayaran Schematics NPC Junior'
+          bulk_select_options={['Save', 'Delete', 'Update']}
+          // export_csv_file = "FuckThisShit"
+          // on_bulk_action={tableBulkClick}
+          // should_export={true}
+          // on_search={onSearch}
+          show_search={true}
+          // export_modify={exportModify}
+          striped={true}
+          bordered={true}
+          hovered={true}
+          styling={tableStyling}
+          // row_render={this.rowcheck}
+          // bulk_select_button_text="Apply"
+        ></Table>
+      </div>
+    </DashboardAdminShell>
   );
 };
 

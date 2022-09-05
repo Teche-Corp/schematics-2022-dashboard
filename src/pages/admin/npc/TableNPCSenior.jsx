@@ -57,7 +57,7 @@ export default function TableNPCSenior() {
                   >
                     <td className='px-2 py-4 text-sm '>
                       <Link
-                        to={`/admin/verifikasi-data/npc-senior/${payment.pembayaran_id}`}
+                        to={`/admin/sch-npc-senior/verifikasi/${payment.pembayaran_id}`}
                       >
                         {payment.nama_tim}{' '}
                       </Link>

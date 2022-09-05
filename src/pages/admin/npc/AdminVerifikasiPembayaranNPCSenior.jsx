@@ -3,6 +3,7 @@ import Table, { Irow } from 'react-tailwind-table';
 import useSWR from 'swr';
 import { bearerToken } from '@/lib/helper';
 import Loading from '@/components/Loading';
+import DashboardAdminShell from '@/layout/DashboardAdminShell';
 
 const column = [
   {
@@ -105,19 +106,21 @@ const AdminVerifikasiPembayaranNPCSenior = () => {
     return <Loading />;
   }
   return (
-    <div style={{ padding: '20px' }}>
-      <Table
-        columns={column}
-        rows={row}
-        per_page={5}
-        table_header='Daftar Pembayaran Schematics NPC Senior'
-        bulk_select_options={['Save', 'Delete', 'Update']}
-        striped={true}
-        bordered={true}
-        hovered={true}
-        styling={tableStyling}
-      ></Table>
-    </div>
+    <DashboardAdminShell>
+      <div style={{ padding: '20px' }}>
+        <Table
+          columns={column}
+          rows={row}
+          per_page={5}
+          table_header='Daftar Pembayaran Schematics NPC Senior'
+          bulk_select_options={['Save', 'Delete', 'Update']}
+          striped={true}
+          bordered={true}
+          hovered={true}
+          styling={tableStyling}
+        ></Table>
+      </div>
+    </DashboardAdminShell>
   );
 };
 
