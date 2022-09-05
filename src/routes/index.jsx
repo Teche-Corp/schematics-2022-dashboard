@@ -358,7 +358,7 @@ const routeItems = [
   },
   {
     auth: 'admin',
-    route: PrivateRoute,
+    route: AdminRoute,
     key: 'admin-verifikasi-pembayaran-npc-senior',
     path: '/admin/sch-npc-senior-payment',
     component: AdminVerifikasiPembayaranSenior,
@@ -366,7 +366,7 @@ const routeItems = [
   },
   {
     auth: 'admin',
-    route: PrivateRoute,
+    route: AdminRoute,
     key: 'admin-verifikasi-pembayaran-npc-junior',
     path: '/admin/sch-npc-junior-payment',
     component: AdminVerifikasiPembayaranJunior,
@@ -374,7 +374,7 @@ const routeItems = [
   },
   {
     auth: 'admin',
-    route: PrivateRoute,
+    route: AdminRoute,
     key: 'admin-verifikasi-pembayaran-nlc',
     path: '/admin/sch-nlc-payment',
     component: AdminVerifikasiPembayaran,
@@ -382,7 +382,7 @@ const routeItems = [
   },
   {
     auth: 'admin',
-    route: AdminPembayaran,
+    route: AdminRoute,
     key: 'admin-pembayaran',
     path: '/admin/detail-pembayaran/:id',
     component: AdminPembayaran,
