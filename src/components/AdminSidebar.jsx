@@ -7,6 +7,7 @@ import {
   HiDesktopComputer,
   HiSpeakerphone,
   HiOutlineSparkles,
+  HiCurrencyDollar,
 } from 'react-icons/hi';
 
 import { classNames } from '@/lib/helper';
@@ -82,6 +83,18 @@ const navigation = [
     ],
     color: 'text-reeva',
     icon: HiOutlineSparkles,
+    current: false,
+  },
+  {
+    name: 'Pembayaran',
+    dropdown: [
+      {
+        name: 'Detail Pembayaran',
+        href: '/admin/detail-pembayaran',
+      },
+    ],
+    color: 'black',
+    icon: HiCurrencyDollar,
     current: false,
   },
   // {

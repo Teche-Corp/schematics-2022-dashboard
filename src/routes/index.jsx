@@ -88,7 +88,7 @@ import { SuccessResetPassword } from '@/pages/auth/SuccessResetPassword';
 // import CreateTeamKetua from '@/pages/nlc/CreateTeamKetua';
 import AdminVerifikasiDataNPCJunior from '../pages/admin/npc/AdminVerifikasiDataNPCJunior';
 import AdminVerifikasiDataNPCSenior from '../pages/admin/npc/AdminVerifikasiDataNPCSenior';
-
+import AdminPembayaran from '@/pages/admin/pembayaran/AdminPembayaran';
 import VerifikasiNLC from '@/pages/admin/nlc/VerifikasiNLC';
 import CloseReeva from '@/pages/reeva/CloseReeva';
 import TableNLC from '@/pages/admin/nlc/TableNLC';
@@ -340,7 +340,7 @@ import TableNPCJunior from '@/pages/admin/npc/TableNPCJunior';
 
 const routeItems = [
   {
-    auth: 'all',
+    auth: 'admin',
     route: PrivateRoute,
     key: 'admin-verifikasi-pembayaran-reeva',
     path: '/admin/sch-reeva',
@@ -377,6 +377,14 @@ const routeItems = [
     key: 'admin-verifikasi-pembayaran-nlc',
     path: '/admin/sch-nlc-payment',
     component: AdminVerifikasiPembayaran,
+    visible: true,
+  },
+  {
+    auth: 'admin',
+    route: AdminPembayaran,
+    key: 'admin-pembayaran',
+    path: '/admin/detail-pembayaran',
+    component: AdminPembayaran,
     visible: true,
   },
   {
