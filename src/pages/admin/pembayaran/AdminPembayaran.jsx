@@ -6,15 +6,11 @@ import useSWR from 'swr';
 import Loading from '../../../components/Loading';
 
 const AdminPembayaran = () => {
-  const [row, setRow] = useState(undefined);
-  const page = 1;
-  const per_page = 10;
-  const { id } = useParams;
+  let { id } = useParams();
   // const url = [`/admin_get_detail_pembayaran?pembayaran_id=${id}`]
+  console.log(id);
   const { data, error } = useSWR(
-    [
-      `/admin_get_detail_pembayaran?pembayaran_id=08d7b93b-0bc0-456f-84c1-2ff554fa9d76`,
-    ],
+    [`/admin_get_detail_pembayaran?pembayaran_id=${id}`],
     {
       shouldRetryOnError: false,
       errorRetryInterval: 0,
@@ -28,13 +24,22 @@ const AdminPembayaran = () => {
     }
   }, [data]);
 
-  if (!data || !row) {
+  if (!data) {
     <Loading />;
   }
+  /*
+  biaya: 135104
+  bukti_pembayaran: "NLC/Pembayaran/00a45c4b-93c7-4be7-b185-408d6633a323"
+  nama_bank: "bank_bni"
+  nama_ketua: "Shima Maharani Onessis"
+  nama_tim: "COCOLEMON"
+  no_telp_ketua: "+6281249917778"
+  tipe_pembayaran: "nlc_team"
+  */
   return (
     <>
       <DashboardAdminShell>
-        <h1>Test</h1>
+        <p>{data.data.biaya}</p>
       </DashboardAdminShell>
     </>
   );
