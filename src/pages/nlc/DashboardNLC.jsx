@@ -4,7 +4,12 @@ import SubmitButton from '@/components/SubmitButton';
 import { useAuthState } from '@/contexts/AuthContext';
 import DashboardShell from '@/layout/DashboardShell';
 import { NLC_REGION, TEAM_STATUS } from '@/lib/constants';
-import { bearerToken, getNLCTeamStatus } from '@/lib/helper';
+import {
+  bearerToken,
+  getNLCTeamStatus,
+  isAbleNLCBingo,
+  isNLCMemberHasBingo,
+} from '@/lib/helper';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -18,6 +23,8 @@ function DashboardNLC() {
   const { user } = useAuthState();
   const history = useHistory();
   const methods = useForm();
+  const methodsBingo = useForm();
+  const { handleSubmit: handleSubmitBingo } = methodsBingo;
   const { handleSubmit } = methods;
   const getNlcRegion = (region_id) => {
     const region = NLC_REGION.filter((region) => {
@@ -30,6 +37,25 @@ function DashboardNLC() {
     const nlcMember = nlcdata.members;
     const myProfile = nlcMember.find((member) => member.name === user.name);
     setNlcProfile(myProfile);
+  };
+
+  const handleBingo = (data) => {
+    const formData = new FormData();
+    for (let key in data) {
+      formData.append(key, data[key][0]);
+    }
+    toast.promise(
+      axios.post('/upload_nlc_bingo', formData, {
+        headers: { ...bearerToken(), 'Content-Type': 'multipart/form-data' },
+      }),
+      {
+        loading: 'Loading...',
+        success: 'Berhasil mengupload data',
+        error: (err) => {
+          return err.response.data.message;
+        },
+      },
+    );
   };
 
   const handleImageUpload = (data) => {
@@ -326,6 +352,57 @@ function DashboardNLC() {
                 </div>
               </div>
             )}
+            <div className='w-full bg-white p-6 mt-8 rounded-xl'>
+              <h1 className='font-primary text-xl'>
+                Untuk mendapatkan kelas gratis, tim anda dapat melakukan upload
+                Bukti share broadcast{' '}
+                <span>
+                  <a
+                    href='https://drive.google.com/drive/folders/1I0snDZbndT_evY15eyKJc5fmza74qxh9?usp=sharing'
+                    className='text-nlc hover:text-nlc-400'
+                  >
+                    ini
+                  </a>
+                </span>{' '}
+                kepada 3 grup
+              </h1>
+              <div className='w-full'>
+                <FormProvider {...methodsBingo}>
+                  <form onSubmit={handleSubmitBingo(handleBingo)}>
+                    <div className='grid grid-cols-1 grid-rows-1'>
+                      <div className='col-span-1'>
+                        <DragnDropInputBox
+                          defaultValue={nlcProfile?.bingo_file_url ?? undefined}
+                          label={
+                            <span className='text-dark-400'>
+                              Bukti share broadcast ke 3 grup
+                            </span>
+                          }
+                          id='bingo_file'
+                          accept='image/png, image/jpg, image/jpeg'
+                          helperText='File dalam format jpg, png, atau jpeg maksimal 1 MB'
+                          maxFiles={1}
+                          validation={{
+                            required:
+                              'Bukti share broadcast ke 3 grup tidak boleh kosong',
+                          }}
+                        />
+                      </div>
+                    </div>
+                    {!nlcProfile?.bingo_file_url && (
+                      <div className='w-full'>
+                        <SubmitButton
+                          className='bg-nlc hover:bg-nlc-300 font-primary'
+                          loading={false}
+                        >
+                          Upload
+                        </SubmitButton>
+                      </div>
+                    )}
+                  </form>
+                </FormProvider>
+              </div>
+            </div>
             <div className='w-full md:h-64 h-96 bg-white p-6 mt-8 rounded-xl'>
               <p className='text-3xl font-bold text-center md:text-left text-nlc'>
                 Pemberitahuan
@@ -341,6 +418,19 @@ function DashboardNLC() {
                   berkas bukti vaksin, bukti bagikan poster, dan bukti upload
                   twibbon
                 </li>
+                {isAbleNLCBingo(data.data) && (
+                  <li>
+                    Anda dapat mengakses kelas bingo pada link berikut{' '}
+                    <span>
+                      <a
+                        href='https://drive.google.com/file/d/1tfL7FGSpnfjGm2BtCnKfHisYQ54d-u79/view?usp=sharing'
+                        className='text-nlc hover:text-nlc-400'
+                      >
+                        ini
+                      </a>
+                    </span>
+                  </li>
+                )}
               </ul>
             </div>
           </div>
