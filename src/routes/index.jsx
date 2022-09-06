@@ -90,11 +90,13 @@ import AdminVerifikasiDataNPCJunior from '../pages/admin/npc/AdminVerifikasiData
 import AdminVerifikasiDataNPCSenior from '../pages/admin/npc/AdminVerifikasiDataNPCSenior';
 import AdminPembayaran from '@/pages/admin/pembayaran/AdminPembayaran';
 import CloseReeva from '@/pages/reeva/CloseReeva';
-import TableNPCSenior from '@/pages/admin/npc/TableNPCSenior';
-import TableNPCJunior from '@/pages/admin/npc/TableNPCJunior';
 import TableNLCTeam from '@/pages/admin/nlc/TableNLCTeam';
 import AdminRoute from './AdminRoute';
 import TableNLCPembayaran from '@/pages/admin/nlc/TableNLCPembayaran';
+import TableNST from '@/pages/admin/nst/TableNST';
+import TableNPC from '@/pages/admin/npc/TableNPCJunior';
+import TableNPCJunior from '@/pages/admin/npc/TableNPCJunior';
+import TableNPCSenior from '@/pages/admin/npc/TableNPCSenior';
 
 // const routeItems = [
 //   {
