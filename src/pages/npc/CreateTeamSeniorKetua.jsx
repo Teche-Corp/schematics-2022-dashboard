@@ -332,17 +332,7 @@ export default function CreateTeamSeniorKetua() {
             />
             <hr className='w-full bg-white' />
             <DragnDropInput
-              label={
-                <span>
-                  Screenshot Hasil Pencarian NISN.{' '}
-                  <a
-                    href='https://nisn.data.kemdikbud.go.id/index.php/Cindex/formcaribynama'
-                    className='text-npc hover:text-npc-300'
-                  >
-                    Cek Link Di Sini
-                  </a>
-                </span>
-              }
+              label='Foto Kartus Tanda Mahasiswa/Surat Keterangan Mahasiswa Aktif'
               id='surat'
               accept='image/png, image/jpg, image/jpeg'
               helperText='File dalam format jpg, png, atau jpeg'
