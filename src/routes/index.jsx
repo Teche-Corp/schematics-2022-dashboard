@@ -353,7 +353,7 @@ const routeItems = [
     route: AdminRoute,
     key: 'admin-verifikasi-pembayaran-nst',
     path: '/admin/sch-nst',
-    component: AdminVerifikasiPembayaranNST,
+    component: TableNST,
     visible: true,
   },
   {
