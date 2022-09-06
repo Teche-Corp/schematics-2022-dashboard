@@ -699,6 +699,13 @@ export const TEAM_STATUS = {
 
 export const COLUMNS_TEAM = [
   {
+    Headers: 'No',
+    accessor: 'id',
+    Cell: ({ row, flatRows }) => {
+      return flatRows.indexOf(row) + 1;
+    },
+  },
+  {
     Headers: 'Nama Tim',
     accessor: 'nama_team',
   },
