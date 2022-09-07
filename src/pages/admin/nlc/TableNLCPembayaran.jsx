@@ -48,14 +48,18 @@ export default function TableNLCPembayaran() {
     <>
       <DashboardAdminShell>
         <div className='p-8'>
-          <h1>Daftar Verifikasi Pembayaran Schematics NLC</h1>
-
+          <div className='bg-white p-4 mx-auto rounded-lg'>
+            <h1 className='text-center text-nlc text-4xl font-primary'>
+              Daftar Verifikasi Pembayaran NLC
+            </h1>
+          </div>
           {/* Table */}
           <TableAdminPembayaran
             dataItems={listTeam?.data?.data_per_page}
             col={COLUMNS}
             max={listTeam?.data?.max_page}
             pages={page}
+            color='bg-nlc'
             setPage={setPage}
             per_page={per_page}
           />

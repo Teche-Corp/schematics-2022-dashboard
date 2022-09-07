@@ -97,7 +97,7 @@ const AdminVerifikasiPembayran = () => {
           nama: payment?.nama_pemesan,
           nama_bank: payment?.nama_bank,
           jumlah: payment?.jumlah_ticket,
-          status: payment?.status_pembyaran, // undefined ??
+          status: payment?.status_pembayaran, // undefined ??
         };
       });
       setRow(rowData);

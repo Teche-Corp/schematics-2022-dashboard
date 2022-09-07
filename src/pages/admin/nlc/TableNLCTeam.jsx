@@ -21,8 +21,11 @@ export default function TableNLCTeam() {
     <>
       <DashboardAdminShell>
         <div className='p-8'>
-          <h1>Daftar Verifikasi Data Schematics NLC</h1>
-
+          <div className='bg-white p-4 mx-auto rounded-lg'>
+            <h1 className='text-center text-nlc text-4xl font-primary'>
+              Daftar Verifikasi Team NLC
+            </h1>
+          </div>
           {/* Table */}
 
           <TableAdmin
@@ -30,6 +33,8 @@ export default function TableNLCTeam() {
             max={listTeam?.data?.max_page}
             pages={page}
             setPage={setPage}
+            link='sch-nlc'
+            color='bg-nlc'
             per_page={per_page}
           />
         </div>

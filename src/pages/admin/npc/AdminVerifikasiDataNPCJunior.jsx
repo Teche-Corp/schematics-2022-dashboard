@@ -70,13 +70,7 @@ export default function AdminVerifikasiDataNPCJunior() {
                 id='nama-sekolah'
                 validation={{ required: 'Email tidak boleh kosong' }}
               />
-              <SelectInput
-                value={npcData?.data.region}
-                label='Pilihan Region'
-                options={NLC_REGION}
-                disabled={true}
-                id='region'
-              />
+
               <InputAdmin
                 value={npcData?.data?.kota}
                 type='text'

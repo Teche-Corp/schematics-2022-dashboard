@@ -14,7 +14,6 @@ const AdminPembayaran = () => {
   let { id } = useParams();
   const { handleSubmit } = methods;
   // const url = [`/admin_get_detail_pembayaran?pembayaran_id=${id}`]
-  console.log(id);
   const { data, error } = useSWR(
     [`/admin_get_detail_pembayaran?pembayaran_id=${id}`],
     {
@@ -24,18 +23,18 @@ const AdminPembayaran = () => {
     },
   );
 
-  useEffect(() => {
-    if (data) {
-      console.log('data :', data);
-    }
-  }, [data]);
+  // useEffect(() => {
+  //   if (data) {
+  //     console.log('data :', data);
+  //   }
+  // }, [data]);
 
   if (!data) {
     <Loading />;
   }
 
   const updateTim = (data) => {
-    console.log(data);
+    // console.log(data);
   };
   /*
   biaya: 135104
@@ -72,15 +71,20 @@ const AdminPembayaran = () => {
                 <h2 className='font-primary text-2xl text-white mb-2 text-center mt-10'>
                   Detail Pembayaran
                 </h2>
-                <InputAdmin
-                  value={data?.data.nama_tim}
-                  type='text'
-                  placeholder={data?.data.nama_tim}
-                  disabled={true}
-                  label='Nama Tim'
-                  id='nama_tim'
-                  // validation={{required: 'Tipe Pembayaran tidak boleh kosong'}}
-                />
+                {data?.data?.tipe_pembayaran === 'reeva_order' ||
+                data?.data?.tipe_pembayaran === 'nst_order' ? (
+                  ''
+                ) : (
+                  <InputAdmin
+                    value={data?.data.nama_tim}
+                    type='text'
+                    placeholder={data?.data.nama_tim}
+                    disabled={true}
+                    label='Nama Tim'
+                    id='nama_tim'
+                    // validation={{required: 'Tipe Pembayaran tidak boleh kosong'}}
+                  />
+                )}
                 <InputAdmin
                   value={data?.data.nama_ketua}
                   type='text'
@@ -127,7 +131,7 @@ const AdminPembayaran = () => {
                   // validation={{required: 'Toal Biaya tidak boleh kosong'}}
                 />
                 <ImageFetch
-                  imgpath={data?.data.bukti_pembayaran}
+                  imgpath={data?.data?.bukti_pembayaran}
                   tag='Bukti Pembayaran'
                 />
                 <ValidasiAdmin

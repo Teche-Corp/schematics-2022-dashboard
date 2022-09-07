@@ -74,13 +74,13 @@ export default function AdminVerifikasiDataNLC() {
                 id='nama-sekolah'
                 validation={{ required: 'Email tidak boleh kosong' }}
               />
-              <SelectInput
+              {/* <SelectInput
                 value={nlcData?.data.region}
                 label='Pilihan Region'
                 options={NLC_REGION}
                 disabled={true}
                 id='region'
-              />
+              /> */}
               <InputAdmin
                 value={nlcData?.data?.kota}
                 type='text'

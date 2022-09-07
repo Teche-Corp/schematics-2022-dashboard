@@ -1,5 +1,5 @@
 import { bearerToken } from '@/lib/helper';
-import { useEffect, useMemo, useState } from 'react';
+import { useState } from 'react';
 import useSWR from 'swr';
 import DashboardAdminShell from '@/layout/DashboardAdminShell';
 
@@ -7,16 +7,15 @@ import DashboardAdminShell from '@/layout/DashboardAdminShell';
 import Loading from '@/components/Loading';
 import TableAdminPembayaran from '@/components/Admin/TablePembayaran';
 
-export default function TableNST() {
+export default function TableNPCPaymentSenior() {
   const [page, setPage] = useState(1);
   const [per_page, setPerPage] = useState(10);
-  const url = `/admin_get_list_pembayaran_nst?page=${page}&per_page=${per_page}`;
-  const { data: listPayment, error } = useSWR(url, {
+  const url = `/admin_get_list_pembayaran_npc_senior?page=${page}&per_page=${per_page}`;
+  const { data: listTeam, error } = useSWR(url, {
     headers: { ...bearerToken() },
   });
-  // console.log(listPayment.data.data_per_page);
 
-  if (!listPayment) {
+  if (!listTeam) {
     return <Loading />;
   }
   const COLUMNS = [
@@ -28,40 +27,41 @@ export default function TableNST() {
       },
     },
     {
-      Headers: 'Nama Pemesan',
-      accessor: 'nama_pemesan',
+      Headers: 'Nama Tim',
+      accessor: 'nama_tim',
+    },
+    {
+      Headers: 'Nama Ketua',
+      accessor: 'nama_ketua',
     },
     {
       Headers: 'Nama Bank',
       accessor: 'nama_bank',
     },
     {
-      Headers: 'Jumlah Tiket',
-      accessor: 'jumlah_ticket',
-    },
-    {
       Headers: 'Status Pembayaran',
       accessor: 'status_pembayaran',
     },
   ];
+
   return (
     <>
       <DashboardAdminShell>
         <div className='p-8'>
           <div className='bg-white p-4 mx-auto rounded-lg'>
-            <h1 className='text-center text-nst text-4xl font-primary'>
-              Daftar Verifikasi Pembayaran NST
+            <h1 className='text-center text-npc text-4xl font-primary'>
+              Daftar Verifikasi Pembayaran Schematics NPC Junior
             </h1>
           </div>
           {/* Table */}
           <TableAdminPembayaran
-            dataItems={listPayment?.data?.data_per_page}
+            dataItems={listTeam?.data?.data_per_page}
             col={COLUMNS}
-            max={listPayment?.data?.max_page}
+            max={listTeam?.data?.max_page}
             pages={page}
-            color='bg-nst'
             setPage={setPage}
             per_page={per_page}
+            color='bg-npc'
           />
         </div>
       </DashboardAdminShell>
