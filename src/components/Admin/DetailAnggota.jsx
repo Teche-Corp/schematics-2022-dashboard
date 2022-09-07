@@ -50,10 +50,9 @@ export default function DetailAnggota({ detailAnggota, index, from = '' }) {
       },
     );
   };
-
+  console.log(detailAnggota);
   return (
     <>
-      {/* <Input label={'Robby Ulung P'}/> */}
       <FormProvider {...methods}>
         <form
           className='flex justify-center mt-14'
@@ -163,7 +162,7 @@ export default function DetailAnggota({ detailAnggota, index, from = '' }) {
                   imgpath={detailAnggota?.bukti_twibbon_url}
                   tag='Bukti Upload Poster'
                 />
-                <InputAdmin
+                {/* <InputAdmin
                   value='Pefizer'
                   type='text'
                   placeholder='Jenis Vaksin'
@@ -171,7 +170,7 @@ export default function DetailAnggota({ detailAnggota, index, from = '' }) {
                   label='Jenis Vaksin'
                   id='jenis-vaksin'
                   // validation={{ required: 'Jenis vaksin tidak boleh kosong' }}
-                />
+                /> */}
                 <ImageFetch
                   imgpath={detailAnggota?.bukti_twibbon_url}
                   tag='Bukti Vaksin'

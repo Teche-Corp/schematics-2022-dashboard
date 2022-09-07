@@ -7,6 +7,7 @@ import {
 import { useMemo } from 'react';
 import { GolbalFilteringAdmin } from './GlobalFiltering';
 import { useHistory } from 'react-router-dom';
+import { classNames } from '@/lib/helper';
 
 export default function TableAdminPembayaran({
   dataItems,
@@ -15,10 +16,9 @@ export default function TableAdminPembayaran({
   setPage = '',
   per_page,
   col,
+  color,
 }) {
   const history = useHistory();
-  console.log(dataItems);
-
   const columns = useMemo(() => col, []);
   const data = dataItems;
   const tableInstance = useTable(
@@ -57,14 +57,19 @@ export default function TableAdminPembayaran({
           {...getTableProps()}
           className='w-full text-sm text-left text-gray-500 dark:text-gray-400 '
         >
-          <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 '>
+          <thead
+            className={classNames(
+              'text-xs text-white uppercase dark:bg-gray-700 dark:text-gray-400 ',
+              color,
+            )}
+          >
             {headerGroups.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => (
                   <th
                     {...column.getHeaderProps(column.getSortByToggleProps())}
                     scope='col'
-                    className='py-3 px-6 '
+                    className={`py-3 px-6 `}
                   >
                     {column.render('Headers')}
                     <span>
@@ -94,7 +99,6 @@ export default function TableAdminPembayaran({
                       onClick={() => goto(cell.row.original.pembayaran_id)}
                     >
                       {cell.render('Cell')}
-                      {/* {console.log(cell.row.original)} */}
                     </td>
                   ))}
                 </tr>
@@ -109,7 +113,9 @@ export default function TableAdminPembayaran({
             {[...Array(max)].map((e, i) => {
               return (
                 <li
-                  className='py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white'
+                  className={`py-2 px-3 leading-tight text-gray-500  border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white ${
+                    i + 1 === pages ? 'bg-gray-200' : 'bg-white'
+                  }`}
                   key={i}
                   onClick={() => setPage(i + 1)}
                 >

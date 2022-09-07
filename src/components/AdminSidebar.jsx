@@ -85,18 +85,7 @@ const navigation = [
     icon: HiOutlineSparkles,
     current: false,
   },
-  {
-    name: 'Pembayaran',
-    dropdown: [
-      {
-        name: 'Detail Pembayaran',
-        href: '/admin/detail-pembayaran',
-      },
-    ],
-    color: 'black',
-    icon: HiCurrencyDollar,
-    current: false,
-  },
+
   // {
   //   name: 'Keuangan Total',
   //   href: '/admin/earning',

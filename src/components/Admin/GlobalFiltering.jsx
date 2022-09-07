@@ -4,7 +4,7 @@ export const GolbalFilteringAdmin = ({ filter, setFilter }) => {
       <div className='relative flex items-center mt-3 md:mt-0 table-top-search'>
         <input
           className='text-xs py-2 h-10 px-4 pl-6 w-52 md:w-auto focus:outline-none leading-9 tracking-wide 
-			    text-gray-700 border border-gray-300 bg-gray-100 rounded-lg'
+			    text-gray-700 border border-gray-300 bg-white rounded-lg'
           type='text'
           name='search'
           placeholder='SEARCH'

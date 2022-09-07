@@ -8,6 +8,7 @@ import { COLUMNS_TEAM } from '@/lib/constants';
 import { useMemo } from 'react';
 import { GolbalFilteringAdmin } from './GlobalFiltering';
 import { useHistory } from 'react-router-dom';
+import { classNames } from '@/lib/helper';
 
 export default function TableAdmin({
   dataItems,
@@ -15,6 +16,8 @@ export default function TableAdmin({
   pages,
   setPage = '',
   per_page,
+  link,
+  color,
 }) {
   const history = useHistory();
 
@@ -44,7 +47,7 @@ export default function TableAdmin({
   } = tableInstance;
 
   function goto(href) {
-    history.push(`/admin/sch-nlc/verifikasi/${href}`);
+    history.push(`/admin/${link}/verifikasi/${href}`);
   }
 
   const { globalFilter, pageSize } = state;
@@ -56,7 +59,12 @@ export default function TableAdmin({
           {...getTableProps()}
           className='w-full text-sm text-left text-gray-500 dark:text-gray-400 '
         >
-          <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 '>
+          <thead
+            className={classNames(
+              'text-xs text-white uppercase dark:bg-gray-700 dark:text-gray-400 ',
+              color,
+            )}
+          >
             {headerGroups.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => (
@@ -108,7 +116,9 @@ export default function TableAdmin({
             {[...Array(max)].map((e, i) => {
               return (
                 <li
-                  className='py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white'
+                  className={`py-2 px-3 leading-tight text-gray-500  border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white ${
+                    i + 1 === pages ? 'bg-gray-200' : 'bg-white'
+                  }`}
                   key={i}
                   onClick={() => setPage(i + 1)}
                 >
