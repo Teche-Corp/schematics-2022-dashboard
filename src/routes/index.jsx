@@ -63,14 +63,8 @@ import JoinTeamSenior from '@/pages/npc/JoinTeamSenior';
 import DashboardNPC from '@/pages/npc/DashboardNPC';
 import DashboardNLC from '@/pages/nlc/DashboardNLC';
 import DashboardNST from '@/pages/nst/Dashboard';
-import PaymentTeamJunior from '@/pages/npc/PaymentTeamJunior';
 import CreateTeamJuniorKetua from '@/pages/npc/CreateTeamSeniorKetua';
-import AdminVerifikasiPembayaran from '@/pages/admin/nlc/AdminVerifikasiPembayaran';
-import AdminVerifikasiPembayaranSenior from '@/pages/admin/npc/AdminVerifikasiPembayaranNPCSenior';
-import AdminVerifikasiPembayaranJunior from '@/pages/admin/npc/AdminVerifikasiPembayaranNPCJunior';
 import AdminVerifikasiDataNLC from '@/pages/admin/nlc/AdminVerifikasiData';
-import AdminVerifikasiPembayaranReeva from '@/pages/admin/reeva/AdminVerifikasiPembayaran';
-import AdminVerifikasiPembayaranNST from '@/pages/admin/nst/AdminVarifikasiPembayaran';
 
 import NSTregister from '@/pages/nst/NSTregister';
 // import CreateTeamJuniorKetua from '@/pages/npc/CreateTeamJuniorKetua';
@@ -78,7 +72,6 @@ import PembayaranNST from '@/pages/nst/PaymentNST';
 import TicketNST from '@/pages/nst/TicketNST';
 import DashboardReeva from '@/pages/reeva/DashboardReeva';
 import PaymentReeva from '@/pages/reeva/PaymentReeva';
-import ReevaRegister from '@/pages/reeva/ReevaRegister';
 import ReevaTicket from '@/pages/reeva/TicketReeva';
 
 import PublicImage from '@/pages/PublicImage';
@@ -97,6 +90,10 @@ import TableNST from '@/pages/admin/nst/TableNST';
 import TableNPC from '@/pages/admin/npc/TableNPCJunior';
 import TableNPCJunior from '@/pages/admin/npc/TableNPCJunior';
 import TableNPCSenior from '@/pages/admin/npc/TableNPCSenior';
+import TableNPCPaymentJunior from '@/pages/admin/npc/TableNPCPaymentJunior';
+import TableNPCPaymentSenior from '@/pages/admin/npc/TableNPCPaymentSenior';
+import Admin from '@/pages/admin/Admin';
+import TableReeva from '@/pages/admin/reeva/TableReeva';
 
 // const routeItems = [
 //   {
@@ -347,7 +344,7 @@ const routeItems = [
     route: AdminRoute,
     key: 'admin-verifikasi-pembayaran-reeva',
     path: '/admin/sch-reeva',
-    component: AdminVerifikasiPembayaranReeva,
+    component: TableReeva,
     visible: true,
   },
   {
@@ -363,7 +360,7 @@ const routeItems = [
     route: AdminRoute,
     key: 'admin-verifikasi-pembayaran-npc-senior',
     path: '/admin/sch-npc-senior-payment',
-    component: AdminVerifikasiPembayaranSenior,
+    component: TableNPCPaymentSenior,
     visible: true,
   },
   {
@@ -371,7 +368,7 @@ const routeItems = [
     route: AdminRoute,
     key: 'admin-verifikasi-pembayaran-npc-junior',
     path: '/admin/sch-npc-junior-payment',
-    component: AdminVerifikasiPembayaranJunior,
+    component: TableNPCPaymentJunior,
     visible: true,
   },
   {
@@ -518,14 +515,7 @@ const routeItems = [
     component: CreateTeamJuniorKetua,
     visible: true,
   },
-  {
-    auth: 'user',
-    route: PrivateRoute,
-    key: 'npc-junior-payment',
-    path: '/admin/npc_junior-payment',
-    component: PaymentTeamJunior,
-    visible: true,
-  },
+
   {
     auth: 'user',
     route: PrivateRoute,
@@ -604,6 +594,14 @@ const routeItems = [
     key: 'admin-npc-senior',
     path: '/admin/sch-npc-senior',
     component: TableNPCSenior,
+    visible: true,
+  },
+  {
+    auth: 'admin',
+    route: AdminRoute,
+    key: 'admin-npc-senior',
+    path: '/admin',
+    component: Admin,
     visible: true,
   },
   {

@@ -27,7 +27,7 @@ const PrivateRoute = ({ component: Component, auth, ...rest }) => {
               return (
                 <Redirect
                   to={{
-                    pathname: '/admin/sch-npc-junior',
+                    pathname: '/admin',
                     state: { redirect: pathname },
                   }}
                 />

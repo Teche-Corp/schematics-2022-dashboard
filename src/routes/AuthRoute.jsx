@@ -33,7 +33,7 @@ const AuthRoute = ({ component: Component, ...rest }) => {
             <p>Loading...</p>
           </div>
         ) : authenticated && user?.user_type === 'admin' ? (
-          <Redirect to={'/admin/sch-npc-junior'} />
+          <Redirect to={'/admin'} />
         ) : authenticated && user?.user_type === 'user' ? (
           <Redirect to={'/landing'} />
         ) : (
