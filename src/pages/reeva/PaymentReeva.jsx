@@ -154,7 +154,7 @@ export default function PaymentReeva() {
                     label='Foto atau Bukti Pembayaran'
                     id='bukti_bayar'
                     accept='image/png, image/jpg, image/jpeg'
-                    helperText='File dalam format jpg, png, atau jpeg'
+                    helperText='*File dalam format jpg, png, atau jpeg'
                     maxFiles={1}
                     validation={{
                       required: 'Foto atau Bukti Pembayaran tidak boleh kosong',

@@ -329,7 +329,7 @@ export default function CreateTeamKetua() {
               </div>
             </div>
             <Input
-              label='Darimana kamu mendapat informasi Schematics'
+              label='Darimana kamu mendapat informasi Schematics?'
               validation={{
                 required: 'Asal informasi Schematics tidak boleh kosong',
               }}
@@ -370,7 +370,7 @@ export default function CreateTeamKetua() {
               }
               id='surat'
               accept='image/png, image/jpg, image/jpeg'
-              helperText='File dalam format jpg, png, atau jpeg maksimal 1 MB'
+              helperText='*File dalam format jpg, png, atau jpeg maksimal 1 MB'
               maxFiles={1}
               validation={{
                 required:
