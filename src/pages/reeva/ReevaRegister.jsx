@@ -4,6 +4,7 @@ import Input from '@/components/Input';
 import SelectInput2 from '@/components/SelectInput2';
 import SelectInput from '@/components/SelectInput';
 import SubmitButton from '@/components/SubmitButton';
+import SubmitButtonPayment from '@/components/SubmitButtonPayment';
 import React, { useEffect, useState } from 'react';
 import { useAuthState } from '@/contexts/AuthContext';
 import { useForm, FormProvider } from 'react-hook-form';
@@ -18,6 +19,7 @@ import Error500 from '../error/500';
 export default function ReevaRegister() {
   const methods = useForm();
   const { control, handleSubmit } = methods;
+  const [showModal, setShowModal] = useState(false);
   const history = useHistory();
   const { user } = useAuthState();
 
@@ -174,14 +176,12 @@ export default function ReevaRegister() {
             />
             <p className='font-secondary text-gray-300'>*Max 1 akun 10 tiket</p>
 
-            <div>
-              <SubmitButton
-                className='mt-8 bg-reeva font-primary text-white'
-                loading={false}
-              >
-                Daftar
-              </SubmitButton>
-            </div>
+            <SubmitButtonPayment
+              className='mt-12 text-white hover:text-black bg-reeva font-tertiary font-normal '
+              loading={false}
+            >
+              Beli Tiket
+            </SubmitButtonPayment>
           </form>
         </FormProvider>
       </div>
