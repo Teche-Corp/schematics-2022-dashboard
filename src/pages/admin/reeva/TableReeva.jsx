@@ -9,7 +9,7 @@ import TableAdminPembayaran from '@/components/Admin/TablePembayaran';
 
 export default function TableReeva() {
   const [page, setPage] = useState(1);
-  const [per_page, setPerPage] = useState(10);
+  const [per_page, setPerPage] = useState(20);
   const url = `/admin_get_list_pembayaran_reeva?page=${page}&per_page=${per_page}`;
   const { data: listPayment, error } = useSWR(url, {
     headers: { ...bearerToken() },
