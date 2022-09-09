@@ -176,7 +176,7 @@ export default function ReevaRegister() {
 
             <div>
               <SubmitButton
-                className='mt-8 bg-reeva font-primary text-white'
+                className='mt-8 bg-reeva font-primary text-white hover:text-reeva'
                 loading={false}
               >
                 Daftar
