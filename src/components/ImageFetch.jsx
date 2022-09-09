@@ -40,7 +40,7 @@ export default function ImageFetch({ imgpath, tag, label, ...rest }) {
       const imgUrl = `/stream_image?path=${imgpath}`;
       getImageUrl(imgUrl);
     }
-  }, []);
+  }, [imgpath]);
 
   if (!imgpath) {
     return (
