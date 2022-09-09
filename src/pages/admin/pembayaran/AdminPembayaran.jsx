@@ -1,16 +1,20 @@
 import DashboardAdminShell from '@/layout/DashboardAdminShell';
 import { bearerToken } from '@/lib/helper';
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import useSWR from 'swr';
 import Loading from '../../../components/Loading';
 import { FormProvider, useForm } from 'react-hook-form';
 import InputAdmin from '@/components/Admin/InputAdmin';
 import ImageFetch from '@/components/ImageFetch';
 import ValidasiAdmin from '@/components/Admin/ValidasiAdmin';
+import toast from 'react-hot-toast';
+import axios from 'axios';
 
 const AdminPembayaran = () => {
   const methods = useForm();
+  const history = useHistory();
+
   let { id } = useParams();
   const { handleSubmit } = methods;
   // const url = [`/admin_get_detail_pembayaran?pembayaran_id=${id}`]
@@ -23,6 +27,21 @@ const AdminPembayaran = () => {
     },
   );
 
+  const validationList = [
+    {
+      value: 'verified',
+      text: 'Verifikasi',
+    },
+    {
+      value: 'need_revision',
+      text: 'Need Revision',
+    },
+  ];
+  if (error) {
+    toast.error('Kesalahan dalam mendapatkan data');
+    history.push('/admin');
+  }
+
   // useEffect(() => {
   //   if (data) {
   //     console.log('data :', data);
@@ -33,8 +52,27 @@ const AdminPembayaran = () => {
     <Loading />;
   }
 
-  const updateTim = (data) => {
-    // console.log(data);
+  const updatePembayaran = (data) => {
+    const formData = new FormData();
+
+    formData.append('pembayaran_id', id);
+    formData.append('verification_status', data['verification_status']);
+
+    toast.promise(
+      axios.post('/admin_verify_pembayaran', formData, {
+        headers: { ...bearerToken(), 'Content-Type': 'multipart/form-data' },
+      }),
+      {
+        loading: 'Loading...',
+        success: (res) => {
+          history.push('/admin');
+          return 'Berhasil merubah status pembayaran';
+        },
+        error: (err) => {
+          return err.response.data.message;
+        },
+      },
+    );
   };
   /*
   biaya: 135104
@@ -45,16 +83,7 @@ const AdminPembayaran = () => {
   no_telp_ketua: "+6281249917778" ok
   tipe_pembayaran: "nlc_team" ok
   */
-  const validationList = [
-    {
-      value: 'active',
-      text: 'Validasi',
-    },
-    {
-      value: 'need_revision',
-      text: 'Tolak Validasi',
-    },
-  ];
+
   return (
     <>
       <DashboardAdminShell>
@@ -65,7 +94,7 @@ const AdminPembayaran = () => {
           <FormProvider {...methods}>
             <form
               className='flex justify-center'
-              onSubmit={handleSubmit(updateTim)}
+              onSubmit={handleSubmit(updatePembayaran)}
             >
               <div className='w-1/2'>
                 <h2 className='font-primary text-2xl text-white mb-2 text-center mt-10'>
@@ -137,7 +166,7 @@ const AdminPembayaran = () => {
                 <ValidasiAdmin
                   options={validationList}
                   label='Validasi'
-                  id='validasi'
+                  id='verification_status'
                 />
               </div>
             </form>

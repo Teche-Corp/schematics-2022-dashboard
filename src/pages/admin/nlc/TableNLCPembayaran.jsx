@@ -9,7 +9,7 @@ import TableAdminPembayaran from '@/components/Admin/TablePembayaran';
 
 export default function TableNLCPembayaran() {
   const [page, setPage] = useState(1);
-  const [per_page, setPerPage] = useState(50);
+  const [per_page, setPerPage] = useState(20);
   const url = `/admin_get_list_pembayaran_nlc?page=${page}&per_page=${per_page}`;
   const { data: listTeam, error } = useSWR(url, {
     headers: { ...bearerToken() },
