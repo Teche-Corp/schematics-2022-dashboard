@@ -696,3 +696,25 @@ export const TEAM_STATUS = {
   need_revision: 'Bukti Ditolak, Perlu Upload Ulang',
   active: 'Aktif',
 };
+
+export const COLUMNS_TEAM = [
+  {
+    Headers: 'No',
+    accessor: 'id',
+    Cell: ({ row, flatRows }) => {
+      return flatRows.indexOf(row) + 1;
+    },
+  },
+  {
+    Headers: 'Nama Tim',
+    accessor: 'nama_team',
+  },
+  {
+    Headers: 'Nama Ketua',
+    accessor: 'nama_ketua',
+  },
+  {
+    Headers: 'Status',
+    accessor: 'status',
+  },
+];

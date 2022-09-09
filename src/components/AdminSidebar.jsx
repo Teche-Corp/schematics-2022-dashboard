@@ -1,17 +1,15 @@
 import { Fragment } from 'react';
-import { Dialog, Transition } from '@headlessui/react';
+import { Dialog, Transition, Menu } from '@headlessui/react';
 import {
   HiCog,
-  HiHome,
   HiQuestionMarkCircle,
   HiXCircle,
   HiDesktopComputer,
   HiSpeakerphone,
   HiOutlineSparkles,
   HiCurrencyDollar,
-  HiOutlineReceiptRefund,
-  HiCreditCard,
 } from 'react-icons/hi';
+
 import { classNames } from '@/lib/helper';
 import { BiBrain } from 'react-icons/bi';
 import { Link, useLocation } from 'react-router-dom';
@@ -19,53 +17,93 @@ import { Link, useLocation } from 'react-router-dom';
 import UnstyledLink from '@/components/UnstyledLink';
 
 const navigation = [
-  { name: 'Home', href: '/my', icon: HiHome, current: false },
+  // { name: 'Home', href: '/my', icon: HiHome, current: false },
   {
     name: 'Schematics NPC',
-    href: '/admin/sch-npc',
-    color: 'text-npc-100',
+    href: '#',
+    dropdown: [
+      // Go to Table
+      {
+        name: 'Verifikasi Team NPC Junior',
+        href: '/admin/sch-npc-junior',
+      },
+      {
+        name: 'Verifikasi Team NPC Senior',
+        href: '/admin/sch-npc-senior',
+      },
+      {
+        name: 'Verifikasi Payment NPC Junior',
+        href: '/admin/sch-npc-junior-payment',
+      },
+      {
+        name: 'Verifikasi Payment NPC Senior',
+        href: '/admin/sch-npc-senior-payment',
+      },
+    ],
+    color: 'text-npc',
     icon: HiDesktopComputer,
     current: false,
   },
   {
     name: 'Schematics NLC',
-    href: '/admin/sch-nlc/user',
-    color: 'text-nlc-100',
+    dropdown: [
+      {
+        name: 'Verifikasi Team NLC',
+        href: '/admin/sch-nlc',
+      },
+      {
+        name: 'Verifikasi Payment NLC',
+        href: '/admin/sch-nlc-payment',
+      },
+    ],
+    color: 'text-nlc',
     icon: BiBrain,
     current: false,
   },
   {
     name: 'Schematics NST',
-    href: '/admin/sch-nst/user',
-    color: 'text-nst-100',
+    href: '/admin/sch-nst/',
+    color: 'text-nst',
+    dropdown: [
+      {
+        name: 'Verifikasi Payment NST',
+        href: '/admin/sch-nst/',
+      },
+    ],
     icon: HiSpeakerphone,
     current: false,
   },
   {
     name: 'Schematics Reeva',
-    href: '/admin/sch-reeva/user',
-    color: 'text-reeva-100',
+    dropdown: [
+      {
+        name: 'Verifikasi Payment Reeva',
+        href: '/admin/sch-reeva/',
+      },
+    ],
+    color: 'text-reeva',
     icon: HiOutlineSparkles,
     current: false,
   },
-  {
-    name: 'Keuangan Total',
-    href: '/admin/earning',
-    icon: HiCurrencyDollar,
-    current: false,
-  },
-  {
-    name: 'Voucher',
-    href: '/admin/voucher',
-    icon: HiOutlineReceiptRefund,
-    current: false,
-  },
-  {
-    name: 'Schemastore',
-    href: '/admin/schemastore',
-    icon: HiCreditCard,
-    current: false,
-  },
+
+  // {
+  //   name: 'Keuangan Total',
+  //   href: '/admin/earning',
+  //   icon: HiCurrencyDollar,
+  //   current: false,
+  // },
+  // {
+  //   name: 'Voucher',
+  //   href: '/admin/voucher',
+  //   icon: HiOutlineReceiptRefund,
+  //   current: false,
+  // },
+  // {
+  //   name: 'Schemastore',
+  //   href: '/admin/schemastore',
+  //   icon: HiCreditCard,
+  //   current: false,
+  // },
 ];
 const secondaryNavigation = [
   { name: 'Settings', href: '#', icon: HiCog },
@@ -107,7 +145,7 @@ export default function AdminSibebar({ sidebarOpen, setSidebarOpen }) {
             leaveFrom='translate-x-0'
             leaveTo='-translate-x-full'
           >
-            <div className='relative flex flex-col flex-1 w-full max-w-xs pt-5 pb-4 bg-dark'>
+            <div className='relative flex flex-col flex-1 w-full max-w-xs pt-5 pb-4 bg-white'>
               <Transition.Child
                 as={Fragment}
                 enter='ease-in-out duration-300'
@@ -137,7 +175,7 @@ export default function AdminSibebar({ sidebarOpen, setSidebarOpen }) {
                 >
                   <img
                     className='h-20 mx-auto'
-                    src={`${process.env.PUBLIC_URL}/images/logo/colored-title.png`}
+                    src={`${process.env.PUBLIC_URL}/images/logo/logo-dashboard-desktop.svg`}
                     alt='colored-title'
                   />
                 </UnstyledLink>
@@ -148,27 +186,62 @@ export default function AdminSibebar({ sidebarOpen, setSidebarOpen }) {
               >
                 <div className='px-2 space-y-1'>
                   {navigation.map((item) => (
-                    <Link
-                      key={item.name}
-                      to={item.href}
-                      className={classNames(
-                        item.href === pathname
-                          ? 'bg-dark-100'
-                          : 'hover:bg-dark-400',
-                        item.color ? `${item.color}` : 'text-white',
-                        'group flex items-center px-2 py-2 text-base font-medium rounded-md',
-                      )}
-                      aria-current={item.current ? 'page' : undefined}
-                    >
-                      <item.icon
+                    <Menu as='div'>
+                      <Menu.Button
                         className={classNames(
+                          item.href === pathname
+                            ? 'bg-dark-100'
+                            : 'hover:bg-dark-400',
                           item.color ? `${item.color}` : 'text-white',
-                          'w-6 h-6 mr-4 text-white',
+                          'group flex items-center px-2 py-2 text-base font-medium rounded-md',
                         )}
-                        aria-hidden='true'
-                      />
-                      {item.name}
-                    </Link>
+                      >
+                        {item.name}
+                      </Menu.Button>
+                      <Menu.Items>
+                        {item.dropdown.map((link) => (
+                          <Menu.Item>
+                            <Link
+                              to={link.href}
+                              className='text-npc'
+                              aria-current={item.current ? 'page' : undefined}
+                            >
+                              <item.icon
+                                className={classNames(
+                                  item.color ? `${item.color}` : 'text-white',
+                                  'w-6 h-6 mr-4 text-white',
+                                )}
+                                aria-hidden='true'
+                              />
+                              {link.name}
+                            </Link>
+                          </Menu.Item>
+                        ))}
+                      </Menu.Items>
+                    </Menu>
+
+                    // <Link
+                    //   key={item.name}
+                    //   to={item.href}
+                    //   className={classNames(
+                    //     item.href === pathname
+                    //       ? 'bg-dark-100'
+                    //       : 'hover:bg-dark-400',
+                    //     item.color ? `${item.color}` : 'text-white',
+                    //     'group flex items-center px-2 py-2 text-base font-medium rounded-md',
+                    //   )}
+                    //   aria-current={item.current ? 'page' : undefined}
+                    // >
+                    //   <item.icon
+                    //     className={classNames(
+                    //       item.color ? `${item.color}` : 'text-white',
+                    //       'w-6 h-6 mr-4 text-white',
+                    //     )}
+                    //     aria-hidden='true'
+                    //   />
+                    //   {item.name}
+                    // </Link>
+                    // )
                   ))}
                 </div>
                 <div className='pt-6 mt-6'>
@@ -200,7 +273,7 @@ export default function AdminSibebar({ sidebarOpen, setSidebarOpen }) {
       <div className='hidden h-full lg:flex lg:flex-shrink-0'>
         <div className='flex flex-col w-64'>
           {/* Sidebar component, swap this element with another sidebar if you like */}
-          <div className='flex flex-col flex-grow pt-5 pb-4 overflow-y-auto bg-dark'>
+          <div className='flex flex-col flex-grow pt-5 pb-4 overflow-y-auto bg-white'>
             <div className='flex items-center flex-shrink-0 px-4'>
               <UnstyledLink
                 openNewTab={false}
@@ -208,7 +281,7 @@ export default function AdminSibebar({ sidebarOpen, setSidebarOpen }) {
               >
                 <img
                   className='h-20'
-                  src={`${process.env.PUBLIC_URL}/images/logo/colored-title.png`}
+                  src={`${process.env.PUBLIC_URL}/images/logo/logo-dashboard-desktop.svg`}
                   alt='colored-title'
                 />
               </UnstyledLink>
@@ -219,27 +292,71 @@ export default function AdminSibebar({ sidebarOpen, setSidebarOpen }) {
             >
               <div className='px-2 space-y-1'>
                 {navigation.map((item) => (
-                  <Link
-                    key={item.name}
-                    to={item.href}
-                    className={classNames(
-                      item.href === pathname
-                        ? 'bg-dark-100 text-white'
-                        : 'text-white hover:bg-dark-400',
-                      item.color ? `${item.color}` : 'text-white',
-                      'group flex items-center px-2 py-2 text-base font-medium rounded-md',
-                    )}
-                    aria-current={item.current ? 'page' : undefined}
-                  >
-                    <item.icon
+                  <Menu as='div'>
+                    <Menu.Button
                       className={classNames(
+                        item.href === pathname
+                          ? 'bg-dark-100'
+                          : 'hover:bg-dark-400',
                         item.color ? `${item.color}` : 'text-white',
-                        'w-6 h-6 mr-4 text-white',
+                        'group flex items-center px-2 py-2 text-base font-medium rounded-md w-full',
                       )}
-                      aria-hidden='true'
-                    />
-                    {item.name}
-                  </Link>
+                    >
+                      <item.icon
+                        className={classNames(
+                          item.color ? `${item.color}` : 'text-white',
+                          'w-6 h-6 mr-4 text-white',
+                        )}
+                        aria-hidden='true'
+                      />
+                      {item.name}
+                    </Menu.Button>
+                    <Menu.Items className='bg-white rounded-xl p-4 flex flex-col'>
+                      {item.dropdown.map((link) => (
+                        <Menu.Item>
+                          <Link
+                            to={link.href}
+                            className={classNames(
+                              'flex items-center px-2 py-1 hover:bg-gray-100 rounded-md',
+                              `${item.color}`,
+                            )}
+                            aria-current={item.current ? 'page' : undefined}
+                          >
+                            {/* <link.icon
+                              className={classNames(
+                                item.color ? `${item.color}` : 'text-white',
+                                'w-3 h-3 mr-4 text-white',
+                              )}
+                              aria-hidden='true'
+                            /> */}
+                            {link.name}
+                          </Link>
+                        </Menu.Item>
+                      ))}
+                    </Menu.Items>
+                  </Menu>
+                  //   <Link
+                  //     key={item.name}
+                  //     to={item.href}
+                  //     className={classNames(
+                  //       item.href === pathname
+                  //         ? 'bg-dark-100'
+                  //         : 'hover:bg-dark-400',
+                  //       item.color ? `${item.color}` : 'text-white',
+                  //       'group flex items-center px-2 py-2 text-base font-medium rounded-md',
+                  //     )}
+                  //     aria-current={item.current ? 'page' : undefined}
+                  //   >
+                  //     <item.icon
+                  //       className={classNames(
+                  //         item.color ? `${item.color}` : 'text-white',
+                  //         'w-6 h-6 mr-4 text-white',
+                  //       )}
+                  //       aria-hidden='true'
+                  //     />
+                  //     {item.name}
+                  //   </Link>
+                  // );
                 ))}
               </div>
               <div className='pt-6 mt-6'>
@@ -248,7 +365,7 @@ export default function AdminSibebar({ sidebarOpen, setSidebarOpen }) {
                     <Link
                       key={item.name}
                       to={item.href}
-                      className='flex items-center px-2 py-2 text-base font-medium text-white rounded-md group hover:bg-dark-400'
+                      className='flex items-center px-2 py-2 text-base font-medium text-white bg-dark-100 rounded-md group hover:bg-dark-400'
                     >
                       <item.icon
                         className='w-6 h-6 mr-4 text-white'

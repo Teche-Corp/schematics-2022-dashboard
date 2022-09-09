@@ -10,7 +10,7 @@ import {
 
 import PrivateRoute from './PrivateRoute';
 import AuthRoute from './AuthRoute';
-
+// comment
 // import ChooseEvent from '@/pages/ChooseEvent';
 // import Dashboard from '@/pages/Dashboard';
 // import EditProfile from '@/pages/EditProfile';
@@ -44,7 +44,7 @@ import AuthRoute from './AuthRoute';
 // import AdminNpc from '@/pages/admin/npc/AdminNpc';
 // import AdminNpcJunior from '@/pages/admin/npc/AdminNpcJunior';
 // import UpdateUserNpcJunior from '@/pages/admin/npc/UpdateUserNpcJunior';
-
+// -- comment
 import PageNotFound from '@/pages/error/404';
 // import Error500 from '@/pages/error/500';
 
@@ -63,14 +63,15 @@ import JoinTeamSenior from '@/pages/npc/JoinTeamSenior';
 import DashboardNPC from '@/pages/npc/DashboardNPC';
 import DashboardNLC from '@/pages/nlc/DashboardNLC';
 import DashboardNST from '@/pages/nst/Dashboard';
-import PaymentTeamJunior from '@/pages/npc/PaymentTeamJunior';
+import CreateTeamJuniorKetua from '@/pages/npc/CreateTeamSeniorKetua';
+import AdminVerifikasiDataNLC from '@/pages/admin/nlc/AdminVerifikasiData';
+
 import NSTregister from '@/pages/nst/NSTregister';
-import CreateTeamJuniorKetua from '@/pages/npc/CreateTeamJuniorKetua';
+// import CreateTeamJuniorKetua from '@/pages/npc/CreateTeamJuniorKetua';
 import PembayaranNST from '@/pages/nst/PaymentNST';
 import TicketNST from '@/pages/nst/TicketNST';
 import DashboardReeva from '@/pages/reeva/DashboardReeva';
 import PaymentReeva from '@/pages/reeva/PaymentReeva';
-import ReevaRegister from '@/pages/reeva/ReevaRegister';
 import ReevaTicket from '@/pages/reeva/TicketReeva';
 
 import PublicImage from '@/pages/PublicImage';
@@ -78,9 +79,21 @@ import { ForgotPassword } from '@/pages/auth/ForgotPassword';
 import { ResetPassword } from '@/pages/auth/ResetPassword';
 import { SuccessResetPassword } from '@/pages/auth/SuccessResetPassword';
 // import CreateTeamKetua from '@/pages/nlc/CreateTeamKetua';
-
-import VerifikasiNLC from '@/pages/admin/nlc/VerifikasiNLC';
+import AdminVerifikasiDataNPCJunior from '../pages/admin/npc/AdminVerifikasiDataNPCJunior';
+import AdminVerifikasiDataNPCSenior from '../pages/admin/npc/AdminVerifikasiDataNPCSenior';
+import AdminPembayaran from '@/pages/admin/pembayaran/AdminPembayaran';
 import CloseReeva from '@/pages/reeva/CloseReeva';
+import TableNLCTeam from '@/pages/admin/nlc/TableNLCTeam';
+import AdminRoute from './AdminRoute';
+import TableNLCPembayaran from '@/pages/admin/nlc/TableNLCPembayaran';
+import TableNST from '@/pages/admin/nst/TableNST';
+import TableNPC from '@/pages/admin/npc/TableNPCJunior';
+import TableNPCJunior from '@/pages/admin/npc/TableNPCJunior';
+import TableNPCSenior from '@/pages/admin/npc/TableNPCSenior';
+import TableNPCPaymentJunior from '@/pages/admin/npc/TableNPCPaymentJunior';
+import TableNPCPaymentSenior from '@/pages/admin/npc/TableNPCPaymentSenior';
+import Admin from '@/pages/admin/Admin';
+import TableReeva from '@/pages/admin/reeva/TableReeva';
 
 // const routeItems = [
 //   {
@@ -327,6 +340,54 @@ import CloseReeva from '@/pages/reeva/CloseReeva';
 
 const routeItems = [
   {
+    auth: 'admin',
+    route: AdminRoute,
+    key: 'admin-verifikasi-pembayaran-reeva',
+    path: '/admin/sch-reeva',
+    component: TableReeva,
+    visible: true,
+  },
+  {
+    auth: 'admin',
+    route: AdminRoute,
+    key: 'admin-verifikasi-pembayaran-nst',
+    path: '/admin/sch-nst',
+    component: TableNST,
+    visible: true,
+  },
+  {
+    auth: 'admin',
+    route: AdminRoute,
+    key: 'admin-verifikasi-pembayaran-npc-senior',
+    path: '/admin/sch-npc-senior-payment',
+    component: TableNPCPaymentSenior,
+    visible: true,
+  },
+  {
+    auth: 'admin',
+    route: AdminRoute,
+    key: 'admin-verifikasi-pembayaran-npc-junior',
+    path: '/admin/sch-npc-junior-payment',
+    component: TableNPCPaymentJunior,
+    visible: true,
+  },
+  {
+    auth: 'admin',
+    route: AdminRoute,
+    key: 'admin-verifikasi-pembayaran-nlc',
+    path: '/admin/sch-nlc-payment',
+    component: TableNLCPembayaran,
+    visible: true,
+  },
+  {
+    auth: 'admin',
+    route: AdminRoute,
+    key: 'admin-pembayaran',
+    path: '/admin/detail-pembayaran/:id',
+    component: AdminPembayaran,
+    visible: true,
+  },
+  {
     auth: 'user',
     route: PrivateRoute,
     key: 'home',
@@ -454,14 +515,7 @@ const routeItems = [
     component: CreateTeamJuniorKetua,
     visible: true,
   },
-  {
-    auth: 'user',
-    route: PrivateRoute,
-    key: 'npc-junior-payment',
-    path: '/npc_junior/payment',
-    component: PaymentTeamJunior,
-    visible: true,
-  },
+
   {
     auth: 'user',
     route: PrivateRoute,
@@ -496,10 +550,58 @@ const routeItems = [
   },
   {
     auth: 'admin',
-    route: PrivateRoute,
+    route: AdminRoute,
     key: 'admin-nlc-verifikasi',
-    path: '/admin/sch-nlc/verifikasi',
-    component: VerifikasiNLC,
+    path: '/admin/sch-nlc/verifikasi/:id',
+    component: AdminVerifikasiDataNLC,
+    visible: true,
+  },
+  {
+    auth: 'admin',
+    route: AdminRoute,
+    key: 'admin-npc-junior-verifikasi',
+    path: '/admin/sch-npc-junior/verifikasi/:id',
+    component: AdminVerifikasiDataNPCJunior,
+    visible: true,
+  },
+  {
+    auth: 'admin',
+    route: AdminRoute,
+    key: 'admin-npc-senior-verifikasi',
+    path: '/admin/sch-npc-senior/verifikasi/:id',
+    component: AdminVerifikasiDataNPCSenior,
+    visible: true,
+  },
+  {
+    auth: 'admin',
+    route: AdminRoute,
+    key: 'admin-nlc',
+    path: '/admin/sch-nlc',
+    component: TableNLCTeam,
+    visible: true,
+  },
+  {
+    auth: 'admin',
+    route: AdminRoute,
+    key: 'admin-npc-senior',
+    path: '/admin/sch-npc-junior',
+    component: TableNPCJunior,
+    visible: true,
+  },
+  {
+    auth: 'admin',
+    route: AdminRoute,
+    key: 'admin-npc-senior',
+    path: '/admin/sch-npc-senior',
+    component: TableNPCSenior,
+    visible: true,
+  },
+  {
+    auth: 'admin',
+    route: AdminRoute,
+    key: 'admin-npc-senior',
+    path: '/admin',
+    component: Admin,
     visible: true,
   },
   {
@@ -551,7 +653,6 @@ const Routes = () => {
         <Route exact path='/'>
           <Redirect to='/login' />
         </Route>
-
         {routeItems.map((routeItem) => {
           if (process.env.PUBLIC_URL === '/dashboard' && !routeItem.visible)
             return null;

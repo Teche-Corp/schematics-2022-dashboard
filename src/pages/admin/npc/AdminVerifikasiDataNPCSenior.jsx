@@ -8,29 +8,32 @@ import { NLC_REGION } from '@/lib/constants';
 import DetailAnggota from '@/components/Admin/DetailAnggota';
 import { useEffect } from 'react';
 import axios from 'axios';
-import { bearerToken } from '@/lib/helper';
 import Loading from '@/components/Loading';
+import { Redirect, useParams } from 'react-router-dom';
 
-export default function VerifikasiNLC() {
+export default function AdminVerifikasiDataNPCSenior() {
   const methods = useForm();
+  let { id } = useParams();
   const { handleSubmit } = methods;
-  const { data: nlcData, error: nlcError } = useSWR(
-    ['/admin_get_nlc_team?team_id=450c0d7b-5315-4777-a932-50a6be3c6256'],
+  const { data: npcData, error: npcError } = useSWR(
+    [`/admin_get_npc_team?team_id=${id}`],
     {
       shouldRetryOnError: false,
       errorRetryInterval: 0,
     },
   );
 
-  // useEffect(() => {
-  //   console.log(nlcData);
-  // }, [nlcData]);
-
-  if (!nlcData) {
+  if (npcError) {
+    if (npcError.response.status === 401) {
+      return <Redirect to='/admin/login' />;
+    }
+    return <Redirect to='/admin' />;
+  }
+  if (!npcData) {
     return <Loading />;
   }
   const updateTim = (data) => {
-    console.log(data);
+    // console.log(data);
   };
 
   return (
@@ -38,7 +41,7 @@ export default function VerifikasiNLC() {
       <div className='w-full min-h-screen p-10 bg-dark-100'>
         {/* Judul */}
         <h1 className='text-center font-primary text-5xl text-white'>
-          Verifikasi Pendaftaran NLC
+          Verifikasi Pendaftaran NPC Senior
         </h1>
         <FormProvider {...methods}>
           <form
@@ -50,7 +53,7 @@ export default function VerifikasiNLC() {
                 Detail TIM
               </h2>
               <InputAdmin
-                value={nlcData.data.nama_team}
+                value={npcData?.data?.nama_team}
                 type='text'
                 placeholder='Nama Tim'
                 disabled={true}
@@ -59,7 +62,7 @@ export default function VerifikasiNLC() {
                 validation={{ required: 'Nama Tim tidak boleh kosong' }}
               />
               <InputAdmin
-                value={nlcData.data.asal_sekolah}
+                value={npcData?.data?.asal_sekolah}
                 type='text'
                 placeholder='Asal Sekolah'
                 disabled={true}
@@ -67,15 +70,9 @@ export default function VerifikasiNLC() {
                 id='nama-sekolah'
                 validation={{ required: 'Email tidak boleh kosong' }}
               />
-              <SelectInput
-                value={nlcData.data.region}
-                label='Pilihan Region'
-                options={NLC_REGION}
-                disabled={true}
-                id='region'
-              />
+
               <InputAdmin
-                value={nlcData.data.kota}
+                value={npcData?.data?.kota}
                 type='text'
                 placeholder='Kabupaten / Kota'
                 disabled={true}
@@ -84,7 +81,7 @@ export default function VerifikasiNLC() {
                 validation={{ required: 'Kabupaten / Kota tidak boleh kosong' }}
               />
               <InputAdmin
-                value={nlcData.data.nama_guru_pendamping}
+                value={npcData?.data?.nama_guru_pendamping}
                 type='text'
                 placeholder='Guru Pendamping (GP)'
                 disabled={true}
@@ -93,7 +90,7 @@ export default function VerifikasiNLC() {
                 validation={{ required: 'Guru pendamping tidak boleh kosong' }}
               />
               <InputAdmin
-                value={nlcData.data.no_telp_guru_pendamping}
+                value={npcData?.data?.no_telp_guru_pendamping}
                 type='text'
                 placeholder='Nomor telpon guru pendamping (GP)'
                 disabled={true}
@@ -105,8 +102,13 @@ export default function VerifikasiNLC() {
           </form>
         </FormProvider>
         <div>
-          {nlcData.data.members.map((data, index) => (
-            <DetailAnggota detailAnggota={data} index={index} key={index} />
+          {npcData?.data?.members.map((data, index) => (
+            <DetailAnggota
+              detailAnggota={data}
+              index={index}
+              key={index}
+              from={'npc-senior'}
+            />
           ))}
         </div>
         {/* <Input disabled={true} label='Nama' /> */}

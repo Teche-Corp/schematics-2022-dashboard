@@ -223,7 +223,7 @@ export default function CreateTeam() {
                           validation={{
                             required: 'NISN tidak boleh kosong',
                             pattern: {
-                              value: /^[0-9]*$/,
+                              value: /^[0-9]{5}*$/,
                               message: 'Harus berupa angka',
                             },
                           }}

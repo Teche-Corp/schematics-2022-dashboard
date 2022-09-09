@@ -245,7 +245,7 @@ export default function CreateTeamKetua() {
               validation={{
                 required: 'NISN tidak boleh kosong',
                 pattern: {
-                  value: /^[0-9]{10}$/,
+                  value: /^[0-9]{5}$/,
                   message:
                     'NISN Harus berupa angka dan memiliki panjang 10 karakter',
                 },

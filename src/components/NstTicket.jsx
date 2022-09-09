@@ -32,7 +32,7 @@ const ComponentToPrint = React.forwardRef((props, ref, data) => {
 
             <p className='text-gray-300 '>Location</p>
             <p className='font-bold mb-4  text-xl md:text-2xl'>
-              {'Gedung Research Center ITS'}
+              {'SCC Marvell City Surabaya'}
             </p>
           </div>
 

@@ -3,11 +3,10 @@ import { Redirect, Route, useLocation } from 'react-router-dom';
 import { ImSpinner8 } from 'react-icons/im';
 import { useAuthState } from '@/contexts/AuthContext';
 
-const PrivateRoute = ({ component: Component, auth, ...rest }) => {
+const AdminRoute = ({ component: Component, auth, ...rest }) => {
   const { authenticated, loading } = useAuthState();
   const { pathname } = useLocation();
   const { user } = useAuthState();
-
   return (
     <Route
       {...rest}
@@ -21,19 +20,15 @@ const PrivateRoute = ({ component: Component, auth, ...rest }) => {
           );
         } else {
           if (authenticated) {
-            if (user.user_type === 'user') {
+            if (user?.user_type === 'admin') {
               return <Component {...props} />;
-            } else if (user.user_type === 'admin') {
+            } else if (user?.user_type === 'user') {
               return (
                 <Redirect
-                  to={{
-                    pathname: '/admin',
-                    state: { redirect: pathname },
-                  }}
+                  to={{ pathname: '/landing', state: { redirect: pathname } }}
                 />
               );
             }
-            // If current user role not allowed to access this route
           } else {
             return (
               <Redirect
@@ -47,4 +42,4 @@ const PrivateRoute = ({ component: Component, auth, ...rest }) => {
   );
 };
 
-export default PrivateRoute;
+export default AdminRoute;

@@ -111,7 +111,7 @@ export default function Dashboard() {
                     <div className='mt-4 md:text-base text-sm'>
                       <p className='font-secondary'>Venue</p>
                       <p className='font-secondary font-semibold leading-6'>
-                        Gedung Research Center ITS
+                        SCC Marvell City Surabaya
                       </p>
                     </div>
                     <div className='mt-4 md:text-base text-sm'>

@@ -1,39 +1,58 @@
 import InputAdmin from '@/components/Admin/InputAdmin';
+import ImageFetch from '../ImageFetch';
 import axios from 'axios';
 import { FormProvider, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import DragnDropInput from '../DragnDropInput';
-import SelectInput from '../SelectInput';
-import SubmitButton from '../SubmitButton';
-import ImageLightboxAdmin from './ImageLightboxAdmin';
+import { bearerToken } from '@/lib/helper';
+import { useHistory } from 'react-router-dom';
+import ImageLightboxAdmin from '@/components/Admin/ImageLightboxAdmin';
 import ValidasiAdmin from './ValidasiAdmin';
+
 const validationList = [
   {
-    value: 'validasi',
+    value: 'active',
     text: 'Validasi',
   },
   {
-    value: 'tolak-validasi',
+    value: 'need_revision',
     text: 'Tolak Validasi',
   },
 ];
 
-export default function DetailAnggota({ detailAnggota, index }) {
+export default function DetailAnggota({ detailAnggota, index, from = '' }) {
   const methods = useForm();
-  const { control, handleSubmit } = methods;
+  const { handleSubmit } = methods;
+  const history = useHistory();
 
-  // console.log(detailAnggota);
+  const API =
+    from.split('-')[0] === 'npc'
+      ? '/admin_verify_npc_member'
+      : '/admin_verify_nlc_member';
 
   const verifikasiAnggota = (data) => {
-    console.log(data);
-    // toast.promise(
-    //   axios.post('/api/admin_verify_nlc_member',)
-    // )
-  };
+    const formData = new FormData();
+    formData.append('member_id', detailAnggota.member_id);
+    formData.append('new_status', data.validasi);
 
+    toast.promise(
+      axios.post(API, formData, {
+        headers: { ...bearerToken(), 'Content-Type': 'multipart/form-data' },
+      }),
+      {
+        loading: 'Loading...',
+        success: (res) => {
+          history.push('/admin');
+          return 'Berhasil merubah setatus verifikasi';
+        },
+        error: (err) => {
+          return err.response.data.message;
+        },
+      },
+    );
+  };
+  console.log(detailAnggota);
   return (
     <>
-      {/* <Input label={'Robby Ulung P'}/> */}
       <FormProvider {...methods}>
         <form
           className='flex justify-center mt-14'
@@ -41,16 +60,18 @@ export default function DetailAnggota({ detailAnggota, index }) {
         >
           <div className='w-1/2'>
             <h2 className='text-center text-white text-2xl font-primary'>
-              Anggota {index + 1}
+              {detailAnggota.member_type === 'ketua'
+                ? 'Ketua'
+                : `Anggota ${index}`}
             </h2>
             <InputAdmin
-              value={detailAnggota.name}
+              value={detailAnggota && detailAnggota?.name}
               type='text'
-              placeholder='Nama '
+              placeholder='Nama'
               disabled={true}
               label='Nama'
               id='nama'
-              validation={{ required: 'Nama tidak boleh kosong' }}
+              // validation={{ required: 'Nama tidak boleh kosong' }}
             />
             {/* Email Tidak ada dalam object */}
             {/* <InputAdmin
@@ -63,19 +84,17 @@ export default function DetailAnggota({ detailAnggota, index }) {
               validation={{ required: 'Email tidak boleh kosong' }}
             /> */}
             <InputAdmin
-              value={detailAnggota.nisn}
+              value={detailAnggota?.nisn}
               type='text'
-              placeholder='nsin '
+              placeholder={from.split('-')[1] === 'senior' ? 'NIM' : 'NISN'}
               disabled={true}
-              label='NISN'
+              label={from === 'npc-senior' ? 'NIM' : 'NISN'}
               id='nisn'
-              validation={{ required: 'NISN tidak boleh kosong' }}
+              // validation={{ required: 'NISN tidak boleh kosong' }}
             />
-
-            <ImageLightboxAdmin
-              src={`${process.env.PUBLIC_URL}/images/qris.jpg`}
-              alt='Cek Gambar'
-              label='Scan KT Pelajar / surat keterangan aktif / surat tugas'
+            <ImageFetch
+              imgpath={detailAnggota?.surat_url}
+              tag='Scan KT Pelajar / Surat Keterangan Aktif'
             />
             <InputAdmin
               value={detailAnggota.no_telp}
@@ -84,81 +103,89 @@ export default function DetailAnggota({ detailAnggota, index }) {
               disabled={true}
               label='Nomor telepon'
               id='no-tlpn'
-              validation={{ required: 'no-telp tidak boleh kosong' }}
+              // validation={{ required: 'no-telp tidak boleh kosong' }}
             />
             <InputAdmin
-              value={detailAnggota.no_wa}
+              value={detailAnggota?.no_wa}
               type='text'
               placeholder='Nomer WA'
               disabled={true}
               label='Nomer WA'
               id='no-wa'
-              validation={{ required: 'no-wa tidak boleh kosong' }}
+              // validation={{ required: 'no-wa tidak boleh kosong' }}
             />
             <InputAdmin
-              value={detailAnggota.id_line}
+              value={detailAnggota?.id_line}
               type='text'
               placeholder='Id Line'
               disabled={true}
               label='ID Line'
               id='id-line'
-              validation={{ required: 'Id-Line tidak boleh kosong' }}
+              // validation={{ required: 'Id-Line tidak boleh kosong' }}
             />
             <InputAdmin
-              value={detailAnggota.alamat}
+              value={detailAnggota?.alamat}
               type='text'
               placeholder='Alamat'
               disabled={true}
               label='Alamat'
               id='address'
-              validation={{ required: 'Alamat tidak boleh kosong' }}
-            />
-            <ImageLightboxAdmin
-              src={`${process.env.PUBLIC_URL}/images/error-icon.png`}
-              alt='Cek Gambar'
-              label='Bukti Up Twibbon'
-            />
-            <ImageLightboxAdmin
-              src={`${process.env.PUBLIC_URL}/images/qris.jpg`}
-              alt='Cek Gambar'
-              label='Sg Poster'
+              // validation={{ required: 'Alamat tidak boleh kosong' }}
             />
             <InputAdmin
-              value='Pefizer'
+              value={detailAnggota?.alamat}
               type='text'
-              placeholder='Jenis Vaksin'
+              placeholder='Alamat'
               disabled={true}
-              label='Jenis Vaksin'
-              id='jenis-vaksin'
-              validation={{ required: 'Jenis vaksin tidak boleh kosong' }}
+              label='Alamat'
+              id='address'
+              // validation={{ required: 'Alamat tidak boleh kosong' }}
             />
-            <ImageLightboxAdmin
-              src={`${process.env.PUBLIC_URL}/images/qris.jpg`}
-              alt='Cek Gambar'
-              label='Bukti Vaksin'
-            />
+            {/* Butki Upload Twibbon */}
+            {from && from.split('-')[0] === 'npc' ? (
+              <InputAdmin
+                value={detailAnggota?.discord_tag}
+                type='text'
+                placeholder='Discord Tag'
+                disabled={true}
+                label='Discord Tag'
+                id='discord-tag'
+              ></InputAdmin>
+            ) : null}
+            {from.split('-')[0] !== 'npc' ? (
+              <>
+                <ImageFetch
+                  imgpath={detailAnggota?.bukti_twibbon_url}
+                  tag='Bukti Upload Twibbon'
+                />
+                <ImageFetch
+                  imgpath={detailAnggota?.bukti_twibbon_url}
+                  tag='Bukti Upload Poster'
+                />
+                {/* <InputAdmin
+                  value='Pefizer'
+                  type='text'
+                  placeholder='Jenis Vaksin'
+                  disabled={true}
+                  label='Jenis Vaksin'
+                  id='jenis-vaksin'
+                  // validation={{ required: 'Jenis vaksin tidak boleh kosong' }}
+                /> */}
+                <ImageFetch
+                  imgpath={detailAnggota?.bukti_twibbon_url}
+                  tag='Bukti Vaksin'
+                />
+              </>
+            ) : null}
+
             <ValidasiAdmin
               options={validationList}
               label='Validasi'
-              validation={{
-                required: 'Asal informasi Schematics tidak boleh kosong',
-              }}
+              // validation={{
+              //   required: 'Asal informasi Schematics tidak boleh kosong',
+              // }}
               id='validasi'
             />
-            {/* <div>
-              <SelectInput
-                label='Validasi'
-                id='validasi'
-                options={validationList}
-              />
-              <SubmitButton
-                className='mt-12 text-white hover:text-black bg-nst font-tertiary font-normal '
-                loading={false}
-              >
-                {' '}
-                Update
-              </SubmitButton>
-            </div> */}
           </div>
         </form>
       </FormProvider>
