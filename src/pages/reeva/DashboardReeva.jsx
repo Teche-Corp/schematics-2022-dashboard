@@ -21,7 +21,6 @@ export default function DashboardReeva() {
 
   useEffect(() => {
     if (data) {
-      console.log(data.data);
       if (
         data.data.status === 'awaiting_payment' ||
         data.data.status === 'need_revision'
@@ -208,38 +207,26 @@ export default function DashboardReeva() {
                 </h2>
 
                 {/* Pemberitahuan Content */}
-                {/* <div className='flex flex-col m-5 bg-nst p-3 rounded-2xl '>
+                <div className='flex flex-col m-5 bg-nst p-3 rounded-2xl '>
                   <div className='flex flex-row justify-between'>
                     <div className='flex flex-col gap-x-10 text-white md:flex-row'>
                       <p className='font-primary text-sm md:text-lg'>
-                        24 Juni 2022
+                        10 September 2022
                       </p>
                       <p className='font-primary text-sm md:text-lg'>
-                        Maintanence Complete
+                        Pengiriman Tiket Teeva
                       </p>
                     </div>
-
-                    <p className='font-primary text-sm text-white md:text-lg'>
-                      19.22 WIB
-                    </p>
                   </div>
 
                   <div className='flex flex-col items-center  justify-between mt-2 md:mt-4 md:flex-row'>
                     <p className='font-secondary text-sm md:text-lg  text-white'>
-                      Server telah diperbaiki silahkan mengakses dashboard yang
-                      tersedia
+                      Tiket akan dikirim melalui email pembeli dan dapat diakses
+                      melalui dashboard pembeli setelah diverifikasi
+                      pembayarannya oleh admin
                     </p>
-
-                    <div className='w-full flex justify-end md:w-min '>
-                      <a
-                        href='/'
-                        className='flex  font-primary text-reeva hover:text-reeva-400 bg-white p-1 rounded-md mt-2 items-center px-2 py-1'
-                      >
-                        Selengkapnya
-                      </a>
-                    </div>
                   </div>
-                </div> */}
+                </div>
               </div>
             </div>
           </div>
