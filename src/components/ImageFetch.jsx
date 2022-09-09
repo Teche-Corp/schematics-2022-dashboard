@@ -21,7 +21,9 @@ export default function ImageFetch({ imgpath, tag, label, ...rest }) {
       })
       .then((response) => {
         let base64string = btoa(
-          String.fromCharCode(...new Uint8Array(response.data)),
+          new Uint8Array(response.data).reduce(function (data, byte) {
+            return data + String.fromCharCode(byte);
+          }, ''),
         );
         let contentType = response.headers['content-type'];
         return {
