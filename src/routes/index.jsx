@@ -94,6 +94,7 @@ import TableNPCPaymentJunior from '@/pages/admin/npc/TableNPCPaymentJunior';
 import TableNPCPaymentSenior from '@/pages/admin/npc/TableNPCPaymentSenior';
 import Admin from '@/pages/admin/Admin';
 import TableReeva from '@/pages/admin/reeva/TableReeva';
+import ReevaRegister from '@/pages/reeva/ReevaRegister';
 
 // const routeItems = [
 //   {
@@ -617,7 +618,7 @@ const routeItems = [
     route: PrivateRoute,
     key: 'reeva-registration',
     path: '/reeva/registration',
-    component: CloseReeva,
+    component: ReevaRegister,
     visible: true,
   },
   {

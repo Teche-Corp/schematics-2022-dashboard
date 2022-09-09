@@ -183,7 +183,7 @@ export default function JoinTeamJunior() {
               }}
             />
             <Input
-              label='Darimana kamu mendapat informasi Schematics'
+              label='Darimana kamu mendapat informasi Schematics?'
               validation={{
                 required: 'Asal informasi Schematics tidak boleh kosong',
               }}
@@ -204,7 +204,7 @@ export default function JoinTeamJunior() {
               }
               id='surat'
               accept='image/png, image/jpg, image/jpeg'
-              helperText='File dalam format jpg, png, atau jpeg'
+              helperText='*File dalam format jpg, png, atau jpeg'
               maxFiles={1}
               validation={{
                 required:

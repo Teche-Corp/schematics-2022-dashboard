@@ -120,7 +120,7 @@ export default function PaymentTeam() {
                 label='Foto atau bukti pembayaran'
                 id='bukti_bayar'
                 accept='image/png, image/jpg, image/jpeg'
-                helperText='File dalam format jpg, png, atau jpeg'
+                helperText='*File dalam format jpg, png, atau jpeg'
                 maxFiles={1}
                 validation={{
                   required: 'Bukti pembayaran tidak boleh kosong',

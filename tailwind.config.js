@@ -24,14 +24,14 @@ module.exports = {
           100: '#F8C5CA',
           200: '#FFB7B7',
           300: '#FF9F97',
-          400: '#EA8686'
+          400: '#EA8686',
         },
         nlc: {
           DEFAULT: '#FFCD46',
           100: '#FFFFCC',
           200: '#FFF0C8',
           300: '#FFCD7C',
-          400: '#FFDB7A'
+          400: '#FFDB7A',
         },
         nst: {
           DEFAULT: '#85D4BE',
@@ -39,22 +39,22 @@ module.exports = {
           200: '#DAF1DE',
           300: '#96DFD8',
           400: '#AEE6CB',
-          'blue': "#0A91FF",
-          'red' : "#F1000B",
-          'black' : "#252525",
-          'orange' : "#F15412"
+          blue: '#0A91FF',
+          red: '#F1000B',
+          black: '#252525',
+          orange: '#F15412',
         },
         reeva: {
           DEFAULT: '#2E97EE',
           100: '#ACE6FF',
           200: '#78C0FC',
           300: '#70A5D1',
-          400: '#3C8ACA'
+          400: '#3C8ACA',
         },
       },
       fontFamily: {
-        primary: "Fredoka One, cursive",
-        secondary: "Poppins, sans-serif",
+        primary: 'Fredoka One, cursive',
+        secondary: 'Poppins, sans-serif',
       },
     },
   },
@@ -67,4 +67,5 @@ module.exports = {
     require('@tailwindcss/forms'),
     require('@tailwindcss/aspect-ratio'),
   ],
+  mode: 'jit',
 };

@@ -285,7 +285,7 @@ export default function CreateTeam() {
                           label='Foto Kartu Pelajar/Surat Keterangan Siswa Aktif'
                           id='leader-id'
                           accept='image/png, image/jpg, image/jpeg'
-                          helperText='Pastikan nama lengkap di KTP/surat keterangan sesuai dengan nama lengkap yang anda masukkan. File dalam format jpg, png, atau jpeg.'
+                          helperText='*Pastikan nama lengkap di KTP/surat keterangan sesuai dengan nama lengkap yang anda masukkan. File dalam format jpg, png, atau jpeg.'
                           maxFiles={1}
                           validation={{
                             required: 'Foto Kartu Pelajar tidak boleh kosong',

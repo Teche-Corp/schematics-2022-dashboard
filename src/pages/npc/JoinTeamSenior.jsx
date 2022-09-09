@@ -178,7 +178,7 @@ export default function JoinTeamSenior() {
               }}
             />
             <Input
-              label='Darimana kamu mendapat informasi Schematics'
+              label='Darimana kamu mendapat informasi Schematics?'
               validation={{
                 required: 'Asal informasi Schematics tidak boleh kosong',
               }}
@@ -186,20 +186,10 @@ export default function JoinTeamSenior() {
             />
             <hr className='w-full bg-white' />
             <DragnDropInput
-              label={
-                <span>
-                  Screenshot Hasil Pencarian NISN.{' '}
-                  <a
-                    href='https://nisn.data.kemdikbud.go.id/index.php/Cindex/formcaribynama'
-                    className='text-white hover:text-nlc-300'
-                  >
-                    Cek Di Sini
-                  </a>
-                </span>
-              }
+              label='Foto Kartus Tanda Mahasiswa/Surat Keterangan Mahasiswa Aktif'
               id='surat'
               accept='image/png, image/jpg, image/jpeg'
-              helperText='File dalam format jpg, png, atau jpeg'
+              helperText='*File dalam format jpg, png, atau jpeg'
               maxFiles={1}
               validation={{
                 required:

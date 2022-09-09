@@ -66,6 +66,24 @@ export function getNLCTeamStatus(team) {
   return status;
 }
 
+export function isAbleNLCBingo(team) {
+  const members = team.members;
+  for (let member of members) {
+    if (member.bingo_file_url === null) {
+      return false;
+    }
+  }
+  return true;
+}
+
+export function isNLCMemberHasBingo(team, name) {
+  const members = team.members;
+  const member = members.find((member) => {
+    return member.name === name;
+  });
+  return member.bingo_file_url === null;
+}
+
 export function getTicketOption(n) {
   const res = [];
   for (let i = 1; i <= n; i++) {
