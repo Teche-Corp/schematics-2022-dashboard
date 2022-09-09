@@ -1,15 +1,16 @@
 import React, { useRef } from 'react';
-import {
-  exportComponentAsJPEG,
-  exportComponentAsPDF,
-  exportComponentAsPNG,
-} from 'react-component-export-image';
-
+import { exportComponentAsJPEG } from 'react-component-export-image';
+import { QRCodeSVG } from 'qrcode.react';
+import Loading from './Loading';
 const ComponentToPrint = React.forwardRef((props, ref, data) => {
+  console.log(props?.data.ticket_id);
+  if (!props) {
+    <Loading />;
+  }
   return (
     <>
       <div
-        className='flex justify-center md:flex-row bg-white flex-col-reverse font-primary p-10 md:p-16 mx-auto w-10/12 md:w-2/3 rounded-xl'
+        className='flex justify-center md:flex-row bg-white flex-col-reverse font-primary p-10 md:p-16 mx-auto w-10/12 md:w-2/3 rounded-xl gap-x-4'
         ref={ref}
       >
         {/* Name */}
@@ -17,7 +18,7 @@ const ComponentToPrint = React.forwardRef((props, ref, data) => {
           <div className='relative w-full'>
             <p className='text-gray-300 '>Name</p>
             <p className='font-bold mb-4 text-xl md:text-2xl'>
-              {props.data.name}
+              {props?.data.name}
             </p>
 
             <p className='text-gray-300 '>Date &amp; Time</p>
@@ -43,20 +44,32 @@ const ComponentToPrint = React.forwardRef((props, ref, data) => {
           />
 
           {/* Barcode Mobile */}
-          <img
+          {/* ticket_id */}
+          <QRCodeSVG
+            className='w-64 mx-auto block md:hidden mt-4'
+            size='160'
+            value={props?.data.ticket_id}
+          />
+
+          {/* <img
             className='w-64 mx-auto block md:hidden'
             src={`${process.env.PUBLIC_URL}/images/nst/barcode.png`}
             alt='qris'
-          />
+          /> */}
         </div>
 
-        <div className='flex flex-col w-full md:w-2/4'>
+        <div className='flex flex-col w-full md:w-2/4 items-center gap-x-2'>
           {/* Barcode Desktop */}
-          <img
+          <QRCodeSVG
+            className='w-64 mx-auto hidden md:block'
+            size={200}
+            value={props?.data.ticket_id}
+          />
+          {/* <img
             className='w-64 mx-auto hidden md:block'
             src={`${process.env.PUBLIC_URL}/images/nst/barcode.png`}
             alt='qris'
-          />
+          /> */}
 
           <div className='flex justify-center items-center flex-col pt-4'>
             {/* Schemtics text */}
