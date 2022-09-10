@@ -93,9 +93,10 @@ export default function PaymentReeva() {
 
               {/* Nominal */}
               <p className=' text-white text-5xl font-primary mt-6 md:mt-12'>
-                {biaya.slice(0, 7)}
+                {biaya.slice(0, biaya.length - 3)}
                 <span className='text-reeva underline'>
-                  {biaya.slice(7, 11)}
+                  {/* {biaya.slice(7, 11)} */}
+                  {biaya.slice(biaya.length - 3, biaya.length)}
                 </span>
               </p>
               <p className='font-tertiary font-normal mt-2 text-white text-sm md:text-base'>
