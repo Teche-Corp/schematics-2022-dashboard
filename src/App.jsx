@@ -12,11 +12,11 @@ import '@/App.css';
 import { bearerToken } from './lib/helper';
 
 const App = () => {
-  axios.defaults.baseURL = 'https://schematics.its.ac.id:8081/api';
-  // process.env.NODE_ENV === 'production' &&
-  // process.env.PUBLIC_URL === '/dashboard'
-  //   ? 'https://schematics.its.ac.id:8081/api'
-  //   : 'https://deploy-laravel.herokuapp.com/api';
+  axios.defaults.baseURL =
+    process.env.NODE_ENV === 'production' &&
+    process.env.PUBLIC_URL === '/dashboard'
+      ? 'https://schematics.its.ac.id:8081/api'
+      : 'https://deploy-laravel.herokuapp.com/api';
 
   // axios.defaults.baseURL = 'https://schematics.its.ac.id:8081/api';
 
