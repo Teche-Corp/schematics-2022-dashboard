@@ -80,7 +80,7 @@ export default function PaymentTeam() {
             <p>Lakukan Pembayaran dengan nominal</p>
             <br />
             <p className='font-primary text-3xl md:text-5xl'>
-              {numberToRupiah(teamPayment.data.biaya)}
+              {numberToRupiah(teamPayment?.data.biaya)}
             </p>
             <br />
             <p>(Nominal HARUS sesuai hingga digit terakhir)</p>
