@@ -95,6 +95,7 @@ import TableNPCPaymentSenior from '@/pages/admin/npc/TableNPCPaymentSenior';
 import Admin from '@/pages/admin/Admin';
 import TableReeva from '@/pages/admin/reeva/TableReeva';
 import ReevaRegister from '@/pages/reeva/ReevaRegister';
+import PaymentTeamJunior from '@/pages/npc/PaymentTeamJunior';
 
 // const routeItems = [
 //   {
@@ -516,7 +517,14 @@ const routeItems = [
     component: CreateTeamJuniorKetua,
     visible: true,
   },
-
+  {
+    auth: 'user',
+    route: PrivateRoute,
+    key: 'npc-junior-payment',
+    path: '/npc_junior/payment',
+    component: PaymentTeamJunior,
+    visible: true,
+  },
   {
     auth: 'user',
     route: PrivateRoute,
