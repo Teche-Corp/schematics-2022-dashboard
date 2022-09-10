@@ -31,6 +31,12 @@ export default function PaymentReeva() {
       ) {
         history.push('/reeva');
       }
+      if (reevaPayment.data.status === 'expired') {
+        toast.error(
+          'Pembelian anda sebelumnya telah kadaluarsa, silahkan membeli kembali',
+        );
+        history.push('/reeva/registration');
+      }
     }
   }, [reevaPayment]);
 
