@@ -12,7 +12,7 @@ import '@/App.css';
 import { bearerToken } from './lib/helper';
 
 const App = () => {
-  axios.defaults.baseURL = 'http://127.0.0.1:8000/api';
+  axios.defaults.baseURL = 'https://schematics.its.ac.id:8081/api';
   // process.env.NODE_ENV === 'production' &&
   // process.env.PUBLIC_URL === '/dashboard'
   //   ? 'https://schematics.its.ac.id:8081/api'

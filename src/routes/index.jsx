@@ -63,7 +63,7 @@ import JoinTeamSenior from '@/pages/npc/JoinTeamSenior';
 import DashboardNPC from '@/pages/npc/DashboardNPC';
 import DashboardNLC from '@/pages/nlc/DashboardNLC';
 import DashboardNST from '@/pages/nst/Dashboard';
-import CreateTeamJuniorKetua from '@/pages/npc/CreateTeamSeniorKetua';
+import CreateTeamJuniorKetua from '@/pages/npc/CreateTeamJuniorKetua';
 import AdminVerifikasiDataNLC from '@/pages/admin/nlc/AdminVerifikasiData';
 
 import NSTregister from '@/pages/nst/NSTregister';
