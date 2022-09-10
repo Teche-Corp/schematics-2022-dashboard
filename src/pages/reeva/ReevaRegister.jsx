@@ -26,7 +26,7 @@ export default function ReevaRegister() {
   const jumlah_tiket = watch('jumlah_tiket');
 
   const handleCheckKode = async () => {
-    if (kode_voucher === undefined) {
+    if (!kode_voucher) {
       return toast.error('Anda belum mengisi form kode promo');
     }
     if (!jumlah_tiket) {
