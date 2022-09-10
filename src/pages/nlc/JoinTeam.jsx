@@ -112,9 +112,9 @@ export default function JoinTeam() {
               validation={{
                 required: 'NISN tidak boleh kosong',
                 pattern: {
-                  value: /^[0-9]{5}$/,
+                  value: /^[0-9]{4,16}$/,
                   message:
-                    'NISN Harus berupa angka dan memiliki panjang 5 karakter',
+                    'NISN Harus berupa angka dan memiliki panjang 4 - 16 karakter',
                 },
               }}
             />
