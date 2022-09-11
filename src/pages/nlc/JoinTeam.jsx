@@ -19,10 +19,7 @@ export default function JoinTeam() {
   const { handleSubmit } = methods;
   const { user } = useAuthState();
 
-  const { data: teamPayment, error: teamPaymentError } = useSWR('/my_nlc', {
-    shouldRetryOnError: false,
-    errorRetryInterval: 0,
-  });
+  const { data: teamPayment, error: teamPaymentError } = useSWR('/my_nlc');
 
   const handleJoinTeam = (data) => {
     const formData = new FormData();

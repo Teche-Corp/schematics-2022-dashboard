@@ -52,10 +52,7 @@ export default function ReevaRegister() {
     );
   };
 
-  const { data: nstOrder, error } = useSWR('/my_nst', {
-    shouldRetryOnError: false,
-    errorRetryInterval: 0,
-  });
+  const { data: nstOrder, error } = useSWR('/my_nst');
 
   useEffect(() => {
     if (nstOrder) {

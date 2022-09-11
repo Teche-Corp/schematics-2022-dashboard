@@ -14,10 +14,7 @@ export default function DashboardReeva() {
   const { user } = useAuthState();
   const history = useHistory();
 
-  const { data, error } = useSWR('/my_reeva', {
-    shouldRetryOnError: false,
-    errorRetryInterval: 0,
-  });
+  const { data, error } = useSWR('/my_reeva');
 
   useEffect(() => {
     if (data) {

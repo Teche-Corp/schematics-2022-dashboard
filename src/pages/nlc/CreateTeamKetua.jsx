@@ -26,10 +26,7 @@ export default function CreateTeamKetua() {
   const kode_voucher = watch('kode_voucher');
   const region = watch('region');
 
-  const { data: teamPayment, error: teamPaymentError } = useSWR('/my_nlc', {
-    shouldRetryOnError: false,
-    errorRetryInterval: 0,
-  });
+  const { data: teamPayment, error: teamPaymentError } = useSWR('/my_nlc');
 
   const handleCreateTeamKetua = async (data) => {
     const formData = new FormData();

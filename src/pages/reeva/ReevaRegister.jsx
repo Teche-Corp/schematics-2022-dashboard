@@ -79,10 +79,7 @@ export default function ReevaRegister() {
     );
   };
 
-  const { data: reevaOrder, error } = useSWR('/my_reeva', {
-    shouldRetryOnError: false,
-    errorRetryInterval: 0,
-  });
+  const { data: reevaOrder, error } = useSWR('/my_reeva');
 
   useEffect(() => {
     if (reevaOrder) {

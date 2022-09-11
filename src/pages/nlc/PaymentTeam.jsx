@@ -17,10 +17,7 @@ export default function PaymentTeam() {
   const methods = useForm();
   const history = useHistory();
   const { handleSubmit } = methods;
-  const { data: teamPayment, error: teamPaymentError } = useSWR('/my_nlc', {
-    shouldRetryOnError: false,
-    errorRetryInterval: 0,
-  });
+  const { data: teamPayment, error: teamPaymentError } = useSWR('/my_nlc');
 
   useEffect(() => {
     if (teamPayment) {

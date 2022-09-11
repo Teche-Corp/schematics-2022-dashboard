@@ -24,10 +24,7 @@ export default function CreateTeamSeniorKetua() {
   const { user } = useAuthState();
   const kode_voucher = watch('kode_voucher');
 
-  const { data: teamPayment, error: teamPaymentError } = useSWR('/my_npc', {
-    shouldRetryOnError: false,
-    errorRetryInterval: 0,
-  });
+  const { data: teamPayment, error: teamPaymentError } = useSWR('/my_npc');
 
   const handleCreateTeamKetua = async (data) => {
     const formData = new FormData();

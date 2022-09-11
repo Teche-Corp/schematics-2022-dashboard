@@ -77,10 +77,7 @@ function DashboardNLC() {
     );
   };
 
-  const { data, error } = useSWR('/my_nlc', {
-    shouldRetryOnError: false,
-    errorRetryInterval: 0,
-  });
+  const { data, error } = useSWR('/my_nlc');
 
   useEffect(() => {
     if (data) {

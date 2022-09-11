@@ -17,10 +17,7 @@ export default function PembayaranNST() {
   const methods = useForm();
   const { control, handleSubmit } = methods;
   const history = useHistory();
-  const { data: nstPayment, error: nstPaymentError } = useSWR('/my_nst', {
-    shouldRetryOnError: false,
-    errorRetryInterval: 0,
-  });
+  const { data: nstPayment, error: nstPaymentError } = useSWR('/my_nst');
 
   const biaya = String(numberToRupiah(nstPayment?.data?.biaya));
   useEffect(() => {

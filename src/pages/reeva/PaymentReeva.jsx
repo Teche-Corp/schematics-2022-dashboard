@@ -17,10 +17,7 @@ export default function PaymentReeva() {
   const methods = useForm();
   const { control, handleSubmit } = methods;
   const history = useHistory();
-  const { data: reevaPayment, error: reevaPaymentError } = useSWR('/my_reeva', {
-    shouldRetryOnError: false,
-    errorRetryInterval: 0,
-  });
+  const { data: reevaPayment, error: reevaPaymentError } = useSWR('/my_reeva');
 
   const biaya = String(numberToRupiah(reevaPayment?.data?.biaya));
   useEffect(() => {

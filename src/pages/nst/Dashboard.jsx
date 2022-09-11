@@ -14,10 +14,7 @@ export default function Dashboard() {
   const { user } = useAuthState();
   const history = useHistory();
 
-  const { data, error } = useSWR('/my_nst', {
-    shouldRetryOnError: false,
-    errorRetryInterval: 0,
-  });
+  const { data, error } = useSWR('/my_nst');
 
   useEffect(() => {
     if (data) {
