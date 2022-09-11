@@ -159,7 +159,7 @@ export default function DetailAnggota({ detailAnggota, index, from = '' }) {
                   tag='Bukti Upload Twibbon'
                 />
                 <ImageFetch
-                  imgpath={detailAnggota?.bukti_twibbon_url}
+                  imgpath={detailAnggota?.bukti_poster_url}
                   tag='Bukti Upload Poster'
                 />
                 {/* <InputAdmin
@@ -172,7 +172,7 @@ export default function DetailAnggota({ detailAnggota, index, from = '' }) {
                   // validation={{ required: 'Jenis vaksin tidak boleh kosong' }}
                 /> */}
                 <ImageFetch
-                  imgpath={detailAnggota?.bukti_twibbon_url}
+                  imgpath={detailAnggota?.bukti_vaksin_url}
                   tag='Bukti Vaksin'
                 />
               </>
