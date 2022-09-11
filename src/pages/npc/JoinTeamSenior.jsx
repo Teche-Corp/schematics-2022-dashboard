@@ -82,10 +82,6 @@ export default function JoinTeamSenior() {
               defaultValue={user.name}
               validation={{
                 required: 'Nama lengkap tidak boleh kosong',
-                minLength: {
-                  value: 6,
-                  message: 'Nama lengkap setidaknya memiliki 6 karakter',
-                },
                 maxLength: {
                   value: 128,
                   message: 'Nama lengkap maksimal memiliki 128 karakter',
