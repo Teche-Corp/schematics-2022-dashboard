@@ -23,7 +23,7 @@ export default function CreateTeamKetua() {
   const [cities, setCities] = useState(undefined);
   const { user } = useAuthState();
 
-  const kode_voucher = watch('kode_voucher');
+  // const kode_voucher = watch('kode_voucher');
   const region = watch('region');
 
   const { data: teamPayment, error: teamPaymentError } = useSWR('/my_nlc');
@@ -58,34 +58,34 @@ export default function CreateTeamKetua() {
     );
   };
 
-  const handleCheckKode = async () => {
-    if (kode_voucher === undefined) {
-      return toast.error('Anda belum mengisi form kode promo');
-    }
-    if (region === undefined) {
-      return toast.error('Anda belum memilih region anda');
-    }
-    toast.promise(
-      axios.post(
-        '/check_voucher',
-        {
-          kode: kode_voucher,
-          region: region,
-          tipe: 'nlc',
-        },
-        {
-          headers: { ...bearerToken() },
-        },
-      ),
-      {
-        loading: 'Loading...',
-        success: 'Kode promo dapat digunakan',
-        error: (err) => {
-          return err.response.data.message;
-        },
-      },
-    );
-  };
+  // const handleCheckKode = async () => {
+  //   if (kode_voucher === undefined) {
+  //     return toast.error('Anda belum mengisi form kode promo');
+  //   }
+  //   if (region === undefined) {
+  //     return toast.error('Anda belum memilih region anda');
+  //   }
+  //   toast.promise(
+  //     axios.post(
+  //       '/check_voucher',
+  //       {
+  //         kode: kode_voucher,
+  //         region: region,
+  //         tipe: 'nlc',
+  //       },
+  //       {
+  //         headers: { ...bearerToken() },
+  //       },
+  //     ),
+  //     {
+  //       loading: 'Loading...',
+  //       success: 'Kode promo dapat digunakan',
+  //       error: (err) => {
+  //         return err.response.data.message;
+  //       },
+  //     },
+  //   );
+  // };
 
   const { data: provincesData, error: errorProvinces } = useSWR('/provinces');
 
@@ -302,7 +302,7 @@ export default function CreateTeamKetua() {
                 },
               }}
             />
-            <div className='w-full space-y-2'>
+            {/* <div className='w-full space-y-2'>
               <div className='w-full'>
                 <Input
                   label='Kode Voucher'
@@ -324,7 +324,7 @@ export default function CreateTeamKetua() {
                   Cek Kode
                 </button>
               </div>
-            </div>
+            </div> */}
             <Input
               label='Darimana kamu mendapat informasi Schematics?'
               validation={{

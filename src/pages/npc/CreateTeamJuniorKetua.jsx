@@ -20,7 +20,7 @@ export default function CreateTeamJuniorKetua() {
   const [provinces, setProvinces] = useState(undefined);
   const [cities, setCities] = useState(undefined);
   const { user } = useAuthState();
-  const kode_voucher = watch('kode_voucher');
+  // const kode_voucher = watch('kode_voucher');
 
   const { data: teamPayment, error: teamPaymentError } = useSWR('/my_npc');
 
@@ -53,31 +53,31 @@ export default function CreateTeamJuniorKetua() {
     );
   };
 
-  const handleCheckKode = async () => {
-    if (kode_voucher === undefined) {
-      return toast.error('Anda belum mengisi form kode promo');
-    }
-    toast.promise(
-      axios.post(
-        '/check_voucher',
-        {
-          kode: kode_voucher,
-          region: 0,
-          tipe: 'npc_junior',
-        },
-        {
-          headers: { ...bearerToken() },
-        },
-      ),
-      {
-        loading: 'Loading...',
-        success: 'Kode promo dapat digunakan',
-        error: (err) => {
-          return err.response.data.message;
-        },
-      },
-    );
-  };
+  // const handleCheckKode = async () => {
+  //   if (kode_voucher === undefined) {
+  //     return toast.error('Anda belum mengisi form kode promo');
+  //   }
+  //   toast.promise(
+  //     axios.post(
+  //       '/check_voucher',
+  //       {
+  //         kode: kode_voucher,
+  //         region: 0,
+  //         tipe: 'npc_junior',
+  //       },
+  //       {
+  //         headers: { ...bearerToken() },
+  //       },
+  //     ),
+  //     {
+  //       loading: 'Loading...',
+  //       success: 'Kode promo dapat digunakan',
+  //       error: (err) => {
+  //         return err.response.data.message;
+  //       },
+  //     },
+  //   );
+  // };
 
   const { data: provincesData, error: errorProvinces } = useSWR('/provinces');
 
@@ -296,7 +296,7 @@ export default function CreateTeamJuniorKetua() {
                 },
               }}
             />
-            <div className='w-full space-y-2'>
+            {/* <div className='w-full space-y-2'>
               <div className='w-full'>
                 <Input
                   label='Kode Voucher'
@@ -318,7 +318,7 @@ export default function CreateTeamJuniorKetua() {
                   Cek Kode
                 </button>
               </div>
-            </div>
+            </div> */}
             <Input
               label='Darimana kamu mendapat informasi Schematics?'
               validation={{
