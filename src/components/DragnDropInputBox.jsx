@@ -6,12 +6,11 @@ import { classNames } from '@/lib/helper';
 import ImageFetch from './ImageFetch';
 
 const FilePreview = ({ file, deleteFile }) => {
-  console.log('fileValue ' + file);
   if (typeof file === 'string') {
     return (
       <>
         <li className='w-full h-full' key={file}>
-          <div className='w-full h-full border p-0 m-0 border-gray-300 border-dashed rounded cursor-pointer focus:ring-dark-400 focus:border-dark-400'>
+          <div className='w-full h-full border p-0 m-0 border-gray-300 border-dashed rounded cursor-pointer focus:ring-dark-400 focus:border-dark-400 overflow-hidden'>
             <ImageFetch imgpath={file} tag={file} className='w-full h-full' />
           </div>
         </li>
@@ -48,7 +47,6 @@ export default function DragnDropInputBox({
   validation,
   defaultValue,
 }) {
-  console.log('component defaultValue ' + defaultValue);
   const {
     control,
     setValue,
