@@ -1,11 +1,16 @@
-import React, { useRef } from 'react';
-import {
-  exportComponentAsJPEG,
-  exportComponentAsPDF,
-  exportComponentAsPNG,
-} from 'react-component-export-image';
+import React, { useEffect, useRef, useState } from 'react';
+import { exportComponentAsJPEG } from 'react-component-export-image';
+import Loading from './Loading';
+import { QRCodeCanvas, QRCodeSVG } from 'qrcode.react';
 
 const ComponentToPrint = React.forwardRef((props, ref, data) => {
+  const [isLoad, setIsLoad] = useState(true);
+  useEffect(() => {
+    setIsLoad(false);
+  }, [isLoad]);
+  if (!props || isLoad) {
+    <Loading />;
+  }
   return (
     <>
       <div
@@ -13,70 +18,66 @@ const ComponentToPrint = React.forwardRef((props, ref, data) => {
         ref={ref}
       >
         {/* Name */}
-        <div>
-          <div className='relative w-full'>
+        <div className='relative'>
+          <div className='relative w-full z-10'>
             <p className='text-gray-300 '>Name</p>
-            <p className='font-bold mb-4 text-xl md:text-2xl'>
+            <p className='font-bold mb-4 text-base sm:text-lg md:text-2xl'>
               {props.data.name}
             </p>
 
             <p className='text-gray-300 '>Date &amp; Time</p>
-            <p className='font-bold mb-4  text-xl md:text-2xl'>
+            <p className='font-bold mb-4  text-base sm:text-lg md:text-2xl'>
               {'22 Oktober 2022'}
             </p>
 
             <p className='text-gray-300 '>Ticket</p>
-            <p className='font-bold mb-4  text-xl md:text-2xl'>
+            <p className='font-bold mb-4  text-base sm:text-lg md:text-2xl'>
               {props.jumlahTicket}
             </p>
 
             <p className='text-gray-300 '>Location</p>
-            <p className='font-bold mb-4  text-xl md:text-2xl'>
+            <p className='font-bold mb-4  text-base sm:text-lg md:text-2xl'>
               {'SCC Marvell City Surabaya'}
             </p>
           </div>
 
           <img
-            src={`${process.env.PUBLIC_URL}/images/nst/assetApproved.svg`}
+            src={`${process.env.PUBLIC_URL}/images/approved.png`}
             alt=''
-            className='md:mx-auto rotate-90 w-14 md:w-48'
+            className='absolute md:relative right-0 top-0 md:inset-px w-20 z-0'
           />
 
           {/* Barcode Mobile */}
-          <img
+          {/* <img
             className='w-64 mx-auto block md:hidden'
             src={`${process.env.PUBLIC_URL}/images/nst/barcode.png`}
             alt='qris'
-          />
+          /> */}
+          <div className='p-2'>
+            <QRCodeCanvas
+              className='mx-auto block md:hidden mt-4'
+              size={160}
+              level={'H'}
+              value={props?.data.ticket_id}
+            />
+          </div>
         </div>
 
-        <div className='flex flex-col w-full md:w-2/4'>
+        <div className='flex flex-col w-full'>
           {/* Barcode Desktop */}
-          <img
-            className='w-64 mx-auto hidden md:block'
-            src={`${process.env.PUBLIC_URL}/images/nst/barcode.png`}
-            alt='qris'
+          <QRCodeCanvas
+            className=' mx-auto hidden md:block w-96 z-50'
+            size={200}
+            level={'H'}
+            value={props?.data.ticket_id}
           />
 
           <div className='flex justify-center items-center flex-col'>
             {/* Schemtics text */}
             <img
-              src={`${process.env.PUBLIC_URL}/images/nst/schematics-text.png`}
+              src={`${process.env.PUBLIC_URL}/images/nst/nst.png`}
               alt='schematics text'
-              className='md:w-2/3 mb-3 mt-3'
-            />
-            {/* NST Ticket */}
-            <img
-              src={`${process.env.PUBLIC_URL}/images/nst/nst-text.svg`}
-              alt='schematics text'
-              className='w-32 md:w-72 mb-3'
-            />
-
-            {/* 2022 Text */}
-            <img
-              src={`${process.env.PUBLIC_URL}/images/nst/2022-text.png`}
-              alt='2022 NST Text'
-              className='mb-3 w-44 md:w-80'
+              className='md:w-22 mb-3 mt-4'
             />
           </div>
         </div>
@@ -86,7 +87,7 @@ const ComponentToPrint = React.forwardRef((props, ref, data) => {
 });
 export default function NstTicket({ data = {}, jumlahTicket }) {
   const componentRef = useRef();
-
+  const options = { x: -1, y: 20 };
   return (
     <>
       <ComponentToPrint
@@ -100,6 +101,14 @@ export default function NstTicket({ data = {}, jumlahTicket }) {
           onClick={() =>
             exportComponentAsJPEG(componentRef, {
               fileName: `Tiket ${data.name}`,
+              html2CanvasOptions: {
+                // scrollY: -window.scrollY,
+                // scrollX: window.scrollX,
+                scale: 3,
+
+                useCORS: true,
+                imageTimeout: 1000,
+              },
             })
           }
         >
