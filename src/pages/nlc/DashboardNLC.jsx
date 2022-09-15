@@ -351,8 +351,8 @@ function DashboardNLC() {
             )}
             <div className='w-full bg-white p-6 mt-8 rounded-xl'>
               <h1 className='font-primary text-xl'>
-                Untuk mendapatkan kelas gratis, tim anda dapat melakukan upload
-                Bukti share broadcast{' '}
+                Untuk mendapatkan contoh soal tahun lalu, tim anda dapat
+                melakukan upload Bukti share broadcast{' '}
                 <span>
                   <a
                     href='https://drive.google.com/drive/folders/1I0snDZbndT_evY15eyKJc5fmza74qxh9?usp=sharing'
@@ -417,7 +417,8 @@ function DashboardNLC() {
                 </li>
                 {isAbleNLCBingo(data.data) && (
                   <li>
-                    Anda dapat mengakses kelas bingo pada link berikut{' '}
+                    Anda dapat mengakses contoh soal tahun lalu pada link
+                    berikut{' '}
                     <span>
                       <a
                         href='https://drive.google.com/file/d/1tfL7FGSpnfjGm2BtCnKfHisYQ54d-u79/view?usp=sharing'

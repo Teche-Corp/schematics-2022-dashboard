@@ -29,7 +29,7 @@ export default function ReevaRegister() {
         formData.append(`${key}`, data?.[key][0]);
       } else {
         if (key === 'jumlah_tiket' && data[key] === 5) {
-          // data[key] += 1;
+          data[key] += 1;
         }
         formData.append(`${key}`, data?.[key]);
       }
@@ -83,10 +83,11 @@ export default function ReevaRegister() {
         <p className='md:text-5xl text-3xl font-primary text-center text-white'>
           Data Pendaftaran
         </p>
-        {/* <p className='md:text-2xl text-lg font-primary text-center text-white mt-4'>
+        <p className='md:text-2xl text-lg font-primary text-center text-white mt-4'>
           <span className='text-nst'>Gratis 1 tiket</span> untuk pembelian{' '}
-          <span className='text-nst'>5 tiket</span> secara langsung!
-        </p> */}
+          <span className='text-nst'>5 tiket</span> secara langsung! untuk 9
+          pembeli pertama
+        </p>
         <FormProvider {...methods}>
           <form
             onSubmit={handleSubmit(handleReevaRegister)}

@@ -211,7 +211,7 @@ export default function DashboardReeva() {
                         10 September 2022
                       </p>
                       <p className='font-primary text-sm md:text-lg'>
-                        Pengiriman Tiket Teeva
+                        Pengiriman Tiket Reeva
                       </p>
                     </div>
                   </div>
