@@ -415,7 +415,7 @@ function DashboardNLC() {
                   berkas bukti vaksin, bukti bagikan poster, dan bukti upload
                   twibbon
                 </li>
-                {isAbleNLCBingo(data.data) && (
+                {getNLCTeamStatus(data.data) === 'active' && (
                   <li>
                     Anda dapat mengakses contoh soal tahun lalu pada link
                     berikut{' '}
@@ -424,7 +424,21 @@ function DashboardNLC() {
                         href='https://drive.google.com/file/d/1tfL7FGSpnfjGm2BtCnKfHisYQ54d-u79/view?usp=sharing'
                         className='text-nlc hover:text-nlc-400'
                       >
-                        ini
+                        Contoh Soal Tahun Lalu
+                      </a>
+                    </span>
+                  </li>
+                )}
+                {isAbleNLCBingo(data.data) && (
+                  <li>
+                    Anda dapat mengakses video pembahasan contoh soal tahun lalu
+                    pada link berikut{' '}
+                    <span>
+                      <a
+                        href='https://drive.google.com/file/d/169LVAcx8cD79p1t-PdUp3dZRus8WVNxl/view?usp=sharing'
+                        className='text-nlc hover:text-nlc-400'
+                      >
+                        Video Pembahasan
                       </a>
                     </span>
                   </li>
