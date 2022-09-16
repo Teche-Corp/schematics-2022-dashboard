@@ -563,7 +563,7 @@ export const BANKS = [
   },
   {
     text: 'BANK OCBC – INDONESIA',
-    value: 'bank_ocbc_–_indonesia',
+    value: 'bank_ocbc_indonesia',
   },
   {
     text: 'BANK CHINA TRUST INDONESIA',
