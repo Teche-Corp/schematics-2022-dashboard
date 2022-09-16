@@ -62,6 +62,7 @@ const App = () => {
             axios
               .get(url, { headers: { ...bearerToken() } })
               .then((res) => res.data),
+          revalidateOnMount: true,
         }}
       >
         <Routes />
