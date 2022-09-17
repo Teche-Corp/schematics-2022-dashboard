@@ -195,49 +195,53 @@ function DashboardNLC() {
                         </p>
                       </>
                     )}
+                    {(getNLCTeamStatus(data.data) === 'active' ||
+                      getNLCTeamStatus(data.data) === 'payment_verified') &&
+                      data.data.members.map((member, index) => {
+                        if (member.member_type === 'ketua') {
+                          if (member.name === user.name) {
+                            return (
+                              <>
+                                <li className='col-span-5'>Username Lomba</li>
+                                <p>:</p>
+                                <p className='col-span-6 font-bold'>
+                                  {data.data.email_lomba}
+                                </p>
+                                <li className='col-span-5'>Password Lomba</li>
+                                <p>:</p>
+                                <p className='col-span-6 font-bold'>
+                                  {data.data.password_lomba}
+                                </p>
 
-                    {data.data.members.map((member, index) => {
-                      if (member.member_type === 'ketua') {
-                        if (member.name === user.name) {
-                          return (
-                            <>
-                              <li className='col-span-5'>Email Lomba</li>
-                              <p>:</p>
-                              <p className='col-span-6 font-bold'>
-                                {data.data.email_lomba}
-                              </p>
-                              <li className='col-span-5'>Password Lomba</li>
-                              <p>:</p>
-                              <p className='col-span-6 font-bold'>
-                                {data.data.password_lomba}
-                              </p>
-                              <li className='col-span-5'>Link Moodle</li>
-                              <p>:</p>
-                              <p className='col-span-6 font-bold'>
-                                <a
-                                  className='text-nlc hover:text-nlc-200'
-                                  href={'https://schematics.its.ac.id/moodle/'}
-                                >
-                                  Di sini
-                                </a>
-                              </p>
-                              <li className='col-span-5'>Link Game</li>
-                              <p>:</p>
-                              <p className='col-span-6 font-bold'>
-                                <a
-                                  className='text-nlc hover:text-nlc-200'
-                                  href={
-                                    'https://schematics.its.ac.id/gamepemanasan/'
-                                  }
-                                >
-                                  Di sini
-                                </a>
-                              </p>
-                            </>
-                          );
+                                <li className='col-span-5'>Link Moodle</li>
+                                <p>:</p>
+                                <p className='col-span-6 font-bold'>
+                                  <a
+                                    className='text-nlc hover:text-nlc-200'
+                                    href={
+                                      'https://schematics.its.ac.id/moodle/'
+                                    }
+                                  >
+                                    Di sini
+                                  </a>
+                                </p>
+                                <li className='col-span-5'>Link Game</li>
+                                <p>:</p>
+                                <p className='col-span-6 font-bold'>
+                                  <a
+                                    className='text-nlc hover:text-nlc-200'
+                                    href={
+                                      'https://schematics.its.ac.id/gamepemanasan/'
+                                    }
+                                  >
+                                    Di sini
+                                  </a>
+                                </p>
+                              </>
+                            );
+                          }
                         }
-                      }
-                    })}
+                      })}
                   </div>
                 </ul>
               </div>
