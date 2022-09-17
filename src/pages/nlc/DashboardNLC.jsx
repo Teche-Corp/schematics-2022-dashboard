@@ -26,6 +26,7 @@ function DashboardNLC() {
   const methodsBingo = useForm();
   const { handleSubmit: handleSubmitBingo } = methodsBingo;
   const { handleSubmit } = methods;
+
   const getNlcRegion = (region_id) => {
     const region = NLC_REGION.filter((region) => {
       return region.value.toString() === region_id;
@@ -161,7 +162,7 @@ function DashboardNLC() {
                     <li className='col-span-5'>Region</li>
                     <p>:</p>
                     <p className='col-span-6 font-bold'>
-                      {getNlcRegion(data.data.region).text}
+                      {getNlcRegion(data.data.region)?.text}
                     </p>
                     <li className='col-span-5'>Guru Pendamping (GP)</li>
                     <p>:</p>
@@ -187,13 +188,60 @@ function DashboardNLC() {
                         <p className='col-span-6 font-bold'>
                           <a
                             className='text-nlc hover:text-nlc-200'
-                            href={getNlcRegion(data.data.region).waGroup}
+                            href={getNlcRegion(data.data.region)?.waGroup}
                           >
                             Di sini
                           </a>
                         </p>
                       </>
                     )}
+                    {(getNLCTeamStatus(data.data) === 'active' ||
+                      getNLCTeamStatus(data.data) === 'payment_verified') &&
+                      data.data.members.map((member, index) => {
+                        if (member.member_type === 'ketua') {
+                          if (member.name === user.name) {
+                            return (
+                              <>
+                                <li className='col-span-5'>Username Lomba</li>
+                                <p>:</p>
+                                <p className='col-span-6 font-bold'>
+                                  {data.data.email_lomba}
+                                </p>
+                                <li className='col-span-5'>Password Lomba</li>
+                                <p>:</p>
+                                <p className='col-span-6 font-bold'>
+                                  {data.data.password_lomba}
+                                </p>
+
+                                <li className='col-span-5'>Link Moodle</li>
+                                <p>:</p>
+                                <p className='col-span-6 font-bold'>
+                                  <a
+                                    className='text-nlc hover:text-nlc-200'
+                                    href={
+                                      'https://schematics.its.ac.id/moodle/'
+                                    }
+                                  >
+                                    Di sini
+                                  </a>
+                                </p>
+                                <li className='col-span-5'>Link Game</li>
+                                <p>:</p>
+                                <p className='col-span-6 font-bold'>
+                                  <a
+                                    className='text-nlc hover:text-nlc-200'
+                                    href={
+                                      'https://schematics.its.ac.id/gamepemanasan/'
+                                    }
+                                  >
+                                    Di sini
+                                  </a>
+                                </p>
+                              </>
+                            );
+                          }
+                        }
+                      })}
                   </div>
                 </ul>
               </div>

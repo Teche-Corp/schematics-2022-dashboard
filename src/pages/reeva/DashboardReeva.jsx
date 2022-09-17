@@ -87,20 +87,20 @@ export default function DashboardReeva() {
                     <div className='mt-8 md:text-base text-sm'>
                       <p className='font-secondary'>Nama</p>
                       <p className='font-secondary font-semibold leading-6'>
-                        {data.data.tickets[0].name}
+                        {data?.data?.tickets[0]?.name}
                       </p>
                     </div>
                     {/* Alamat */}
                     <div className='mt-4 md:text-base text-sm'>
                       <p className='font-secondary'>Alamat</p>
                       <p className='font-secondary font-semibold leading-6'>
-                        {data.data.tickets[0].alamat}
+                        {data?.data?.tickets[0]?.alamat}
                       </p>
                     </div>
                     <div className='mt-4 md:text-base text-sm'>
                       <p className='font-secondary'>No. Telp</p>
                       <p className='font-secondary font-semibold leading-6'>
-                        {data?.data.tickets[0].no_telp}
+                        {data?.data?.tickets[0]?.no_telp}
                       </p>
                     </div>
                     <div className='mt-4 md:text-base text-sm'>
@@ -113,7 +113,7 @@ export default function DashboardReeva() {
                     <div className='mt-4 md:text-base text-sm'>
                       <p className='font-secondary'>Jumlah Ticket</p>
                       <p className='font-secondary font-semibold leading-6'>
-                        {data?.data.tickets.length}
+                        {data?.data?.tickets?.length}
                       </p>
                     </div>
                     <div className='mt-4 md:text-base text-sm'>
