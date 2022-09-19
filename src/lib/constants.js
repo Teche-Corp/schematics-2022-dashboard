@@ -601,11 +601,11 @@ export const NLC_REGION = [
   //   text: 'Surabaya',
   //   waGroup: 'https://chat.whatsapp.com/CddJwFqA7DqFuiB7KpM3WU',
   // },
-  // {
-  //   value: 2,
-  //   text: 'Jakarta',
-  //   waGroup: 'https://chat.whatsapp.com/FYwowCKH1FQFfrIFGHZ5cI',
-  // },
+  {
+    value: 2,
+    text: 'Jakarta',
+    waGroup: 'https://chat.whatsapp.com/FYwowCKH1FQFfrIFGHZ5cI',
+  },
   // {
   //   value: 3,
   //   text: 'Jember',
