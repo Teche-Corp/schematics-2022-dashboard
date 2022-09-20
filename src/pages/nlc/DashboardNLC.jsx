@@ -3,7 +3,7 @@ import Loading from '@/components/Loading';
 import SubmitButton from '@/components/SubmitButton';
 import { useAuthState } from '@/contexts/AuthContext';
 import DashboardShell from '@/layout/DashboardShell';
-import { NLC_REGION, TEAM_STATUS } from '@/lib/constants';
+import { NLC_REGION_GROUP, TEAM_STATUS } from '@/lib/constants';
 import {
   bearerToken,
   getNLCTeamStatus,
@@ -28,7 +28,7 @@ function DashboardNLC() {
   const { handleSubmit } = methods;
 
   const getNlcRegion = (region_id) => {
-    const region = NLC_REGION.filter((region) => {
+    const region = NLC_REGION_GROUP.filter((region) => {
       return region.value.toString() === region_id;
     });
     return region[0];
