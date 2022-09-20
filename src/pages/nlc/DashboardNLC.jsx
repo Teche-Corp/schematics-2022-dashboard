@@ -280,7 +280,7 @@ function DashboardNLC() {
                   </p>
                 </div>
                 <a
-                  href='https://drive.google.com/file/d/1QKap6V7x-k80DZ-1rCGuTIRRqaY4ceSH/view?usp=sharing'
+                  href='https://drive.google.com/file/d/11Pw0REtV3uB2b6XRlhjOM3oHMKTH08QK/view?usp=sharing'
                   target='_blank'
                   rel='noreferrer'
                 >
