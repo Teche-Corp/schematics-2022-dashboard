@@ -52,18 +52,11 @@ export const formatUTC = (dateInt, addOffset = false) => {
 };
 
 export function getNLCTeamStatus(team) {
-  const members = team.members;
+  console.log(team);
   if (team.status !== 'payment_verified') {
     return team.status;
   }
-  let status = 'active';
-  for (let member of members) {
-    if (member.status === 'awaiting_file_upload') {
-      status = 'awaiting_file_upload';
-      return status;
-    }
-  }
-  return status;
+  return team.status;
 }
 
 export function isAbleNLCBingo(team) {

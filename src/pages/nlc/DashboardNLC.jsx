@@ -179,7 +179,8 @@ function DashboardNLC() {
                     <p className='col-span-6 font-bold'>
                       {TEAM_STATUS[getNLCTeamStatus(data.data)]}
                     </p>
-                    {getNLCTeamStatus(data.data) === 'active' && (
+                    {(getNLCTeamStatus(data.data) === 'active' ||
+                      getNLCTeamStatus(data.data) === 'payment_verified') && (
                       <>
                         <li className='col-span-5'>
                           Link Grup Whatsapp Region
