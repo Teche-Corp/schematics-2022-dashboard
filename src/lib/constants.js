@@ -639,7 +639,7 @@ export const NLC_REGION_GROUP = [
   {
     value: 9,
     text: 'Online',
-    waGroup: 'https://chat.whatsapp.com/ERe5fWFvHYMAizdnIPaAiU',
+    waGroup: 'https://chat.whatsapp.com/FlrXZjdgus60yRBKvq0ptf',
   },
 ];
 export const NLC_REGION = [
