@@ -156,7 +156,7 @@ function DashboardNPC() {
                             https://schematics-npc.com/
                           </a>
                         </p>
-                        <li className='col-span-5'>Username Lomba</li>
+                        {/* <li className='col-span-5'>Username Lomba</li>
                         <p>:</p>
                         <p className='col-span-6 font-bold'>
                           {data.data.username_lomba}
@@ -165,7 +165,7 @@ function DashboardNPC() {
                         <p>:</p>
                         <p className='col-span-6 font-bold'>
                           {data.data.password_lomba}
-                        </p>
+                        </p> */}
                       </>
                     )}
                   </div>
