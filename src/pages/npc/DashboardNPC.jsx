@@ -144,6 +144,28 @@ function DashboardNPC() {
                             https://discord.gg/amvajPDkVf
                           </a>
                         </p>
+                        <li className='col-span-5'>Link Penyisihan</li>
+                        <p>:</p>
+                        <p className='col-span-6 font-bold'>
+                          <a
+                            className='text-npc hover:text-npc-300'
+                            target='_blank'
+                            href='https://schematics-npc.com/'
+                            rel='noreferrer'
+                          >
+                            https://schematics-npc.com/
+                          </a>
+                        </p>
+                        <li className='col-span-5'>Username Lomba</li>
+                        <p>:</p>
+                        <p className='col-span-6 font-bold'>
+                          {data.data.username_lomba}
+                        </p>
+                        <li className='col-span-5'>Password Lomba</li>
+                        <p>:</p>
+                        <p className='col-span-6 font-bold'>
+                          {data.data.password_lomba}
+                        </p>
                       </>
                     )}
                   </div>
