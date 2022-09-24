@@ -7,6 +7,7 @@ import { NLC_REGION_GROUP, TEAM_STATUS } from '@/lib/constants';
 import {
   bearerToken,
   getNLCTeamStatus,
+  getTimeByTimeZone,
   isAbleNLCBingo,
   isNLCMemberHasBingo,
 } from '@/lib/helper';
@@ -32,6 +33,18 @@ function DashboardNLC() {
       return region.value.toString() === region_id;
     });
     return region[0];
+  };
+
+  const handleGame = () => {
+    let currentDate = getTimeByTimeZone(7);
+    let h = currentDate.getHours();
+    let m = currentDate.getMinutes();
+    let d = currentDate.getDate();
+    if (d < 25 || h < 9 || m < 45) {
+      toast.error('Penyisihan fase game dimulai saat 09.45 WIB');
+    } else {
+      window.location.href = 'https://schematics.its.ac.id/sch-nlc-game/';
+    }
   };
 
   const getMyNLCProfile = (nlcdata) => {
@@ -187,7 +200,7 @@ function DashboardNLC() {
                         <p>:</p>
                         <p className='col-span-6 font-bold'>
                           <a
-                            className='text-nlc hover:text-nlc-200'
+                            className='text-nlc hover:text-nlc-200 cursor-pointer'
                             href={getNlcRegion(data.data.region)?.waGroup}
                           >
                             Di sini
@@ -227,15 +240,11 @@ function DashboardNLC() {
                                 </p>
                                 <li className='col-span-5'>Link Game</li>
                                 <p>:</p>
-                                <p className='col-span-6 font-bold'>
-                                  <a
-                                    className='text-nlc hover:text-nlc-200'
-                                    href={
-                                      'https://schematics.its.ac.id/gamepemanasan/'
-                                    }
-                                  >
-                                    Di sini
-                                  </a>
+                                <p
+                                  onClick={handleGame}
+                                  className='col-span-6 font-bold text-nlc hover:text-nlc-200 cursor-pointer'
+                                >
+                                  Di sini
                                 </p>
                               </>
                             );
