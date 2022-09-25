@@ -40,8 +40,8 @@ function DashboardNLC() {
     let h = currentDate.getHours();
     let m = currentDate.getMinutes();
     let d = currentDate.getDate();
-    if (d < 25 || h < 9 || m < 45) {
-      toast.error('Penyisihan fase game dimulai saat 09.45 WIB');
+    if (d < 25 || h < 9 || m < 30) {
+      toast.error('Penyisihan fase game dapat dimulai saat 09.30 WIB');
     } else {
       window.location.href = 'https://schematics.its.ac.id/sch-nlc-game/';
     }
