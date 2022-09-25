@@ -36,15 +36,15 @@ function DashboardNLC() {
   };
 
   const handleGame = () => {
-    let currentDate = getTimeByTimeZone(7);
-    let h = currentDate.getHours();
-    let m = currentDate.getMinutes();
-    let d = currentDate.getDate();
-    if (d < 25 || h < 9 || m < 30) {
-      toast.error('Penyisihan fase game dapat dimulai saat 09.30 WIB');
-    } else {
-      window.location.href = 'https://schematics.its.ac.id/sch-nlc-game/';
-    }
+    // let currentDate = getTimeByTimeZone(7);
+    // let h = currentDate.getHours();
+    // let m = currentDate.getMinutes();
+    // let d = currentDate.getDate();
+    window.location.href = 'https://schematics.its.ac.id/sch-nlc-game/';
+    // if (d < 25 || h < 9 || m < 30) {
+    //   toast.error('Penyisihan fase game dapat dimulai saat 09.30 WIB');
+    // } else {
+    // }
   };
 
   const getMyNLCProfile = (nlcdata) => {
