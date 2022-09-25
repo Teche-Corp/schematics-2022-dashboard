@@ -246,6 +246,16 @@ function DashboardNLC() {
                                 >
                                   Di sini
                                 </p>
+                                <li className='col-span-5'>Link Feedback</li>
+                                <p>:</p>
+                                <p className='col-span-6 font-bold'>
+                                  <a
+                                    className='text-nlc hover:text-nlc-200'
+                                    href={'https://forms.gle/vS4LhTRjdvUzNeQn7'}
+                                  >
+                                    Di sini
+                                  </a>
+                                </p>
                               </>
                             );
                           }
