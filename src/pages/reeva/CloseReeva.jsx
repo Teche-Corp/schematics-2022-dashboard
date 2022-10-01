@@ -16,11 +16,13 @@ export default function CloseReeva() {
       <div className='h-screen flex flex-col justify-center items-center md:pb-16 pb-0 bg-dark-400'>
         <div className='md:w-1/2 w-4/5 text-center'>
           <h1 className='text-5xl md:text-9xl text-white font-primary uppercase'>
-            <span className='text-reeva'>Presale 1</span> Sold Out!!
+            <span className='text-reeva'>Presale 2</span> Sold Out!!
           </h1>
         </div>
         <div className='md:w-1/2 w-4/5 mt-2 text-white font-primary text-center space-y-2'>
-          <p className='md:text-5xl text-3xl py-12'>Stay Tune for Presale 2</p>
+          <p className='md:text-5xl text-3xl py-12'>
+            Stay Tune For Next Presale
+          </p>
         </div>
         <a
           href='/'

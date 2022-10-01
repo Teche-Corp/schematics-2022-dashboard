@@ -626,7 +626,7 @@ const routeItems = [
     route: PrivateRoute,
     key: 'reeva-registration',
     path: '/reeva/registration',
-    component: ReevaRegister,
+    component: CloseReeva,
     visible: true,
   },
   {
