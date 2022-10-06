@@ -263,6 +263,13 @@ function DashboardNLC() {
                         }
                       })}
                   </div>
+                  {user.sertifikat?.nlc_penyisihan && (
+                    <div className='w-full flex justify-center items-center mt-5'>
+                      <button className='text-center bg-nlc hover:bg-yellow-200 font-secondary px-8 py-3 my-5 font-bold rounded-xl'>
+                        <a href={user.sertifikat?.nlc_penyisihan}>SERTIFIKAT</a>
+                      </button>
+                    </div>
+                  )}
                 </ul>
               </div>
               <div className='md:w-5/12 w-full grid grid-rows-6 md:pl-8 pl-0 space-y-3'>
