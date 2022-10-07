@@ -106,7 +106,7 @@ export default function DashboardReeva() {
                     <div className='mt-4 md:text-base text-sm'>
                       <p className='font-secondary'>Tiket</p>
                       <p className='font-secondary font-semibold leading-6'>
-                        Presale 1
+                        {data?.data?.jenis_tiket}
                       </p>
                     </div>
 
