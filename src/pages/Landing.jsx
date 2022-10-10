@@ -8,48 +8,48 @@ function Landing() {
 
   const cards = [
     {
-      textpicture: `${process.env.PUBLIC_URL}/images/nlc/nlc-text.png`,
-      name: 'NATIONAL LOGIC COMPETITION',
-      img1: `${process.env.PUBLIC_URL}/images/nlc/assetNLC1.png`,
-      img2: `${process.env.PUBLIC_URL}/images/nlc/assetNLC.png`,
-      key: 'nlc',
-    },
-    {
-      textpicture: `${process.env.PUBLIC_URL}/images/npc/npc-text.png`,
-      name: 'NATIONAL PROGAMMING CONTEST',
-      img1: `${process.env.PUBLIC_URL}/images/npc/assetNPC2.png`,
-      img2: `${process.env.PUBLIC_URL}/images/npc/assetNPC.png`,
+      name: 'Schematics NPC',
+      icon: `${process.env.PUBLIC_URL}/images/npc/npc-dashboard.png`,
+      link: '/npc',
       key: 'npc',
     },
     {
-      textpicture: `${process.env.PUBLIC_URL}/images/nst/nst-text.png`,
-      name: 'NATIONAL SEMINAR OF TECHNOLOGY',
-      img1: `${process.env.PUBLIC_URL}/images/nst/assetNST2.png`,
-      img2: `${process.env.PUBLIC_URL}/images/nst/assetNST1.png`,
+      name: 'Schematics NLC',
+      icon: `${process.env.PUBLIC_URL}/images/nlc/nlc-dashboard.png`,
+      link: '/nlc',
+      key: 'nlc',
+    },
+    {
+      name: 'Schematics NST',
+      icon: `${process.env.PUBLIC_URL}/images/nst/nst-dashboard.png`,
+      link: '/nst',
       key: 'nst',
     },
     {
-      textpicture: `${process.env.PUBLIC_URL}/images/reeva/reeva-text.png`,
-      name: 'REVOLUTIONARY ENTERTAIMENT AND EXPO WITH VARIOUS ARTS',
-      img1: `${process.env.PUBLIC_URL}/images/reeva/assetreeva1.png`,
-      img2: `${process.env.PUBLIC_URL}/images/reeva/assetreeva.png`,
+      name: 'Schematics REEVA',
+      icon: `${process.env.PUBLIC_URL}/images/reeva/reeva-dashboard.png`,
+      link: '/reeva',
       key: 'reeva',
     },
   ];
 
   return (
     <DashboardShell>
-      <div className='bg-black min-h-screen py-8'>
+      <div className='min-h-screen bg-white py-8'>
         <div className='md:px-16 px-6'>
-          <div className='flex md:flex-row flex-col w-full justify-between md:space-y-0 space-y-3'>
+          <div className='mb-20'>
+            <p className='text-[#24657A] font-secondary text-xl'>
+              Dashboard Peserta
+            </p>
+          </div>
+          <div className='flex flex-row flex-wrap w-full justify-between md:space-y-0 space-y-3 gap-x-6 gap-y-5'>
             {cards.map((card, index) => {
               return (
                 <DashboardEventCard
                   key={index}
-                  textpicture={card.textpicture}
+                  icon={card.icon}
                   name={card.name}
-                  img1={card.img1}
-                  img2={card.img2}
+                  link={card.link}
                   status={
                     user?.events?.[card.key] ? 'Mengikuti' : 'Tidak Mengikuti'
                   }
@@ -57,10 +57,12 @@ function Landing() {
               );
             })}
           </div>
-          <div className='w-full md:h-64 h-96 bg-white p-6 mt-8 rounded-xl'>
-            <p className='text-3xl font-bold text-center md:text-left'>
-              Pemberitahuan
-            </p>
+          <div className='w-full md:h-64 h-96 bg-white p-6 mt-20 rounded-xl relative shadow-lg'>
+            <div className='bg-black px-6 py-4 absolute rounded-xl -top-4'>
+              <p className='text-xl font-bold text-center md:text-left text-white'>
+                Pemberitahuan
+              </p>
+            </div>
             {/* <div>
               <ul className='list-disc list-inside text-lg'>
                 <li>Pembayaran lo kocak</li>
