@@ -191,6 +191,25 @@ export default function Dashboard() {
                 <h2 className='text-nst font-primary text-3xl leading-9'>
                   Pemberitahuan
                 </h2>
+                <div className='mt-4 font-secondary text-lg'>
+                  <tr>
+                    <td>Lokasi :&nbsp;&nbsp;</td>
+                    <td className=''>
+                      Suroboyo Community Center, Marvel City Mall{' '}
+                      <a
+                        target={'_blank'}
+                        className='text-nst font-semibold'
+                        href='https://goo.gl/maps/a3s8oeaFd5V3nogL6'
+                      >
+                        &emsp;Buka peta
+                      </a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Waktu :&nbsp;&nbsp;</td>
+                    <td>08.00 - 10.00 WIB</td>
+                  </tr>
+                </div>
 
                 {/* Pemberitahuan Content */}
                 {/* <div className='flex flex-col m-5 bg-nst p-3 rounded-2xl '>
