@@ -96,6 +96,7 @@ import Admin from '@/pages/admin/Admin';
 import TableReeva from '@/pages/admin/reeva/TableReeva';
 import ReevaRegister from '@/pages/reeva/ReevaRegister';
 import PaymentTeamJunior from '@/pages/npc/PaymentTeamJunior';
+import LayoutKursi from '@/pages/admin/nst/LayoutKursi';
 
 // const routeItems = [
 //   {
@@ -347,6 +348,15 @@ const routeItems = [
     key: 'admin-verifikasi-pembayaran-reeva',
     path: '/admin/sch-reeva',
     component: TableReeva,
+    visible: true,
+  },
+  // Dena Kursi NST
+  {
+    auth: 'admin',
+    route: AdminRoute,
+    key: 'layout-kursi-nst',
+    path: '/admin/sch-nst/layout-kursi',
+    component: LayoutKursi,
     visible: true,
   },
   {
@@ -613,6 +623,7 @@ const routeItems = [
     component: Admin,
     visible: true,
   },
+
   {
     auth: 'user',
     route: PrivateRoute,
