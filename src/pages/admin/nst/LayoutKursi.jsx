@@ -7,6 +7,7 @@ class Sheat {
     this.name = name;
     this.id = id;
     this.status = status;
+    this.isDisable = false;
   }
 }
 
@@ -64,19 +65,77 @@ export default function LayoutKursi() {
   const generateSheet = () => {
     const total_column_sheet = 10;
     const sheets = [];
+    let coutKursi = 1;
     for (let i = 0; i < total_row_sheet.length; i++) {
       for (let j = 0; j < total_column_sheet; j++) {
-        sheets.push(
-          new Sheat(`${total_row_sheet[i]}${j + 1}`, `${i}${j}`, false),
-        );
+        sheets.push(new Sheat(`${coutKursi++}`, `${i}${j}`, false));
       }
     }
+    const sheat1 = ['50', '51', '52', '53', '54'];
+    const sheat2 = ['60', '61', '62', '63', '64', '65', '66', '67', '68', '69'];
+    const sheet3 = ['70', '80', '90', '100', '110', '120', '130', '140'];
+    const sheet4 = [
+      '93',
+      '94',
+      '101',
+      '102',
+      '103',
+      '104',
+      '111',
+      '112',
+      '113',
+      '121',
+      '122',
+      '131',
+    ];
+    const sheet5 = [
+      '150',
+      '151',
+      '152',
+      '153',
+      '154',
+      '155',
+      '156',
+      '157',
+      '158',
+      '159',
+    ];
+    const sheet6 = [
+      '179',
+      '178',
+      '177',
+      '176',
+      '189',
+      '188',
+      '187',
+      '199',
+      '198',
+      '209',
+    ];
+    const sheet7 = ['239', '238', '237', '236', '249'];
+    const disable_kursi = [
+      ...sheat1,
+      ...sheat2,
+      ...sheet3,
+      ...sheet4,
+      ...sheet5,
+      ...sheet6,
+      ...sheet7,
+    ];
+    for (let i = 0; i < disable_kursi.length; i++) {
+      sheets[disable_kursi[i]].isDisable = true;
+      sheets[disable_kursi[i]].status = true;
+    }
+
     localStorage.setItem('sheets', JSON.stringify(sheets));
   };
 
   const changeSheetStatus = (id) => {
     const sheets = JSON.parse(localStorage.getItem('sheets'));
     const sheet = sheets.find((sheet) => sheet.id === id);
+    if (sheet.isDisable) {
+      return;
+    }
     sheet.status = !sheet.status;
     localStorage.setItem('sheets', JSON.stringify(sheets));
     setSheets(JSON.parse(localStorage.getItem('sheets')));
@@ -99,7 +158,7 @@ export default function LayoutKursi() {
         <div className='w-full shadow-md p-5 bg-white mt-3 min-h-screen flex justify-start flex-col items-start overflow-auto gap-x-3 relative'>
           <div
             className='sticky px-4 py-2 border border-black mb-5 rounded inline-flex center left-1/2 w-52'
-            // onClick={() => ResetSheat()}
+            onClick={() => ResetSheat()}
           >
             <p className='mx-auto'>Main Stage</p>
           </div>
@@ -128,7 +187,9 @@ export default function LayoutKursi() {
                                     className={`w-6 h-6 border-2 border-black flex justify-center items-center ${
                                       sheet.status
                                         ? 'bg-green-500'
-                                        : 'bg-transparent'
+                                        : sheet.isDisable
+                                        ? 'bg-green-500'
+                                        : 'bg-white'
                                     }`}
                                     onClick={() => changeSheetStatus(sheet.id)}
                                   >
@@ -166,7 +227,9 @@ export default function LayoutKursi() {
                                     className={`w-6 h-6 border-2 border-black flex justify-center items-center ${
                                       sheet.status
                                         ? 'bg-green-500'
-                                        : 'bg-transparent'
+                                        : sheet.isDisable
+                                        ? 'bg-green-500'
+                                        : 'bg-white'
                                     }`}
                                     onClick={() => changeSheetStatus(sheet.id)}
                                   >
@@ -186,7 +249,6 @@ export default function LayoutKursi() {
             <div className='space-y-2 mt-52 '>
               {/* Sheet */}
               {total_row_sheet.map((row, index) => {
-                console.log(index);
                 if (index >= 15 && index < 23) {
                   return (
                     <div className='flex flex-col space-y-2'>
@@ -205,7 +267,9 @@ export default function LayoutKursi() {
                                     className={`w-6 h-6 border-2 border-black flex justify-center items-center ${
                                       sheet.status
                                         ? 'bg-green-500'
-                                        : 'bg-transparent'
+                                        : sheet.isDisable
+                                        ? 'bg-green-500'
+                                        : 'bg-white'
                                     }`}
                                     onClick={() => changeSheetStatus(sheet.id)}
                                   >
@@ -245,7 +309,9 @@ export default function LayoutKursi() {
                                     className={`w-6 h-6 border-2 border-black flex justify-center items-center ${
                                       sheet.status
                                         ? 'bg-green-500'
-                                        : 'bg-transparent'
+                                        : sheet.isDisable
+                                        ? 'bg-green-500'
+                                        : 'bg-white'
                                     }`}
                                     onClick={() => changeSheetStatus(sheet.id)}
                                   >
