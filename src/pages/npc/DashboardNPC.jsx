@@ -5,11 +5,13 @@ import React, { useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import useSWR from 'swr';
 import Error500 from '../error/500';
-
+import { AiOutlineCheckCircle } from 'react-icons/ai';
 function DashboardNPC() {
   const history = useHistory();
-  const { data, error } = useSWR('/my_npc');
-
+  const { data, error } = useSWR('/my_npc', {
+    shouldRetryOnError: false,
+    errorRetryInterval: 0,
+  });
   useEffect(() => {
     if (data) {
       if (
@@ -27,31 +29,15 @@ function DashboardNPC() {
   return (
     <DashboardShell>
       {error?.response.status === 404 ? (
-        <div className='bg-dark-100 min-h-screen'>
-          <div className='flex flex-col w-full px-4 py-8 font-primary items-center text-white'>
-            <p className='text-3xl p-6'>
-              Schematics{' '}
-              <span className='text-npc'>National Programming Contest</span>
-            </p>
-            <p className='text-lg md:w-3/5 w-full text-justify'>
-              Schematics{' '}
-              <span className='text-npc'>National Programming Contest</span>{' '}
-              2022 merupakan kompetisi pemrograman nasional yang menguji
-              kemampuan penyelesaian suatu permasalahan dengan{' '}
-              <span className='text-npc'>algoritma</span> yang paling efektif
-              dan efisien menggunakan{' '}
-              <span className='text-npc'>program komputer</span> dengan
-              spesifikasi yang telah ditentukan. Schematics{' '}
-              <span className='text-npc'>NPC Junior</span> dapat diikuti oleh{' '}
-              <span className='text-npc'>
-                siswa SMA/Sederajat secara perorangan
-              </span>{' '}
-              dan <span className='text-npc'>Schematics NPC Senior</span> dapat
-              diikuti oleh{' '}
-              <span className='text-npc'>
-                tim beranggotakan maksimal 3 mahasiswa
-              </span>
-              .
+        <div className='bg-white min-h-screen relative'>
+          <div className='flex flex-col w-full px-4 py-8 font-secondary items-center text-black'>
+            <p className='text-5xl p-6 font-bold'>SCHEMATICS NPC</p>
+            <p className='text-xl md:w-2/3 w-full text-center font-normal'>
+              Schematics National Programming Contest 2022 merupakan kompetisi
+              pemrograman nasional yang menguji kemampuan penyelesaian suatu
+              permasalahan dengan algoritma yang paling efektif dan efisien
+              menggunakan program komputer dengan spesifikasi yang telah
+              ditentukan.
             </p>
           </div>
           <div className='w-full flex flex-row px-4 justify-center'>
@@ -88,48 +74,71 @@ function DashboardNPC() {
               </Link>
             </div>
           </div>
+          <div className='absolute bottom-0'>
+            <img
+              src={`${process.env.PUBLIC_URL}/images/npc/npc-left.png`}
+              alt=''
+              className=''
+            />
+          </div>
         </div>
       ) : (
-        <div className='bg-dark-100 py-8 min-h-screen'>
-          <div className='md:px-16 px-6'>
-            <div className='flex md:flex-row flex-col w-full justify-between md:space-y-0 space-y-3'>
-              <div className='md:w-7/12 w-full bg-white rounded-lg p-4'>
-                <p className='text-3xl font-bold text-left text-npc'>
+        <div className='bg-white py-4 min-h-screen font-secondary'>
+          <div className='text-xs md:px-16 px-6 flex gap-x-2 font-medium text-[#24657A]'>
+            <a href='/landing'>
+              <p className='hover:text-gray-200'>Dashboard Peserta</p>
+            </a>
+            <p> &gt; </p>
+            <p className='cursor-pointer'>Event</p>
+            <p> &gt; </p>
+            <p className='cursor-pointer'>Schematics NPC </p>
+          </div>
+          <div className='md:px-16 px-6 py-16'>
+            <div className='flex md:flex-row flex-col w-full justify-between md:space-y-0 space-y-10'>
+              <div className='md:w-1/2 w-full bg-white rounded-lg px-4 pb-4 shadow-xl'>
+                <p className='w-1/3 text-md md:text-xl font-medium text-white bg-npc -translate-y-1/2 text-center rounded-lg py-2'>
                   Profil Tim
                 </p>
-                <ul className='list-disc list-inside'>
-                  <div className='grid grid-cols-12 space-y-3 mt-4 text-lg'>
+                <div className='flex justify-between'>
+                  <h2 className='font-bold text-md md:text-xl'>
+                    Schematics NPC
+                  </h2>
+                  <p className='text-npc hover:text-npc-100 text-xs md:text-sm my-auto cursor-pointer'>
+                    Lengkapi data diri
+                  </p>
+                </div>
+                <ul className=' list-inside mb-3'>
+                  <div className='grid grid-cols-12 space-y-1 mt-4 text-sm md:text-md'>
                     <li className='col-span-5'>Nama Tim</li>
                     <p>:</p>
-                    <p className='col-span-6 font-bold'>
-                      {data.data.nama_team}
-                    </p>
+                    <p className='col-span-6'>{data.data.nama_team}</p>
+                    <li className='col-span-5'>Nama Ketua Tim</li>
+                    <p>:</p>
+                    <p className='col-span-6'>{data.data.members[0].name}</p>
                     <li className='col-span-5'>Asal Sekolah</li>
                     <p>:</p>
-                    <p className='col-span-6 font-bold'>
-                      {data.data.asal_sekolah}
-                    </p>
-                    <li className='col-span-5'>Kota/Kabupaten</li>
+                    <p className='col-span-6'>{data.data.asal_sekolah}</p>
+                    <li className='col-span-5'>Kota / Kabupaten</li>
                     <p>:</p>
-                    <p className='col-span-6 font-bold'>{data.data.kota}</p>
+                    <p className='col-span-6'>{data.data.kota}</p>
                     <li className='col-span-5'>Kategori</li>
                     <p>:</p>
-                    <p className='col-span-6 font-bold'>
+                    <p className='col-span-6'>
                       {data.data.kategori.toUpperCase()}
                     </p>
                     <li className='col-span-5'>Guru Pendamping (GP)</li>
                     <p>:</p>
-                    <p className='col-span-6 font-bold'>
+                    <p className='col-span-6'>
                       {data.data.nama_guru_pendamping}
                     </p>
                     <li className='col-span-5'>No. Telepon GP</li>
                     <p>:</p>
-                    <p className='col-span-6 font-bold'>
+                    <p className='col-span-6'>
                       {data.data.no_telp_guru_pendamping}
                     </p>
                     <li className='col-span-5'>Status Tim</li>
                     <p>:</p>
-                    <p className='col-span-6 font-bold'>
+                    <p className='col-span-6'>
                       {TEAM_STATUS[data.data.status]}
                     </p>
                     {data.data.status === 'active' && (
@@ -139,98 +148,86 @@ function DashboardNPC() {
                         <p className='col-span-6 font-bold'>
                           <a
                             className='text-npc hover:text-npc-300'
-                            href='https://discord.gg/amvajPDkVf'
-                          >
-                            https://discord.gg/amvajPDkVf
-                          </a>
-                        </p>
-                        <li className='col-span-5'>Link Penyisihan</li>
-                        <p>:</p>
-                        <p className='col-span-6 font-bold'>
-                          <a
-                            className='text-npc hover:text-npc-300'
                             target='_blank'
                             href='https://schematics-npc.com/'
                             rel='noreferrer'
                           >
-                            https://schematics-npc.com/
+                            https://discord.gg/amvajPDkVf
                           </a>
                         </p>
-                        {/* <li className='col-span-5'>Username Lomba</li>
-                        <p>:</p>
-                        <p className='col-span-6 font-bold'>
-                          {data.data.username_lomba}
-                        </p>
-                        <li className='col-span-5'>Password Lomba</li>
-                        <p>:</p>
-                        <p className='col-span-6 font-bold'>
-                          {data.data.password_lomba}
-                        </p> */}
                       </>
                     )}
                   </div>
                 </ul>
-              </div>
-              <div className='md:w-5/12 w-full grid grid-rows-6 md:pl-8 pl-0 space-y-3'>
-                <div className='w-full row-span-4 bg-white p-4 rounded-lg'>
-                  <div>
-                    <p className='text-3xl font-bold text-left text-npc'>
-                      Ketua Tim
-                    </p>
-                    {data.data.members.map((member, index) => {
-                      if (member.member_type === 'ketua') {
-                        return (
-                          <p className='mt-1 font-bold' key={index}>
-                            {member.name}
-                          </p>
-                        );
-                      }
-                    })}
-                  </div>
-                  <div className='mt-2'>
-                    {data.data.kategori === 'senior' && (
-                      <p className='text-3xl font-bold text-left text-npc'>
-                        Anggota Tim
-                      </p>
-                    )}
-                    <ul className='space-y-1 mt-1 font-bold'>
-                      {data.data.members.map((member, index) => {
-                        if (member.member_type === 'anggota') {
-                          return <li key={index}>{member.name}</li>;
-                        }
-                      })}
-                    </ul>
-                  </div>
-                </div>
-                {data.data.kategori === 'senior' && (
-                  <div className='w-full bg-white rounded-lg flex justify-center items-center'>
-                    <p className='text-xl font-bold py-4 px-2'>
-                      {`Kode Afiliasi: ${data.data.referral_code}`}
+                <hr />
+                {data.data.status === 'active' && (
+                  <div className='flex justify-start text-green-500'>
+                    <p className='text-sm mt-4 flex my-auto'>
+                      <AiOutlineCheckCircle className='w-5 h-4 mx-2 my-auto' />
+                      Akun tim anda telah aktif
                     </p>
                   </div>
                 )}
-                <a
-                  href={
-                    data.data.kategori === 'senior'
-                      ? 'https://drive.google.com/file/d/1zMvXQ3_GvcOHd2BsJ5p3DVPBmIgJS5Y9/view?usp=sharing'
-                      : 'https://drive.google.com/file/d/1aagSVYQUoxqBj34OF0fLZ_Xrd5EWhrGl/view?usp=sharing'
-                  }
-                  target='_blank'
-                  rel='noreferrer'
-                >
-                  <button className='w-full h-full bg-npc hover:bg-white hover:text-npc rounded-lg flex justify-center items-center'>
-                    <p className='text-xl font-bold py-4 px-2'>
-                      Unduh Guidebook
+              </div>
+
+              <div className='md:w-5/12 w-full shadow-xl pb-4'>
+                <p className='w-1/3 text-md md:text-xl font-medium text-white -translate-y-1/2 bg-npc text-center rounded-lg py-2 ml-4'>
+                  Link Penting
+                </p>
+                <div className='w-11/12 mx-auto'>
+                  <div className='flex justify-between'>
+                    <p className='font-bold text-md md:text-xl'>
+                      Kode Afiliasi :
+                      <span>&nbsp; {data.data.referral_code}</span>
                     </p>
-                  </button>
-                </a>
+                    <a
+                      href={
+                        data.data.kategori === 'senior'
+                          ? 'https://drive.google.com/file/d/1zMvXQ3_GvcOHd2BsJ5p3DVPBmIgJS5Y9/view?usp=sharing'
+                          : 'https://drive.google.com/file/d/1aagSVYQUoxqBj34OF0fLZ_Xrd5EWhrGl/view?usp=sharing'
+                      }
+                      target='_blank'
+                      rel='noreferrer'
+                    >
+                      <p className='text-npc hover:text-npc-100 text-xs md:text-sm my-auto'>
+                        Unduh GuideBook
+                      </p>
+                    </a>
+                  </div>
+                  {data.data.status === 'active' && (
+                    <ul className='list-inside'>
+                      <div className='grid grid-cols-12 text-sm md:text-md mt-4'>
+                        <li className='col-span-5'>Link Grup Discord</li>
+                        <p>:</p>
+                        <p className='col-span-6'>
+                          <a
+                            className='text-npc hover:text-npc-300'
+                            href='https://discord.gg/amvajPDkVf'
+                          >
+                            Disini
+                          </a>
+                        </p>
+                        <li className='col-span-5'>Link Penyisihan</li>
+                        <p>:</p>
+                        <p className='col-span-6'>
+                          <a
+                            className='text-npc hover:text-npc-300'
+                            href='https://bit.ly/A_TnP_2021_Penyisihan'
+                          >
+                            Disini
+                          </a>
+                        </p>
+                      </div>
+                    </ul>
+                  )}
+                </div>
               </div>
             </div>
-            <div className='w-full md:h-64 h-96 bg-white p-6 mt-8 rounded-xl'>
-              <p className='text-3xl font-bold text-center md:text-left text-npc'>
+            <div className='w-full md:h-64 h-96 bg-white px-6 pb-6 mt-16 rounded-xl shadow-xl'>
+              <p className='md:w-1/5 text-xl bg-npc py-2 rounded-lg font-medium text-center md:text-center text-white -translate-y-1/2'>
                 Pemberitahuan
               </p>
-              <ul className='list-disc list-inside mt-2 font-bold text-lg'>
+              <ul className='list-disc list-inside mt-2 font-medium text-lg'>
                 <li>
                   Untuk tim yang berstatus aktif, mohon untuk segera masuk ke
                   link discord yang tertera pada dashboard

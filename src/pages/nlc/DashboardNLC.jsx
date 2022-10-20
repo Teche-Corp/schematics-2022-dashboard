@@ -18,6 +18,7 @@ import toast from 'react-hot-toast';
 import { Link, useHistory } from 'react-router-dom';
 import useSWR from 'swr';
 import Error500 from '../error/500';
+import { AiOutlineCheckCircle } from 'react-icons/ai';
 
 function DashboardNLC() {
   const [nlcProfile, setNlcProfile] = useState(undefined);
@@ -150,188 +151,192 @@ function DashboardNLC() {
           </div>
         </div>
       ) : (
-        <div className='bg-dark-100 py-8 min-h-screen'>
+        <div className='bg-white py-8 min-h-screen'>
           <div className='md:px-16 px-6'>
+            <div className='pb-16 text-sm flex gap-x-2 font-medium text-[#24657A]'>
+              <a href='/landing'>
+                <p className='hover:text-gray-400'>Dashboard Peserta</p>
+              </a>
+              <p> &gt; </p>
+              <p className='cursor-pointer'>Event</p>
+              <p> &gt; </p>
+              <p className='cursor-pointer'>Schematics NLC</p>
+            </div>
             <div className='flex md:flex-row flex-col w-full justify-between md:space-y-0 space-y-3'>
-              <div className='md:w-7/12 w-full bg-white rounded-lg p-4'>
-                <p className='text-3xl font-bold text-left text-nlc'>
+              <div className='md:w-1/2 w-full bg-white rounded-lg px-4 shadow-xl'>
+                <p className='text=md md:text-xl font-medium text-center text-white bg-nlc w-1/5 -translate-y-1/2 py-2 rounded'>
                   Profil Tim
                 </p>
-                <ul className='list-disc list-inside'>
-                  <div className='grid grid-cols-12 space-y-3 mt-4 text-lg'>
+                <div className='flex justify-between'>
+                  <h2 className='font-bold text-md md:text-xl'>
+                    Schematics NLC
+                  </h2>
+                  <p className='text-nlc hover:text-nlc-200 text-xs md:text-sm my-auto cursor-pointer'>
+                    Lengkapi data diri &gt;
+                  </p>
+                </div>
+                <ul className='list-inside mb-6'>
+                  <div className='grid grid-cols-12 space-y-1 mt-4 text-sm md:text-lg'>
+                    <li className='col-span-5'>Nama Ketua Tim</li>
+                    <p>:</p>
+                    <p className='col-span-6'>{data.data.members[0].name}</p>
                     <li className='col-span-5'>Nama Tim</li>
                     <p>:</p>
-                    <p className='col-span-6 font-bold'>
-                      {data.data.nama_team}
-                    </p>
+                    <p className='col-span-6'>{data.data.nama_team}</p>
                     <li className='col-span-5'>Asal Sekolah</li>
                     <p>:</p>
-                    <p className='col-span-6 font-bold'>
-                      {data.data.asal_sekolah}
-                    </p>
+                    <p className='col-span-6'>{data.data.asal_sekolah}</p>
                     <li className='col-span-5'>Kota/Kabupaten</li>
                     <p>:</p>
-                    <p className='col-span-6 font-bold'>{data.data.kota}</p>
+                    <p className='col-span-6'>{data.data.kota}</p>
                     <li className='col-span-5'>Region</li>
                     <p>:</p>
-                    <p className='col-span-6 font-bold'>
-                      {getNlcRegion(data.data.region)?.text}
+                    <p className='col-span-6'>
+                      {getNlcRegion(data.data.region).text}
                     </p>
                     <li className='col-span-5'>Guru Pendamping (GP)</li>
                     <p>:</p>
-                    <p className='col-span-6 font-bold'>
+                    <p className='col-span-6'>
                       {data.data.nama_guru_pendamping}
                     </p>
                     <li className='col-span-5'>No. Telepon GP</li>
                     <p>:</p>
-                    <p className='col-span-6 font-bold'>
+                    <p className='col-span-6'>
                       {data.data.no_telp_guru_pendamping}
                     </p>
-                    <li className='col-span-5'>Status Tim</li>
+                    {/* <li className='col-span-5'>Status Tim</li>
                     <p>:</p>
-                    <p className='col-span-6 font-bold'>
+                    <p className='col-span-6'>
                       {TEAM_STATUS[getNLCTeamStatus(data.data)]}
-                    </p>
-                    {(getNLCTeamStatus(data.data) === 'active' ||
-                      getNLCTeamStatus(data.data) === 'payment_verified') && (
+                    </p> */}
+                    {/* {getNLCTeamStatus(data.data) === 'active' && (
                       <>
                         <li className='col-span-5'>
                           Link Grup Whatsapp Region
                         </li>
                         <p>:</p>
-                        <p className='col-span-6 font-bold'>
+                        <p className='col-span-6'>
                           <a
-                            className='text-nlc hover:text-nlc-200 cursor-pointer'
-                            href={getNlcRegion(data.data.region)?.waGroup}
+                            className='text-nlc hover:text-nlc-200'
+                            href={getNlcRegion(data.data.region).waGroup}
                           >
                             Di sini
                           </a>
                         </p>
                       </>
-                    )}
-                    {(getNLCTeamStatus(data.data) === 'active' ||
-                      getNLCTeamStatus(data.data) === 'payment_verified') &&
-                      data.data.members.map((member, index) => {
-                        if (member.member_type === 'ketua') {
-                          if (member.name === user.name) {
-                            return (
-                              <>
-                                <li className='col-span-5'>Username Lomba</li>
-                                <p>:</p>
-                                <p className='col-span-6 font-bold'>
-                                  {data.data.email_lomba}
-                                </p>
-                                <li className='col-span-5'>Password Lomba</li>
-                                <p>:</p>
-                                <p className='col-span-6 font-bold'>
-                                  {data.data.password_lomba}
-                                </p>
-
-                                <li className='col-span-5'>Link Moodle</li>
-                                <p>:</p>
-                                <p className='col-span-6 font-bold'>
-                                  <a
-                                    className='text-nlc hover:text-nlc-200'
-                                    href={
-                                      'https://schematics.its.ac.id/moodle/'
-                                    }
-                                  >
-                                    Di sini
-                                  </a>
-                                </p>
-                                <li className='col-span-5'>Link Game</li>
-                                <p>:</p>
-                                <p
-                                  onClick={handleGame}
-                                  className='col-span-6 font-bold text-nlc hover:text-nlc-200 cursor-pointer'
-                                >
-                                  Di sini
-                                </p>
-                                <li className='col-span-5'>Link Feedback</li>
-                                <p>:</p>
-                                <p className='col-span-6 font-bold'>
-                                  <a
-                                    className='text-nlc hover:text-nlc-200'
-                                    href={'https://forms.gle/vS4LhTRjdvUzNeQn7'}
-                                  >
-                                    Di sini
-                                  </a>
-                                </p>
-                              </>
-                            );
-                          }
-                        }
-                      })}
+                    )} */}
                   </div>
                   {user.sertifikat?.nlc_penyisihan && (
                     <div className='w-full flex justify-center items-center mt-5'>
-                      <button className='text-center bg-nlc hover:bg-yellow-200 font-secondary px-8 py-3 my-5 font-bold rounded-xl'>
+                      <button className='text-center bg-nlc hover:bg-yellow-200 font-secondary px-8 py-3 my-5 font-bold rounded-xl text-white'>
                         <a href={user.sertifikat?.nlc_penyisihan}>SERTIFIKAT</a>
                       </button>
                     </div>
                   )}
                 </ul>
+                <hr />
+                {getNLCTeamStatus(data.data) === 'active' && (
+                  <div className='flex justify-start text-green-500 pb-4'>
+                    <p className='text-sm mt-4 flex my-auto'>
+                      <AiOutlineCheckCircle className='w-5 h-4 mx-2 my-auto' />
+                      Akun tim anda telah aktif
+                    </p>
+                  </div>
+                )}
               </div>
-              <div className='md:w-5/12 w-full grid grid-rows-6 md:pl-8 pl-0 space-y-3'>
-                <div className='w-full row-span-4 bg-white p-4 rounded-lg'>
-                  <div>
-                    <p className='text-3xl font-bold text-left text-nlc'>
-                      Ketua Tim
+
+              <div className='md:w-5/12 w-full space-y-3 grid'>
+                <div className='shadow-xl rounded-xl space-y-3 md:pl-8 pl-0 row-span-4 mb-4'>
+                  <div className='w-full bg-white rounded-lg'>
+                    <p className='w-1/3 text-md md:text-xl font-medium text-white -translate-y-1/2 bg-nlc text-center rounded-lg py-2'>
+                      Link Penting
                     </p>
-                    {data.data.members.map((member, index) => {
-                      if (member.member_type === 'ketua') {
-                        return (
-                          <p className='mt-1 font-bold' key={index}>
-                            {member.name}
+                  </div>
+                  {getNLCTeamStatus(data.data) === 'active' && (
+                    <div className='mx-auto'>
+                      <div className='flex justify-between'>
+                        <p className='font-bold text-md md:text-xl'>
+                          Kode Afiliasi : {data.data.referral_code}
+                        </p>
+                        <a href='https://drive.google.com/file/d/1QKap6V7x-k80DZ-1rCGuTIRRqaY4ceSH/view?usp=sharing'>
+                          <p className='text-nlc hover:text-nlc-200 text-xs md:text-sm my-auto pr-2'>
+                            Unduh Guidebook &gt;
                           </p>
-                        );
-                      }
-                    })}
-                  </div>
-                  <div className='mt-2'>
-                    <p className='text-3xl font-bold text-left text-nlc'>
-                      Anggota Tim
-                    </p>
-                    <ul className='space-y-1 mt-1 font-bold'>
-                      {data.data.members.map((member, index) => {
-                        if (member.member_type === 'anggota') {
-                          return <li key={index}>{member.name}</li>;
-                        }
-                      })}
-                    </ul>
-                  </div>
+                        </a>
+                      </div>
+                      <ul className='list-inside'>
+                        <div className='grid grid-cols-12 text-sm md:text-lg mt-4'>
+                          <li className='col-span-5'>Link Grup WA Region</li>
+                          <p>:</p>
+                          <a
+                            href={getNlcRegion(data.data.region).waGroup}
+                            target='_blank'
+                            rel='noopener noreferrer'
+                            className='col-span-6 text-nlc hover:text-nlc-200'
+                          >
+                            <p className=''>Klik Disini</p>
+                          </a>
+                          <li className='col-span-5'>Username Lomba</li>
+                          <p>:</p>
+                          <p className='col-span-6'>Masih dummy</p>
+                          <li className='col-span-5'>Password Lomba</li>
+                          <p>:</p>
+                          <p className='col-span-6'>Masih dummy</p>
+                          <li className='col-span-5'>Link Moodle</li>
+                          <p>:</p>
+                          <a
+                            href={getNlcRegion(data.data.region).waGroup}
+                            target='_blank'
+                            rel='noopener noreferrer'
+                            className='col-span-6 text-nlc hover:text-nlc-200'
+                          >
+                            <p className=''>Masih dummy</p>
+                          </a>
+                          <li className='col-span-5'>Link Game</li>
+                          <p>:</p>
+                          <a
+                            href={getNlcRegion(data.data.region).waGroup}
+                            target='_blank'
+                            rel='noopener noreferrer'
+                            className='col-span-6 text-nlc hover:text-nlc-200'
+                          >
+                            <p className=''>Masih dummy</p>
+                          </a>
+                          <li className='col-span-5'>Link Feedback</li>
+                          <p>:</p>
+                          <a
+                            href={getNlcRegion(data.data.region).waGroup}
+                            target='_blank'
+                            rel='noopener noreferrer'
+                            className='col-span-6 text-nlc hover:text-nlc-200'
+                          >
+                            <p className=''>Masih dummy</p>
+                          </a>
+                        </div>
+                      </ul>
+                    </div>
+                  )}
+                  {/* <a
+                    href='https://drive.google.com/drive/folders/1TgcidIjyzGt7xXtmqJ6ty24EboesImsI?usp=sharing'
+                    target='_blank'
+                    rel='noreferrer'
+                  >
+                    <button className='w-full h-full bg-nlc hover:bg-white hover:text-nlc rounded-lg flex justify-center items-center'>
+                      <p className='text-xl font-bold py-4 px-2'>
+                        Unduh Contoh Soal
+                      </p>
+                    </button>
+                  </a> */}
                 </div>
-                <div className='w-full bg-white rounded-lg flex justify-center items-center'>
-                  <p className='text-xl font-bold py-4 px-2'>
-                    {`Kode Afiliasi: ${data.data.referral_code}`}
+                <div className='w-full md:w-2/3 mx-auto bg-nlc row-span-1 justify-end rounded-xl flex cursor-pointer hover:bg-nlc-300 shadow-lg'>
+                  <p className='mx-auto my-auto text-white font-primary'>
+                    Unduh Soal
                   </p>
                 </div>
-                <a
-                  href='https://drive.google.com/file/d/11Pw0REtV3uB2b6XRlhjOM3oHMKTH08QK/view?usp=sharing'
-                  target='_blank'
-                  rel='noreferrer'
-                >
-                  <button className='w-full h-full bg-nlc hover:bg-white hover:text-nlc rounded-lg flex justify-center items-center'>
-                    <p className='text-xl font-bold py-4 px-2'>
-                      Unduh Guidebook
-                    </p>
-                  </button>
-                </a>
-                <a
-                  href='https://drive.google.com/drive/folders/1TgcidIjyzGt7xXtmqJ6ty24EboesImsI?usp=sharing'
-                  target='_blank'
-                  rel='noreferrer'
-                >
-                  <button className='w-full h-full bg-nlc hover:bg-white hover:text-nlc rounded-lg flex justify-center items-center'>
-                    <p className='text-xl font-bold py-4 px-2'>
-                      Unduh Contoh Soal
-                    </p>
-                  </button>
-                </a>
               </div>
             </div>
             {getNLCTeamStatus(data.data) === 'awaiting_file_upload' && (
-              <div className='w-full bg-white p-6 mt-8 rounded-xl'>
+              <div className='w-full bg-white p-6 mt-8 rounded-xl shadow-xl'>
                 <div className='w-full'>
                   <FormProvider {...methods}>
                     <form onSubmit={handleSubmit(handleImageUpload)}>
@@ -424,10 +429,13 @@ function DashboardNLC() {
                 </div>
               </div>
             )}
-            <div className='w-full bg-white p-6 mt-8 rounded-xl'>
-              <h1 className='font-primary text-xl'>
+            <div className='w-full bg-white px-6 pb-6 mt-16 rounded-xl shadow-xl font-secondary'>
+              <h1 className='md:w-1/5 text-xl bg-nlc py-2 rounded-lg font-medium text-center md:text-center text-white -translate-y-1/2'>
+                Contoh Soal
+              </h1>
+              <h1 className='text-lg'>
                 Untuk mendapatkan contoh soal tahun lalu, tim anda dapat
-                melakukan upload Bukti share broadcast{' '}
+                melakukan upload bukti share broadcast{' '}
                 <span>
                   <a
                     href='https://drive.google.com/drive/folders/1I0snDZbndT_evY15eyKJc5fmza74qxh9?usp=sharing'
@@ -438,18 +446,14 @@ function DashboardNLC() {
                 </span>{' '}
                 kepada 3 grup
               </h1>
-              <div className='w-full'>
+              <div className='w-full my-4'>
                 <FormProvider {...methodsBingo}>
                   <form onSubmit={handleSubmitBingo(handleBingo)}>
                     <div className='grid grid-cols-1 grid-rows-1'>
                       <div className='col-span-1'>
                         <DragnDropInputBox
                           defaultValue={nlcProfile?.bingo_file_url ?? undefined}
-                          label={
-                            <span className='text-dark-400'>
-                              Bukti share broadcast ke 3 grup
-                            </span>
-                          }
+                          label={''}
                           id='bingo_file'
                           accept='image/png, image/jpg, image/jpeg'
                           helperText='File dalam format jpg, png, atau jpeg maksimal 1 MB'
@@ -475,11 +479,11 @@ function DashboardNLC() {
                 </FormProvider>
               </div>
             </div>
-            <div className='w-full md:h-64 h-96 bg-white p-6 mt-8 rounded-xl'>
-              <p className='text-3xl font-bold text-center md:text-left text-nlc'>
-                Pemberitahuan
+            <div className='w-full md:h-64 h-96 bg-white px-6 pb-6 mt-16 rounded-xl shadow-xl'>
+              <p className='md:w-1/5 text-xl bg-nlc py-2 rounded-lg font-medium text-center md:text-center text-white -translate-y-1/2'>
+                Pengumuman
               </p>
-              <ul className='list-disc list-inside mt-2 font-bold text-lg'>
+              <ul className='list-disc list-inside mt-2 text-lg'>
                 <li>
                   Untuk tim yang berstatus Aktif, mohon untuk segera masuk ke
                   grup WA region melalui link yang tertera pada dashboard

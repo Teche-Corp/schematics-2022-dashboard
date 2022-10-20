@@ -1,49 +1,94 @@
 import { Fragment } from 'react';
-import { Dialog, Transition } from '@headlessui/react';
-import { HiHome, HiXCircle } from 'react-icons/hi';
-
+import { Dialog, Transition, Menu } from '@headlessui/react';
+import { HiXCircle, HiLogout, HiViewGrid } from 'react-icons/hi';
+import { RiArrowDropDownLine } from 'react-icons/ri';
 import { BsCircleFill } from 'react-icons/bs';
-
 import { classNames } from '@/lib/helper';
 import { Link, useLocation } from 'react-router-dom';
-
+import { useState } from 'react';
 import UnstyledLink from '@/components/UnstyledLink';
-
+import { FaTrophy } from 'react-icons/fa';
 const navigation = [
   {
-    name: 'Home',
+    id: 'dashboard',
+    name: 'Dashboard',
     href: '/landing',
-    icon: HiHome,
+    icon: HiViewGrid,
     current: false,
+    dropdown: [],
   },
   {
-    name: 'Schematics NPC',
-    href: '/npc',
-    color: 'text-npc',
-    icon: BsCircleFill,
+    id: 'events',
+    name: 'Events',
+    href: '#',
+    icon: FaTrophy,
     current: false,
+    dropdown: [
+      {
+        id: 'npc',
+        name: 'Schematics NPC',
+        href: '/npc',
+        current: false,
+      },
+      {
+        id: 'nlc',
+        name: 'Schematics NLC',
+        href: '/nlc',
+        color: 'text-nlc',
+        current: false,
+      },
+      {
+        id: 'nst',
+        name: 'Schematics NST',
+        href: '/nst',
+        color: 'text-nst',
+        current: false,
+      },
+      {
+        id: 'reeva',
+        name: 'Schematics Reeva',
+        href: '/reeva',
+        color: 'text-reeva',
+        current: false,
+      },
+    ],
   },
-  {
-    name: 'Schematics NLC',
-    href: '/nlc',
-    color: 'text-nlc',
-    icon: BsCircleFill,
-    current: false,
-  },
-  {
-    name: 'Schematics NST',
-    href: '/nst',
-    color: 'text-nst',
-    icon: BsCircleFill,
-    current: false,
-  },
-  {
-    name: 'Schematics Reeva',
-    href: '/reeva',
-    color: 'text-reeva',
-    icon: BsCircleFill,
-    current: false,
-  },
+  // {
+  //   id: 'npc',
+  //   name: 'Schematics NPC',
+  //   href: '/npc',
+  //   color: 'text-white',
+  //   icon: BsCircleFill,
+  //   current: false,
+  // },
+  // {
+  //   name: 'Schematics NLC',
+  //   href: '/nlc',
+  //   color: 'text-white',
+  //   icon: BsCircleFill,
+  //   current: false,
+  // },
+  // {
+  //   name: 'Schematics NST',
+  //   href: '/nst',
+  //   color: 'text-white',
+  //   icon: BsCircleFill,
+  //   current: false,
+  // },
+  // {
+  //   name: 'Schematics Reeva',
+  //   href: '/reeva',
+  //   color: 'text-white',
+  //   icon: BsCircleFill,
+  //   current: false,
+  // },
+  // {
+  //   name: 'Sign Out',
+  //   href: '/logout',
+  //   color: 'text-white',
+  //   icon: HiLogout,
+  //   current: false,
+  // },
   // {
   //   name: 'Schematics Reeva',
   //   href: '/my/sch-reeva/ticket',
@@ -55,9 +100,11 @@ const navigation = [
 
 export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
   const location = useLocation();
-
   const { pathname } = location;
-
+  const [selectEvent, setSelectEvent] = useState(false);
+  const handleSelectEvent = () => {
+    setSelectEvent(!selectEvent);
+  };
   return (
     <div>
       <Transition.Root show={sidebarOpen} as={Fragment}>
@@ -88,7 +135,12 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
             leaveFrom='translate-x-0'
             leaveTo='-translate-x-full'
           >
-            <div className='relative flex flex-col flex-1 w-full max-w-xs pt-5 pb-4 bg-white'>
+            <div
+              className={classNames(
+                'relative flex flex-col flex-1 w-full max-w-xs pt-5 pb-4',
+                pathname === '/landing' ? 'bg-yellow-200' : 'bg-gray-900',
+              )}
+            >
               <Transition.Child
                 as={Fragment}
                 enter='ease-in-out duration-300'
@@ -127,27 +179,48 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
                 className='flex-shrink-0 h-full mt-5 overflow-y-auto divide-y divide-dark-700'
                 aria-label='Sidebar'
               >
-                <div className='px-2 space-y-1'>
+                <div className='px-2 space-y-3'>
                   {navigation.map((item) => (
                     <Link
                       key={item.name}
                       to={item.href}
                       className={classNames(
                         item.href === pathname
-                          ? 'bg-white'
-                          : 'hover:bg-gray-100',
-                        item.color ? `${item.color}` : 'text-black',
+                          ? 'bg-white text-[#24657A]'
+                          : `hover:bg-gray-200 text-white hover:text-[#24657A]`,
+                        item.color ? `${item.color}` : 'text-white',
                         'group flex items-center px-2 py-2 text-base font-medium rounded-md',
                       )}
                       aria-current={item.current ? 'page' : undefined}
                     >
                       <item.icon
                         className={classNames(
-                          item.color ? `${item.color}` : 'text-black',
-                          'w-6 h-6 mr-4 text-black',
+                          item.color ? `${item.color}` : 'text-[#24657A]',
+                          'w-6 h-6 mr-4',
                         )}
                         aria-hidden='true'
                       />
+                      {item.name}
+                      {item.id === 'events' && (
+                        <div className='absolute right-5'>
+                          <RiArrowDropDownLine className='text-white w-8 relative hover:text-[#24657A] h-8' />
+                        </div>
+                      )}
+                    </Link>
+                  ))}
+                  <hr />
+                  <div className='flex items-center px-2 py-3 space-y-3 text-white font-bold hover:text-[#24657A] hover:bg-white rounded-lg cursor-pointer'>
+                    <HiLogout className='mr-3 w-5 h-5' />
+                    Sign Out
+                  </div>
+                </div>
+                <div className={classNames(selectEvent ? 'block' : 'block')}>
+                  {navigation.map((item) => (
+                    <Link
+                      key={item.name}
+                      to={item.href}
+                      className={classNames()}
+                    >
                       {item.name}
                     </Link>
                   ))}
@@ -164,15 +237,30 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
       <div className='hidden h-full lg:flex lg:flex-shrink-0'>
         <div className='flex flex-col w-64'>
           {/* Sidebar component, swap this element with another sidebar if you like */}
-          <div className='flex flex-col flex-grow pt-5 pb-4 overflow-y-auto bg-white'>
-            <div className='flex items-center flex-shrink-0 px-4'>
+          <div
+            className={classNames(
+              `flex flex-col flex-grow pt-5 pb-4 overflow-y-auto`,
+              pathname === '/landing'
+                ? 'dashboard-color'
+                : pathname === '/npc'
+                ? 'dashboard-color-2'
+                : pathname === '/nlc'
+                ? 'dashboard-color-2'
+                : pathname === '/nst'
+                ? 'dashboard-color'
+                : pathname === '/reeva'
+                ? 'dashboard-color'
+                : 'bg-white',
+            )}
+          >
+            <div className='flex items-center justify-center flex-shrink-0 px-4 w-full'>
               <UnstyledLink
                 openNewTab={false}
                 href='https://schematics.its.ac.id/'
               >
                 <img
-                  className='h-20'
-                  src={`${process.env.PUBLIC_URL}/images/logo/logo-dashboard-desktop.svg`}
+                  className='h-24 mt-4'
+                  src={`${process.env.PUBLIC_URL}/images/logo/logo-dashboard-desktop-1.svg`}
                   alt='colored-title'
                 />
               </UnstyledLink>
@@ -181,30 +269,69 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
               className='flex flex-col flex-1 mt-5 overflow-y-auto divide-y divide-gray-600'
               aria-label='Sidebar'
             >
-              <div className='px-2 space-y-1'>
+              <div className='px-2 space-y-3'>
                 {navigation.map((item) => (
-                  <Link
-                    key={item.name}
-                    to={item.href}
-                    className={classNames(
-                      item.href === pathname
-                        ? 'bg-white text-black'
-                        : 'text-black hover:bg-gray-100',
-                      item.color ? `${item.color}` : 'text-black',
-                      'group flex items-center px-2 py-2 text-base font-medium rounded-md',
-                    )}
-                    aria-current={item.current ? 'page' : undefined}
-                  >
-                    <item.icon
+                  <Menu as='div'>
+                    <Menu.Button
                       className={classNames(
-                        item.color ? `${item.color}` : 'text-black',
-                        'w-6 h-6 mr-4 text-black',
+                        item.href === pathname
+                          ? 'bg-white text-[#24657A]'
+                          : `hover:bg-gray-200 text-white hover:text-[#24657A]`,
+                        `group flex items-center text-sm font-semibold rounded-md w-full`,
                       )}
-                      aria-hidden='true'
-                    />
-                    {item.name}
-                  </Link>
+                    >
+                      <Link
+                        key={item.name}
+                        to={item.href}
+                        className={classNames(
+                          item.href === pathname
+                            ? 'bg-white text-[#24657A]'
+                            : `hover:bg-gray-200 text-white hover:text-[#24657A]`,
+                          `group flex items-center px-2 py-2 text-sm font-semibold rounded-md w-full`,
+                        )}
+                      >
+                        <item.icon
+                          className={classNames('w-6 h-6 mr-4')}
+                          aria-hidden='true'
+                        />
+                        {item.name}
+                        {item.id === 'events' && (
+                          <div className={classNames('ml-auto')}>
+                            <RiArrowDropDownLine
+                              className={classNames(
+                                'w-6 h-6',
+                                item.href === '#' ? '' : 'rotate-180',
+                              )}
+                            />
+                          </div>
+                        )}
+                      </Link>
+                    </Menu.Button>
+                    <Menu.Items>
+                      {item.dropdown.map((event) => (
+                        <Link
+                          key={event.name}
+                          to={event.href}
+                          aria-current={event.current ? 'page' : undefined}
+                          className={classNames(
+                            `group flex items-center my-2 px-4 py-2 text-sm font-semibold rounded-md w-full`,
+                            event.color ? `text-${event.color}` : 'text-white',
+                            event.href === pathname
+                              ? 'bg-white text-[#24657A]'
+                              : `hover:bg-gray-200 text-white hover:text-[#24657A]`,
+                          )}
+                        >
+                          {event.name}
+                        </Link>
+                      ))}
+                    </Menu.Items>
+                  </Menu>
                 ))}
+                <hr />
+                <div className='flex items-center px-2 py-3 space-y-3 text-white font-bold hover:text-[#24657A] hover:bg-white rounded-lg cursor-pointer'>
+                  <HiLogout className='mr-3 w-5 h-5' />
+                  Sign Out
+                </div>
               </div>
             </nav>
           </div>
