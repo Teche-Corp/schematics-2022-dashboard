@@ -19,6 +19,7 @@ import { Link, useHistory } from 'react-router-dom';
 import useSWR from 'swr';
 import Error500 from '../error/500';
 import { AiOutlineCheckCircle } from 'react-icons/ai';
+import { Toaster } from 'react-hot-toast';
 
 function DashboardNLC() {
   const [nlcProfile, setNlcProfile] = useState(undefined);
@@ -73,6 +74,12 @@ function DashboardNLC() {
     );
   };
 
+  const showToast = () => {
+    toast.error('Pendaftaran sudah ditutup!');
+
+    history.push('/landing');
+  };
+
   const handleImageUpload = (data) => {
     const formData = new FormData();
     for (let key in data) {
@@ -111,44 +118,65 @@ function DashboardNLC() {
 
   return (
     <DashboardShell>
+      <Toaster position='top-center' reverseOrder={false} />
       {error?.response.status === 404 ? (
-        <div className='bg-dark-100 min-h-screen'>
-          <div className='flex flex-col w-full px-4 py-8 font-primary items-center text-white'>
-            <p className='text-3xl p-6'>
-              Schematics{' '}
-              <span className='text-nlc'>National Logic Competition</span>
-            </p>
-            <p className='text-lg md:w-3/5 w-full text-justify'>
-              Schematics{' '}
-              <span className='text-nlc'>National Logic Competition</span> 2022
-              merupakan kompetisi yang menguji kemampuan{' '}
-              <span className='text-nlc'>
-                berpikir secara logis dan analitis
-              </span>{' '}
-              melalui berbagai persoalan dan permainan menarik.
+        <div className='bg-white min-h-[calc(100vh-64px)] relative'>
+          <div className='flex flex-col w-full px-4 py-8 pt-[6%] font-secondary items-center text-black'>
+            <p className='text-5xl p-6 font-bold'>SCHEMATICS NLC</p>
+            <p className='text-2xl md:w-4/5 w-full text-center font-normal leading-10'>
+              Schematics National Logic Competition 2022 merupakan kompetisi
+              yang menguji kemampuan berpikir secara logis dan analitis melalui
+              berbagai persoalan dan permainan menarik.
             </p>
           </div>
           <div className='w-full flex flex-row px-4 justify-center'>
             <div className='md:w-3/5 w-full flex flex-col items-center space-y-6'>
-              <Link
-                to='/nlc/registration'
+              {/* <Link to='/landing' className='w-full flex justify-center'> */}
+              <button
+                onClick={() => showToast()}
+                className='mt-10 bg-nlc hover:bg-nlc-400 rounded-lg flex justify-center items-center text-white w-4/5'
+              >
+                <p className='text-xl font-bold py-4 px-2'>Daftar Sekarang</p>
+              </button>
+              {/* </Link> */}
+              {/* <Link
+                to='/npc_senior/registration'
                 className='w-full flex justify-center'
               >
-                <button className='bg-nlc hover:bg-nlc-400 rounded-lg flex justify-center items-center text-white w-4/5'>
+                <button className='bg-npc hover:bg-npc-400 rounded-lg flex justify-center items-center text-white w-4/5'>
                   <p className='text-lg font-bold py-4 px-2'>
-                    Daftar Schematics NLC Sebagai Ketua
+                    Daftar Schematics NPC Senior Sebagai Ketua
                   </p>
                 </button>
               </Link>
-              <Link to='/nlc/join_team' className='w-full flex justify-center'>
-                <button className='bg-nlc hover:bg-nlc-400 rounded-lg flex justify-center items-center text-white w-4/5'>
+              <Link
+                to='/npc_senior/join_team'
+                className='w-full flex justify-center'
+              >
+                <button className='bg-npc hover:bg-npc-400 rounded-lg flex justify-center items-center text-white w-4/5'>
                   <p className='text-lg font-bold py-4 px-2'>
-                    Daftar Schematics NLC Sebagai Anggota
+                    Daftar Schematics NPC Senior Sebagai Anggota
                   </p>
                 </button>
-              </Link>
+              </Link> */}
             </div>
           </div>
+
+          <img
+            src={`${process.env.PUBLIC_URL}/images/nlc/nlc-left.png`}
+            alt=''
+            className='absolute bottom-0 -left-16 w-[33%]'
+          />
+          <img
+            src={`${process.env.PUBLIC_URL}/images/nlc/nlc-mid.png`}
+            alt=''
+            className='absolute bottom-0 right-[35%] w-[30%]'
+          />
+          <img
+            src={`${process.env.PUBLIC_URL}/images/nlc/nlc-right.png`}
+            alt=''
+            className='absolute bottom-0 right-0 w-[30%]'
+          />
         </div>
       ) : (
         <div className='bg-white py-8 min-h-screen'>

@@ -8,6 +8,10 @@ import { Link, useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import UnstyledLink from '@/components/UnstyledLink';
 import { FaTrophy } from 'react-icons/fa';
+import { useAuthDispatch } from '@/contexts/AuthContext';
+import { useSWRConfig } from 'swr';
+import { useHistory } from 'react-router-dom';
+
 const navigation = [
   {
     id: 'dashboard',
@@ -99,11 +103,18 @@ const navigation = [
 ];
 
 export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
+  const authDispatch = useAuthDispatch();
+  const { cache } = useSWRConfig();
+  // const teamDispatch = useTeamDispatch();
+  const history = useHistory();
   const location = useLocation();
   const { pathname } = location;
   const [selectEvent, setSelectEvent] = useState(false);
-  const handleSelectEvent = () => {
-    setSelectEvent(!selectEvent);
+  const handleLogout = () => {
+    authDispatch('LOGOUT');
+    cache.clear();
+    // teamDispatch('CLEAR');
+    history.replace('/login');
   };
   return (
     <div>
@@ -214,17 +225,6 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
                     Sign Out
                   </div>
                 </div>
-                <div className={classNames(selectEvent ? 'block' : 'block')}>
-                  {navigation.map((item) => (
-                    <Link
-                      key={item.name}
-                      to={item.href}
-                      className={classNames()}
-                    >
-                      {item.name}
-                    </Link>
-                  ))}
-                </div>
               </nav>
             </div>
           </Transition.Child>
@@ -328,7 +328,10 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
                   </Menu>
                 ))}
                 <hr />
-                <div className='flex items-center px-2 py-3 space-y-3 text-white font-bold hover:text-[#24657A] hover:bg-white rounded-lg cursor-pointer'>
+                <div
+                  className='flex items-center px-2 py-3 space-y-3 text-white font-bold hover:text-[#24657A] hover:bg-white rounded-lg cursor-pointer'
+                  onClick={handleLogout}
+                >
                   <HiLogout className='mr-3 w-5 h-5' />
                   Sign Out
                 </div>

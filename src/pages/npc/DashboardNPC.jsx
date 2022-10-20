@@ -6,12 +6,21 @@ import { Link, useHistory } from 'react-router-dom';
 import useSWR from 'swr';
 import Error500 from '../error/500';
 import { AiOutlineCheckCircle } from 'react-icons/ai';
+import toast, { Toaster } from 'react-hot-toast';
+
 function DashboardNPC() {
   const history = useHistory();
   const { data, error } = useSWR('/my_npc', {
     shouldRetryOnError: false,
     errorRetryInterval: 0,
   });
+
+  const showToast = () => {
+    toast.error('Pendaftaran sudah ditutup!');
+
+    history.push('/landing');
+  };
+
   useEffect(() => {
     if (data) {
       if (
@@ -28,11 +37,12 @@ function DashboardNPC() {
 
   return (
     <DashboardShell>
+      <Toaster position='top-center' reverseOrder={false} />
       {error?.response.status === 404 ? (
-        <div className='bg-white min-h-screen relative'>
-          <div className='flex flex-col w-full px-4 py-8 font-secondary items-center text-black'>
+        <div className='bg-white min-h-[calc(100vh-64px)] relative'>
+          <div className='flex flex-col w-full px-4 py-8 pt-[6%] font-secondary items-center text-black'>
             <p className='text-5xl p-6 font-bold'>SCHEMATICS NPC</p>
-            <p className='text-xl md:w-2/3 w-full text-center font-normal'>
+            <p className='text-2xl md:w-4/5 w-full text-center font-normal leading-10'>
               Schematics National Programming Contest 2022 merupakan kompetisi
               pemrograman nasional yang menguji kemampuan penyelesaian suatu
               permasalahan dengan algoritma yang paling efektif dan efisien
@@ -42,17 +52,15 @@ function DashboardNPC() {
           </div>
           <div className='w-full flex flex-row px-4 justify-center'>
             <div className='md:w-3/5 w-full flex flex-col items-center space-y-6'>
-              <Link
-                to='/npc_junior/registration'
-                className='w-full flex justify-center'
+              {/* <Link to='/landing' className='w-full flex justify-center'> */}
+              <button
+                onClick={() => showToast()}
+                className='mt-10 bg-npc hover:bg-npc-400 rounded-lg flex justify-center items-center text-white w-4/5'
               >
-                <button className='bg-npc hover:bg-npc-400 rounded-lg flex justify-center items-center text-white w-4/5'>
-                  <p className='text-lg font-bold py-4 px-2'>
-                    Daftar Schematics NPC Junior
-                  </p>
-                </button>
-              </Link>
-              <Link
+                <p className='text-xl font-bold py-4 px-2'>Daftar Sekarang</p>
+              </button>
+              {/* </Link> */}
+              {/* <Link
                 to='/npc_senior/registration'
                 className='w-full flex justify-center'
               >
@@ -71,16 +79,25 @@ function DashboardNPC() {
                     Daftar Schematics NPC Senior Sebagai Anggota
                   </p>
                 </button>
-              </Link>
+              </Link> */}
             </div>
           </div>
-          <div className='absolute bottom-0'>
-            <img
-              src={`${process.env.PUBLIC_URL}/images/npc/npc-left.png`}
-              alt=''
-              className=''
-            />
-          </div>
+
+          <img
+            src={`${process.env.PUBLIC_URL}/images/npc/npc-left.png`}
+            alt=''
+            className='absolute bottom-0 -left-16 w-[33%]'
+          />
+          <img
+            src={`${process.env.PUBLIC_URL}/images/npc/npc-mid.png`}
+            alt=''
+            className='absolute bottom-0 right-[35%] w-[30%]'
+          />
+          <img
+            src={`${process.env.PUBLIC_URL}/images/npc/npc-right.png`}
+            alt=''
+            className='absolute bottom-0 right-0 w-[30%]'
+          />
         </div>
       ) : (
         <div className='bg-white py-4 min-h-screen font-secondary'>
@@ -141,22 +158,6 @@ function DashboardNPC() {
                     <p className='col-span-6'>
                       {TEAM_STATUS[data.data.status]}
                     </p>
-                    {data.data.status === 'active' && (
-                      <>
-                        <li className='col-span-5'>Link Grup Discord</li>
-                        <p>:</p>
-                        <p className='col-span-6 font-bold'>
-                          <a
-                            className='text-npc hover:text-npc-300'
-                            target='_blank'
-                            href='https://schematics-npc.com/'
-                            rel='noreferrer'
-                          >
-                            https://discord.gg/amvajPDkVf
-                          </a>
-                        </p>
-                      </>
-                    )}
                   </div>
                 </ul>
                 <hr />
