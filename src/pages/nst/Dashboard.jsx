@@ -187,7 +187,7 @@ export default function Dashboard() {
 
             {/* Pemberitahuan Card*/}
             <div className='w-full flex justify-center mt-10 pb-20 mb:mx-4 mx-2  '>
-              <div className='w-10/12 bg-white h-64 rounded-3xl p-5 overflow-auto'>
+              <div className='w-10/12 bg-white h-auto rounded-3xl p-5 overflow-auto'>
                 <h2 className='text-nst font-primary text-3xl leading-9'>
                   Pemberitahuan
                 </h2>
@@ -207,8 +207,25 @@ export default function Dashboard() {
                   </tr>
                   <tr>
                     <td>Waktu :&nbsp;&nbsp;</td>
-                    <td>08.00 - 10.00 WIB</td>
+                    <td>09.00 - 15.00 WIB</td>
                   </tr>
+                  <div className='ml-4 mt-2'>
+                    <ul className='list-disc list-outside'>
+                      <li>
+                        Tidak ada penukaran tiket fisik, sehingga mohon
+                        menunjukkan tiket digital / QR Code yang sudah terdapat
+                        di setelah laman pembayaran
+                      </li>
+                      <li>
+                        Open gate di jam 09.00 WIB, dimohon kepada peserta untuk
+                        datang tepat waktu
+                      </li>
+                      <li>
+                        Seluruh informasi mengenai acara Schematics NST bisa
+                        diakses di sosial media Schematics
+                      </li>
+                    </ul>
+                  </div>
                 </div>
 
                 {/* Pemberitahuan Content */}
