@@ -2,13 +2,15 @@ import Loading from '@/components/Loading';
 import DashboardShell from '@/layout/DashboardShell';
 import { TEAM_STATUS } from '@/lib/constants';
 import React, { useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import useSWR from 'swr';
 import Error500 from '../error/500';
 import { AiOutlineCheckCircle } from 'react-icons/ai';
 import toast, { Toaster } from 'react-hot-toast';
 
 function DashboardNPC() {
+  const location = useLocation();
+  const { pathname } = location;
   const history = useHistory();
   const { data, error } = useSWR('/my_npc', {
     shouldRetryOnError: false,
@@ -18,9 +20,9 @@ function DashboardNPC() {
   const showToast = () => {
     toast.error('Pendaftaran sudah ditutup!');
 
-    history.push('/landing');
+    console.log(pathname);
+    history.push(`${pathname}`);
   };
-
   useEffect(() => {
     if (data) {
       if (

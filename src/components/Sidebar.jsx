@@ -149,7 +149,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
             <div
               className={classNames(
                 'relative flex flex-col flex-1 w-full max-w-xs pt-5 pb-4',
-                pathname === '/landing' ? 'bg-yellow-200' : 'bg-gray-900',
+                pathname === '/landing' ? 'bg-white' : 'bg-white',
               )}
             >
               <Transition.Child
@@ -174,14 +174,14 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
                   </button>
                 </div>
               </Transition.Child>
-              <div className='flex items-center flex-shrink-0 px-4'>
+              <div className='flex items-center justify-center flex-shrink-0 py-6'>
                 <UnstyledLink
                   openNewTab={false}
                   href='https://schematics.its.ac.id/'
                 >
                   <img
-                    className='h-20 mx-auto'
-                    src={`${process.env.PUBLIC_URL}/images/logo/logo-dashboard-desktop.svg`}
+                    className='h-40'
+                    src={`${process.env.PUBLIC_URL}/images/logo/logo-dashboard-mobile.png`}
                     alt='colored-title'
                   />
                 </UnstyledLink>
@@ -192,35 +192,69 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
               >
                 <div className='px-2 space-y-3'>
                   {navigation.map((item) => (
-                    <Link
-                      key={item.name}
-                      to={item.href}
-                      className={classNames(
-                        item.href === pathname
-                          ? 'bg-white text-[#24657A]'
-                          : `hover:bg-gray-200 text-white hover:text-[#24657A]`,
-                        item.color ? `${item.color}` : 'text-white',
-                        'group flex items-center px-2 py-2 text-base font-medium rounded-md',
-                      )}
-                      aria-current={item.current ? 'page' : undefined}
-                    >
-                      <item.icon
+                    <Menu as='div'>
+                      <Menu.Button
                         className={classNames(
-                          item.color ? `${item.color}` : 'text-[#24657A]',
-                          'w-6 h-6 mr-4',
+                          item.href === pathname
+                            ? 'bg-[#24657A] text-white'
+                            : `hover:bg-gray-200 text-[#24657A] hover:text-[#24657A]`,
+                          `group flex items-center text-sm font-semibold rounded-md w-full`,
                         )}
-                        aria-hidden='true'
-                      />
-                      {item.name}
-                      {item.id === 'events' && (
-                        <div className='absolute right-5'>
-                          <RiArrowDropDownLine className='text-white w-8 relative hover:text-[#24657A] h-8' />
-                        </div>
-                      )}
-                    </Link>
+                      >
+                        <Link
+                          key={item.name}
+                          to={item.href}
+                          className={classNames(
+                            item.href === pathname
+                              ? 'bg-[#24657A] text-white'
+                              : `hover:bg-gray-200 text-[#24657A] hover:text-[#24657A]`,
+                            `group flex items-center px-2 py-2 text-sm font-semibold rounded-md w-full`,
+                          )}
+                        >
+                          <item.icon
+                            className={classNames('w-6 h-6 mr-4')}
+                            aria-hidden='true'
+                          />
+                          {item.name}
+                          {item.id === 'events' && (
+                            <div className={classNames('ml-auto')}>
+                              <RiArrowDropDownLine
+                                className={classNames(
+                                  'w-6 h-6',
+                                  item.href === '#' ? '' : 'rotate-180',
+                                )}
+                              />
+                            </div>
+                          )}
+                        </Link>
+                      </Menu.Button>
+                      <Menu.Items>
+                        {item.dropdown.map((event) => (
+                          <Link
+                            key={event.name}
+                            to={event.href}
+                            aria-current={event.current ? 'page' : undefined}
+                            className={classNames(
+                              `group flex items-center my-2 px-4 py-2 text-sm font-semibold rounded-md w-full`,
+                              event.color
+                                ? `text-${event.color}`
+                                : 'text-white',
+                              event.href === pathname
+                                ? 'text-white bg-[#24657A]'
+                                : `hover:bg-gray-200 text-[#24657A] hover:text-[#24657A]`,
+                            )}
+                          >
+                            {event.name}
+                          </Link>
+                        ))}
+                      </Menu.Items>
+                    </Menu>
                   ))}
                   <hr />
-                  <div className='flex items-center px-2 py-3 space-y-3 text-white font-bold hover:text-[#24657A] hover:bg-white rounded-lg cursor-pointer'>
+                  <div
+                    className='flex items-center px-2 py-3 space-y-3 text-[#24657A] font-bold hover:text-[#24657A] hover:bg-gray-200 rounded-lg cursor-pointer'
+                    onClick={handleLogout}
+                  >
                     <HiLogout className='mr-3 w-5 h-5' />
                     Sign Out
                   </div>

@@ -15,13 +15,15 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import useSWR from 'swr';
 import Error500 from '../error/500';
 import { AiOutlineCheckCircle } from 'react-icons/ai';
 import { Toaster } from 'react-hot-toast';
 
 function DashboardNLC() {
+  const location = useLocation();
+  const { pathname } = location;
   const [nlcProfile, setNlcProfile] = useState(undefined);
   const { user } = useAuthState();
   const history = useHistory();
@@ -77,7 +79,7 @@ function DashboardNLC() {
   const showToast = () => {
     toast.error('Pendaftaran sudah ditutup!');
 
-    history.push('/landing');
+    history.push(`${pathname}`);
   };
 
   const handleImageUpload = (data) => {
@@ -199,7 +201,10 @@ function DashboardNLC() {
                   <h2 className='font-bold text-md md:text-xl'>
                     Schematics NLC
                   </h2>
-                  <p className='text-nlc hover:text-nlc-200 text-xs md:text-sm my-auto cursor-pointer'>
+                  <p
+                    className='text-nlc hover:text-nlc-200 text-xs md:text-sm my-auto cursor-pointer'
+                    onClick={() => showToast()}
+                  >
                     Lengkapi data diri &gt;
                   </p>
                 </div>
@@ -286,60 +291,38 @@ function DashboardNLC() {
                         <p className='font-bold text-md md:text-xl'>
                           Kode Afiliasi : {data.data.referral_code}
                         </p>
-                        <a href='https://drive.google.com/file/d/1QKap6V7x-k80DZ-1rCGuTIRRqaY4ceSH/view?usp=sharing'>
-                          <p className='text-nlc hover:text-nlc-200 text-xs md:text-sm my-auto pr-2'>
-                            Unduh Guidebook &gt;
-                          </p>
-                        </a>
+                        <p
+                          className='text-nlc hover:text-nlc-200 text-xs md:text-sm my-auto pr-2 cursor-pointer'
+                          onClick={() => showToast()}
+                        >
+                          Unduh Guidebook &gt;
+                        </p>
                       </div>
                       <ul className='list-inside'>
                         <div className='grid grid-cols-12 text-sm md:text-lg mt-4'>
                           <li className='col-span-5'>Link Grup WA Region</li>
                           <p>:</p>
-                          <a
-                            href={getNlcRegion(data.data.region).waGroup}
-                            target='_blank'
-                            rel='noopener noreferrer'
-                            className='col-span-6 text-nlc hover:text-nlc-200'
+                          <p
+                            className='col-span-6 text-nlc hover:text-nlc-200 cursor-pointer'
+                            onClick={() => showToast()}
                           >
-                            <p className=''>Klik Disini</p>
-                          </a>
+                            Klik Disini
+                          </p>
                           <li className='col-span-5'>Username Lomba</li>
                           <p>:</p>
-                          <p className='col-span-6'>Masih dummy</p>
+                          <p className='col-span-6'></p>
                           <li className='col-span-5'>Password Lomba</li>
                           <p>:</p>
-                          <p className='col-span-6'>Masih dummy</p>
+                          <p className='col-span-6'></p>
                           <li className='col-span-5'>Link Moodle</li>
                           <p>:</p>
-                          <a
-                            href={getNlcRegion(data.data.region).waGroup}
-                            target='_blank'
-                            rel='noopener noreferrer'
-                            className='col-span-6 text-nlc hover:text-nlc-200'
-                          >
-                            <p className=''>Masih dummy</p>
-                          </a>
+                          <p className='col-span-6 text-nlc hover:text-nlc-200'></p>
                           <li className='col-span-5'>Link Game</li>
                           <p>:</p>
-                          <a
-                            href={getNlcRegion(data.data.region).waGroup}
-                            target='_blank'
-                            rel='noopener noreferrer'
-                            className='col-span-6 text-nlc hover:text-nlc-200'
-                          >
-                            <p className=''>Masih dummy</p>
-                          </a>
+                          <p className='col-span-6 text-nlc hover:text-nlc-200'></p>
                           <li className='col-span-5'>Link Feedback</li>
                           <p>:</p>
-                          <a
-                            href={getNlcRegion(data.data.region).waGroup}
-                            target='_blank'
-                            rel='noopener noreferrer'
-                            className='col-span-6 text-nlc hover:text-nlc-200'
-                          >
-                            <p className=''>Masih dummy</p>
-                          </a>
+                          <p className='col-span-6 text-nlc hover:text-nlc-200'></p>
                         </div>
                       </ul>
                     </div>
@@ -356,7 +339,10 @@ function DashboardNLC() {
                     </button>
                   </a> */}
                 </div>
-                <div className='w-full md:w-2/3 mx-auto bg-nlc row-span-1 justify-end rounded-xl flex cursor-pointer hover:bg-nlc-300 shadow-lg'>
+                <div
+                  className='w-full md:w-2/3 mx-auto bg-nlc row-span-1 justify-end rounded-xl flex cursor-pointer hover:bg-nlc-300 shadow-lg'
+                  onClick={() => showToast()}
+                >
                   <p className='mx-auto my-auto text-white font-primary'>
                     Unduh Soal
                   </p>
@@ -496,7 +482,7 @@ function DashboardNLC() {
                     {!nlcProfile?.bingo_file_url && (
                       <div className='w-full'>
                         <SubmitButton
-                          className='bg-nlc hover:bg-nlc-300 font-primary'
+                          className='bg-nlc hover:bg-nlc-300 font-secondary font-bold text-white'
                           loading={false}
                         >
                           Upload
