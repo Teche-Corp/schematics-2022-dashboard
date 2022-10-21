@@ -69,6 +69,10 @@ const navigation = [
         name: 'Verifikasi Payment NST',
         href: '/admin/sch-nst/',
       },
+      {
+        name: 'Layout Kursi NST',
+        href: '/admin/sch-nst/layout-kursi',
+      },
     ],
     icon: HiSpeakerphone,
     current: false,
