@@ -71,48 +71,67 @@ export default function LayoutKursi() {
         sheets.push(new Sheat(`${coutKursi++}`, `${i}${j}`, false));
       }
     }
-    const sheat1 = ['50', '51', '52', '53', '54'];
-    const sheat2 = ['60', '61', '62', '63', '64', '65', '66', '67', '68', '69'];
-    const sheet3 = ['70', '80', '90', '100', '110', '120', '130', '140'];
+    const sheat1 = ['240', '241', '242', '243', '244'];
+    const sheat2 = [
+      '280',
+      '281',
+      '282',
+      '283',
+      '284',
+      '285',
+      '286',
+      '287',
+      '288',
+      '289',
+    ];
+    const sheet3 = ['10', '50', '90', '130', '170', '210', '250', '290'];
     const sheet4 = [
+      '10',
+      '50',
+      '90',
+      '130',
+      '170',
+      '210',
+      '250',
+      '290',
       '93',
       '94',
-      '101',
-      '102',
-      '103',
-      '104',
-      '111',
-      '112',
-      '113',
-      '121',
-      '122',
       '131',
+      '132',
+      '133',
+      '134',
     ];
     const sheet5 = [
-      '150',
-      '151',
-      '152',
-      '153',
-      '154',
-      '155',
-      '156',
-      '157',
-      '158',
-      '159',
+      '251',
+      '211',
+      '212',
+      '171',
+      '172',
+      '173',
+      '20',
+      '21',
+      '22',
+      '23',
+      '24',
+      '25',
+      '26',
+      '27',
+      '28',
+      '29',
     ];
     const sheet6 = [
-      '179',
-      '178',
-      '177',
-      '176',
+      '109',
+      '108',
+      '107',
+      '106',
+      '149',
+      '148',
+      '147',
       '189',
       '188',
-      '187',
-      '199',
-      '198',
-      '209',
+      '229',
     ];
-    const sheet7 = ['239', '238', '237', '236', '249'];
+    const sheet7 = ['39', '38', '37', '36', '79'];
     const disable_kursi = [
       ...sheat1,
       ...sheat2,
@@ -167,12 +186,12 @@ export default function LayoutKursi() {
             <div className='space-y-3'>
               {/* Sheet */}
               {total_row_sheet.map((row, index) => {
-                if (index < 7) {
+                if (index < 8) {
                   return (
                     <div className='flex flex-col space-y-4 ml-5'>
                       <div className='flex gap-x-3 rotate-45'>
                         {sheets
-                          .slice(index * 10, index * 10 + 10)
+                          .slice(index * 40, index * 40 + 10)
                           .map((sheet, index) => {
                             return (
                               <div
@@ -206,15 +225,15 @@ export default function LayoutKursi() {
               })}
               {/* End Sheet */}
             </div>
-            <div className='space-y-2 mt-52 mr-10'>
+            <div className='space-y-2 mt-60 mr-10'>
               {/* Sheet */}
               {total_row_sheet.map((row, index) => {
                 if (index >= 7 && index < 15) {
                   return (
-                    <div className='flex flex-col space-y-2'>
+                    <div className='flex flex-col space-y-3'>
                       <div className='flex gap-x-2'>
                         {sheets
-                          .slice(index * 10, index * 10 + 10)
+                          .slice((index - 7) * 40 + 10, (index - 7) * 40 + 20)
                           .map((sheet, index) => {
                             return (
                               <div
@@ -222,7 +241,9 @@ export default function LayoutKursi() {
                                 className='flex flex-col items-center'
                               >
                                 <div className='flex flex-col items-center'>
-                                  <p className='w-5 text-xs'>{sheet.name}</p>
+                                  <p className='w-5 text-xs mt-3'>
+                                    {sheet.name}
+                                  </p>
                                   <div
                                     className={`w-6 h-6 border-2 border-black flex justify-center items-center ${
                                       sheet.status
@@ -246,15 +267,15 @@ export default function LayoutKursi() {
               })}
               {/* End Sheet */}
             </div>
-            <div className='space-y-2 mt-52 '>
+            <div className='space-y-2 mt-44 '>
               {/* Sheet */}
               {total_row_sheet.map((row, index) => {
-                if (index >= 15 && index < 23) {
+                if (index >= 15 && index < 22) {
                   return (
                     <div className='flex flex-col space-y-2'>
                       <div className='flex gap-x-2'>
                         {sheets
-                          .slice(index * 10, index * 10 + 10)
+                          .slice((index - 15) * 40 + 20, (index - 15) * 40 + 30)
                           .map((sheet, index) => {
                             return (
                               <div
@@ -262,7 +283,9 @@ export default function LayoutKursi() {
                                 className='flex flex-col items-center'
                               >
                                 <div className='flex flex-col items-center'>
-                                  <p className='w-5 text-xs'>{sheet.name}</p>
+                                  <p className='w-5 text-xs mt-3'>
+                                    {sheet.name}
+                                  </p>
                                   <div
                                     className={`w-6 h-6 border-2 border-black flex justify-center items-center ${
                                       sheet.status
@@ -286,15 +309,15 @@ export default function LayoutKursi() {
               })}
               {/* End Sheet */}
             </div>
-            <div className='space-y-3'>
+            <div className='space-y-3 -translate-y-10'>
               {/* Sheet */}
               {total_row_sheet.map((row, index) => {
                 if (index >= 23 && index < 30) {
                   return (
-                    <div className='flex flex-col space-y-4 ml-5'>
+                    <div className='flex flex-col space-y-3 ml-5'>
                       <div className='flex gap-x-3 -rotate-45'>
                         {sheets
-                          .slice(index * 10, index * 10 + 10)
+                          .slice((index - 23) * 40 + 30, (index - 23) * 40 + 40)
                           .map((sheet, index) => {
                             return (
                               <div
