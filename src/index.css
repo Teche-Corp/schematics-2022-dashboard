@@ -30,3 +30,11 @@
   padding-left: 0.7rem;
   border-radius: 0.25rem;
 }
+
+.dashboard-color {
+  background: linear-gradient(153.19deg, #2E97EE 2.57%, #00E6B7 91.16%);
+}
+
+.dashboard-color-2 {
+  background: linear-gradient(153.19deg, #F06330 0.78%, #F9F871 63.29%);
+}
