@@ -139,55 +139,6 @@ export default function Dashboard() {
                       </a>
                     )}
                   </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Pemberitahuan Card*/}
-            <div className='w-full flex justify-center mt-10 pb-20 mb:mx-4 mx-2  '>
-              <div className='w-10/12 bg-white h-auto rounded-3xl p-5 overflow-auto'>
-                <h2 className='text-nst font-primary text-3xl leading-9'>
-                  Pemberitahuan
-                </h2>
-                <div className='mt-4 font-secondary text-lg'>
-                  <tr>
-                    <td>Lokasi :&nbsp;&nbsp;</td>
-                    <td className=''>
-                      Suroboyo Community Center, Marvel City Mall{' '}
-                      <a
-                        target={'_blank'}
-                        className='text-nst font-semibold'
-                        href='https://goo.gl/maps/a3s8oeaFd5V3nogL6'
-                      >
-                        &emsp;Buka peta
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Waktu :&nbsp;&nbsp;</td>
-                    <td>09.00 - 15.00 WIB</td>
-                  </tr>
-                  <div className='ml-4 mt-2'>
-                    <ul className='list-disc list-outside'>
-                      <li>
-                        Tidak ada penukaran tiket fisik, sehingga mohon
-                        menunjukkan tiket digital / QR Code yang sudah terdapat
-                        di setelah laman pembayaran
-                      </li>
-                      <li>
-                        Open gate di jam 09.00 WIB, dimohon kepada peserta untuk
-                        datang tepat waktu
-                      </li>
-                      <li>
-                        Seluruh informasi mengenai acara Schematics NST bisa
-                        diakses di sosial media Schematics
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-
-                {/* Pemberitahuan Content */}
-                {/* <div className='flex flex-col m-5 bg-nst p-3 rounded-2xl '>
                   <ul className='list-inside mb-4'>
                     <div className='grid grid-cols-12 text-sm md:text-md mt-4 gap-y-1'>
                       <li className='col-span-5'>Jumlah Ticket</li>
@@ -235,13 +186,42 @@ export default function Dashboard() {
               <p className='md:w-1/5 text-xl bg-nst py-2 rounded-lg font-medium text-center md:text-center text-white -translate-y-1/2'>
                 Pemberitahuan
               </p>
-              <ul className='list-disc list-inside mt-2 font-medium text-lg'>
-                <li>
-                  Tiket akan dikirim melalui email pembeli dan dapat diakses
-                  melalui dashboard pembeli setelah diverifikasi pembayarannya
-                  oleh admin
-                </li>
-              </ul>
+              <div className='mt-4 font-secondary text-lg'>
+                <tr>
+                  <td>Lokasi :&nbsp;&nbsp;</td>
+                  <td className=''>
+                    Suroboyo Community Center, Marvel City Mall{' '}
+                    <a
+                      target={'_blank'}
+                      className='text-nst font-semibold'
+                      href='https://goo.gl/maps/a3s8oeaFd5V3nogL6'
+                    >
+                      &emsp;Buka peta
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Waktu :&nbsp;&nbsp;</td>
+                  <td>09.00 - 15.00 WIB</td>
+                </tr>
+                <div className='ml-4 mt-2'>
+                  <ul className='list-disc list-outside'>
+                    <li>
+                      Tidak ada penukaran tiket fisik, sehingga mohon
+                      menunjukkan tiket digital / QR Code yang sudah terdapat di
+                      setelah laman pembayaran
+                    </li>
+                    <li>
+                      Open gate di jam 09.00 WIB, dimohon kepada peserta untuk
+                      datang tepat waktu
+                    </li>
+                    <li>
+                      Seluruh informasi mengenai acara Schematics NST bisa
+                      diakses di sosial media Schematics
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
           {data.data.status === 'active' ? (
