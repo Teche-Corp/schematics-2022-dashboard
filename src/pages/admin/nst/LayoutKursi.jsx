@@ -129,9 +129,9 @@ export default function LayoutKursi() {
       '147',
       '189',
       '188',
-      '229',
+      '239',
     ];
-    const sheet7 = ['39', '38', '37', '36', '79'];
+    const sheet7 = ['39', '38', '37', '36'];
     const disable_kursi = [
       ...sheat1,
       ...sheat2,
@@ -173,6 +173,13 @@ export default function LayoutKursi() {
         <p>
           Jumlah Kursi Kosong : {sheets.filter((sheet) => !sheet.status).length}
         </p>
+        <button
+          className='px-6 py-2 bg-nst-blue rounded-xl text-white my-2'
+          onClick={() => ResetSheat()}
+          type='button'
+        >
+          <p>Reset Kursi</p>
+        </button>
         {/* Card */}
         <div className='w-full shadow-md p-5 bg-white mt-3 min-h-screen flex justify-start flex-col items-start overflow-auto gap-x-3 relative'>
           <div
