@@ -187,48 +187,6 @@ export default function Dashboard() {
                 </div>
 
                 {/* Pemberitahuan Content */}
-                {/* <div className='flex flex-col m-5 bg-nst p-3 rounded-2xl '>
-                  <ul className='list-inside mb-4'>
-                    <div className='grid grid-cols-12 text-sm md:text-md mt-4 gap-y-1'>
-                      <li className='col-span-5'>Jumlah Ticket</li>
-                      <p>:</p>
-                      <p className='col-span-6'>{data.data.tickets.length}</p>
-                      <li className='col-span-5'>Tanggal Acara</li>
-                      <p>:</p>
-                      <p className='col-span-6'>22 November 2022</p>
-                      <li className='col-span-5'>Venue</li>
-                      <p>:</p>
-                      <p className='col-span-6'>
-                        Surabaya Community Center, Marvel City
-                      </p>
-                    </div>
-                  </ul>
-                  <hr />
-                  <p
-                    className={`font-secondary text-sm leading-6 flex pt-2 ${
-                      data?.data.status === 'active'
-                        ? 'text-green-500'
-                        : 'text-black'
-                    } hover:text-reeva-400-red`}
-                  >
-                    {data?.data.status === 'awaiting_payment' ||
-                    data?.data.status === 'awaiting_verification' ||
-                    data?.data.status === 'need_revision' ? (
-                      <AiOutlineWarning className='w-5 h-4 mx-2 my-auto text-red-500' />
-                    ) : (
-                      <AiOutlineCheckCircle className='w-5 h-4 mx-2 my-auto' />
-                    )}
-                    {data?.data.status === 'awaiting_payment'
-                      ? 'Menunggu pembayaran'
-                      : data?.data.status === 'awaiting_verification'
-                      ? 'Menunggu verifikasi'
-                      : data?.data.status === 'need_revision'
-                      ? 'Pembayaran ditolak, silahkan upload ulang'
-                      : data?.data.status === 'active'
-                      ? 'Pembayaran Terverifikasi'
-                      : ''}
-                  </p>
-                </div>
               </div>
             </div>
             <div className='w-full md:h-64 h-96 bg-white px-6 pb-6 mt-16 rounded-xl shadow-xl'>
