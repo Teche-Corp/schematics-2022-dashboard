@@ -168,12 +168,10 @@ export default function DashboardReeva() {
                       <p className='col-span-6'>{data.data.tickets.length}</p>
                       <li className='col-span-5'>Tanggal Acara</li>
                       <p>:</p>
-                      <p className='col-span-6'>22 November 2022</p>
+                      <p className='col-span-6'>12 November 2022</p>
                       <li className='col-span-5'>Venue</li>
                       <p>:</p>
-                      <p className='col-span-6'>
-                        Surabaya Community Center, Marvel City
-                      </p>
+                      <p className='col-span-6'>Jatim International Expo</p>
                     </div>
                   </ul>
                   <hr />
