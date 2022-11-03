@@ -18,9 +18,9 @@ const App = () => {
   //     ? 'https://schematics.its.ac.id:8081/api'
   //     : 'https://deploy-laravel.herokuapp.com/api';
 
-  // axios.defaults.baseURL = 'https://schematics.its.ac.id:8081/api';
+  axios.defaults.baseURL = 'https://schematics.its.ac.id:8081/api';
 
-  axios.defaults.baseURL = 'http://127.0.0.1:8000/api';
+  // axios.defaults.baseURL = 'http://127.0.0.1:8000/api';
   axios.interceptors.response.use(undefined, async function (err) {
     // const originalRequest = err.config;
 
