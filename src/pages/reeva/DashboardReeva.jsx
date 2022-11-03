@@ -133,12 +133,7 @@ export default function DashboardReeva() {
                     </p>
                   </div>
                 ) : (
-                  <div className='flex justify-start'>
-                    <p className='flex text-sm mt-4 my-auto text-black'>
-                      <AiOutlineWarning className='w-5 h-4 mx-2 my-auto text-red-500' />
-                      Lakukan Pembayaran untuk mengaktifkan akun anda
-                    </p>
-                  </div>
+                  <></>
                 )}
               </div>
 
@@ -151,7 +146,8 @@ export default function DashboardReeva() {
                     <p className='font-bold text-md md:text-xl'>
                       Ticket Schematics REEVA
                     </p>
-                    {data.data.status === 'active' ? (
+                    {!(data.data.status === 'awaiting_payment') ||
+                    !(data.data.status === 'need_revision') ? (
                       <div></div>
                     ) : (
                       <a href='/reeva/payment' target='_blank' rel='noreferrer'>
@@ -206,12 +202,7 @@ export default function DashboardReeva() {
               <p className='md:w-1/5 text-xl bg-reeva py-2 rounded-lg font-medium text-center md:text-center text-white -translate-y-1/2'>
                 Pemberitahuan
               </p>
-              <ul className='list-disc list-inside mt-2 font-medium text-lg'>
-                <li>
-                  Untuk tim yang berstatus aktif, mohon untuk segera masuk ke
-                  link discord yang tertera pada dashboard
-                </li>
-              </ul>
+              <ul className='list-disc list-inside mt-2 font-medium text-lg'></ul>
             </div>
           </div>
           {data.data.status === 'active' ? (

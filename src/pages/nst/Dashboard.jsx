@@ -44,7 +44,7 @@ export default function Dashboard() {
               diikuti oleh masyarakat umum.
             </p>
           </div>
-          <div className='w-full flex flex-row px-4 justify-center'>
+          {/* <div className='w-full flex flex-row px-4 justify-center'>
             <div className='md:w-3/5 w-full flex flex-col items-center space-y-6'>
               <Link
                 to='/nst/registration'
@@ -57,7 +57,7 @@ export default function Dashboard() {
                 </button>
               </Link>
             </div>
-          </div>
+          </div> */}
           <img
             src={`${process.env.PUBLIC_URL}/images/nst/guest-star.png`}
             alt=''
