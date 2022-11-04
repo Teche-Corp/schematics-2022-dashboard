@@ -84,6 +84,10 @@ const navigation = [
         name: 'Verifikasi Payment Reeva',
         href: '/admin/sch-reeva/',
       },
+      {
+        name: 'Penukaran Tiket Reeva',
+        href: '/admin/sch-reeva/scan',
+      },
     ],
     color: 'text-reeva',
     icon: HiOutlineSparkles,

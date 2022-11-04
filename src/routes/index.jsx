@@ -57,13 +57,13 @@ import Register from '@/pages/auth/Register';
 import PaymentTeam from '@/pages/nlc/PaymentTeam';
 import CreateTeamKetua from '@/pages/nlc/CreateTeamKetua';
 import JoinTeam from '@/pages/nlc/JoinTeam';
-import CreateTeamSeniorKetua from '@/pages/npc/CreateTeamSeniorKetua';
-import PaymentTeamSenior from '@/pages/npc/PaymentTeamSenior';
-import JoinTeamSenior from '@/pages/npc/JoinTeamSenior';
+// import CreateTeamSeniorKetua from '@/pages/npc/CreateTeamSeniorKetua';
+// import PaymentTeamSenior from '@/pages/npc/PaymentTeamSenior';
+// import JoinTeamSenior from '@/pages/npc/JoinTeamSenior';
 import DashboardNPC from '@/pages/npc/DashboardNPC';
 import DashboardNLC from '@/pages/nlc/DashboardNLC';
 import DashboardNST from '@/pages/nst/Dashboard';
-import CreateTeamJuniorKetua from '@/pages/npc/CreateTeamJuniorKetua';
+// import CreateTeamJuniorKetua from '@/pages/npc/CreateTeamJuniorKetua';
 import AdminVerifikasiDataNLC from '@/pages/admin/nlc/AdminVerifikasiData';
 
 import NSTregister from '@/pages/nst/NSTregister';
@@ -97,6 +97,7 @@ import TableReeva from '@/pages/admin/reeva/TableReeva';
 import ReevaRegister from '@/pages/reeva/ReevaRegister';
 import PaymentTeamJunior from '@/pages/npc/PaymentTeamJunior';
 import LayoutKursi from '@/pages/admin/nst/LayoutKursi';
+import ScanQRTicket from '@/pages/admin/reeva/ScanQRTicket';
 
 // const routeItems = [
 //   {
@@ -345,12 +346,20 @@ const routeItems = [
   {
     auth: 'admin',
     route: AdminRoute,
+    key: 'admin-scan-tiket-reeva',
+    path: '/admin/sch-reeva/scan',
+    component: ScanQRTicket,
+    visible: true,
+  },
+  {
+    auth: 'admin',
+    route: AdminRoute,
     key: 'admin-verifikasi-pembayaran-reeva',
     path: '/admin/sch-reeva',
     component: TableReeva,
     visible: true,
   },
-  // Dena Kursi NST
+  // Denah Kursi NST
   {
     auth: 'admin',
     route: AdminRoute,
