@@ -202,7 +202,18 @@ export default function DashboardReeva() {
               <p className='md:w-1/5 text-xl bg-reeva py-2 rounded-lg font-medium text-center md:text-center text-white -translate-y-1/2'>
                 Pemberitahuan
               </p>
-              <ul className='list-disc list-inside mt-2 font-medium text-lg'></ul>
+              <ul className='list-disc list-inside mt-2 font-medium text-lg'>
+                <li>
+                  Seluruh penonton Schematics Reeva diharuskan untuk
+                  memperhatikan terms and condition pada link{' '}
+                  <a
+                    href='https://drive.google.com/file/d/1up6bvnSz0KwtqHTAmMAwE2tQuR2S8RNq/view?usp=sharing'
+                    className='text-reeva hover:text-reeva-200'
+                  >
+                    berikut
+                  </a>
+                </li>
+              </ul>
             </div>
           </div>
           {data.data.status === 'active' ? (
