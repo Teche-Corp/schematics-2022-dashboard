@@ -4,7 +4,7 @@ import {
   usePagination,
   useSortBy,
 } from 'react-table';
-import { useMemo } from 'react';
+import { useMemo, useRef } from 'react';
 import { GolbalFilteringAdmin } from './GlobalFiltering';
 import { useHistory } from 'react-router-dom';
 import { classNames } from '@/lib/helper';
@@ -15,12 +15,19 @@ export default function TableAdminPembayaran({
   pages,
   setPage = '',
   per_page,
+  refDataPage,
   col,
+  setPerPage,
   color,
 }) {
   const history = useHistory();
-  const columns = useMemo(() => col, []);
+  const columns = col;
   const data = dataItems;
+
+  const PerPage = (number) => {
+    refDataPage.current = number;
+    setPerPage(number);
+  };
   const tableInstance = useTable(
     {
       columns,
@@ -51,7 +58,22 @@ export default function TableAdminPembayaran({
   const { globalFilter, pageSize } = state;
   return (
     <>
-      <GolbalFilteringAdmin filter={globalFilter} setFilter={setGlobalFilter} />
+      <div className='flex justify-between items-center'>
+        <GolbalFilteringAdmin
+          filter={globalFilter}
+          setFilter={setGlobalFilter}
+        />
+        <select
+          className='rounded-sm'
+          defaultValue={refDataPage.current}
+          onChange={(e) => PerPage(e.target.value)}
+        >
+          <option value='20'>20</option>
+          <option value='50'>50</option>
+          <option value='100'>100</option>
+          <option value='10000'>All</option>
+        </select>
+      </div>
       <div className='overflow-auto relative shadow-md sm:rounded-lg max-h-screen'>
         <table
           {...getTableProps()}
@@ -126,7 +148,7 @@ export default function TableAdminPembayaran({
           </ul>
         </nav>
         <p className='px-4'>
-          Halaman {pages} dari {max} ({pageSize} items)
+          Halaman {pages} dari {max} ({refDataPage.current} items)
         </p>
       </div>
     </>

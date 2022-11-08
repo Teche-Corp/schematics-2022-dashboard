@@ -71,6 +71,7 @@ export default function ScanQRTicket() {
             <QrReader
               onResult={(result, error) => {
                 if (result) {
+                  alert(result);
                   setData(result?.text);
                 }
               }}
