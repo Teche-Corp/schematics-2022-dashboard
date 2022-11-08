@@ -282,7 +282,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
                 ? 'dashboard-color-2'
                 : pathname === '/nst'
                 ? 'dashboard-color'
-                : pathname === '/reeva'
+                : pathname === '/reeva' || pathname === '/reeva/ticket'
                 ? 'dashboard-color'
                 : 'bg-white',
             )}
