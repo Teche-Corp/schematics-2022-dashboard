@@ -56,13 +56,13 @@ export default function DashboardReeva() {
                 konser musik.
               </p>
             </div>
-            <div className='mt-20'>
+            {/* <div className='mt-20'>
               <Link to='/reeva/registration'>
                 <button className='bg-reeva-400 px-4 py-2 text-white font-bold text-lg w-[480px] rounded-lg'>
                   <p>Daftar Sekarang</p>
                 </button>
               </Link>
-            </div>
+            </div> */}
           </div>
           {/* Images Guest Start */}
           <div className='absolute bottom-0 z-0'>
