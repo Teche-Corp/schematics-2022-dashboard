@@ -114,12 +114,6 @@ export default function PaymentReeva() {
               <p className='font-tertiary font-normal text-white mt-4 md:mt-6 text-sm md:text-base'>
                 QRIS a.n Schematics Reeva 2022
               </p>
-              <p className='font-tertiary font-normal text-white mt-4 md:mt-6 text-sm md:text-base'>
-                Atau melalui rekening berikut:
-              </p>
-              <p className='font-tertiary font-normal text-white mt-1 text-sm md:text-base'>
-                1400021406518 (Bank Mandiri a.n AQSHA NAUFALDY INDRI)
-              </p>
             </div>
             <div className='flex justify-start  flex-col p-3'>
               <FormProvider {...methods}>
