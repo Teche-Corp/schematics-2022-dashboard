@@ -1,5 +1,5 @@
 import { bearerToken } from '@/lib/helper';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import useSWR from 'swr';
 import DashboardAdminShell from '@/layout/DashboardAdminShell';
 
@@ -10,7 +10,10 @@ import TableAdminPembayaran from '@/components/Admin/TablePembayaran';
 export default function TableReeva() {
   const [page, setPage] = useState(1);
   const [per_page, setPerPage] = useState(20);
+  const refDataPage = useRef(20);
+
   const url = `/admin_get_list_pembayaran_reeva?page=${page}&per_page=${per_page}`;
+  console.log(url);
   const { data: listPayment, error } = useSWR(url, {
     headers: { ...bearerToken() },
   });
@@ -61,6 +64,8 @@ export default function TableReeva() {
             pages={page}
             color='bg-reeva'
             setPage={setPage}
+            refDataPage={refDataPage}
+            setPerPage={setPerPage}
             per_page={per_page}
           />
         </div>

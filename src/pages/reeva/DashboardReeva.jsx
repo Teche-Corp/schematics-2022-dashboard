@@ -115,13 +115,17 @@ export default function DashboardReeva() {
                   <div className='grid grid-cols-12 space-y-1 mt-4 text-sm md:text-md'>
                     <li className='col-span-5'>Nama</li>
                     <p>:</p>
-                    <p className='col-span-6'>{data.data.tickets[0].name}</p>
+                    <p className='col-span-6'>{data?.data?.tickets[0]?.name}</p>
                     <li className='col-span-5'>Alamat</li>
                     <p>:</p>
-                    <p className='col-span-6'>{data.data.tickets[0].alamat}</p>
+                    <p className='col-span-6'>
+                      {data?.data?.tickets[0]?.alamat}
+                    </p>
                     <li className='col-span-5'>No Telepon</li>
                     <p>:</p>
-                    <p className='col-span-6'>{data.data.tickets[0].no_telp}</p>
+                    <p className='col-span-6'>
+                      {data?.data?.tickets[0]?.no_telp}
+                    </p>
                   </div>
                 </ul>
                 <hr />
